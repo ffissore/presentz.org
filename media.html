@@ -1,0 +1,19 @@
+<html>
+<head>
+<script src="jquery.min.js"></script>
+<script src="mediaelement/mediaelement-and-player.min.js"></script>
+<link rel="stylesheet" href="mediaelement/mediaelementplayer.css" />
+</head>
+<body>
+<video src="Google I_O 2011 Querying Freebase Get More From MQL.mp4"></video>
+</body>
+<script>
+$('video').mediaelementplayer({
+		success: function (mediaElement, domObject) {
+			mediaElement.addEventListener('timeupdate', function(e) {
+					console.debug(e.currentTime);
+			}, false);
+		}
+});
+</script>
+</html>
