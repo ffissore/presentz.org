@@ -85,6 +85,11 @@ a:hover { color: #036; }
    ||                                              ||
     \\ ========================================== //
 */
+
+footer {
+  text-align: center;
+}
+
 body {
 	margin: 0;
 	pading: 0;
