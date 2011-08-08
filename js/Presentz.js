@@ -26,34 +26,59 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     child.__super__ = parent.prototype;
     return child;
   };
+  Video = (function() {
+    function Video(playState, pauseState, finishState, presentz) {
+      this.playState = playState;
+      this.pauseState = pauseState;
+      this.finishState = finishState;
+      this.presentz = presentz;
+    }
+    Video.prototype.handleEvent = function(id, event) {
+      if (event === this.playState) {
+        this.presentz.startTimeChecker();
+      } else if (event === this.pauseState || event === this.finishState) {
+        this.presentz.stopTimeChecker();
+      }
+      if (event === this.finishState && this.presentz.currentChapterIndex < (this.presentz.howManyChapters - 1)) {
+        return this.presentz.changeChapter(chapter + 1, true);
+      }
+    };
+    return Video;
+  })();
   Html5Video = (function() {
-    function Html5Video() {}
+    __extends(Html5Video, Video);
+    function Html5Video(presentz) {
+      Html5Video.__super__.constructor.call(this, "play", "pause", "ended", presentz);
+    }
     Html5Video.prototype.changeVideo = function(videoData, play) {
       var video, videoHtml;
       if ($("#videoContainer").children().length === 0) {
         videoHtml = "<video controls preload='none' src='" + videoData.url + "' width='100%' heigth='100%'></video>";
         $("#videoContainer").append(videoHtml);
         video = $("#videoContainer > video")[0];
-        video.addEventListener("play", handleEvent, false);
-        video.addEventListener("pause", handleEvent, false);
-        return video.addEventListener("ended", handleEvent, false);
+        video.addEventListener("play", this.handleEvent, false);
+        video.addEventListener("pause", this.handleEvent, false);
+        return video.addEventListener("ended", this.handleEvent, false);
       } else {
         video = $("#videoContainer > video")[0];
         return video.setAttribute("src", videoData.url);
       }
+    };
+    Html5Video.prototype.handleEvent = function(event) {
+      return Html5Video.__super__.handleEvent.call(this, event.type);
     };
     return Html5Video;
   })();
   Presentz = (function() {
     function Presentz() {
       this.videoPlugins = [new Vimeo];
-      this.defaultVideoPlugin = new Html5Video;
+      this.defaultVideoPlugin = new Html5Video(this);
     }
     Presentz.prototype.registerVideoPlugin = function(plugin) {
       return this.videoPlugins.push(plugin);
     };
     Presentz.prototype.init = function(presentation) {
-      var agenda, chapter, chapterIndex, firstChapter, firstVideoUrl, plugin, videoPlugin, widths, _i, _len, _ref, _ref2;
+      var agenda, chapter, chapterIndex, plugin, videoPlugins, widths, _i, _len, _ref, _ref2;
       this.presentation = presentation;
       this.howManyChapters = this.presentation.chapters.length;
       this.currentChapterIndex = 0;
@@ -72,7 +97,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         effect: "fade",
         opacity: 0.7
       });
-      videoPlugin = ((function() {
+      videoPlugins = (function() {
         var _j, _len2, _ref3, _results;
         _ref3 = this.videoPlugins;
         _results = [];
@@ -83,20 +108,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           }
         }
         return _results;
-      }).call(this))[0];
-      if (videoPlugin.length > 0) {
-        this.videoPlugin = videoPlugin;
+      }).call(this);
+      if (videoPlugins.length > 0) {
+        return this.videoPlugin = videoPlugins[0];
       } else {
-        this.videoPlugin = this.defaultVideoPlugin;
-      }
-      firstChapter = presentation.chapters[0];
-      firstVideoUrl = firstChapter.media.video.url.toLowerCase();
-      if (firstVideoUrl.indexOf("http://youtu.be") !== -1) {
-        return this.video = new YouTube;
-      } else if (firstVideoUrl.indexOf("http://vimeo.com") !== -1) {
-        return this.video = new Vimeo;
-      } else {
-        return this.video = new Html5Video;
+        return this.videoPlugin = this.defaultVideoPlugin;
       }
     };
     Presentz.prototype.computeBarWidths = function(max) {
@@ -142,28 +158,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       $("#slideContainer").empty();
       return $("#slideContainer").append("<img width='100%' heigth='100%' src='" + slideData.url + "'>");
     };
+    Presentz.prototype.startTimeChecker = function() {
+      clearInterval(this.interval);
+      this.intervalSet = true;
+      return this.interval = setInterval(update_properties, 1000);
+    };
+    Presentz.prototype.stopTimeChecker = function() {
+      clearInterval(this.interval);
+      return this.intervalSet = false;
+    };
     return Presentz;
   })();
   window.Presentz = Presentz;
-  Video = (function() {
-    function Video(playState, pauseState, finishState, presentz) {
-      this.playState = playState;
-      this.pauseState = pauseState;
-      this.finishState = finishState;
-      this.presentz = presentz;
-    }
-    Video.prototype.handleEvent = function(id, event) {
-      if (event === this.playState) {
-        startTimeChecker();
-      } else if (event === this.pauseState || event === this.finishState) {
-        stopTimeChecker();
-      }
-      if (event === this.finishState && chapter < (howManyChapters - 1)) {
-        return changeChapter(chapter + 1, true);
-      }
-    };
-    return Video;
-  })();
   Vimeo = (function() {
     __extends(Vimeo, Video);
     function Vimeo() {

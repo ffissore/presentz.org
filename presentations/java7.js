@@ -4,7 +4,7 @@ var presentation = {
     "duration" : 4800,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/26315250"
+        "url" : "presentations/prova.webm"
       },
       "slides" : [ {
         "slide" : {

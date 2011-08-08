@@ -58,6 +58,13 @@
 <script src="js/swfobject.js"></script>
 <script src="js/Presentz.js"></script>
 <script src="js/DynPresentation.js"></script>
+<script>
+  $(document).ready(function() {
+    presentz = new Presentz();
+    presentz.init(presentation);
+    presentz.changeChapter(0, true);
+  });
+</script>
 
 <!--[if lt IE 7 ]>
 <script src="js/dd_belatedpng.js"></script>
