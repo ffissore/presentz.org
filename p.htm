@@ -21,7 +21,8 @@
 
   <link rel="shortcut icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mediaelementplayer.css">
 
   <script src="js/modernizr-1.7.min.js"></script>
 </head>
@@ -49,26 +50,29 @@
   </div>
 
   <footer>
-    With Presentz you are free to share your talks with the tools you like - This is Free Software - Copyright Federico Fissore
+    With Presentz you are free to share your talks with the tools you like - This is Free Software - Copyright Federico
+    Fissore
   </footer>
 </div>
 
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.tools.min.js"></script>
+<script src="js/mediaelement-and-player.js"></script>
 <script src="js/swfobject.js"></script>
 <script src="js/Presentz.js"></script>
 <script src="js/DynPresentation.js"></script>
 <script>
   $(document).ready(function() {
-    presentz = new Presentz();
-    presentz.init(presentation);
-    presentz.changeChapter(0, true);
+  presentz = new Presentz();
+  presentz.init(presentation);
+  presentz.changeChapter(0, true);
   });
 </script>
 
 <!--[if lt IE 7 ]>
 <script src="js/dd_belatedpng.js"></script>
-<script> DD_belatedPNG.fix('img, .png_bg');</script>
+<script> DD_belatedPNG.fix('img, .png_bg');
+</script>
 <![endif]-->
 </body>
 </html>
