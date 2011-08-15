@@ -18,14 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function() {
   var Html5Video, Presentz, Video, Vimeo;
-  var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-    for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-    function ctor() { this.constructor = child; }
-    ctor.prototype = parent.prototype;
-    child.prototype = new ctor;
-    child.__super__ = parent.prototype;
-    return child;
-  };
   Video = (function() {
     function Video(playState, pauseState, finishState, presentz) {
       this.playState = playState;
@@ -71,6 +63,61 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return $("#videoContainer > video")[0].currentTime;
     };
     return Html5Video;
+  })();
+  Vimeo = (function() {
+    var videoId;
+    function Vimeo(presentz) {
+      this.video = new Video("play", "pause", "finish", presentz);
+      this.wouldPlay = false;
+    }
+    Vimeo.prototype.changeVideo = function(videoData, wouldPlay) {
+      var ajaxCall;
+      this.videoData = videoData;
+      this.wouldPlay = wouldPlay;
+      ajaxCall = {
+        url: "http://vimeo.com/api/v2/video/" + (videoId(this.videoData)) + ".json",
+        dataType: "jsonp",
+        jsonpCallback: "presentz.videoPlugin.receiveVideoInfo"
+      };
+      $.ajax(ajaxCall);
+    };
+    videoId = function(videoData) {
+      return videoData.url.substr(videoData.url.lastIndexOf("/") + 1);
+    };
+    Vimeo.prototype.receiveVideoInfo = function(data) {
+      var iframe, movieUrl, videoHtml;
+      movieUrl = "http://player.vimeo.com/video/" + (videoId(this.videoData)) + "?api=1";
+      if ($("#videoContainer").children().length === 0) {
+        videoHtml = "<iframe src='" + movieUrl + "' width='100%' height='" + data[0].height + "' frameborder='0'></iframe>";
+        $("#videoContainer").append(videoHtml);
+        iframe = $("#videoContainer iframe")[0];
+        $f(iframe).addEvent("ready", presentz.videoPlugin.onPlayerReady);
+      } else {
+        iframe = $("#videoContainer iframe")[0];
+        iframe.src = movieUrl;
+      }
+    };
+    Vimeo.prototype.handle = function(presentation) {
+      return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://vimeo.com") !== -1;
+    };
+    Vimeo.prototype.handleVideoEvent = function(event) {
+      return console.log(event);
+    };
+    Vimeo.prototype.onPlayerReady = function(id) {
+      var video, wouldPlay;
+      video = $f($("#videoContainer iframe")[0]);
+      video.addEvent("play", presentz.videoPlugin.handleVideoEvent);
+      video.addEvent("pause", presentz.videoPlugin.handleVideoEvent);
+      video.addEvent("finish", presentz.videoPlugin.handleVideoEvent);
+      if (this.wouldPlay) {
+        wouldPlay = false;
+        if (!intervalSet) {
+          startTimeChecker();
+        }
+        return video.play();
+      }
+    };
+    return Vimeo;
   })();
   Presentz = (function() {
     function Presentz() {
@@ -199,44 +246,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     return Presentz;
   })();
   window.Presentz = Presentz;
-  Vimeo = (function() {
-    __extends(Vimeo, Video);
-    function Vimeo() {
-      Vimeo.__super__.constructor.call(this, "play", "pause", "finish");
-      this.wouldPlay = false;
-    }
-    Vimeo.prototype.handle = function(presentation) {
-      return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://vimeo.com") !== -1;
-    };
-    Vimeo.prototype.changeVideo = function(videoData, play) {
-      var atts, movieUrl, params, wouldPlay;
-      movieUrl = "http://vimeo.com/moogaloop.swf?clip_id=" + (videoData.url.substr(videoData.url.lastIndexOf("/") + 1));
-      $("#videoContainer").empty();
-      $("#videoContainer").append("<div id='vimeoContainer'></div>");
-      params = {
-        allowscriptaccess: "always",
-        flashvars: "api=1&player_id=vimeoplayer&api_ready=video.onPlayerReady&js_ready=video.onPlayerReady"
-      };
-      atts = {
-        id: "vimeoplayer"
-      };
-      swfobject.embedSWF(movieUrl, "vimeoContainer", "425", "356", "8", null, null, params, atts);
-      return wouldPlay = play;
-    };
-    Vimeo.prototype.onPlayerReady = function(id) {
-      var video, wouldPlay;
-      video = document.getElementById(id);
-      video.api_addEventListener("play", "video.handleVideoEvent");
-      video.api_addEventListener("pause", "video.handleVideoEvent");
-      video.api_addEventListener("finish", "video.handleVideoEvent");
-      if (wouldPlay) {
-        wouldPlay = false;
-        if (!intervalSet) {
-          startTimeChecker();
-        }
-        return video.api_play();
-      }
-    };
-    return Vimeo;
-  })();
 }).call(this);
