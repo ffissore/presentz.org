@@ -69,6 +69,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     function Vimeo(presentz) {
       this.video = new Video("play", "pause", "finish", presentz);
       this.wouldPlay = false;
+      this.currentTimeInSeconds = 0.0;
     }
     Vimeo.prototype.changeVideo = function(videoData, wouldPlay) {
       var ajaxCall;
@@ -85,13 +86,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return videoData.url.substr(videoData.url.lastIndexOf("/") + 1);
     };
     Vimeo.prototype.receiveVideoInfo = function(data) {
-      var iframe, movieUrl, videoHtml;
-      movieUrl = "http://player.vimeo.com/video/" + (videoId(this.videoData)) + "?api=1";
+      var caller, iframe, movieUrl, onReady, videoHtml;
+      movieUrl = "http://player.vimeo.com/video/" + (videoId(this.videoData)) + "?api=1&player_id=player_1";
       if ($("#videoContainer").children().length === 0) {
-        videoHtml = "<iframe src='" + movieUrl + "' width='100%' height='" + data[0].height + "' frameborder='0'></iframe>";
+        videoHtml = "<iframe id='player_1' src='" + movieUrl + "' width='100%' height='" + data[0].height + "' frameborder='0'></iframe>";
         $("#videoContainer").append(videoHtml);
         iframe = $("#videoContainer iframe")[0];
-        $f(iframe).addEvent("ready", presentz.videoPlugin.onPlayerReady);
+        caller = this;
+        onReady = function(id) {
+        caller.onReady(id);
+      };
+        $f(iframe).addEvent("ready", onReady);
       } else {
         iframe = $("#videoContainer iframe")[0];
         iframe.src = movieUrl;
@@ -100,28 +105,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     Vimeo.prototype.handle = function(presentation) {
       return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://vimeo.com") !== -1;
     };
-    Vimeo.prototype.handleVideoEvent = function(event) {
-      return console.log(event);
+    Vimeo.prototype.onReady = function(id) {
+      var caller, video;
+      video = $f(id);
+      caller = this;
+      video.addEvent("play", function() {
+      caller.video.handleEvent("play");
+    });
+      video.addEvent("pause", function() {
+      caller.video.handleEvent("pause");
+    });
+      video.addEvent("finish", function() {
+      caller.video.handleEvent("finish");
+    });
+      video.addEvent("playProgress", function(data) {
+      caller.currentTimeInSeconds = data.seconds;
+    });
     };
-    Vimeo.prototype.onPlayerReady = function(id) {
-      var video, wouldPlay;
-      video = $f($("#videoContainer iframe")[0]);
-      video.addEvent("play", presentz.videoPlugin.handleVideoEvent);
-      video.addEvent("pause", presentz.videoPlugin.handleVideoEvent);
-      video.addEvent("finish", presentz.videoPlugin.handleVideoEvent);
-      if (this.wouldPlay) {
-        wouldPlay = false;
-        if (!intervalSet) {
-          startTimeChecker();
-        }
-        return video.play();
-      }
+    Vimeo.prototype.currentTime = function() {
+      return this.currentTimeInSeconds;
     };
     return Vimeo;
   })();
   Presentz = (function() {
     function Presentz() {
-      this.videoPlugins = [new Vimeo];
+      this.videoPlugins = [new Vimeo(this)];
       this.defaultVideoPlugin = new Html5Video(this);
     }
     Presentz.prototype.registerVideoPlugin = function(plugin) {
