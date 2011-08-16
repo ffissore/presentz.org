@@ -86,6 +86,31 @@ a:hover { color: #036; }
     \\ ========================================== //
 */
 
+@font-face {
+    font-family: 'Purisa-BoldOblique';
+    src: url('../fonts/Purisa-BoldOblique.eot'); /* For IE */
+    src: local('Purisa-BoldOblique'),
+         url('../fonts/Purisa-BoldOblique.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Purisa-Oblique';
+    src: url('../fonts/Purisa-Oblique.eot'); /* For IE */
+    src: local('Purisa-Oblique'),
+         url('../fonts/Purisa-Oblique.ttf') format('truetype');
+}
+
+#logonormal {
+	top: 2;
+	font-family: 'Purisa-Oblique';
+	color: #fff;
+}
+
+#logobold {
+	font-family: 'Purisa-BoldOblique';
+	color: #ba0000;
+}
+
 footer {
   text-align: center;
 }
@@ -102,12 +127,13 @@ body {
 }
 
 .header {
-	background: #272b31 url(../img/logo.png) 10px 10px no-repeat;
+	background: #272b31 10px 10px no-repeat;
 	padding: 10px 10px 0 10px;
 	height: 60px;
 	vertical-align: bottom;
 	position: relative;
 	border-bottom: 1px solid black;
+	font-size: 30pt;
 }
 
 .header div.menu {
