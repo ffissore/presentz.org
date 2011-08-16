@@ -117,7 +117,7 @@ footer {
 
 body {
 	margin: 0;
-	pading: 0;
+  padding: 0;
 	background: black;
 	min-width: 980px;
 }
@@ -126,7 +126,7 @@ body {
 	width: 100%;
 }
 
-.header {
+.header, .mainheader {
 	background: #272b31 10px 10px no-repeat;
 	padding: 10px 10px 0 10px;
 	height: 60px;
@@ -134,6 +134,12 @@ body {
 	position: relative;
 	border-bottom: 1px solid black;
 	font-size: 30pt;
+	text-shadow: 0px 0px 4px black;
+}
+
+.mainheader {
+	font-size: 66pt;
+	height: 120px;
 }
 
 .header div.menu {
@@ -165,6 +171,18 @@ body {
 	padding: 10px;
 	border-top: 1px solid #52585c;
 	border-bottom: 1px solid #52585c;
+}
+
+p {
+	margin-bottom: 2
+}
+
+.introtext {
+	color: #fff;
+	width: 50%;
+	margin-left: 25%;
+	text-align: justify;
+	font-size: 12pt;
 }
 
 .slide {
@@ -201,7 +219,7 @@ body {
 	border-bottom: 1px solid black;
 }
 
-.footer {
+.footer, footer {
 	background: url(../img/gradGray02.png) top left repeat-x;
 	height: 80px;
 	border-top: 1px solid #52585c;
