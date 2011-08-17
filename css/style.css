@@ -66,7 +66,10 @@ input:valid, textarea:valid   {  }
 input:invalid, textarea:invalid { border-radius: 1px; -moz-box-shadow: 0px 0px 5px red; -webkit-box-shadow: 0px 0px 5px red; box-shadow: 0px 0px 5px red; }
 .no-boxshadow input:invalid, .no-boxshadow textarea:invalid { background-color: #f0dddd; }
 
-a:link { -webkit-tap-highlight-color: #FF5E99; }
+a:link {
+	-webkit-tap-highlight-color: #FF5E99;
+	text-decoration: none;
+}
 
 button {  width: auto; overflow: visible; }
 .ie7 img { -ms-interpolation-mode: bicubic; }
@@ -123,7 +126,7 @@ body {
 	width: 100%;
 }
 
-.header, .mainheader {
+.header, .mainheader, .headeradditionadesc {
 	background: #272b31 10px 10px no-repeat;
 	padding: 10px 10px 0 10px;
 	height: 60px;
@@ -137,6 +140,11 @@ body {
 .mainheader {
 	font-size: 66pt;
 	height: 120px;
+}
+
+.headeradditionaldesc {
+	font-size: 20pt;
+	color: #fff;
 }
 
 .header div.menu {
@@ -163,11 +171,15 @@ body {
 	text-decoration: none;
 }
 
-.presentation {
+.presentation, .intro {
 	background: #2c3138;
 	padding: 10px;
 	border-top: 1px solid #52585c;
 	border-bottom: 1px solid #52585c;
+}
+
+.intro {
+	border-bottom: 1px solid black;
 }
 
 p {
@@ -182,13 +194,20 @@ p {
 	font-size: 12pt;
 }
 
-.slide {
+.slide, .thumbcontainer {
 	background: black;
 	border: 1px solid #41454a;
 	padding: 10px;
 	-moz-box-shadow: 0 0 4px black;
 	-webkit-box-shadow: 0 0 4px black;
 	box-shadow: 0 0 4px black;
+}
+
+.thumbcontainer {
+	float: left;
+	width: 200px;
+	margin-left: 10px;
+	margin-top: 10px;
 }
 
 #videoContainer {
