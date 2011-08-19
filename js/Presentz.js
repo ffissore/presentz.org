@@ -209,7 +209,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       var currentMedia;
       this.currentChapterIndex = chapterIndex;
       currentMedia = this.presentation.chapters[this.currentChapterIndex].media;
-      this.changeSlide(currentMedia.slides[0].slide);
+      this.changeSlide(currentMedia.slides[0]);
       this.videoPlugin.changeVideo(currentMedia.video, play);
     };
     Presentz.prototype.changeSlide = function(slideData) {
@@ -226,8 +226,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       candidateSlide = void 0;
       for (_i = 0, _len = slides.length; _i < _len; _i++) {
         slide = slides[_i];
-        if (slide.slide.time < currentTime) {
-          candidateSlide = slide.slide;
+        if (slide.time < currentTime) {
+          candidateSlide = slide;
         }
       }
       if (candidateSlide !== void 0 && candidateSlide.url !== $("#slideContainer > img")[0].src) {
