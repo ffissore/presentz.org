@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function() {
-  var Html5Video, Presentz, Video, Vimeo, Youtube;
+  var Html5Video, ImgSlide, Presentz, SlideShare, Video, Vimeo, Youtube;
   Video = (function() {
     function Video(playState, pauseState, finishState, presentz) {
       this.playState = playState;
@@ -203,19 +203,86 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
     return Youtube;
   })();
+  ImgSlide = (function() {
+    function ImgSlide() {}
+    ImgSlide.prototype.changeSlide = function(slide) {
+      if ($("#slideContainer img").length === 0) {
+        $("#slideContainer").empty();
+        $("#slideContainer").append("<img width='100%' heigth='100%' src='" + slide.url + "'>");
+      } else {
+        $("#slideContainer img")[0].setAttribute("src", slide.url);
+      }
+    };
+    ImgSlide.prototype.isCurrentSlideDifferentFrom = function(slide) {
+      return slide.url !== $("#slideContainer > img")[0].src;
+    };
+    return ImgSlide;
+  })();
+  SlideShare = (function() {
+    var slideNumber;
+    function SlideShare() {
+      this.slideShareInit = false;
+    }
+    SlideShare.prototype.handle = function(presentation) {
+      return presentation.chapters[0].media.slides[0].url.toLowerCase().indexOf("http://www.slideshare.net") !== -1;
+    };
+    SlideShare.prototype.changeSlide = function(slide) {
+      var atts, currentSlide, docId, flashvars, nextSlide, params, player;
+      if ($("#slideContainer").children().length === 0) {
+        $("#slideContainer").append("<div id='slidesharecontainer'></div>");
+        docId = slide.url.substr(slide.url.lastIndexOf("/") + 1, slide.url.lastIndexOf("#") - 1 - slide.url.lastIndexOf("/"));
+        params = {
+          allowScriptAccess: "always"
+        };
+        atts = {
+          id: "slideshareplayer"
+        };
+        flashvars = {
+          doc: docId,
+          rel: 0
+        };
+        swfobject.embedSWF("http://static.slidesharecdn.com/swf/ssplayer2.swf", "slidesharecontainer", "598", "480", "8", null, flashvars, params, atts);
+      } else {
+        player = $("#slideshareplayer")[0];
+        nextSlide = slideNumber(slide);
+        currentSlide = player.getCurrentSlide();
+        if (nextSlide === (currentSlide + 1)) {
+          player.next();
+        } else {
+          player.jumpTo(slideNumber(slide));
+        }
+      }
+    };
+    SlideShare.prototype.isCurrentSlideDifferentFrom = function(slide) {
+      var player;
+      player = $("#slideshareplayer")[0];
+      if (player.getCurrentSlide) {
+        return slideNumber(slide) !== player.getCurrentSlide();
+      }
+      return false;
+    };
+    slideNumber = function(slide) {
+      return parseInt(slide.url.substr(slide.url.lastIndexOf("#") + 1));
+    };
+    return SlideShare;
+  })();
   Presentz = (function() {
     function Presentz() {
       this.videoPlugins = [new Vimeo(this), new Youtube(this)];
+      this.slidePlugins = [new SlideShare()];
       this.defaultVideoPlugin = new Html5Video(this);
+      this.defaultSlidePlugin = new ImgSlide();
     }
     Presentz.prototype.registerVideoPlugin = function(plugin) {
       this.videoPlugins.push(plugin);
     };
+    Presentz.prototype.registerSlidePlugin = function(plugin) {
+      this.slidePlugins.push(plugin);
+    };
     Presentz.prototype.init = function(presentation) {
-      var agenda, chapter, chapterIndex, plugin, videoPlugins, widths, _i, _len, _ref, _ref2;
+      var agenda, chapter, chapterIndex, plugin, slidePlugins, videoPlugins, widths, _i, _len, _ref, _ref2;
       this.presentation = presentation;
       this.howManyChapters = this.presentation.chapters.length;
-      console.log(this.presentation.title);
       if (this.presentation.title) {
         document.title = this.presentation.title;
       }
@@ -251,6 +318,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         this.videoPlugin = videoPlugins[0];
       } else {
         this.videoPlugin = this.defaultVideoPlugin;
+      }
+      slidePlugins = (function() {
+        var _j, _len2, _ref3, _results;
+        _ref3 = this.slidePlugins;
+        _results = [];
+        for (_j = 0, _len2 = _ref3.length; _j < _len2; _j++) {
+          plugin = _ref3[_j];
+          if (plugin.handle(this.presentation)) {
+            _results.push(plugin);
+          }
+        }
+        return _results;
+      }).call(this);
+      if (slidePlugins.length > 0) {
+        this.slidePlugin = slidePlugins[0];
+      } else {
+        this.slidePlugin = this.defaultSlidePlugin;
       }
     };
     Presentz.prototype.computeBarWidths = function(max) {
@@ -289,16 +373,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       var currentMedia;
       this.currentChapterIndex = chapterIndex;
       currentMedia = this.presentation.chapters[this.currentChapterIndex].media;
-      this.changeSlide(currentMedia.slides[0]);
+      this.slidePlugin.changeSlide(currentMedia.slides[0]);
       this.videoPlugin.changeVideo(currentMedia.video, play);
-    };
-    Presentz.prototype.changeSlide = function(slideData) {
-      if ($("#slideContainer img").length === 0) {
-        $("#slideContainer").empty();
-        $("#slideContainer").append("<img width='100%' heigth='100%' src='" + slideData.url + "'>");
-      } else {
-        $("#slideContainer img")[0].setAttribute("src", slideData.url);
-      }
     };
     Presentz.prototype.checkSlideChange = function(currentTime) {
       var candidateSlide, slide, slides, _i, _len;
@@ -310,8 +386,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           candidateSlide = slide;
         }
       }
-      if (candidateSlide !== void 0 && candidateSlide.url !== $("#slideContainer > img")[0].src) {
-        this.changeSlide(candidateSlide);
+      if (candidateSlide !== void 0 && this.slidePlugin.isCurrentSlideDifferentFrom(candidateSlide)) {
+        this.slidePlugin.changeSlide(candidateSlide);
       }
     };
     Presentz.prototype.startTimeChecker = function() {
