@@ -32,14 +32,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         this.presentz.stopTimeChecker();
       }
       if (event === this.finishState && this.presentz.currentChapterIndex < (this.presentz.howManyChapters - 1)) {
-        this.presentz.changeChapter(chapter + 1, true);
+        this.presentz.changeChapter(this.presentz.currentChapterIndex + 1, true);
       }
     };
     return Video;
   })();
   Html5Video = (function() {
     function Html5Video(presentz) {
-      this.video = new Video("play", "pause", "ended", presentz);
+      this.presentz = presentz;
+      this.video = new Video("play", "pause", "ended", this.presentz);
     }
     Html5Video.prototype.changeVideo = function(videoData, play) {
       var caller, eventHandler, video, videoHtml;
@@ -58,6 +59,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         video = $("#videoContainer > video")[0];
         video.setAttribute("src", videoData.url);
       }
+      video.load();
+      if (play) {
+        if (!this.presentz.intervalSet) {
+          this.presentz.startTimeChecker();
+        }
+        video.play();
+      }
     };
     Html5Video.prototype.currentTime = function() {
       return $("#videoContainer > video")[0].currentTime;
@@ -67,7 +75,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   Vimeo = (function() {
     var videoId;
     function Vimeo(presentz) {
-      this.video = new Video("play", "pause", "finish", presentz);
+      this.presentz = presentz;
+      this.video = new Video("play", "pause", "finish", this.presentz);
       this.wouldPlay = false;
       this.currentTimeInSeconds = 0.0;
     }
@@ -121,6 +130,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       video.addEvent("playProgress", function(data) {
       caller.currentTimeInSeconds = data.seconds;
     });
+      if (this.wouldPlay) {
+        this.wouldPlay = false;
+        if (!this.presentz.intervalSet) {
+          this.presentz.startTimeChecker();
+        }
+        video.api("play");
+      }
     };
     Vimeo.prototype.currentTime = function() {
       return this.currentTimeInSeconds;
@@ -139,6 +155,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       var agenda, chapter, chapterIndex, plugin, videoPlugins, widths, _i, _len, _ref, _ref2;
       this.presentation = presentation;
       this.howManyChapters = this.presentation.chapters.length;
+      console.log(this.presentation.title);
+      if (this.presentation.title) {
+        document.title = this.presentation.title;
+      }
       this.currentChapterIndex = 0;
       _ref = this.presentation.chapters;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
