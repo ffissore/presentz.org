@@ -1,5 +1,5 @@
 var presentation = {
-  "title" : "Demo - Youtube player, slideshare player",
+  "title" : "Demo - video tag, slideshare player",
   "chapters" : [ {
     "title" : "Part 1",
     "duration" : 21,
