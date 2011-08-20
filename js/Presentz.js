@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function() {
-  var Html5Video, Presentz, Video, Vimeo;
+  var Html5Video, Presentz, Video, Vimeo, Youtube;
   Video = (function() {
     function Video(playState, pauseState, finishState, presentz) {
       this.playState = playState;
@@ -45,7 +45,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     Html5Video.prototype.changeVideo = function(videoData, play) {
       var caller, eventHandler, video, videoHtml;
       if ($("#videoContainer").children().length === 0) {
-        videoHtml = "<video controls preload='none' src='" + videoData.url + "' width='100%' heigth='100%'></video>";
+        videoHtml = "<video controls preload='none' src='" + videoData.url + "' width='100%'></video>";
         $("#videoContainer").append(videoHtml);
         caller = this;
         eventHandler = function(event) {
@@ -143,9 +143,69 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
     return Vimeo;
   })();
+  Youtube = (function() {
+    var adjustVideoSize, videoId;
+    function Youtube(presentz) {
+      this.presentz = presentz;
+      this.video = new Video(1, 2, 0, this.presentz);
+      window.onYouTubePlayerReady = this.onYouTubePlayerReady;
+    }
+    Youtube.prototype.changeVideo = function(videoData, wouldPlay) {
+      var atts, movieUrl, params, video;
+      this.wouldPlay = wouldPlay;
+      movieUrl = "http://www.youtube.com/e/" + (videoId(videoData)) + "?enablejsapi=1&playerapiid=ytplayer";
+      if ($("#videoContainer").children().length === 0) {
+        $("#videoContainer").append("<div id='youtubecontainer'></div>");
+        params = {
+          allowScriptAccess: "always"
+        };
+        atts = {
+          id: "ytplayer"
+        };
+        swfobject.embedSWF(movieUrl, "youtubecontainer", "425", "356", "8", null, null, params, atts);
+      } else {
+        video = $("#ytplayer")[0];
+        video.cueVideoByUrl(movieUrl);
+      }
+      if (this.wouldPlay && $("#ytplayer").length > 0) {
+        if (!this.presentz.intervalSet) {
+          this.presentz.startTimeChecker();
+        }
+        $("#ytplayer")[0].playVideo();
+      }
+    };
+    videoId = function(videoData) {
+      return videoData.url.substr(videoData.url.lastIndexOf("/") + 1);
+    };
+    Youtube.prototype.handle = function(presentation) {
+      return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://youtu.be") !== -1;
+    };
+    Youtube.prototype.onYouTubePlayerReady = function(id) {
+      $("#" + id)[0].addEventListener("onStateChange", "presentz.videoPlugin.video.handleEvent");
+      adjustVideoSize(id);
+      if (presentz.videoPlugin.wouldPlay) {
+        if (!presentz.intervalSet) {
+          presentz.startTimeChecker();
+        }
+        $("#" + id)[0].playVideo();
+      }
+    };
+    adjustVideoSize = function(id) {
+      var newHeight, newWidth, player;
+      newWidth = $("#videoContainer").width();
+      newHeight = 0.837647059 * newWidth;
+      player = $("#" + id);
+      player.width(newWidth);
+      player.height(newHeight);
+    };
+    Youtube.prototype.currentTime = function() {
+      return $("#ytplayer")[0].getCurrentTime();
+    };
+    return Youtube;
+  })();
   Presentz = (function() {
     function Presentz() {
-      this.videoPlugins = [new Vimeo(this)];
+      this.videoPlugins = [new Vimeo(this), new Youtube(this)];
       this.defaultVideoPlugin = new Html5Video(this);
     }
     Presentz.prototype.registerVideoPlugin = function(plugin) {
