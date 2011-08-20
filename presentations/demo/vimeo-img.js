@@ -15,7 +15,7 @@ var presentation = {
         "time" : 7
       }, {
         "url" : "presentations/demo/slide3.png",
-        "time" : 10
+        "time" : 9.5
       }, {
         "url" : "presentations/demo/slide4.png",
         "time" : 14

@@ -15,7 +15,7 @@ var presentation = {
         "time" : 7
       }, {
         "url" : "http://www.slideshare.net/slides-110818145820-phpapp02#3",
-        "time" : 10
+        "time" : 9.5
       }, {
         "url" : "http://www.slideshare.net/slides-110818145820-phpapp02#4",
         "time" : 14

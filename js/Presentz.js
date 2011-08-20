@@ -43,7 +43,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.video = new Video("play", "pause", "ended", this.presentz);
     }
     Html5Video.prototype.changeVideo = function(videoData, play) {
-      var caller, eventHandler, video, videoHtml;
+      var caller, eventHandler, videoHtml;
       if ($("#videoContainer").children().length === 0) {
         videoHtml = "<video controls preload='none' src='" + videoData.url + "' width='100%'></video>";
         $("#videoContainer").append(videoHtml);
@@ -51,24 +51,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         eventHandler = function(event) {
         caller.video.handleEvent(event.type);
       };
-        video = $("#videoContainer > video")[0];
-        video.onplay = eventHandler;
-        video.onpause = eventHandler;
-        video.onended = eventHandler;
+        this.player = $("#videoContainer > video")[0];
+        this.player.onplay = eventHandler;
+        this.player.onpause = eventHandler;
+        this.player.onended = eventHandler;
       } else {
-        video = $("#videoContainer > video")[0];
-        video.setAttribute("src", videoData.url);
+        this.player.setAttribute("src", videoData.url);
       }
-      video.load();
+      this.player.load();
       if (play) {
         if (!this.presentz.intervalSet) {
           this.presentz.startTimeChecker();
         }
-        video.play();
+        this.player.play();
       }
     };
     Html5Video.prototype.currentTime = function() {
-      return $("#videoContainer > video")[0].currentTime;
+      return presentz.videoPlugin.player.currentTime;
     };
     return Html5Video;
   })();
@@ -151,7 +150,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       window.onYouTubePlayerReady = this.onYouTubePlayerReady;
     }
     Youtube.prototype.changeVideo = function(videoData, wouldPlay) {
-      var atts, movieUrl, params, video;
+      var atts, movieUrl, params;
       this.wouldPlay = wouldPlay;
       movieUrl = "http://www.youtube.com/e/" + (videoId(videoData)) + "?enablejsapi=1&playerapiid=ytplayer";
       if ($("#videoContainer").children().length === 0) {
@@ -164,14 +163,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         };
         swfobject.embedSWF(movieUrl, "youtubecontainer", "425", "356", "8", null, null, params, atts);
       } else {
-        video = $("#ytplayer")[0];
-        video.cueVideoByUrl(movieUrl);
+        this.player.cueVideoByUrl(movieUrl);
       }
-      if (this.wouldPlay && $("#ytplayer").length > 0) {
+      if (this.wouldPlay && this.player !== void 0) {
         if (!this.presentz.intervalSet) {
           this.presentz.startTimeChecker();
         }
-        $("#ytplayer")[0].playVideo();
+        this.player.playVideo();
       }
     };
     videoId = function(videoData) {
@@ -181,47 +179,49 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://youtu.be") !== -1;
     };
     Youtube.prototype.onYouTubePlayerReady = function(id) {
-      $("#" + id)[0].addEventListener("onStateChange", "presentz.videoPlugin.video.handleEvent");
-      adjustVideoSize(id);
+      presentz.videoPlugin.playerArray = $("#" + id);
+      presentz.videoPlugin.player = presentz.videoPlugin.playerArray[0];
+      presentz.videoPlugin.player.addEventListener("onStateChange", "presentz.videoPlugin.video.handleEvent");
+      adjustVideoSize(presentz.videoPlugin.playerArray);
       if (presentz.videoPlugin.wouldPlay) {
         if (!presentz.intervalSet) {
           presentz.startTimeChecker();
         }
-        $("#" + id)[0].playVideo();
+        presentz.videoPlugin.player.playVideo();
       }
     };
-    adjustVideoSize = function(id) {
-      var newHeight, newWidth, player;
+    adjustVideoSize = function(playerArray) {
+      var newHeight, newWidth;
       newWidth = $("#videoContainer").width();
       newHeight = 0.837647059 * newWidth;
-      player = $("#" + id);
-      player.width(newWidth);
-      player.height(newHeight);
+      playerArray.width(newWidth);
+      playerArray.height(newHeight);
     };
     Youtube.prototype.currentTime = function() {
-      return $("#ytplayer")[0].getCurrentTime();
+      return presentz.videoPlugin.player.getCurrentTime();
     };
     return Youtube;
   })();
   ImgSlide = (function() {
     function ImgSlide() {}
     ImgSlide.prototype.changeSlide = function(slide) {
-      if ($("#slideContainer img").length === 0) {
+      if (this.slide === void 0) {
         $("#slideContainer").empty();
         $("#slideContainer").append("<img width='100%' heigth='100%' src='" + slide.url + "'>");
+        this.slide = $("#slideContainer img")[0];
       } else {
-        $("#slideContainer img")[0].setAttribute("src", slide.url);
+        this.slide.setAttribute("src", slide.url);
       }
     };
     ImgSlide.prototype.isCurrentSlideDifferentFrom = function(slide) {
-      return slide.url !== $("#slideContainer > img")[0].src;
+      return this.slide.src.lastIndexOf(slide.url) === -1;
     };
     return ImgSlide;
   })();
   SlideShare = (function() {
     var slideNumber;
     function SlideShare() {
-      this.slideShareInit = false;
+      this.currentSlide = 0;
     }
     SlideShare.prototype.handle = function(presentation) {
       return presentation.chapters[0].media.slides[0].url.toLowerCase().indexOf("http://www.slideshare.net") !== -1;
@@ -242,6 +242,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           rel: 0
         };
         swfobject.embedSWF("http://static.slidesharecdn.com/swf/ssplayer2.swf", "slidesharecontainer", "598", "480", "8", null, flashvars, params, atts);
+        this.currentSlide = 0;
       } else {
         player = $("#slideshareplayer")[0];
         nextSlide = slideNumber(slide);
@@ -251,15 +252,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         } else {
           player.jumpTo(slideNumber(slide));
         }
+        this.currentSlide = player.getCurrentSlide();
       }
     };
     SlideShare.prototype.isCurrentSlideDifferentFrom = function(slide) {
-      var player;
-      player = $("#slideshareplayer")[0];
-      if (player.getCurrentSlide) {
-        return slideNumber(slide) !== player.getCurrentSlide();
-      }
-      return false;
+      return slideNumber(slide) !== this.currentSlide;
     };
     slideNumber = function(slide) {
       return parseInt(slide.url.substr(slide.url.lastIndexOf("#") + 1));
