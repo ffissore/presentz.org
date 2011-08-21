@@ -264,6 +264,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     return SlideShare;
   })();
   Presentz = (function() {
+    var computeBarWidths;
     function Presentz() {
       this.videoPlugins = [new Vimeo(this), new Youtube(this)];
       this.slidePlugins = [new SlideShare()];
@@ -277,22 +278,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.slidePlugins.push(plugin);
     };
     Presentz.prototype.init = function(presentation) {
-      var agenda, chapter, chapterIndex, plugin, slidePlugins, videoPlugins, widths, _i, _len, _ref, _ref2;
+      var agenda, chapter, chapterIndex, plugin, slidePlugins, totalDuration, videoPlugins, widths, _i, _len, _ref, _ref2;
       this.presentation = presentation;
       this.howManyChapters = this.presentation.chapters.length;
       if (this.presentation.title) {
         document.title = this.presentation.title;
       }
       this.currentChapterIndex = 0;
+      totalDuration = 0;
       _ref = this.presentation.chapters;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         chapter = _ref[_i];
-        this.totalDuration += parseInt(chapter.duration);
+        totalDuration += parseInt(chapter.duration);
       }
-      widths = this.computeBarWidths(100, true);
+      widths = computeBarWidths(totalDuration, $("#agendaContainer").width(), this.presentation.chapters);
       agenda = '';
       for (chapterIndex = 0, _ref2 = this.presentation.chapters.length - 1; 0 <= _ref2 ? chapterIndex <= _ref2 : chapterIndex >= _ref2; 0 <= _ref2 ? chapterIndex++ : chapterIndex--) {
-        agenda += "<div title='" + this.presentation.chapters[chapterIndex].title + "' style='width: " + widths[chapterIndex] + "%' onclick='changeChapter(" + chapterIndex + ", true);'>&nbsp;</div>";
+        agenda += "<div title='" + this.presentation.chapters[chapterIndex].title + "' style='width: " + widths[chapterIndex] + "px' onclick='presentz.changeChapter(" + chapterIndex + ", true);'></div>";
       }
       $("#agendaContainer").html(agenda);
       $("#agendaContainer div[title]").tooltip({
@@ -334,44 +336,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         this.slidePlugin = this.defaultSlidePlugin;
       }
     };
-    Presentz.prototype.computeBarWidths = function(max) {
-      var chapter, chapterIndex, maxIndex, sumOfWidths, width, widths, _i, _j, _len, _len2, _ref, _ref2;
-      chapterIndex = 0;
-      widths = [];
-      sumOfWidths = 0;
-      chapterIndex = 0;
-      _ref = this.presentation.chapters;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        chapter = _ref[_i];
-        width = chapter.durationmax / this.totalDuration;
-        if (width === 0) {
-          width = 1;
-        }
-        widths[chapterIndex] = width;
-        sumOfWidths += width;
-        chapterIndex++;
+    computeBarWidths = function(duration, maxWidth, chapters) {
+      var chapter, _i, _len, _results;
+      _results = [];
+      for (_i = 0, _len = chapters.length; _i < _len; _i++) {
+        chapter = chapters[_i];
+        _results.push((chapter.duration * maxWidth / duration) - 10);
       }
-      maxIndex = 0;
-      if (sumOfWidths > (max - 1)) {
-        chapterIndex = 0;
-        _ref2 = this.presentation.chapters;
-        for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-          chapter = _ref2[_j];
-          if (widths[chapterIndex] > widths[maxIndex]) {
-            maxIndex = chapterIndex;
-          }
-          chapterIndex++;
-        }
-      }
-      widths[maxIndex] = widths[maxIndex] - (sumOfWidths - (max - 1));
-      return widths;
+      return _results;
     };
     Presentz.prototype.changeChapter = function(chapterIndex, play) {
-      var currentMedia;
+      var currentMedia, index, _ref;
       this.currentChapterIndex = chapterIndex;
       currentMedia = this.presentation.chapters[this.currentChapterIndex].media;
       this.slidePlugin.changeSlide(currentMedia.slides[0]);
       this.videoPlugin.changeVideo(currentMedia.video, play);
+      for (index = 1, _ref = $("#agendaContainer div").length; 1 <= _ref ? index <= _ref : index >= _ref; 1 <= _ref ? index++ : index--) {
+        $("#agendaContainer div:nth-child(" + index + ")").removeClass("agendaselected");
+      }
+      $("#agendaContainer div:nth-child(" + (chapterIndex + 1) + ")").addClass("agendaselected");
     };
     Presentz.prototype.checkSlideChange = function(currentTime) {
       var candidateSlide, slide, slides, _i, _len;
