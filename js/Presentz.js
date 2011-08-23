@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function() {
-  var Html5Video, ImgSlide, Presentz, SlideShare, Video, Vimeo, Youtube;
+  var BlipTv, Html5Video, ImgSlide, Presentz, SlideShare, Video, Vimeo, Youtube;
   Video = (function() {
     function Video(playState, pauseState, finishState, presentz) {
       this.playState = playState;
@@ -202,6 +202,61 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
     return Youtube;
   })();
+  BlipTv = (function() {
+    var videoId;
+    function BlipTv(presentz) {
+      this.presentz = presentz;
+      this.video = new Video(1, 2, 0, this.presentz);
+    }
+    BlipTv.prototype.changeVideo = function(videoData, wouldPlay) {
+      var movieUrl, script, scripts;
+      this.wouldPlay = wouldPlay;
+      movieUrl = "" + videoData.url + ".js?width=480&height=303&parent=bliptvcontainer";
+      if ($("#videoContainer").children().length === 0) {
+        $("#videoContainer").append("<div id='bliptvcontainer'></div>");
+        script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = movieUrl;
+        scripts = $("script");
+        $(scripts[scripts.length - 1]).append(script);
+        console.log($("script"));
+      } else {
+        throw "boh!";
+      }
+      if (this.wouldPlay && this.player !== void 0) {
+        if (!this.presentz.intervalSet) {
+          this.presentz.startTimeChecker();
+        }
+        this.player.play();
+      }
+    };
+    videoId = function(videoData) {
+      return videoData.url.substr(videoData.url.lastIndexOf("/") + 1);
+    };
+    BlipTv.prototype.handle = function(presentation) {
+      return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://blip.tv") !== -1;
+    };
+    BlipTv.prototype.onBlipTvPlayerAlmostReady = function() {
+      var caller;
+      this.player = document.getElementById("bliptvcontainer");
+      caller = this;
+      this.player.registerCallback("playerReady", function () {
+        caller.onBlipTvPlayerReady();
+    });
+    };
+    BlipTv.prototype.onBlipTvPlayerReady = function() {
+      if (this.wouldPlay) {
+        if (!this.presentz.intervalSet) {
+          this.presentz.startTimeChecker();
+        }
+        this.player.play();
+      }
+    };
+    BlipTv.prototype.currentTime = function() {
+      return presentz.videoPlugin.player.getCurrentTime();
+    };
+    return BlipTv;
+  })();
   ImgSlide = (function() {
     function ImgSlide() {}
     ImgSlide.prototype.changeSlide = function(slide) {
@@ -268,7 +323,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   Presentz = (function() {
     var computeBarWidths;
     function Presentz() {
-      this.videoPlugins = [new Vimeo(this), new Youtube(this)];
+      this.videoPlugins = [new Vimeo(this), new Youtube(this), new BlipTv(this)];
       this.slidePlugins = [new SlideShare()];
       this.defaultVideoPlugin = new Html5Video(this);
       this.defaultSlidePlugin = new ImgSlide();

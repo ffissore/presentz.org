@@ -1,11 +1,11 @@
 initPresentz( {
-  "title" : "",
+  "title" : "Scala, un Java migliore",
   "chapters" : [ {
-    "title" : "",
+    "title" : "Scala, un Java migliore",
     "duration" : 5458.53,
     "media" : {
       "video" : {
-        "url" : ""
+        "url" : "http://blip.tv/play/AYLPmGEC"
       },
       "slides" : [ {
         "url" : "http://jugtorino.presentz.org/201002_scala/201003230756085723035.jpg",
