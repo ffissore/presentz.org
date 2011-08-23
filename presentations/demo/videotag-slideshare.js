@@ -1,4 +1,4 @@
-var presentation = {
+initPresentz( {
   "title" : "Demo - video tag, slideshare player",
   "chapters" : [ {
     "title" : "Part 1",
@@ -34,4 +34,4 @@ var presentation = {
       } ]
     }
   } ]
-}
+})

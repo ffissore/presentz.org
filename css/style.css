@@ -242,11 +242,11 @@ p {
 	margin-right: 2px;
 	min-height: 30px;
 	float: left;
-	background: purple;
+	background: url(../img/unselected.png) top left repeat-x;
 }
 
 #agendaContainer div.agendaselected {
-	background: aqua;
+	background: url(../img/selected.png) top left repeat-x;
 }
 
 .tooltip {

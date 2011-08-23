@@ -1,4 +1,4 @@
-var presentation = {
+initPresentz( {
   "title" : "Demo - Vimeo player, images as slides",
   "chapters" : [ {
     "title" : "Vimeo player, slides as images",
@@ -25,4 +25,4 @@ var presentation = {
       } ]
     }
   } ]
-}
+})

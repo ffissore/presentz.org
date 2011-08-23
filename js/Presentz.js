@@ -207,7 +207,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     ImgSlide.prototype.changeSlide = function(slide) {
       if (this.slide === void 0) {
         $("#slideContainer").empty();
-        $("#slideContainer").append("<img width='100%' heigth='100%' src='" + slide.url + "'>");
+        $("#slideContainer").append("<img width='100%' src='" + slide.url + "'>");
         this.slide = $("#slideContainer img")[0];
       } else {
         this.slide.setAttribute("src", slide.url);
@@ -246,13 +246,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       } else {
         player = $("#slideshareplayer")[0];
         nextSlide = slideNumber(slide);
-        currentSlide = player.getCurrentSlide();
-        if (nextSlide === (currentSlide + 1)) {
-          player.next();
-        } else {
-          player.jumpTo(slideNumber(slide));
+        if (player.getCurrentSlide) {
+          currentSlide = player.getCurrentSlide();
+          if (nextSlide === (currentSlide + 1)) {
+            player.next();
+          } else {
+            player.jumpTo(slideNumber(slide));
+            this.currentSlide = player.getCurrentSlide();
+          }
         }
-        this.currentSlide = player.getCurrentSlide();
       }
     };
     SlideShare.prototype.isCurrentSlideDifferentFrom = function(slide) {

@@ -57,14 +57,15 @@
 <script src="js/froogaloop.js"></script>
 <script src="js/swfobject.js"></script>
 <script src="js/Presentz.js"></script>
-<script src="js/DynPresentation.js"></script>
 <script>
-  $(document).ready(function() {
-  presentz = new Presentz();
-  presentz.init(presentation);
-  presentz.changeChapter(0, true);
-  });
+presentz = new Presentz();
+
+function initPresentz(presentation) {
+	presentz.init(presentation);
+	presentz.changeChapter(0, true);
+}
 </script>
+<script src="js/DynPresentation.js"></script>
 
 <!--[if lt IE 7 ]>
 <script src="js/dd_belatedpng.js"></script>
