@@ -43,20 +43,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.video = new Video("play", "pause", "ended", this.presentz);
     }
     Html5Video.prototype.changeVideo = function(videoData, play) {
-      var caller, eventHandler, videoHtml;
+      var availableWidth, caller, playerOptions, successHandler, videoHtml;
       if ($("#videoContainer").children().length === 0) {
-        videoHtml = "<video controls preload='none' src='" + videoData.url + "' width='100%'></video>";
+        availableWidth = $("#videoContainer").width();
+        videoHtml = "<video id='html5player' controls preload='none' src='" + videoData.url + "' width='" + availableWidth + "'></video>";
         $("#videoContainer").append(videoHtml);
         caller = this;
-        eventHandler = function(event) {
-        caller.video.handleEvent(event.type);
+        successHandler = function(me, a, b, c) {
+        caller.onPlayerLoaded(me);
       };
-        this.player = $("#videoContainer > video")[0];
-        this.player.onplay = eventHandler;
-        this.player.onpause = eventHandler;
-        this.player.onended = eventHandler;
+        playerOptions = {
+          enableAutosize: false,
+          timerRate: 500,
+          success: successHandler
+        };
+        this.player = new MediaElementPlayer("#html5player", playerOptions);
       } else {
-        this.player.setAttribute("src", videoData.url);
+        $("#html5player")[0].src = videoData.url;
       }
       this.player.load();
       if (play) {
@@ -66,8 +69,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         this.player.play();
       }
     };
+    Html5Video.prototype.onPlayerLoaded = function(player) {
+      var caller, eventHandler;
+      caller = this;
+      eventHandler = function(event) {
+      caller.adjustVideoSize()
+      caller.video.handleEvent(event.type);
+    };
+      player.addEventListener('play', eventHandler, false);
+      player.addEventListener('pause', eventHandler, false);
+      return player.addEventListener('ended', eventHandler, false);
+    };
+    Html5Video.prototype.adjustVideoSize = function() {
+      var newHeight;
+      if (presentz.videoPlugin.player.height < $("#html5player").height()) {
+        newHeight = $("#html5player").height();
+        $("#videoContainer").height(newHeight);
+        $(".mejs-container").height(newHeight);
+        return presentz.videoPlugin.player.height = newHeight;
+      }
+    };
     Html5Video.prototype.currentTime = function() {
-      return presentz.videoPlugin.player.currentTime;
+      presentz.videoPlugin.adjustVideoSize();
+      return presentz.videoPlugin.player.getCurrentTime();
     };
     return Html5Video;
   })();
@@ -203,57 +227,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     return Youtube;
   })();
   BlipTv = (function() {
-    var videoId;
     function BlipTv(presentz) {
       this.presentz = presentz;
-      this.video = new Video(1, 2, 0, this.presentz);
+      this.video = new Html5Video(this.presentz);
     }
     BlipTv.prototype.changeVideo = function(videoData, wouldPlay) {
-      var movieUrl, script, scripts;
+      var ajaxCall;
       this.wouldPlay = wouldPlay;
-      movieUrl = "" + videoData.url + ".js?width=480&height=303&parent=bliptvcontainer";
-      if ($("#videoContainer").children().length === 0) {
-        $("#videoContainer").append("<div id='bliptvcontainer'></div>");
-        script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = movieUrl;
-        scripts = $("script");
-        $(scripts[scripts.length - 1]).append(script);
-        console.log($("script"));
-      } else {
-        throw "boh!";
-      }
-      if (this.wouldPlay && this.player !== void 0) {
-        if (!this.presentz.intervalSet) {
-          this.presentz.startTimeChecker();
-        }
-        this.player.play();
-      }
+      ajaxCall = {
+        url: videoData.url,
+        dataType: "jsonp",
+        data: "skin=json",
+        jsonpCallback: "presentz.videoPlugin.receiveVideoInfo"
+      };
+      $.ajax(ajaxCall);
     };
-    videoId = function(videoData) {
-      return videoData.url.substr(videoData.url.lastIndexOf("/") + 1);
+    BlipTv.prototype.receiveVideoInfo = function(data) {
+      var fakeVideoData;
+      fakeVideoData = {
+        url: data[0].Post.media.url
+      };
+      this.video.changeVideo(fakeVideoData, this.wouldPlay);
+      this.player = this.video.player;
+      return this.adjustVideoSize = this.video.adjustVideoSize;
     };
     BlipTv.prototype.handle = function(presentation) {
       return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://blip.tv") !== -1;
     };
-    BlipTv.prototype.onBlipTvPlayerAlmostReady = function() {
-      var caller;
-      this.player = document.getElementById("bliptvcontainer");
-      caller = this;
-      this.player.registerCallback("playerReady", function () {
-        caller.onBlipTvPlayerReady();
-    });
-    };
-    BlipTv.prototype.onBlipTvPlayerReady = function() {
-      if (this.wouldPlay) {
-        if (!this.presentz.intervalSet) {
-          this.presentz.startTimeChecker();
-        }
-        this.player.play();
-      }
-    };
     BlipTv.prototype.currentTime = function() {
-      return presentz.videoPlugin.player.getCurrentTime();
+      return presentz.videoPlugin.video.currentTime();
     };
     return BlipTv;
   })();
