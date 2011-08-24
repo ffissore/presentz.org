@@ -5,7 +5,7 @@ initPresentz( {
     "duration" : 5458.53,
     "media" : {
       "video" : {
-        "url" : "http://blip.tv/play/AYLPmGEC"
+        "url" : "http://blip.tv/ffissore/scala-un-java-migliore-5491709"
       },
       "slides" : [ {
         "url" : "http://jugtorino.presentz.org/201002_scala/201003230756085723035.jpg",
