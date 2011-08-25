@@ -43,19 +43,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.video = new Video("play", "pause", "ended", this.presentz);
     }
     Html5Video.prototype.changeVideo = function(videoData, play) {
-      var availableWidth, caller, playerOptions, successHandler, videoHtml;
+      var availableWidth, caller, playerOptions, videoHtml;
       if ($("#videoContainer").children().length === 0) {
         availableWidth = $("#videoContainer").width();
         videoHtml = "<video id='html5player' controls preload='none' src='" + videoData.url + "' width='" + availableWidth + "'></video>";
         $("#videoContainer").append(videoHtml);
         caller = this;
-        successHandler = function(me, a, b, c) {
-        caller.onPlayerLoaded(me);
-      };
         playerOptions = {
           enableAutosize: false,
           timerRate: 500,
-          success: successHandler
+          success: function(me) {
+            caller.onPlayerLoaded(me);
+          }
         };
         this.player = new MediaElementPlayer("#html5player", playerOptions);
       } else {
@@ -73,9 +72,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       var caller, eventHandler;
       caller = this;
       eventHandler = function(event) {
-      caller.adjustVideoSize()
-      caller.video.handleEvent(event.type);
-    };
+        caller.adjustVideoSize();
+        caller.video.handleEvent(event.type);
+      };
       player.addEventListener('play', eventHandler, false);
       player.addEventListener('pause', eventHandler, false);
       return player.addEventListener('ended', eventHandler, false);
@@ -126,8 +125,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         iframe = $("#videoContainer iframe")[0];
         caller = this;
         onReady = function(id) {
-        caller.onReady(id);
-      };
+          caller.onReady(id);
+        };
         $f(iframe).addEvent("ready", onReady);
       } else {
         iframe = $("#videoContainer iframe")[0];
@@ -142,17 +141,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       video = $f(id);
       caller = this;
       video.addEvent("play", function() {
-      caller.video.handleEvent("play");
-    });
+        caller.video.handleEvent("play");
+      });
       video.addEvent("pause", function() {
-      caller.video.handleEvent("pause");
-    });
+        caller.video.handleEvent("pause");
+      });
       video.addEvent("finish", function() {
-      caller.video.handleEvent("finish");
-    });
+        caller.video.handleEvent("finish");
+      });
       video.addEvent("playProgress", function(data) {
-      caller.currentTimeInSeconds = data.seconds;
-    });
+        return caller.currentTimeInSeconds = data.seconds;
+      });
       if (this.wouldPlay) {
         this.wouldPlay = false;
         if (!this.presentz.intervalSet) {
@@ -262,16 +261,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ImgSlide = (function() {
     function ImgSlide() {}
     ImgSlide.prototype.changeSlide = function(slide) {
-      if (this.slide === void 0) {
+      if ($("#slideContainer img").length === 0) {
         $("#slideContainer").empty();
         $("#slideContainer").append("<img width='100%' src='" + slide.url + "'>");
-        this.slide = $("#slideContainer img")[0];
       } else {
-        this.slide.setAttribute("src", slide.url);
+        $("#slideContainer img")[0].setAttribute("src", slide.url);
       }
-    };
-    ImgSlide.prototype.isCurrentSlideDifferentFrom = function(slide) {
-      return this.slide.src.lastIndexOf(slide.url) === -1;
     };
     return ImgSlide;
   })();
@@ -280,8 +275,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     function SlideShare() {
       this.currentSlide = 0;
     }
-    SlideShare.prototype.handle = function(presentation) {
-      return presentation.chapters[0].media.slides[0].url.toLowerCase().indexOf("http://www.slideshare.net") !== -1;
+    SlideShare.prototype.handle = function(slide) {
+      return slide.url.toLowerCase().indexOf("http://www.slideshare.net") !== -1;
     };
     SlideShare.prototype.changeSlide = function(slide) {
       var atts, currentSlide, docId, flashvars, nextSlide, params, player;
@@ -337,7 +332,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.slidePlugins.push(plugin);
     };
     Presentz.prototype.init = function(presentation) {
-      var agenda, chapter, chapterIndex, plugin, slidePlugins, totalDuration, videoPlugins, widths, _i, _len, _ref, _ref2;
+      var agenda, chapter, chapterIndex, plugin, totalDuration, videoPlugins, widths, _i, _len, _ref, _ref2;
       this.presentation = presentation;
       this.howManyChapters = this.presentation.chapters.length;
       if (this.presentation.title) {
@@ -377,23 +372,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       } else {
         this.videoPlugin = this.defaultVideoPlugin;
       }
-      slidePlugins = (function() {
-        var _j, _len2, _ref3, _results;
-        _ref3 = this.slidePlugins;
-        _results = [];
-        for (_j = 0, _len2 = _ref3.length; _j < _len2; _j++) {
-          plugin = _ref3[_j];
-          if (plugin.handle(this.presentation)) {
-            _results.push(plugin);
-          }
-        }
-        return _results;
-      }).call(this);
-      if (slidePlugins.length > 0) {
-        this.slidePlugin = slidePlugins[0];
-      } else {
-        this.slidePlugin = this.defaultSlidePlugin;
-      }
     };
     computeBarWidths = function(duration, maxWidth, chapters) {
       var chapter, _i, _len, _results;
@@ -408,7 +386,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       var currentMedia, index, _ref;
       this.currentChapterIndex = chapterIndex;
       currentMedia = this.presentation.chapters[this.currentChapterIndex].media;
-      this.slidePlugin.changeSlide(currentMedia.slides[0]);
+      this.changeSlide(currentMedia.slides[0]);
       this.videoPlugin.changeVideo(currentMedia.video, play);
       for (index = 1, _ref = $("#agendaContainer div").length; 1 <= _ref ? index <= _ref : index >= _ref; 1 <= _ref ? index++ : index--) {
         $("#agendaContainer div:nth-child(" + index + ")").removeClass("agendaselected");
@@ -425,9 +403,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           candidateSlide = slide;
         }
       }
-      if (candidateSlide !== void 0 && this.slidePlugin.isCurrentSlideDifferentFrom(candidateSlide)) {
-        this.slidePlugin.changeSlide(candidateSlide);
+      if (candidateSlide !== void 0 && this.isCurrentSlideDifferentFrom(candidateSlide)) {
+        this.changeSlide(candidateSlide);
       }
+    };
+    Presentz.prototype.isCurrentSlideDifferentFrom = function(slide) {
+      return this.currentSlide.url !== slide.url;
+    };
+    Presentz.prototype.changeSlide = function(slide) {
+      this.currentSlide = slide;
+      this.findSlidePlugin(slide).changeSlide(slide);
+    };
+    Presentz.prototype.findSlidePlugin = function(slide) {
+      var plugin, slidePlugins;
+      slidePlugins = (function() {
+        var _i, _len, _ref, _results;
+        _ref = this.slidePlugins;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          plugin = _ref[_i];
+          if (plugin.handle(slide)) {
+            _results.push(plugin);
+          }
+        }
+        return _results;
+      }).call(this);
+      if (slidePlugins.length > 0) {
+        return slidePlugins[0];
+      }
+      return this.defaultSlidePlugin;
     };
     Presentz.prototype.startTimeChecker = function() {
       var caller, eventHandler;
@@ -435,8 +439,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.intervalSet = true;
       caller = this;
       eventHandler = function() {
-      caller.checkState();
-    };
+        caller.checkState();
+      };
       this.interval = setInterval(eventHandler, 500);
     };
     Presentz.prototype.stopTimeChecker = function() {
