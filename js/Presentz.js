@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function() {
-  var BlipTv, Html5Video, ImgSlide, Presentz, SlideShare, Video, Vimeo, Youtube;
+  var BlipTv, Html5Video, ImgSlide, Presentz, SlideShare, SwfSlide, Video, Vimeo, Youtube;
   Video = (function() {
     function Video(playState, pauseState, finishState, presentz) {
       this.playState = playState;
@@ -317,11 +317,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
     return SlideShare;
   })();
+  SwfSlide = (function() {
+    function SwfSlide() {}
+    SwfSlide.prototype.handle = function(slide) {
+      return slide.url.toLowerCase().indexOf(".swf") !== -1;
+    };
+    SwfSlide.prototype.changeSlide = function(slide) {
+      var atts, swfslide;
+      if ($("#slideContainer object").length === 0) {
+        $("#slideContainer").empty();
+        $("#slideContainer").append("<div id='swfslidecontainer'></div>");
+        atts = {
+          id: "swfslide"
+        };
+        swfobject.embedSWF(slide.url, "swfslidecontainer", "598", "480", "8", null, null, null, atts);
+      } else {
+        swfslide = $("#swfslide")[0];
+        swfslide.data = slide.url;
+      }
+    };
+    return SwfSlide;
+  })();
   Presentz = (function() {
     var computeBarWidths;
     function Presentz() {
       this.videoPlugins = [new Vimeo(this), new Youtube(this), new BlipTv(this)];
-      this.slidePlugins = [new SlideShare()];
+      this.slidePlugins = [new SlideShare(), new SwfSlide()];
       this.defaultVideoPlugin = new Html5Video(this);
       this.defaultSlidePlugin = new ImgSlide();
     }
