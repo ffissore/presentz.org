@@ -20,6 +20,7 @@
   <link rel="shortcut icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="http://presentz.org/apple-touch-icon.png">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mediaelementplayer.css">
 
   <script src="http://presentz.org/js/modernizr-1.7.min.js"></script>
 </head>
@@ -56,15 +57,17 @@
 <script src="http://presentz.org/js/jquery.tools.min.js"></script>
 <script src="http://presentz.org/js/froogaloop.js"></script>
 <script src="http://presentz.org/js/swfobject.js"></script>
+<script src="http://presentz.org/js/mediaelement-and-player.js"></script>
 <script src="http://presentz.org/js/Presentz.js"></script>
-<script src="http://presentz.org/js/DynPresentation.js"></script>
 <script>
-  $(document).ready(function() {
-  presentz = new Presentz();
-  presentz.init(presentation);
-  presentz.changeChapter(0, true);
-  });
+presentz = new Presentz();
+
+function initPresentz(presentation) {
+	presentz.init(presentation);
+	presentz.changeChapter(0, true);
+}
 </script>
+<script src="http://presentz.org/js/DynPresentation.js"></script>
 
 <!--[if lt IE 7 ]>
 <script src="http://presentz.org/js/dd_belatedpng.js"></script>

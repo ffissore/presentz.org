@@ -240,15 +240,13 @@ p {
 #agendaContainer div {
 	margin-left: 2px;
 	margin-right: 2px;
+	min-height: 30px;
 	float: left;
+	background: url(../img/unselected.png) top left repeat-x;
 }
 
-.agendaunselected {
-	background: purple;
-}
-
-.agendaselected {
-	background: aqua;
+#agendaContainer div.agendaselected {
+	background: url(../img/selected.png) top left repeat-x;
 }
 
 .tooltip {
