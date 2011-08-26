@@ -271,7 +271,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     return ImgSlide;
   })();
   SlideShare = (function() {
-    var slideNumber;
+    var adjustSlideSize, slideNumber;
     function SlideShare() {
       this.currentSlide = 0;
     }
@@ -308,12 +308,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           }
         }
       }
+      adjustSlideSize();
     };
     SlideShare.prototype.isCurrentSlideDifferentFrom = function(slide) {
       return slideNumber(slide) !== this.currentSlide;
     };
     slideNumber = function(slide) {
       return parseInt(slide.url.substr(slide.url.lastIndexOf("#") + 1));
+    };
+    adjustSlideSize = function() {
+      var currentSlide, newHeight, newWidth;
+      newWidth = $("#slideContainer").width();
+      currentSlide = $("#slideshareplayer")[0];
+      if (currentSlide && currentSlide.width !== newWidth) {
+        newHeight = newWidth * (currentSlide.height / currentSlide.width);
+        currentSlide.width = newWidth;
+        return currentSlide.height = newHeight;
+      }
     };
     return SlideShare;
   })();
@@ -342,10 +353,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       var currentSlide, newHeight, newWidth;
       newWidth = $("#slideContainer").width();
       currentSlide = $("#swfslide")[0];
-      if (currentSlide.width !== newWidth) {
+      if (currentSlide && currentSlide.width !== newWidth) {
         newHeight = newWidth * (currentSlide.height / currentSlide.width);
-        $("#swfslide")[0].width = newWidth;
-        return $("#swfslide")[0].height = newHeight;
+        currentSlide.width = newWidth;
+        return currentSlide.height = newHeight;
       }
     };
     return SwfSlide;
