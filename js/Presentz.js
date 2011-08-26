@@ -318,6 +318,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     return SlideShare;
   })();
   SwfSlide = (function() {
+    var adjustSlideSize;
     function SwfSlide() {}
     SwfSlide.prototype.handle = function(slide) {
       return slide.url.toLowerCase().indexOf(".swf") !== -1;
@@ -334,6 +335,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       } else {
         swfslide = $("#swfslide")[0];
         swfslide.data = slide.url;
+      }
+      adjustSlideSize();
+    };
+    adjustSlideSize = function() {
+      var currentSlide, newHeight, newWidth;
+      newWidth = $("#slideContainer").width();
+      currentSlide = $("#swfslide")[0];
+      if (currentSlide.width !== newWidth) {
+        newHeight = newWidth * (currentSlide.height / currentSlide.width);
+        $("#swfslide")[0].width = newWidth;
+        return $("#swfslide")[0].height = newHeight;
       }
     };
     return SwfSlide;
