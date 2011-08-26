@@ -42,26 +42,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.presentz = presentz;
       this.video = new Video("play", "pause", "ended", this.presentz);
     }
-    Html5Video.prototype.changeVideo = function(videoData, play) {
+    Html5Video.prototype.changeVideo = function(videoData, wouldPlay) {
       var availableWidth, caller, playerOptions, videoHtml;
-      if ($("#videoContainer").children().length === 0) {
-        availableWidth = $("#videoContainer").width();
-        videoHtml = "<video id='html5player' controls preload='none' src='" + videoData.url + "' width='" + availableWidth + "'></video>";
-        $("#videoContainer").append(videoHtml);
-        caller = this;
-        playerOptions = {
-          enableAutosize: false,
-          timerRate: 500,
-          success: function(me) {
-            caller.onPlayerLoaded(me);
-          }
-        };
-        this.player = new MediaElementPlayer("#html5player", playerOptions);
-      } else {
-        $("#html5player")[0].src = videoData.url;
-      }
+      this.wouldPlay = wouldPlay;
+      $("#videoContainer").empty();
+      availableWidth = $("#videoContainer").width();
+      videoHtml = "<video id='html5player' controls preload='none' src='" + videoData.url + "' width='" + availableWidth + "'></video>";
+      $("#videoContainer").append(videoHtml);
+      caller = this;
+      playerOptions = {
+        enableAutosize: false,
+        timerRate: 500,
+        success: function(me) {
+          caller.onPlayerLoaded(me);
+        }
+      };
+      this.player = new MediaElementPlayer("#html5player", playerOptions);
       this.player.load();
-      if (play) {
+      if (this.wouldPlay) {
         if (!this.presentz.intervalSet) {
           this.presentz.startTimeChecker();
         }
@@ -77,7 +75,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       };
       player.addEventListener('play', eventHandler, false);
       player.addEventListener('pause', eventHandler, false);
-      return player.addEventListener('ended', eventHandler, false);
+      player.addEventListener('ended', eventHandler, false);
+      if (this.wouldPlay) {
+        if (!this.presentz.intervalSet) {
+          this.presentz.startTimeChecker();
+        }
+        return this.player.play();
+      }
     };
     Html5Video.prototype.adjustVideoSize = function() {
       var newHeight;
