@@ -214,10 +214,45 @@ p {
 }
 
 .thumbcontainer {
+	-moz-box-shadow: 0 0 4px black;
+	-webkit-box-shadow: 0 0 4px black;
+	box-shadow: 0 0 4px black;
+	
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	
 	float: left;
+	margin: 10px 0 10px 20px;
+	padding: 7px;
+}
+
+.thumbcontainer .thumb {
+	background: black;
+	margin-left: auto; margin-right: auto;
+	/*border: 1px solid #41454a;*/
 	width: 200px;
-	margin-left: 10px;
-	margin-top: 10px;
+	padding: 10px;
+}
+
+.thumbcontainer .comment {
+	background: #8198ad url(bgComment.png) bottom left repeat-x;
+	color: #333333;
+	padding: 5px 10px;
+	
+	border-radius: 0 0 5px 5px;
+	-moz-border-radius: 0 0 5px 5px;
+}
+
+.thumbcontainer .comment h2 {
+	margin: 0 0 2px 0;
+	padding: 0;
+	color: white;
+	text-shadow: 0 1px 2px black;
+}
+
+.thumbcontainer .comment b {
+	color: black;
+	font-weight: bold;
 }
 
 #videoContainer {
