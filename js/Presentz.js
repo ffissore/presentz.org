@@ -57,25 +57,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           caller.onPlayerLoaded(me);
         }
       };
-      this.player = new MediaElementPlayer("#html5player", playerOptions);
-      this.player.load();
-      if (this.wouldPlay) {
-        if (!this.presentz.intervalSet) {
-          this.presentz.startTimeChecker();
-        }
-        this.player.play();
-      }
+      new MediaElementPlayer("#html5player", playerOptions);
     };
     Html5Video.prototype.onPlayerLoaded = function(player) {
       var caller, eventHandler;
+      this.player = player;
       caller = this;
       eventHandler = function(event) {
-        caller.adjustVideoSize();
         caller.video.handleEvent(event.type);
       };
-      player.addEventListener('play', eventHandler, false);
-      player.addEventListener('pause', eventHandler, false);
-      player.addEventListener('ended', eventHandler, false);
+      player.addEventListener("play", eventHandler, false);
+      player.addEventListener("pause", eventHandler, false);
+      player.addEventListener("ended", eventHandler, false);
+      this.player.load();
       if (this.wouldPlay) {
         if (!this.presentz.intervalSet) {
           this.presentz.startTimeChecker();
@@ -85,16 +79,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
     Html5Video.prototype.adjustVideoSize = function() {
       var newHeight;
-      if (presentz.videoPlugin.player.height < $("#html5player").height()) {
+      if (this.player.height < $("#html5player").height()) {
         newHeight = $("#html5player").height();
         $("#videoContainer").height(newHeight);
         $(".mejs-container").height(newHeight);
-        return presentz.videoPlugin.player.height = newHeight;
+        return this.player.height = newHeight;
       }
     };
     Html5Video.prototype.currentTime = function() {
-      presentz.videoPlugin.adjustVideoSize();
-      return presentz.videoPlugin.player.getCurrentTime();
+      return this.player.currentTime;
     };
     return Html5Video;
   })();
