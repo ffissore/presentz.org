@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function() {
-  var BlipTv, Html5Video, ImgSlide, Presentz, SlideShare, SwfSlide, Video, Vimeo, Youtube;
+  var BlipTv, Html5Video, ImgSlide, SlideShare, SwfSlide, Video, Vimeo, Youtube;
   Video = (function() {
     function Video(playState, pauseState, finishState, presentz) {
       this.playState = playState;
@@ -358,7 +358,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
     return SwfSlide;
   })();
-  Presentz = (function() {
+}).call(this);
+sentz = (function() {
     var computeBarWidths;
     function Presentz() {
       this.videoPlugins = [new Vimeo(this), new Youtube(this), new BlipTv(this)];
@@ -389,13 +390,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       widths = computeBarWidths(totalDuration, $("#agendaContainer").width(), this.presentation.chapters);
       agenda = '';
       for (chapterIndex = 0, _ref2 = this.presentation.chapters.length - 1; 0 <= _ref2 ? chapterIndex <= _ref2 : chapterIndex >= _ref2; 0 <= _ref2 ? chapterIndex++ : chapterIndex--) {
-        agenda += "<div title='" + this.presentation.chapters[chapterIndex].title + "' style='width: " + widths[chapterIndex] + "px' onclick='presentz.changeChapter(" + chapterIndex + ", true);'></div>";
+        agenda += "<div style='width: " + widths[chapterIndex] + "px' onclick='presentz.changeChapter(" + chapterIndex + ", true);'><div class='progress'></div><div class='info'>" + this.presentation.chapters[chapterIndex].title + "</div></div>";
       }
       $("#agendaContainer").html(agenda);
-      $("#agendaContainer div[title]").tooltip({
-        effect: "fade",
-        opacity: 0.7
-      });
       videoPlugins = (function() {
         var _j, _len2, _ref3, _results;
         _ref3 = this.videoPlugins;

@@ -228,7 +228,8 @@ p {
 
 .thumbcontainer .thumb {
 	background: black;
-	margin-left: auto; margin-right: auto;
+	margin-left: auto;
+	margin-right: auto;
 	/*border: 1px solid #41454a;*/
 	width: 200px;
 	padding: 10px;
@@ -283,15 +284,59 @@ p {
 }
 
 #agendaContainer div {
-	margin-left: 2px;
-	margin-right: 2px;
-	min-height: 30px;
+	height: 30px;
 	float: left;
-	background: url(../img/unselected.png) top left repeat-x;
+	background: #627b94 url(bgAgendaUnselected.png) top left repeat-x;
+	border-left: 1px solid black;
+	position: relative;
+}
+
+#agendaContainer div > div {
+	border: none;
+}
+
+#agendaContainer div.info {
+	position: absolute;
+	top: 40px;
+	left: 5px;
+	z-index: 1;
+	background: #8198ad url(bgComment.png) bottom left repeat-x;
+	color: #333333;
+	padding: 10px;
+	height: auto;
+	border: 2px solid #476f8f;
+	
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	
+	-moz-box-shadow: 0 0 5px #89DCFF;
+	-webkit-box-shadow: 0 0 5px #89DCFF;
+	box-shadow: 0 0 5px #89DCFF;
+
+	display: none;
+}
+
+#agendaContainer > div:hover {
+	-moz-box-shadow: 0 0 20px #89DCFF;
+	-webkit-box-shadow: 0 0 20px #89DCFF;
+	box-shadow: 0 0 20px #89DCFF;
+}
+
+#agendaContainer > div:hover div.info {
+	display: block;
 }
 
 #agendaContainer div.agendaselected {
-	background: url(../img/selected.png) top left repeat-x;
+	background: #627b94 url(bgAgendaSelected.png) top left repeat-x;
+}
+
+#agendaContainer div.agendaselected > div.progress {
+	background: transparent url(bgAvanzamento.png) top left repeat-x;
+	margin: 3px auto;
+	height: 24px;
+	-moz-box-shadow: 0 0 20px #89DCFF;
+	-webkit-box-shadow: 0 0 20px #89DCFF;
+	box-shadow: 0 0 20px #89DCFF;
 }
 
 .tooltip {
