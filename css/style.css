@@ -194,6 +194,16 @@ p {
 	font-size: 12pt;
 }
 
+.tos {
+	background: #2c3138;
+	padding: 10px;
+	color: #fff;
+	text-align: justify;
+	margin-left: 5%;
+	margin-right: 5%;
+	font-size: 10pt;
+}
+
 .slide, .thumbcontainer {
 	background: black;
 	border: 1px solid #41454a;
