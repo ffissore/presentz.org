@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function() {
-  var BlipTv, Html5Video, ImgSlide, SlideShare, SwfSlide, Video, Vimeo, Youtube;
+  var BlipTv, Html5Video, ImgSlide, Presentz, SlideShare, SwfSlide, Video, Vimeo, Youtube;
   Video = (function() {
     function Video(playState, pauseState, finishState, presentz) {
       this.playState = playState;
@@ -79,7 +79,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
     Html5Video.prototype.adjustVideoSize = function() {
       var newHeight;
-      if (this.player.height < $("#html5player").height()) {
+      if (this.player.height !== $("#html5player").height()) {
         newHeight = $("#html5player").height();
         $("#videoContainer").height(newHeight);
         $(".mejs-container").height(newHeight);
@@ -87,6 +87,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       }
     };
     Html5Video.prototype.currentTime = function() {
+      this.adjustVideoSize();
       return this.player.currentTime;
     };
     return Html5Video;
@@ -358,8 +359,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
     return SwfSlide;
   })();
-}).call(this);
-sentz = (function() {
+  Presentz = (function() {
     var computeBarWidths;
     function Presentz() {
       this.videoPlugins = [new Vimeo(this), new Youtube(this), new BlipTv(this)];
@@ -416,7 +416,7 @@ sentz = (function() {
       _results = [];
       for (_i = 0, _len = chapters.length; _i < _len; _i++) {
         chapter = chapters[_i];
-        _results.push((chapter.duration * maxWidth / duration) - 10);
+        _results.push((chapter.duration * maxWidth / duration) - 1);
       }
       return _results;
     };
