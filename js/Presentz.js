@@ -115,10 +115,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return videoData.url.substr(videoData.url.lastIndexOf("/") + 1);
     };
     Vimeo.prototype.receiveVideoInfo = function(data) {
-      var caller, iframe, movieUrl, onReady, videoHtml;
-      movieUrl = "http://player.vimeo.com/video/" + (videoId(this.videoData)) + "?api=1&player_id=player_1";
+      var caller, height, iframe, movieUrl, onReady, videoHtml, width;
+      movieUrl = "http://player.vimeo.com/video/" + (videoId(this.videoData)) + "?api=1&player_id=vimeoPlayer";
       if ($("#videoContainer").children().length === 0) {
-        videoHtml = "<iframe id='player_1' src='" + movieUrl + "' width='100%' height='" + data[0].height + "' frameborder='0'></iframe>";
+        width = $("#videoContainer").width();
+        height = (width / data[0].width) * data[0].height;
+        videoHtml = "<iframe id='vimeoPlayer' src='" + movieUrl + "' width='" + width + "' height='" + height + "' frameborder='0'></iframe>";
         $("#videoContainer").append(videoHtml);
         iframe = $("#videoContainer iframe")[0];
         caller = this;
