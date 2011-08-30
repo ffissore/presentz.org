@@ -5,7 +5,7 @@ initPresentz( {
     "duration" : 5676.14,
     "media" : {
       "video" : {
-        "url" : "http://blip.tv/ffissore/episode-5499796"
+        "url" : "http://vimeo.com/28343315"
       },
       "slides" : [ {
         "url" : "http://jugtorino.presentz.org/201011_git/201011180806106222558.swf",
