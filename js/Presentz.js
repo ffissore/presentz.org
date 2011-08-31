@@ -90,6 +90,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.adjustVideoSize();
       return this.player.currentTime;
     };
+    Html5Video.prototype.skipTo = function(time) {
+      return false;
+    };
     return Html5Video;
   })();
   Vimeo = (function() {
@@ -152,6 +155,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       video.addEvent("playProgress", function(data) {
         return caller.currentTimeInSeconds = data.seconds;
       });
+      video.addEvent("loadProgress", function(data) {
+        return caller.loadedTimeInSeconds = parseInt(parseFloat(data.duration) * parseFloat(data.percent));
+      });
       if (this.wouldPlay) {
         this.wouldPlay = false;
         if (!this.presentz.intervalSet) {
@@ -164,10 +170,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return this.currentTimeInSeconds;
     };
     Vimeo.prototype.skipTo = function(time) {
-      $f($("#videoContainer iframe")[0]).api("seekTo", time);
-      console.log(time);
-      console.log(this.currentTimeInSeconds);
-      return true;
+      if (time <= this.loadedTimeInSeconds) {
+        $f($("#videoContainer iframe")[0]).api("seekTo", time);
+        return true;
+      }
+      return false;
     };
     return Vimeo;
   })();
@@ -229,6 +236,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     Youtube.prototype.currentTime = function() {
       return presentz.videoPlugin.player.getCurrentTime();
     };
+    Youtube.prototype.skipTo = function(time) {
+      return false;
+    };
     return Youtube;
   })();
   BlipTv = (function() {
@@ -261,6 +271,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
     BlipTv.prototype.currentTime = function() {
       return presentz.videoPlugin.video.currentTime();
+    };
+    BlipTv.prototype.skipTo = function(time) {
+      return false;
     };
     return BlipTv;
   })();
@@ -383,7 +396,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.slidePlugins.push(plugin);
     };
     Presentz.prototype.init = function(presentation) {
-      var agenda, chapter, chapterIndex, plugin, slideIndex, totalDuration, videoPlugins, widths, _i, _len, _ref, _ref2, _ref3;
+      var agenda, chapter, chapterIndex, plugin, slideIndex, title, totalDuration, videoPlugins, widths, _i, _len, _ref, _ref2, _ref3;
       this.presentation = presentation;
       this.howManyChapters = this.presentation.chapters.length;
       if (this.presentation.title) {
@@ -399,7 +412,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       agenda = '';
       for (chapterIndex = 0, _ref2 = widths.length - 1; 0 <= _ref2 ? chapterIndex <= _ref2 : chapterIndex >= _ref2; 0 <= _ref2 ? chapterIndex++ : chapterIndex--) {
         for (slideIndex = 0, _ref3 = widths[chapterIndex].length - 1; 0 <= _ref3 ? slideIndex <= _ref3 : slideIndex >= _ref3; 0 <= _ref3 ? slideIndex++ : slideIndex--) {
-          agenda += "<div style='width: " + widths[chapterIndex][slideIndex] + "px' onclick='presentz.changeChapter(" + chapterIndex + ", " + slideIndex + ", true);'><div class='progress'></div><div class='info'>" + this.presentation.chapters[chapterIndex].media.slides[slideIndex].title + "</div></div>";
+          if (this.presentation.chapters[chapterIndex].media.slides[slideIndex].title) {
+            title = this.presentation.chapters[chapterIndex].media.slides[slideIndex].title;
+          } else {
+            title = "" + this.presentation.chapters[chapterIndex].title + " - Slide " + (slideIndex + 1);
+          }
+          agenda += "<div style='width: " + widths[chapterIndex][slideIndex] + "px' onclick='presentz.changeChapter(" + chapterIndex + ", " + slideIndex + ", true);'><div class='progress'></div><div class='info'>" + title + "</div></div>";
         }
       }
       $("#agendaContainer").html(agenda);
@@ -431,11 +449,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         clength = Math.round((chapter.duration * maxWidth / duration) - 1);
         slideWidthSum = 0;
         slides = chapter.media.slides;
-        for (slideIndex = 1, _ref = slides.length - 1; 1 <= _ref ? slideIndex <= _ref : slideIndex >= _ref; 1 <= _ref ? slideIndex++ : slideIndex--) {
-          slideWidth = Math.round(clength * slides[slideIndex].time / chapter.duration - slideWidthSum) - 1;
-          slideWidth = slideWidth > 0 ? slideWidth : 1;
-          slideWidthSum += slideWidth + 1;
-          widths[chapterIndex][slideIndex - 1] = slideWidth;
+        if (slides.length > 1) {
+          for (slideIndex = 1, _ref = slides.length - 1; 1 <= _ref ? slideIndex <= _ref : slideIndex >= _ref; 1 <= _ref ? slideIndex++ : slideIndex--) {
+            console.log(slideIndex);
+            slideWidth = Math.round(clength * slides[slideIndex].time / chapter.duration - slideWidthSum) - 1;
+            slideWidth = slideWidth > 0 ? slideWidth : 1;
+            slideWidthSum += slideWidth + 1;
+            widths[chapterIndex][slideIndex - 1] = slideWidth;
+          }
         }
         widths[chapterIndex][slides.length - 1] = clength - slideWidthSum;
         chapterIndex++;
