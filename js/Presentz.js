@@ -60,7 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       new MediaElementPlayer("#html5player", playerOptions);
     };
     Html5Video.prototype.onPlayerLoaded = function(player) {
-      var caller, eventHandler;
+      var a, caller, eventHandler;
       this.player = player;
       caller = this;
       eventHandler = function(event) {
@@ -69,6 +69,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       player.addEventListener("play", eventHandler, false);
       player.addEventListener("pause", eventHandler, false);
       player.addEventListener("ended", eventHandler, false);
+      a = function(event) {
+        return console.log(event);
+      };
+      player.addEventListener("loadeddata", a, false);
       this.player.load();
       if (this.wouldPlay) {
         if (!this.presentz.intervalSet) {
@@ -91,6 +95,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return this.player.currentTime;
     };
     Html5Video.prototype.skipTo = function(time) {
+      if (this.player) {
+        this.player.currentTime = time;
+        return true;
+      }
       return false;
     };
     return Html5Video;
@@ -215,15 +223,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://youtu.be") !== -1;
     };
     Youtube.prototype.onYouTubePlayerReady = function(id) {
-      presentz.videoPlugin.playerArray = $("#" + id);
-      presentz.videoPlugin.player = presentz.videoPlugin.playerArray[0];
-      presentz.videoPlugin.player.addEventListener("onStateChange", "presentz.videoPlugin.video.handleEvent");
-      adjustVideoSize(presentz.videoPlugin.playerArray);
-      if (presentz.videoPlugin.wouldPlay) {
+      var playerArray, youTube;
+      youTube = presentz.videoPlugin;
+      playerArray = $("#" + id);
+      youTube.player = playerArray[0];
+      youTube.player.addEventListener("onStateChange", "presentz.videoPlugin.video.handleEvent");
+      adjustVideoSize(playerArray);
+      if (youTube.wouldPlay) {
         if (!presentz.intervalSet) {
           presentz.startTimeChecker();
         }
-        presentz.videoPlugin.player.playVideo();
+        youTube.player.playVideo();
       }
     };
     adjustVideoSize = function(playerArray) {
@@ -234,9 +244,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       playerArray.height(newHeight);
     };
     Youtube.prototype.currentTime = function() {
-      return presentz.videoPlugin.player.getCurrentTime();
+      return this.player.getCurrentTime();
     };
     Youtube.prototype.skipTo = function(time) {
+      if (this.player) {
+        this.player.seekTo(time, true);
+        return true;
+      }
       return false;
     };
     return Youtube;
@@ -270,10 +284,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://blip.tv") !== -1;
     };
     BlipTv.prototype.currentTime = function() {
-      return presentz.videoPlugin.video.currentTime();
+      return this.video.currentTime();
     };
     BlipTv.prototype.skipTo = function(time) {
-      return false;
+      return this.video.skipTo(time);
     };
     return BlipTv;
   })();
@@ -449,56 +463,66 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         clength = Math.round((chapter.duration * maxWidth / duration) - 1);
         slideWidthSum = 0;
         slides = chapter.media.slides;
-        if (slides.length > 1) {
-          for (slideIndex = 1, _ref = slides.length - 1; 1 <= _ref ? slideIndex <= _ref : slideIndex >= _ref; 1 <= _ref ? slideIndex++ : slideIndex--) {
-            console.log(slideIndex);
+        for (slideIndex = 1, _ref = slides.length - 1; 1 <= _ref ? slideIndex <= _ref : slideIndex >= _ref; 1 <= _ref ? slideIndex++ : slideIndex--) {
+          if (slides.length > 1) {
             slideWidth = Math.round(clength * slides[slideIndex].time / chapter.duration - slideWidthSum) - 1;
             slideWidth = slideWidth > 0 ? slideWidth : 1;
             slideWidthSum += slideWidth + 1;
             widths[chapterIndex][slideIndex - 1] = slideWidth;
           }
         }
-        widths[chapterIndex][slides.length - 1] = clength - slideWidthSum;
+        widths[chapterIndex][slides.length - 1] = clength - slideWidthSum - 1;
         chapterIndex++;
       }
       return widths;
     };
     Presentz.prototype.changeChapter = function(chapterIndex, slideIndex, play) {
-      var currentMedia, currentSlide, index, _ref;
+      var currentMedia, currentSlide;
       currentMedia = this.presentation.chapters[chapterIndex].media;
       currentSlide = currentMedia.slides[slideIndex];
       if (chapterIndex !== this.currentChapterIndex || this.videoPlugin.skipTo(currentSlide.time)) {
-        this.changeSlide(currentSlide);
+        this.changeSlide(currentSlide, chapterIndex, slideIndex);
         if (chapterIndex !== this.currentChapterIndex) {
           this.videoPlugin.changeVideo(currentMedia.video, play);
+          this.videoPlugin.skipTo(currentSlide.time);
         }
         this.currentChapterIndex = chapterIndex;
-        for (index = 1, _ref = $("#agendaContainer div").length; 1 <= _ref ? index <= _ref : index >= _ref; 1 <= _ref ? index++ : index--) {
-          $("#agendaContainer div:nth-child(" + index + ")").removeClass("agendaselected");
-        }
-        $("#agendaContainer div:nth-child(" + (chapterIndex + slideIndex + 1) + ")").addClass("agendaselected");
       }
     };
     Presentz.prototype.checkSlideChange = function(currentTime) {
-      var candidateSlide, slide, slides, _i, _len;
+      var candidateSlide, slide, slideIndex, slides, _i, _len;
       slides = this.presentation.chapters[this.currentChapterIndex].media.slides;
       candidateSlide = void 0;
+      slideIndex = -1;
       for (_i = 0, _len = slides.length; _i < _len; _i++) {
         slide = slides[_i];
         if (slide.time < currentTime) {
+          console.log(slide);
           candidateSlide = slide;
+          slideIndex++;
         }
       }
       if (candidateSlide !== void 0 && this.isCurrentSlideDifferentFrom(candidateSlide)) {
-        this.changeSlide(candidateSlide);
+        this.changeSlide(candidateSlide, this.currentChapterIndex, slideIndex);
       }
     };
     Presentz.prototype.isCurrentSlideDifferentFrom = function(slide) {
       return this.currentSlide.url !== slide.url;
     };
-    Presentz.prototype.changeSlide = function(slide) {
+    Presentz.prototype.changeSlide = function(slide, chapterIndex, slideIndex) {
+      var currentSlideIndex, index, _ref, _ref2;
       this.currentSlide = slide;
       this.findSlidePlugin(slide).changeSlide(slide);
+      for (index = 1, _ref = $("#agendaContainer div").length; 1 <= _ref ? index <= _ref : index >= _ref; 1 <= _ref ? index++ : index--) {
+        $("#agendaContainer div:nth-child(" + index + ")").removeClass("agendaselected");
+      }
+      currentSlideIndex = slideIndex;
+      for (index = 0, _ref2 = chapterIndex - 1; 0 <= _ref2 ? index <= _ref2 : index >= _ref2; 0 <= _ref2 ? index++ : index--) {
+        if (chapterIndex - 1 >= 0) {
+          currentSlideIndex += this.presentation.chapters[index].media.slides.length;
+        }
+      }
+      $("#agendaContainer div:nth-child(" + (currentSlideIndex + 1) + ")").addClass("agendaselected");
     };
     Presentz.prototype.findSlidePlugin = function(slide) {
       var plugin, slidePlugins;
