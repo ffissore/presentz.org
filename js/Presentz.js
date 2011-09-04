@@ -60,7 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       new MediaElementPlayer("#html5player", playerOptions);
     };
     Html5Video.prototype.onPlayerLoaded = function(player) {
-      var a, caller, eventHandler;
+      var caller, eventHandler;
       this.player = player;
       caller = this;
       eventHandler = function(event) {
@@ -69,10 +69,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       player.addEventListener("play", eventHandler, false);
       player.addEventListener("pause", eventHandler, false);
       player.addEventListener("ended", eventHandler, false);
-      a = function(event) {
-        return console.log(event);
-      };
-      player.addEventListener("loadeddata", a, false);
       this.player.load();
       if (this.wouldPlay) {
         if (!this.presentz.intervalSet) {
@@ -95,7 +91,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return this.player.currentTime;
     };
     Html5Video.prototype.skipTo = function(time) {
-      if (this.player) {
+      if (this.player && this.player.currentTime) {
         this.player.currentTime = time;
         return true;
       }
@@ -178,8 +174,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return this.currentTimeInSeconds;
     };
     Vimeo.prototype.skipTo = function(time) {
+      var player;
       if (time <= this.loadedTimeInSeconds) {
-        $f($("#videoContainer iframe")[0]).api("seekTo", time);
+        player = $f($("#videoContainer iframe")[0]);
+        player.api("seekTo", time);
         return true;
       }
       return false;
@@ -497,7 +495,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       for (_i = 0, _len = slides.length; _i < _len; _i++) {
         slide = slides[_i];
         if (slide.time < currentTime) {
-          console.log(slide);
           candidateSlide = slide;
           slideIndex++;
         }
