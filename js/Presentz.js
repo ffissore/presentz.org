@@ -295,13 +295,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         slideContainer = $("#slideContainer");
         slideContainer.empty();
         slideContainer.append("<img width='100%' height='100%' src='" + slide.url + "'>");
-        this.sizer = new Sizer(slideContainer.width(), slideContainer.width(), "slideContainer");
       } else {
         $("#slideContainer img")[0].setAttribute("src", slide.url);
       }
     };
     ImgSlide.prototype.adjustSize = function() {
-      var img, newSize;
+      var img, newSize, slideContainer;
+      if (this.sizer === void 0) {
+        slideContainer = $("#slideContainer");
+        this.sizer = new Sizer(slideContainer.width(), slideContainer.height(), "slideContainer");
+      }
       newSize = this.sizer.optimalSize();
       img = $("#slideContainer img");
       if (img.width() !== newSize.width) {
