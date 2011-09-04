@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function() {
-  var Agenda, BlipTv, Html5Video, ImgSlide, Presentz, SlideShare, SwfSlide, Video, Vimeo, Youtube;
+  var Agenda, BlipTv, Html5Video, ImgSlide, Presentz, Sizer, SlideShare, SwfSlide, Video, Vimeo, Youtube;
   Video = (function() {
     function Video(playState, pauseState, finishState, presentz) {
       this.playState = playState;
@@ -77,7 +77,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         return this.player.play();
       }
     };
-    Html5Video.prototype.adjustVideoSize = function() {
+    Html5Video.prototype.adjustSize = function() {
       var newHeight;
       if (this.player.height !== $("#html5player").height()) {
         newHeight = $("#html5player").height();
@@ -87,7 +87,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       }
     };
     Html5Video.prototype.currentTime = function() {
-      this.adjustVideoSize();
       return this.player.currentTime;
     };
     Html5Video.prototype.skipTo = function(time) {
@@ -182,13 +181,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       }
       return false;
     };
+    Vimeo.prototype.adjustSize = function() {};
     return Vimeo;
   })();
   Youtube = (function() {
-    var adjustVideoSize, videoId;
+    var videoId;
     function Youtube(presentz) {
       this.presentz = presentz;
       this.video = new Video(1, 2, 0, this.presentz);
+      this.sizer = new Sizer(425, 356, "videoContainer");
       window.onYouTubePlayerReady = this.onYouTubePlayerReady;
     }
     Youtube.prototype.changeVideo = function(videoData, wouldPlay) {
@@ -203,7 +204,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         atts = {
           id: "ytplayer"
         };
-        swfobject.embedSWF(movieUrl, "youtubecontainer", "425", "356", "8", null, null, params, atts);
+        swfobject.embedSWF(movieUrl, "youtubecontainer", "" + this.sizer.startingWidth, "" + this.sizer.startingHeight, "8", null, null, params, atts);
       } else {
         this.player.cueVideoByUrl(movieUrl);
       }
@@ -221,12 +222,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://youtu.be") !== -1;
     };
     Youtube.prototype.onYouTubePlayerReady = function(id) {
-      var playerArray, youTube;
+      var youTube;
       youTube = presentz.videoPlugin;
-      playerArray = $("#" + id);
-      youTube.player = playerArray[0];
+      youTube.id = id;
+      youTube.player = $("#" + id)[0];
       youTube.player.addEventListener("onStateChange", "presentz.videoPlugin.video.handleEvent");
-      adjustVideoSize(playerArray);
       if (youTube.wouldPlay) {
         if (!presentz.intervalSet) {
           presentz.startTimeChecker();
@@ -234,12 +234,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         youTube.player.playVideo();
       }
     };
-    adjustVideoSize = function(playerArray) {
-      var newHeight, newWidth;
-      newWidth = $("#videoContainer").width();
-      newHeight = 0.837647059 * newWidth;
-      playerArray.width(newWidth);
-      playerArray.height(newHeight);
+    Youtube.prototype.adjustSize = function() {
+      var newSize, player;
+      newSize = this.sizer.optimalSize();
+      player = $("#" + this.id);
+      if (player.width() !== newSize.width) {
+        player.width(newSize.width);
+        player.height(newSize.height);
+      }
     };
     Youtube.prototype.currentTime = function() {
       return this.player.getCurrentTime();
@@ -276,35 +278,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       };
       this.video.changeVideo(fakeVideoData, this.wouldPlay);
       this.player = this.video.player;
-      return this.adjustVideoSize = this.video.adjustVideoSize;
+      this.adjustSize = this.video.adjustSize;
+      this.currentTime = this.video.currentTime;
+      this.skipTo = this.video.skipTo;
     };
     BlipTv.prototype.handle = function(presentation) {
       return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://blip.tv") !== -1;
-    };
-    BlipTv.prototype.currentTime = function() {
-      return this.video.currentTime();
-    };
-    BlipTv.prototype.skipTo = function(time) {
-      return this.video.skipTo(time);
     };
     return BlipTv;
   })();
   ImgSlide = (function() {
     function ImgSlide() {}
     ImgSlide.prototype.changeSlide = function(slide) {
+      var slideContainer;
       if ($("#slideContainer img").length === 0) {
-        $("#slideContainer").empty();
-        $("#slideContainer").append("<img width='100%' src='" + slide.url + "'>");
+        slideContainer = $("#slideContainer");
+        slideContainer.empty();
+        slideContainer.append("<img width='100%' height='100%' src='" + slide.url + "'>");
+        this.sizer = new Sizer(slideContainer.width(), slideContainer.height(), "slideContainer");
       } else {
         $("#slideContainer img")[0].setAttribute("src", slide.url);
+      }
+    };
+    ImgSlide.prototype.adjustSize = function() {
+      var img, newSize;
+      newSize = this.sizer.optimalSize();
+      img = $("#slideContainer img");
+      if (img.width() !== newSize.width) {
+        img[0].setAttribute("width", newSize.width);
+        return img[0].setAttribute("height", newSize.height);
       }
     };
     return ImgSlide;
   })();
   SlideShare = (function() {
-    var adjustSlideSize, slideNumber;
+    var slideNumber;
     function SlideShare() {
       this.currentSlide = 0;
+      this.sizer = new Sizer(598, 480, "slideContainer");
     }
     SlideShare.prototype.handle = function(slide) {
       return slide.url.toLowerCase().indexOf("http://www.slideshare.net") !== -1;
@@ -339,29 +350,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           }
         }
       }
-      adjustSlideSize();
-    };
-    SlideShare.prototype.isCurrentSlideDifferentFrom = function(slide) {
-      return slideNumber(slide) !== this.currentSlide;
     };
     slideNumber = function(slide) {
       return parseInt(slide.url.substr(slide.url.lastIndexOf("#") + 1));
     };
-    adjustSlideSize = function() {
-      var currentSlide, newHeight, newWidth;
-      newWidth = $("#slideContainer").width();
+    SlideShare.prototype.adjustSize = function() {
+      var currentSlide, newSize;
+      newSize = this.sizer.optimalSize();
       currentSlide = $("#slideshareplayer")[0];
-      if (currentSlide && currentSlide.width !== newWidth) {
-        newHeight = newWidth * (currentSlide.height / currentSlide.width);
-        currentSlide.width = newWidth;
-        return currentSlide.height = newHeight;
+      if (currentSlide && currentSlide.width !== newSize.width) {
+        currentSlide.width = newSize.width;
+        return currentSlide.height = newSize.height;
       }
     };
     return SlideShare;
   })();
   SwfSlide = (function() {
-    var adjustSlideSize;
-    function SwfSlide() {}
+    function SwfSlide() {
+      this.sizer = new Sizer(598, 480, "slideContainer");
+    }
     SwfSlide.prototype.handle = function(slide) {
       return slide.url.toLowerCase().indexOf(".swf") !== -1;
     };
@@ -378,16 +385,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         swfslide = $("#swfslide")[0];
         swfslide.data = slide.url;
       }
-      adjustSlideSize();
     };
-    adjustSlideSize = function() {
-      var currentSlide, newHeight, newWidth;
-      newWidth = $("#slideContainer").width();
+    SwfSlide.prototype.adjustSize = function() {
+      var currentSlide, newSize;
+      newSize = this.sizer.optimalSize();
       currentSlide = $("#swfslide")[0];
-      if (currentSlide && currentSlide.width !== newWidth) {
-        newHeight = newWidth * (currentSlide.height / currentSlide.width);
-        currentSlide.width = newWidth;
-        return currentSlide.height = newHeight;
+      if (currentSlide && currentSlide.width !== newSize.width) {
+        currentSlide.width = newSize.width;
+        return currentSlide.height = newSize.height;
       }
     };
     return SwfSlide;
@@ -452,6 +457,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return widths;
     };
     return Agenda;
+  })();
+  Sizer = (function() {
+    function Sizer(startingWidth, startingHeight, containerName) {
+      this.startingWidth = startingWidth;
+      this.startingHeight = startingHeight;
+      this.containerName = containerName;
+    }
+    Sizer.prototype.optimalSize = function() {
+      var containerWidth, newHeight, newWidth, result;
+      newHeight = $(window).height() - ($("div.container div.header").height() + $("div.container div.controls").height()) * 2;
+      newWidth = Math.round(this.startingWidth / this.startingHeight * newHeight);
+      containerWidth = $("#" + this.containerName).width();
+      if (newWidth > containerWidth) {
+        newWidth = containerWidth;
+        newHeight = Math.round(this.startingHeight / this.startingWidth * newWidth);
+      }
+      result = {
+        width: newWidth,
+        height: newHeight
+      };
+      return result;
+    };
+    return Sizer;
   })();
   Presentz = (function() {
     function Presentz() {
@@ -519,16 +547,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           slideIndex++;
         }
       }
-      if (candidateSlide !== void 0 && this.isCurrentSlideDifferentFrom(candidateSlide)) {
+      if (candidateSlide !== void 0 && this.currentSlide.url !== candidateSlide.url) {
         this.changeSlide(candidateSlide, this.currentChapterIndex, slideIndex);
       }
     };
-    Presentz.prototype.isCurrentSlideDifferentFrom = function(slide) {
-      return this.currentSlide.url !== slide.url;
-    };
     Presentz.prototype.changeSlide = function(slide, chapterIndex, slideIndex) {
       this.currentSlide = slide;
-      this.findSlidePlugin(slide).changeSlide(slide);
+      this.slidePlugin = this.findSlidePlugin(slide);
+      this.slidePlugin.changeSlide(slide);
       this.agenda.select(this.presentation, chapterIndex, slideIndex);
     };
     Presentz.prototype.findSlidePlugin = function(slide) {
@@ -556,6 +582,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.intervalSet = true;
       caller = this;
       timeChecker = function() {
+        caller.videoPlugin.adjustSize();
+        caller.slidePlugin.adjustSize();
         caller.checkState();
       };
       this.interval = setInterval(timeChecker, 500);
