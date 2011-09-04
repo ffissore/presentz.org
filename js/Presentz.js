@@ -295,7 +295,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         slideContainer = $("#slideContainer");
         slideContainer.empty();
         slideContainer.append("<img width='100%' height='100%' src='" + slide.url + "'>");
-        this.sizer = new Sizer(slideContainer.width(), slideContainer.height(), "slideContainer");
+        this.sizer = new Sizer(slideContainer.width(), slideContainer.width(), "slideContainer");
       } else {
         $("#slideContainer img")[0].setAttribute("src", slide.url);
       }
