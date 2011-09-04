@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function() {
-  var BlipTv, Html5Video, ImgSlide, Presentz, SlideShare, SwfSlide, Video, Vimeo, Youtube;
+  var Agenda, BlipTv, Html5Video, ImgSlide, Presentz, SlideShare, SwfSlide, Video, Vimeo, Youtube;
   Video = (function() {
     function Video(playState, pauseState, finishState, presentz) {
       this.playState = playState;
@@ -32,7 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         this.presentz.stopTimeChecker();
       }
       if (event === this.finishState && this.presentz.currentChapterIndex < (this.presentz.howManyChapters - 1)) {
-        this.presentz.changeChapter(this.presentz.currentChapterIndex + 1, true);
+        this.presentz.changeChapter(this.presentz.currentChapterIndex + 1, 0, true);
       }
     };
     return Video;
@@ -89,6 +89,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     Html5Video.prototype.currentTime = function() {
       this.adjustVideoSize();
       return this.player.currentTime;
+    };
+    Html5Video.prototype.skipTo = function(time) {
+      if (this.player && this.player.currentTime) {
+        this.player.currentTime = time;
+        return true;
+      }
+      return false;
     };
     return Html5Video;
   })();
@@ -152,6 +159,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       video.addEvent("playProgress", function(data) {
         return caller.currentTimeInSeconds = data.seconds;
       });
+      video.addEvent("loadProgress", function(data) {
+        return caller.loadedTimeInSeconds = parseInt(parseFloat(data.duration) * parseFloat(data.percent));
+      });
       if (this.wouldPlay) {
         this.wouldPlay = false;
         if (!this.presentz.intervalSet) {
@@ -162,6 +172,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
     Vimeo.prototype.currentTime = function() {
       return this.currentTimeInSeconds;
+    };
+    Vimeo.prototype.skipTo = function(time) {
+      var player;
+      if (time <= this.loadedTimeInSeconds) {
+        player = $f($("#videoContainer iframe")[0]);
+        player.api("seekTo", time);
+        return true;
+      }
+      return false;
     };
     return Vimeo;
   })();
@@ -202,15 +221,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://youtu.be") !== -1;
     };
     Youtube.prototype.onYouTubePlayerReady = function(id) {
-      presentz.videoPlugin.playerArray = $("#" + id);
-      presentz.videoPlugin.player = presentz.videoPlugin.playerArray[0];
-      presentz.videoPlugin.player.addEventListener("onStateChange", "presentz.videoPlugin.video.handleEvent");
-      adjustVideoSize(presentz.videoPlugin.playerArray);
-      if (presentz.videoPlugin.wouldPlay) {
+      var playerArray, youTube;
+      youTube = presentz.videoPlugin;
+      playerArray = $("#" + id);
+      youTube.player = playerArray[0];
+      youTube.player.addEventListener("onStateChange", "presentz.videoPlugin.video.handleEvent");
+      adjustVideoSize(playerArray);
+      if (youTube.wouldPlay) {
         if (!presentz.intervalSet) {
           presentz.startTimeChecker();
         }
-        presentz.videoPlugin.player.playVideo();
+        youTube.player.playVideo();
       }
     };
     adjustVideoSize = function(playerArray) {
@@ -221,7 +242,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       playerArray.height(newHeight);
     };
     Youtube.prototype.currentTime = function() {
-      return presentz.videoPlugin.player.getCurrentTime();
+      return this.player.getCurrentTime();
+    };
+    Youtube.prototype.skipTo = function(time) {
+      if (this.player) {
+        this.player.seekTo(time, true);
+        return true;
+      }
+      return false;
     };
     return Youtube;
   })();
@@ -254,7 +282,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://blip.tv") !== -1;
     };
     BlipTv.prototype.currentTime = function() {
-      return presentz.videoPlugin.video.currentTime();
+      return this.video.currentTime();
+    };
+    BlipTv.prototype.skipTo = function(time) {
+      return this.video.skipTo(time);
     };
     return BlipTv;
   })();
@@ -361,13 +392,75 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
     return SwfSlide;
   })();
-  Presentz = (function() {
+  Agenda = (function() {
     var computeBarWidths;
+    function Agenda() {}
+    Agenda.prototype.build = function(presentation) {
+      var agenda, chapter, chapterIndex, slideIndex, title, totalDuration, widths, _i, _len, _ref, _ref2, _ref3;
+      totalDuration = 0;
+      _ref = presentation.chapters;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        chapter = _ref[_i];
+        totalDuration += Math.round(chapter.duration);
+      }
+      widths = computeBarWidths(totalDuration, $("#agendaContainer").width(), presentation.chapters);
+      agenda = '';
+      for (chapterIndex = 0, _ref2 = widths.length - 1; 0 <= _ref2 ? chapterIndex <= _ref2 : chapterIndex >= _ref2; 0 <= _ref2 ? chapterIndex++ : chapterIndex--) {
+        for (slideIndex = 0, _ref3 = widths[chapterIndex].length - 1; 0 <= _ref3 ? slideIndex <= _ref3 : slideIndex >= _ref3; 0 <= _ref3 ? slideIndex++ : slideIndex--) {
+          if (presentation.chapters[chapterIndex].media.slides[slideIndex].title) {
+            title = presentation.chapters[chapterIndex].media.slides[slideIndex].title;
+          } else {
+            title = "" + presentation.chapters[chapterIndex].title + " - Slide " + (slideIndex + 1);
+          }
+          agenda += "<div style='width: " + widths[chapterIndex][slideIndex] + "px' onclick='presentz.changeChapter(" + chapterIndex + ", " + slideIndex + ", true);'><div class='progress'></div><div class='info'>" + title + "</div></div>";
+        }
+      }
+      $("#agendaContainer").html(agenda);
+    };
+    Agenda.prototype.select = function(presentation, chapterIndex, slideIndex) {
+      var currentSlideIndex, index, _ref;
+      $("#agendaContainer div.agendaselected").removeClass("agendaselected");
+      currentSlideIndex = slideIndex;
+      for (index = 0, _ref = chapterIndex - 1; 0 <= _ref ? index <= _ref : index >= _ref; 0 <= _ref ? index++ : index--) {
+        if (chapterIndex - 1 >= 0) {
+          currentSlideIndex += presentation.chapters[index].media.slides.length;
+        }
+      }
+      $("#agendaContainer div:nth-child(" + (currentSlideIndex + 1) + ")").addClass("agendaselected");
+    };
+    computeBarWidths = function(duration, maxWidth, chapters) {
+      var chapter, chapterIndex, clength, slideIndex, slideWidth, slideWidthSum, slides, widths, _i, _len, _ref;
+      widths = new Array();
+      chapterIndex = 0;
+      for (_i = 0, _len = chapters.length; _i < _len; _i++) {
+        chapter = chapters[_i];
+        widths[chapterIndex] = new Array();
+        clength = Math.round((chapter.duration * maxWidth / duration) - 1);
+        slideWidthSum = 0;
+        slides = chapter.media.slides;
+        for (slideIndex = 1, _ref = slides.length - 1; 1 <= _ref ? slideIndex <= _ref : slideIndex >= _ref; 1 <= _ref ? slideIndex++ : slideIndex--) {
+          if (slides.length > 1) {
+            slideWidth = Math.round(clength * slides[slideIndex].time / chapter.duration - slideWidthSum) - 1;
+            slideWidth = slideWidth > 0 ? slideWidth : 1;
+            slideWidthSum += slideWidth + 1;
+            widths[chapterIndex][slideIndex - 1] = slideWidth;
+          }
+        }
+        widths[chapterIndex][slides.length - 1] = clength - slideWidthSum - 1;
+        chapterIndex++;
+      }
+      return widths;
+    };
+    return Agenda;
+  })();
+  Presentz = (function() {
     function Presentz() {
       this.videoPlugins = [new Vimeo(this), new Youtube(this), new BlipTv(this)];
       this.slidePlugins = [new SlideShare(), new SwfSlide()];
       this.defaultVideoPlugin = new Html5Video(this);
       this.defaultSlidePlugin = new ImgSlide();
+      this.currentChapterIndex = -1;
+      this.agenda = new Agenda();
     }
     Presentz.prototype.registerVideoPlugin = function(plugin) {
       this.videoPlugins.push(plugin);
@@ -376,31 +469,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.slidePlugins.push(plugin);
     };
     Presentz.prototype.init = function(presentation) {
-      var agenda, chapter, chapterIndex, plugin, totalDuration, videoPlugins, widths, _i, _len, _ref, _ref2;
+      var plugin, videoPlugins;
       this.presentation = presentation;
       this.howManyChapters = this.presentation.chapters.length;
       if (this.presentation.title) {
         document.title = this.presentation.title;
       }
-      this.currentChapterIndex = 0;
-      totalDuration = 0;
-      _ref = this.presentation.chapters;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        chapter = _ref[_i];
-        totalDuration += parseInt(chapter.duration);
-      }
-      widths = computeBarWidths(totalDuration, $("#agendaContainer").width(), this.presentation.chapters);
-      agenda = '';
-      for (chapterIndex = 0, _ref2 = this.presentation.chapters.length - 1; 0 <= _ref2 ? chapterIndex <= _ref2 : chapterIndex >= _ref2; 0 <= _ref2 ? chapterIndex++ : chapterIndex--) {
-        agenda += "<div style='width: " + widths[chapterIndex] + "px' onclick='presentz.changeChapter(" + chapterIndex + ", true);'><div class='progress'></div><div class='info'>" + this.presentation.chapters[chapterIndex].title + "</div></div>";
-      }
-      $("#agendaContainer").html(agenda);
+      this.agenda.build(this.presentation);
       videoPlugins = (function() {
-        var _j, _len2, _ref3, _results;
-        _ref3 = this.videoPlugins;
+        var _i, _len, _ref, _results;
+        _ref = this.videoPlugins;
         _results = [];
-        for (_j = 0, _len2 = _ref3.length; _j < _len2; _j++) {
-          plugin = _ref3[_j];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          plugin = _ref[_i];
           if (plugin.handle(this.presentation)) {
             _results.push(plugin);
           }
@@ -413,46 +494,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         this.videoPlugin = this.defaultVideoPlugin;
       }
     };
-    computeBarWidths = function(duration, maxWidth, chapters) {
-      var chapter, _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = chapters.length; _i < _len; _i++) {
-        chapter = chapters[_i];
-        _results.push((chapter.duration * maxWidth / duration) - 1);
+    Presentz.prototype.changeChapter = function(chapterIndex, slideIndex, play) {
+      var currentMedia, currentSlide;
+      currentMedia = this.presentation.chapters[chapterIndex].media;
+      currentSlide = currentMedia.slides[slideIndex];
+      if (chapterIndex !== this.currentChapterIndex || this.videoPlugin.skipTo(currentSlide.time)) {
+        this.changeSlide(currentSlide, chapterIndex, slideIndex);
+        if (chapterIndex !== this.currentChapterIndex) {
+          this.videoPlugin.changeVideo(currentMedia.video, play);
+          this.videoPlugin.skipTo(currentSlide.time);
+        }
+        this.currentChapterIndex = chapterIndex;
       }
-      return _results;
-    };
-    Presentz.prototype.changeChapter = function(chapterIndex, play) {
-      var currentMedia, index, _ref;
-      this.currentChapterIndex = chapterIndex;
-      currentMedia = this.presentation.chapters[this.currentChapterIndex].media;
-      this.changeSlide(currentMedia.slides[0]);
-      this.videoPlugin.changeVideo(currentMedia.video, play);
-      for (index = 1, _ref = $("#agendaContainer div").length; 1 <= _ref ? index <= _ref : index >= _ref; 1 <= _ref ? index++ : index--) {
-        $("#agendaContainer div:nth-child(" + index + ")").removeClass("agendaselected");
-      }
-      $("#agendaContainer div:nth-child(" + (chapterIndex + 1) + ")").addClass("agendaselected");
     };
     Presentz.prototype.checkSlideChange = function(currentTime) {
-      var candidateSlide, slide, slides, _i, _len;
+      var candidateSlide, slide, slideIndex, slides, _i, _len;
       slides = this.presentation.chapters[this.currentChapterIndex].media.slides;
       candidateSlide = void 0;
+      slideIndex = -1;
       for (_i = 0, _len = slides.length; _i < _len; _i++) {
         slide = slides[_i];
         if (slide.time < currentTime) {
           candidateSlide = slide;
+          slideIndex++;
         }
       }
       if (candidateSlide !== void 0 && this.isCurrentSlideDifferentFrom(candidateSlide)) {
-        this.changeSlide(candidateSlide);
+        this.changeSlide(candidateSlide, this.currentChapterIndex, slideIndex);
       }
     };
     Presentz.prototype.isCurrentSlideDifferentFrom = function(slide) {
       return this.currentSlide.url !== slide.url;
     };
-    Presentz.prototype.changeSlide = function(slide) {
+    Presentz.prototype.changeSlide = function(slide, chapterIndex, slideIndex) {
       this.currentSlide = slide;
       this.findSlidePlugin(slide).changeSlide(slide);
+      this.agenda.select(this.presentation, chapterIndex, slideIndex);
     };
     Presentz.prototype.findSlidePlugin = function(slide) {
       var plugin, slidePlugins;
@@ -474,14 +551,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return this.defaultSlidePlugin;
     };
     Presentz.prototype.startTimeChecker = function() {
-      var caller, eventHandler;
+      var caller, timeChecker;
       clearInterval(this.interval);
       this.intervalSet = true;
       caller = this;
-      eventHandler = function() {
+      timeChecker = function() {
         caller.checkState();
       };
-      this.interval = setInterval(eventHandler, 500);
+      this.interval = setInterval(timeChecker, 500);
     };
     Presentz.prototype.stopTimeChecker = function() {
       clearInterval(this.interval);
