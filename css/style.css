@@ -224,6 +224,7 @@ p {
 	float: left;
 	margin: 10px 0 10px 20px;
 	padding: 7px;
+	height: 220px;
 }
 
 .thumbcontainer .thumb {
