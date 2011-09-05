@@ -83,7 +83,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         newHeight = $("#html5player").height();
         $("#videoContainer").height(newHeight);
         $(".mejs-container").height(newHeight);
-        return this.player.height = newHeight;
+        this.player.height = newHeight;
       }
     };
     Html5Video.prototype.currentTime = function() {
@@ -278,12 +278,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       };
       this.video.changeVideo(fakeVideoData, this.wouldPlay);
       this.player = this.video.player;
-      this.adjustSize = this.video.adjustSize;
-      this.currentTime = this.video.currentTime;
       this.skipTo = this.video.skipTo;
     };
     BlipTv.prototype.handle = function(presentation) {
       return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://blip.tv") !== -1;
+    };
+    BlipTv.prototype.adjustSize = function() {
+      this.video.adjustSize();
+    };
+    BlipTv.prototype.currentTime = function() {
+      return this.video.currentTime();
+    };
+    BlipTv.prototype.skipTo = function(time) {
+      return this.video.skipTo(time);
     };
     return BlipTv;
   })();
