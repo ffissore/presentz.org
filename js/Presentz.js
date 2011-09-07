@@ -126,6 +126,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       if ($("#videoContainer").children().length === 0) {
         width = $("#videoContainer").width();
         height = (width / data[0].width) * data[0].height;
+        this.sizer = new Sizer(width, height, "videoContainer");
         videoHtml = "<iframe id='vimeoPlayer' src='" + movieUrl + "' width='" + width + "' height='" + height + "' frameborder='0'></iframe>";
         $("#videoContainer").append(videoHtml);
         iframe = $("#videoContainer iframe")[0];
@@ -181,7 +182,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       }
       return false;
     };
-    Vimeo.prototype.adjustSize = function() {};
+    Vimeo.prototype.adjustSize = function() {
+      var iframe, newSize;
+      newSize = this.sizer.optimalSize();
+      iframe = $("#videoContainer iframe");
+      if (iframe.width() !== newSize.width) {
+        iframe.width(newSize.width);
+        iframe.height(newSize.height);
+      }
+    };
     return Vimeo;
   })();
   Youtube = (function() {
