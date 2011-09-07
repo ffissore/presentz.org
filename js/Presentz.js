@@ -91,7 +91,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
     Html5Video.prototype.skipTo = function(time) {
       if (this.player && this.player.currentTime) {
-        this.player.currentTime = time;
+        this.player.setCurrentTime(time);
         return true;
       }
       return false;
