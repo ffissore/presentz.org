@@ -393,6 +393,71 @@ initPresentz( {
             "url" : "http://www.slideshare.net/jssurvivalguide-110128045155-phpapp02#77",
             "title" : "and...",
             "time" : 1242
+          },
+          {
+            "url" : "http://www.slideshare.net/jssurvivalguide-110128045155-phpapp02#78",
+            "title" : "and...",
+            "time" : 1257
+          },
+          {
+            "url" : "http://www.slideshare.net/jssurvivalguide-110128045155-phpapp02#79",
+            "title" : "and...",
+            "time" : 1275
+          },
+          {
+            "url" : "http://www.slideshare.net/jssurvivalguide-110128045155-phpapp02#80",
+            "title" : "and...",
+            "time" : 1291
+          },
+          {
+            "url" : "http://www.slideshare.net/jssurvivalguide-110128045155-phpapp02#81",
+            "title" : "and...",
+            "time" : 1308
+          },
+          {
+            "url" : "http://www.slideshare.net/jssurvivalguide-110128045155-phpapp02#82",
+            "title" : "and...",
+            "time" : 1316
+          },
+          {
+            "url" : "http://www.slideshare.net/jssurvivalguide-110128045155-phpapp02#83",
+            "title" : "and...",
+            "time" : 1347
+          },
+          {
+            "url" : "http://www.slideshare.net/jssurvivalguide-110128045155-phpapp02#84",
+            "title" : "and...",
+            "time" : 1378
+          },
+          {
+            "url" : "http://www.slideshare.net/jssurvivalguide-110128045155-phpapp02#85",
+            "title" : "and...",
+            "time" : 1380
+          },
+          {
+            "url" : "http://www.slideshare.net/jssurvivalguide-110128045155-phpapp02#86",
+            "title" : "and...",
+            "time" : 1383
+          },
+          {
+            "url" : "http://www.slideshare.net/jssurvivalguide-110128045155-phpapp02#87",
+            "title" : "and...",
+            "time" : 1426
+          },
+          {
+            "url" : "http://www.slideshare.net/jssurvivalguide-110128045155-phpapp02#88",
+            "title" : "and...",
+            "time" : 1450
+          },
+          {
+            "url" : "http://www.slideshare.net/jssurvivalguide-110128045155-phpapp02#89",
+            "title" : "and...",
+            "time" : 1480
+          },
+          {
+            "url" : "http://www.slideshare.net/jssurvivalguide-110128045155-phpapp02#100",
+            "title" : "and...",
+            "time" : 1502
           }
           
           
