@@ -60,7 +60,7 @@ initPresentz( {
         "title" : "Production Rule System",
         "time" : 1762
       }, {
-        "url" : "http://jugtorino.presentz.org/201009_drools/201010171445064935927.swf",
+        "url" : "http://jugtorino.presentz.org/201009_drools/drools_modules.jpg",
         "title" : "Drools Modules",
         "time" : 1827
       }, {
@@ -68,7 +68,7 @@ initPresentz( {
         "title" : "Inference Engine",
         "time" : 2199
       }, {
-        "url" : "http://jugtorino.presentz.org/201009_drools/201010171445064935927.swf",
+        "url" : "http://jugtorino.presentz.org/201009_drools/drools_modules.jpg",
         "title" : "Drools Modules",
         "time" : 2208
       }, {
