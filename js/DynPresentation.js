@@ -19,13 +19,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 (function() {
   var importExternalJS, param, params, _i, _len;
   importExternalJS = function(param) {
-    var script, scriptUrl, scripts;
+    var ajaxCall, scriptUrl;
     scriptUrl = param.substr(2);
-    script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = scriptUrl;
-    scripts = $("script");
-    return $(scripts[scripts.length - 1]).append(script);
+    ajaxCall = {
+      url: scriptUrl,
+      dataType: "jsonp",
+      jsonpCallback: "initPresentz"
+    };
+    $.ajax(ajaxCall);
   };
   params = window.location.search.substring(1).split("&");
   for (_i = 0, _len = params.length; _i < _len; _i++) {
