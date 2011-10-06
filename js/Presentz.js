@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function() {
-  var Agenda, BlipTv, Html5Video, ImgSlide, Presentz, Sizer, SlideShare, SwfSlide, Video, Vimeo, Youtube;
+  var Agenda, BlipTv, Html5Video, ImgSlide, NullAgenda, Presentz, Sizer, SlideShare, SwfSlide, Video, Vimeo, Youtube;
   Video = (function() {
     function Video(playState, pauseState, finishState, presentz) {
       this.playState = playState;
@@ -486,6 +486,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
     return Agenda;
   })();
+  NullAgenda = (function() {
+    function NullAgenda() {}
+    NullAgenda.prototype.build = function() {};
+    NullAgenda.prototype.select = function() {};
+    return NullAgenda;
+  })();
   Sizer = (function() {
     function Sizer(startingWidth, startingHeight, containerName) {
       this.startingWidth = startingWidth;
@@ -516,7 +522,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.defaultVideoPlugin = new Html5Video(this, videoContainer);
       this.defaultSlidePlugin = new ImgSlide(slideContainer);
       this.currentChapterIndex = -1;
-      this.agenda = new Agenda(agendaContainer);
+      if (!(agendaContainer != null)) {
+        this.agenda = new NullAgenda();
+      } else {
+        this.agenda = new Agenda(agendaContainer);
+      }
     }
     Presentz.prototype.registerVideoPlugin = function(plugin) {
       this.videoPlugins.push(plugin);
