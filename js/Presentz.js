@@ -402,7 +402,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       var atts, swfslide;
       if ($("#" + this.slideContainer + " object").length === 0) {
         $("#" + this.slideContainer).empty();
-        $("" + this.slideContainer).append("<div id='swfslidecontainer'></div>");
+        $("#" + this.slideContainer).append("<div id='swfslidecontainer'></div>");
         atts = {
           id: "swfslide"
         };
