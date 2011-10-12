@@ -535,30 +535,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.slidePlugins.push(plugin);
     };
     Presentz.prototype.init = function(presentation) {
-      var plugin, videoPlugins;
       this.presentation = presentation;
       this.howManyChapters = this.presentation.chapters.length;
-      if (this.presentation.title) {
+      if (this.presentation.title != null) {
         document.title = this.presentation.title;
       }
       this.agenda.build(this.presentation);
-      videoPlugins = (function() {
-        var _i, _len, _ref, _results;
-        _ref = this.videoPlugins;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          plugin = _ref[_i];
-          if (plugin.handle(this.presentation)) {
-            _results.push(plugin);
-          }
-        }
-        return _results;
-      }).call(this);
-      if (videoPlugins.length > 0) {
-        this.videoPlugin = videoPlugins[0];
-      } else {
-        this.videoPlugin = this.defaultVideoPlugin;
-      }
+      this.videoPlugin = this.findVideoPlugin();
     };
     Presentz.prototype.changeChapter = function(chapterIndex, slideIndex, play) {
       var currentMedia, currentSlide;
@@ -574,19 +557,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       }
     };
     Presentz.prototype.checkSlideChange = function(currentTime) {
-      var candidateSlide, slide, slideIndex, slides, _i, _len;
+      var candidateSlide, slide, slides, _i, _len;
       slides = this.presentation.chapters[this.currentChapterIndex].media.slides;
-      candidateSlide = void 0;
-      slideIndex = -1;
       for (_i = 0, _len = slides.length; _i < _len; _i++) {
         slide = slides[_i];
-        if (slide.time < currentTime) {
+        if (slide.time <= currentTime) {
           candidateSlide = slide;
-          slideIndex++;
         }
       }
-      if (candidateSlide !== void 0 && this.currentSlide.url !== candidateSlide.url) {
-        this.changeSlide(candidateSlide, this.currentChapterIndex, slideIndex);
+      if ((candidateSlide != null) && this.currentSlide.url !== candidateSlide.url) {
+        this.changeSlide(candidateSlide, this.currentChapterIndex, slides.indexOf(candidateSlide));
       }
     };
     Presentz.prototype.changeSlide = function(slide, chapterIndex, slideIndex) {
@@ -595,9 +575,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.slidePlugin.changeSlide(slide);
       this.agenda.select(this.presentation, chapterIndex, slideIndex);
     };
+    Presentz.prototype.findVideoPlugin = function() {
+      var plugin, plugins;
+      plugins = (function() {
+        var _i, _len, _ref, _results;
+        _ref = this.videoPlugins;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          plugin = _ref[_i];
+          if (plugin.handle(this.presentation)) {
+            _results.push(plugin);
+          }
+        }
+        return _results;
+      }).call(this);
+      if (plugins.length > 0) {
+        return plugins[0];
+      }
+      return this.defaultVideoPlugin;
+    };
     Presentz.prototype.findSlidePlugin = function(slide) {
-      var plugin, slidePlugins;
-      slidePlugins = (function() {
+      var plugin, plugins;
+      plugins = (function() {
         var _i, _len, _ref, _results;
         _ref = this.slidePlugins;
         _results = [];
@@ -609,8 +608,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         }
         return _results;
       }).call(this);
-      if (slidePlugins.length > 0) {
-        return slidePlugins[0];
+      if (plugins.length > 0) {
+        return plugins[0];
       }
       return this.defaultSlidePlugin;
     };
