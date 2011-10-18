@@ -220,7 +220,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       } else {
         this.player.cueVideoByUrl(movieUrl);
       }
-      if (this.wouldPlay && this.player !== void 0) {
+      if (this.wouldPlay && (this.player != null)) {
         if (!this.presentz.intervalSet) {
           this.presentz.startTimeChecker();
         }
@@ -322,7 +322,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
     ImgSlide.prototype.adjustSize = function() {
       var img, newSize, slideContainer;
-      if (this.sizer === void 0) {
+      if (!(this.sizer != null)) {
         slideContainer = $("#" + this.slideContainer);
         this.sizer = new Sizer(slideContainer.width(), slideContainer.height(), this.slideContainer);
       }
@@ -332,6 +332,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         img[0].setAttribute("width", newSize.width);
         return img[0].setAttribute("height", newSize.height);
       }
+    };
+    ImgSlide.prototype.preload = function(slide) {
+      var fakeImage;
+      fakeImage = new Image();
+      fakeImage.src = slide.url;
     };
     return ImgSlide;
   })();
@@ -388,6 +393,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         return currentSlide.height = newSize.height;
       }
     };
+    SlideShare.prototype.preload = function() {};
     return SlideShare;
   })();
   SwfSlide = (function() {
@@ -421,6 +427,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         return currentSlide.height = newSize.height;
       }
     };
+    SwfSlide.prototype.preload = function(slide) {};
     return SwfSlide;
   })();
   Agenda = (function() {
@@ -570,9 +577,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       }
     };
     Presentz.prototype.changeSlide = function(slide, chapterIndex, slideIndex) {
+      var slides, _i, _len;
       this.currentSlide = slide;
       this.slidePlugin = this.findSlidePlugin(slide);
       this.slidePlugin.changeSlide(slide);
+      slides = this.presentation.chapters[chapterIndex].media.slides;
+      slides = slides.slice(slideIndex + 1, (slideIndex + 5 + 1) || 9e9);
+      for (_i = 0, _len = slides.length; _i < _len; _i++) {
+        slide = slides[_i];
+        this.findSlidePlugin(slide).preload(slide);
+      }
       this.agenda.select(this.presentation, chapterIndex, slideIndex);
     };
     Presentz.prototype.findVideoPlugin = function() {
