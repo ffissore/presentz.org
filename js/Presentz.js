@@ -18,6 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function() {
   var Agenda, BlipTv, Html5Video, ImgSlide, NullAgenda, Presentz, Sizer, SlideShare, SwfSlide, Video, Vimeo, Youtube;
+  var __indexOf = Array.prototype.indexOf || function(item) {
+    for (var i = 0, l = this.length; i < l; i++) {
+      if (this[i] === item) return i;
+    }
+    return -1;
+  };
   Video = (function() {
     function Video(playState, pauseState, finishState, presentz) {
       this.playState = playState;
@@ -309,6 +315,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ImgSlide = (function() {
     function ImgSlide(slideContainer) {
       this.slideContainer = slideContainer;
+      this.preloadedSlides = [];
     }
     ImgSlide.prototype.changeSlide = function(slide) {
       var slideContainer;
@@ -333,10 +340,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         return img[0].setAttribute("height", newSize.height);
       }
     };
-    ImgSlide.prototype.preload = function(slide) {
-      var fakeImage;
-      fakeImage = new Image();
-      fakeImage.src = slide.url;
+    ImgSlide.prototype.preload = function(slides) {
+      var image, images, slide, _i, _len, _ref;
+      images = [];
+      for (_i = 0, _len = slides.length; _i < _len; _i++) {
+        slide = slides[_i];
+        if (!(_ref = slide.url, __indexOf.call(this.preloadedSlides, _ref) >= 0)) {
+          image = new Image();
+          image.src = slide.url;
+          images.push(image);
+          this.preloadedSlides.push(slide.url);
+        }
+      }
+      return images;
     };
     return ImgSlide;
   })();
@@ -400,6 +416,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     function SwfSlide(slideContainer) {
       this.slideContainer = slideContainer;
       this.sizer = new Sizer(598, 480, this.slideContainer);
+      this.preloadedSlides = [];
     }
     SwfSlide.prototype.handle = function(slide) {
       return slide.url.toLowerCase().indexOf(".swf") !== -1;
@@ -427,7 +444,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         return currentSlide.height = newSize.height;
       }
     };
-    SwfSlide.prototype.preload = function(slide) {};
+    SwfSlide.prototype.preload = function(slides) {
+      var atts, caller, index, slide, _i, _len, _ref;
+      $("#swfpreloadslidecontainer").empty();
+      index = 0;
+      for (_i = 0, _len = slides.length; _i < _len; _i++) {
+        slide = slides[_i];
+        if (!(_ref = slide.url, __indexOf.call(this.preloadedSlides, _ref) >= 0)) {
+          $("#" + this.slideContainer).append("<div id='swfpreloadslidecontainer" + index + "'></div>");
+          atts = {
+            id: "swfpreloadslide" + index
+          };
+          caller = this;
+          swfobject.embedSWF(slide.url, "swfpreloadslidecontainer" + index, "1", "1", "8", null, null, null, atts, function() {
+            return caller.preloadedSlides.push(slide.url);
+          });
+        }
+      }
+    };
     return SwfSlide;
   })();
   Agenda = (function() {
@@ -577,16 +611,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       }
     };
     Presentz.prototype.changeSlide = function(slide, chapterIndex, slideIndex) {
-      var slides, _i, _len;
+      var slides;
       this.currentSlide = slide;
       this.slidePlugin = this.findSlidePlugin(slide);
       this.slidePlugin.changeSlide(slide);
       slides = this.presentation.chapters[chapterIndex].media.slides;
       slides = slides.slice(slideIndex + 1, (slideIndex + 5 + 1) || 9e9);
-      for (_i = 0, _len = slides.length; _i < _len; _i++) {
-        slide = slides[_i];
-        this.findSlidePlugin(slide).preload(slide);
-      }
+      this.findSlidePlugin(slide).preload(slides);
       this.agenda.select(this.presentation, chapterIndex, slideIndex);
     };
     Presentz.prototype.findVideoPlugin = function() {
