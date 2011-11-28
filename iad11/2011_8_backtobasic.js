@@ -1,7 +1,7 @@
 initPresentz( {
-  "title" : "Back to basic",
+  "title" : "Back to basic - Paolo Polce",
   "chapters" : [ {
-    "title" : "Back to basic",
+    "title" : "Back to basic - Paolo Polce",
     "duration" : 3577,
     "media" : {
       "video" : {
