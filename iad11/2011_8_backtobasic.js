@@ -2,7 +2,7 @@ initPresentz( {
   "title" : "Back to basic - Paolo Polce",
   "chapters" : [ {
     "title" : "Back to basic - Paolo Polce",
-    "duration" : 3577,
+    "duration" : 3578,
     "media" : {
       "video" : {
         "url" : "http://vimeo.com/32500100"

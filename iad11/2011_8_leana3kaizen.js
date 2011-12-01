@@ -2,7 +2,7 @@ initPresentz( {
   "title" : "Lean, A3 e Kaizen - Andrea Provaglio",
   "chapters" : [ {
     "title" : "Lean, A3 e Kaizen - Andrea Provaglio",
-    "duration" : 3577,
+    "duration" : 2563,
     "media" : {
       "video" : {
         "url" : "http://vimeo.com/32509793"

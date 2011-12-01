@@ -13,13 +13,14 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>Italian Agile Day 2011</title>
+  <title></title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="http://presentz.org/apple-touch-icon.png">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mediaelementplayer.css">
 
   <script src="http://presentz.org/js/modernizr-1.7.min.js"></script>
 </head>
@@ -28,38 +29,22 @@
   <div id="main" role="main">
     <div class="container">
       <div class="header">
-      	<a href="/"><img src="img/IAD468.gif" border="0"/></a>
+      	<a href="/catalog.html"><img src="img/IAD468.gif" border="0"/></a>
+        <!--
+           <div class="menu">
+             <a href="#">Options</a>
+             <a href="#">Menu-1</a>
+             <a href="#">Menu-2</a>
+           </div>
+        -->
       </div>
-      <div class="intro">
-        <div class="thumbcontainer">
-					<div class="thumb">
-						<a href="backtobasic.html" title="Paolo Polce Back to Basic"><img src="http://b.vimeocdn.com/ts/219/932/219932017_200.jpg" alt="Paolo Polce Back to Basic"/></a>
-					</div>
-					<div class="comment">
-						<h2>Paolo Polce</h2>
-						Back to Basic
-					</div>
-				</div>
-        <div class="thumbcontainer">
-					<div class="thumb">
-						<a href="leana3kaizen.html" title="Claudio Perrone Lean, A3 e kaizen"><img src="http://b.vimeocdn.com/ts/220/002/220002645_200.jpg" alt="Claudio Perrone Lean, A3 e kaizen"/></a>
-					</div>
-					<div class="comment">
-						<h2>Claudio Perrone</h2>
-						Lean, A3 e kaizen
-					</div>
-				</div>
-        <div class="thumbcontainer">
-					<div class="thumb">
-						<a href="overcomingselforganizationblocks.html" title="Andrea Provaglio - Overcoming self-organization blocks"><img src="http://b.vimeocdn.com/ts/220/081/220081268_200.jpg" alt="Andrea Provaglio Overcoming self-organization blocks"/></a>
-					</div>
-					<div class="comment">
-						<h2>Andrea Provaglio</h2>
-						Overcoming self-organization blocks
-					</div>
-				</div>
+      <div class="presentation">
+        <div id="videoContainer" class="slide"></div>
+        <div id="slideContainer" class="slide"></div>
         <div class="floatCloser"></div>
       </div>
+      <div class="controls"><div id="agendaContainer"></div></div>
+      <div class="footer"></div>
     </div>
   </div>
 
@@ -68,6 +53,21 @@
     <p>Copyright &copy; 2011 <a href="mailto:federico^_^AT^_^presentz.org">Federico Fissore</a></p>
   </footer>
 </div>
+
+<script src="http://presentz.org/js/jquery.min.js"></script>
+<script src="http://presentz.org/js/froogaloop.js"></script>
+<script src="http://presentz.org/js/swfobject.js"></script>
+<script src="http://presentz.org/js/mediaelement-and-player.js"></script>
+<script src="http://presentz.org/js/Presentz.js"></script>
+<script>
+presentz = new Presentz("videoContainer", "slideContainer", "agendaContainer");
+
+function initPresentz(presentation) {
+	presentz.init(presentation);
+	presentz.changeChapter(0, 0, true);
+}
+</script>
+<script src="http://iad11.presentz.org/2011_8_overcomingselforganizationblocks.js"></script>
 
 <!--[if lt IE 7 ]>
 <script src="http://presentz.org/js/dd_belatedpng.js"></script>
@@ -88,4 +88,3 @@ piwikTracker.enableLinkTracking();
 <!-- End Piwik Tracking Code -->
 </body>
 </html>
-
