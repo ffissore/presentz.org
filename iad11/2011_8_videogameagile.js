@@ -8,8 +8,11 @@ initPresentz( {
         "url" : "http://vimeo.com/32937330"
       },
       "slides" : [ {
-        "url" : "http://www.slideshare.net/videogameeagile-111122033313-phpapp02#2",
+        "url" : "http://www.slideshare.net/videogameeagile-111122033313-phpapp02#1",
         "time" : 0
+      }, {
+        "url" : "http://www.slideshare.net/videogameeagile-111122033313-phpapp02#2",
+        "time" : 1
       }, {
         "url" : "http://www.slideshare.net/videogameeagile-111122033313-phpapp02#3",
         "time" : 71
