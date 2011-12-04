@@ -1,7 +1,7 @@
 initPresentz( {
-  "title" : "Lean, A3 e Kaizen - Andrea Provaglio",
+  "title" : "Lean, A3 e Kaizen - Claudio Perrone",
   "chapters" : [ {
-    "title" : "Lean, A3 e Kaizen - Andrea Provaglio",
+    "title" : "Lean, A3 e Kaizen - Claudio Perrone",
     "duration" : 2563,
     "media" : {
       "video" : {
