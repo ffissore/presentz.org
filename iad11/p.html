@@ -76,6 +76,12 @@ function initPresentz(presentation) {
 <![endif]-->
 <!-- Piwik -->
 <script type="text/javascript">
+var uvOptions = {};
+(function() {
+  var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+  uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/BtoAk3pfbifzb1YtVbuWFQ.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+})();
 var pkBaseURL = (("https:" == document.location.protocol) ? "https://fissore.org/piwik/" : "http://fissore.org/piwik/");
 document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
 </script><script type="text/javascript">
