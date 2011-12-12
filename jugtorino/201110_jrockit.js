@@ -1,11 +1,11 @@
 initPresentz( {
-  "title" : "How a JVM works - Simone Bordet",
+  "title" : "How a JVM works with a look to JRockit- Simone Bordet",
   "chapters" : [ {
-    "title" : "How a JVM works - Simone Bordet",
+    "title" : "How a JVM works with a look to JRockit - Simone Bordet",
     "duration" : 4820,
     "media" : {
       "video" : {
-        "url" : "/jrockit.webm"
+        "url" : "http://vimeo.com/33528296"
       },
       "slides" : [
           {

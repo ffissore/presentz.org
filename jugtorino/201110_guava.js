@@ -5,7 +5,7 @@ initPresentz( {
     "duration" : 760,
     "media" : {
       "video" : {
-        "url" : "/guava.webm"
+        "url" : "http://vimeo.com/33525589"
       },
       "slides" : [
           {
