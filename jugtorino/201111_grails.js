@@ -73,7 +73,7 @@ initPresentz( {
             "time" : 3705
           },
           {
-            "url" : "http://jugtorino.presentz.org/201111_grails/grails_17.swf",
+            "url" : "http://jugtorino.presentz.org/201111_grails/grails_14.swf",
             "time" : 3755
           },
           {
