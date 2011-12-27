@@ -1,11 +1,11 @@
 initPresentz( {
-  "title" : "Orient DB - Roberto Franchini",
+  "title" : "OrientDB - Roberto Franchini",
   "chapters" : [ {
-    "title" : "Orient DB - Roberto Franchini",
-    "duration" : 4820,
+    "title" : "OrientDB - Roberto Franchini",
+    "duration" : 3290,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/33528296"
+        "url" : "http://vimeo.com/33963256"
       },
       "slides" : [
           {
@@ -85,92 +85,68 @@ initPresentz( {
             "time" : 1064
           },
           {
-            "url" : "http://jugtorino.presentz.org/201109_orient/img19.png",
-            "time" : 2943
+            "url" : "http://jugtorino.presentz.org/201109_orient/img16.png",
+            "time" : 1133
+          },
+          {
+            "url" : "http://jugtorino.presentz.org/201109_orient/img17.png",
+            "time" : 1211
           },
           {
             "url" : "http://jugtorino.presentz.org/201109_orient/img18.png",
-            "time" : 2950
+            "time" : 1271
           },
           {
             "url" : "http://jugtorino.presentz.org/201109_orient/img19.png",
-            "time" : 2998
+            "time" : 1437
           },
           {
             "url" : "http://jugtorino.presentz.org/201109_orient/img20.png",
-            "time" : 3057
+            "time" : 1505
           },
           {
             "url" : "http://jugtorino.presentz.org/201109_orient/img21.png",
-            "time" : 3067
+            "time" : 1607
           },
           {
             "url" : "http://jugtorino.presentz.org/201109_orient/img22.png",
-            "time" : 3170
+            "time" : 1636
           },
           {
             "url" : "http://jugtorino.presentz.org/201109_orient/img23.png",
-            "time" : 3234
+            "time" : 1665
           },
           {
             "url" : "http://jugtorino.presentz.org/201109_orient/img24.png",
-            "time" : 3353
+            "time" : 1792
           },
           {
             "url" : "http://jugtorino.presentz.org/201109_orient/img25.png",
-            "time" : 3430
+            "time" : 1820
           },
           {
             "url" : "http://jugtorino.presentz.org/201109_orient/img26.png",
-            "time" : 3593
+            "time" : 1844
           },
           {
             "url" : "http://jugtorino.presentz.org/201109_orient/img27.png",
-            "time" : 3830
+            "time" : 1882
           },
           {
             "url" : "http://jugtorino.presentz.org/201109_orient/img28.png",
-            "time" : 3855
+            "time" : 1943
           },
           {
             "url" : "http://jugtorino.presentz.org/201109_orient/img29.png",
-            "time" : 3856
+            "time" : 2064
           },
           {
             "url" : "http://jugtorino.presentz.org/201109_orient/img30.png",
-            "time" : 3947
+            "time" : 2211
           },
           {
             "url" : "http://jugtorino.presentz.org/201109_orient/img31.png",
-            "time" : 4004
-          },
-          {
-            "url" : "http://jugtorino.presentz.org/201109_orient/img32.png",
-            "time" : 4056
-          },
-          {
-            "url" : "http://jugtorino.presentz.org/201109_orient/img33.png",
-            "time" : 4204
-          },
-          {
-            "url" : "http://jugtorino.presentz.org/201109_orient/img34.png",
-            "time" : 4310
-          },
-          {
-            "url" : "http://jugtorino.presentz.org/201109_orient/img35.png",
-            "time" : 4314
-          },
-          {
-            "url" : "http://jugtorino.presentz.org/201109_orient/img36.png",
-            "time" : 4377
-          },
-          {
-            "url" : "http://jugtorino.presentz.org/201109_orient/img37.png",
-            "time" : 4459
-          },
-          {
-            "url" : "http://jugtorino.presentz.org/201109_orient/img38.png",
-            "time" : 4543
+            "time" : 2276
           } ]
     }
   } ]
