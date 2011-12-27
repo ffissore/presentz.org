@@ -2,10 +2,10 @@ initPresentz( {
   "title" : "Groovy & Grails - Roberto Cappa",
   "chapters" : [ {
     "title" : "Groovy & Grails - Roberto Cappa",
-    "duration" : 4820,
+    "duration" : 5720,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/33528296"
+        "url" : "http://vimeo.com/33963414"
       },
       "slides" : [
           {
