@@ -18,19 +18,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function() {
   var Agenda, BlipTv, Html5Video, ImgSlide, NullAgenda, Presentz, Sizer, SlideShare, SwfSlide, Video, Vimeo, Youtube;
-  var __indexOf = Array.prototype.indexOf || function(item) {
-    for (var i = 0, l = this.length; i < l; i++) {
-      if (this[i] === item) return i;
-    }
-    return -1;
-  };
+  var __hasProp = Object.prototype.hasOwnProperty, __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (__hasProp.call(this, i) && this[i] === item) return i; } return -1; };
+
   Video = (function() {
+
     function Video(playState, pauseState, finishState, presentz) {
       this.playState = playState;
       this.pauseState = pauseState;
       this.finishState = finishState;
       this.presentz = presentz;
     }
+
     Video.prototype.handleEvent = function(event) {
       if (event === this.playState) {
         this.presentz.startTimeChecker();
@@ -41,14 +39,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         this.presentz.changeChapter(this.presentz.currentChapterIndex + 1, 0, true);
       }
     };
+
     return Video;
+
   })();
+
   Html5Video = (function() {
+
     function Html5Video(presentz, videoContainer) {
       this.presentz = presentz;
       this.videoContainer = videoContainer;
       this.video = new Video("play", "pause", "ended", this.presentz);
     }
+
     Html5Video.prototype.changeVideo = function(videoData, wouldPlay) {
       var availableWidth, caller, playerOptions, videoHtml;
       this.wouldPlay = wouldPlay;
@@ -66,6 +69,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       };
       new MediaElementPlayer("#html5player", playerOptions);
     };
+
     Html5Video.prototype.onPlayerLoaded = function(player) {
       var caller, eventHandler;
       this.player = player;
@@ -78,12 +82,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       player.addEventListener("ended", eventHandler, false);
       this.player.load();
       if (this.wouldPlay) {
-        if (!this.presentz.intervalSet) {
-          this.presentz.startTimeChecker();
-        }
+        if (!this.presentz.intervalSet) this.presentz.startTimeChecker();
         return this.player.play();
       }
     };
+
     Html5Video.prototype.adjustSize = function() {
       var newHeight;
       if (this.player.height !== $("#html5player").height()) {
@@ -93,9 +96,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         this.player.height = newHeight;
       }
     };
+
     Html5Video.prototype.currentTime = function() {
       return this.player.currentTime;
     };
+
     Html5Video.prototype.skipTo = function(time) {
       if (this.player && this.player.currentTime) {
         this.player.setCurrentTime(time);
@@ -103,10 +108,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       }
       return false;
     };
+
     return Html5Video;
+
   })();
+
   Vimeo = (function() {
     var videoId;
+
     function Vimeo(presentz, videoContainer) {
       this.presentz = presentz;
       this.videoContainer = videoContainer;
@@ -114,6 +123,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.wouldPlay = false;
       this.currentTimeInSeconds = 0.0;
     }
+
     Vimeo.prototype.changeVideo = function(videoData, wouldPlay) {
       var ajaxCall;
       this.videoData = videoData;
@@ -125,9 +135,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       };
       $.ajax(ajaxCall);
     };
+
     videoId = function(videoData) {
       return videoData.url.substr(videoData.url.lastIndexOf("/") + 1);
     };
+
     Vimeo.prototype.receiveVideoInfo = function(data) {
       var caller, height, iframe, movieUrl, onReady, videoHtml, width;
       movieUrl = "http://player.vimeo.com/video/" + (videoId(this.videoData)) + "?api=1&player_id=vimeoPlayer";
@@ -148,9 +160,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         iframe.src = movieUrl;
       }
     };
+
     Vimeo.prototype.handle = function(presentation) {
       return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://vimeo.com") !== -1;
     };
+
     Vimeo.prototype.onReady = function(id) {
       var caller, video;
       video = $f(id);
@@ -172,15 +186,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       });
       if (this.wouldPlay) {
         this.wouldPlay = false;
-        if (!this.presentz.intervalSet) {
-          this.presentz.startTimeChecker();
-        }
+        if (!this.presentz.intervalSet) this.presentz.startTimeChecker();
         video.api("play");
       }
     };
+
     Vimeo.prototype.currentTime = function() {
       return this.currentTimeInSeconds;
     };
+
     Vimeo.prototype.skipTo = function(time) {
       var player;
       if (time <= this.loadedTimeInSeconds) {
@@ -190,6 +204,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       }
       return false;
     };
+
     Vimeo.prototype.adjustSize = function() {
       var iframe, newSize;
       newSize = this.sizer.optimalSize();
@@ -199,10 +214,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         iframe.height(newSize.height);
       }
     };
+
     return Vimeo;
+
   })();
+
   Youtube = (function() {
     var videoId;
+
     function Youtube(presentz, videoContainer) {
       this.presentz = presentz;
       this.videoContainer = videoContainer;
@@ -210,6 +229,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.sizer = new Sizer(425, 356, this.videoContainer);
       window.onYouTubePlayerReady = this.onYouTubePlayerReady;
     }
+
     Youtube.prototype.changeVideo = function(videoData, wouldPlay) {
       var atts, movieUrl, params;
       this.wouldPlay = wouldPlay;
@@ -227,31 +247,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         this.player.cueVideoByUrl(movieUrl);
       }
       if (this.wouldPlay && (this.player != null)) {
-        if (!this.presentz.intervalSet) {
-          this.presentz.startTimeChecker();
-        }
+        if (!this.presentz.intervalSet) this.presentz.startTimeChecker();
         this.player.playVideo();
       }
     };
+
     videoId = function(videoData) {
       return videoData.url.substr(videoData.url.lastIndexOf("/") + 1);
     };
+
     Youtube.prototype.handle = function(presentation) {
       return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://youtu.be") !== -1;
     };
+
     Youtube.prototype.onYouTubePlayerReady = function(id) {
       var youTube;
       youTube = presentz.videoPlugin;
       youTube.id = id;
       youTube.player = $("#" + id)[0];
-      youTube.player.addEventListener("onStateChange", "presentz.videoPlugin.video.handleEvent");
+      try {
+        youTube.player.addEventListener("onStateChange", "presentz.videoPlugin.video.handleEvent", false);
+      } catch (error) {
+        console.error(error);
+      }
       if (youTube.wouldPlay) {
-        if (!presentz.intervalSet) {
-          presentz.startTimeChecker();
-        }
+        if (!presentz.intervalSet) presentz.startTimeChecker();
         youTube.player.playVideo();
       }
     };
+
     Youtube.prototype.adjustSize = function() {
       var newSize, player;
       newSize = this.sizer.optimalSize();
@@ -261,9 +285,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         player.height(newSize.height);
       }
     };
+
     Youtube.prototype.currentTime = function() {
       return this.player.getCurrentTime();
     };
+
     Youtube.prototype.skipTo = function(time) {
       if (this.player) {
         this.player.seekTo(time, true);
@@ -271,13 +297,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       }
       return false;
     };
+
     return Youtube;
+
   })();
+
   BlipTv = (function() {
+
     function BlipTv(presentz, videoContainer) {
       this.presentz = presentz;
       this.video = new Html5Video(this.presentz, videoContainer);
     }
+
     BlipTv.prototype.changeVideo = function(videoData, wouldPlay) {
       var ajaxCall;
       this.wouldPlay = wouldPlay;
@@ -289,6 +320,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       };
       $.ajax(ajaxCall);
     };
+
     BlipTv.prototype.receiveVideoInfo = function(data) {
       var fakeVideoData;
       fakeVideoData = {
@@ -298,25 +330,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.player = this.video.player;
       this.skipTo = this.video.skipTo;
     };
+
     BlipTv.prototype.handle = function(presentation) {
       return presentation.chapters[0].media.video.url.toLowerCase().indexOf("http://blip.tv") !== -1;
     };
+
     BlipTv.prototype.adjustSize = function() {
       this.video.adjustSize();
     };
+
     BlipTv.prototype.currentTime = function() {
       return this.video.currentTime();
     };
+
     BlipTv.prototype.skipTo = function(time) {
       return this.video.skipTo(time);
     };
+
     return BlipTv;
+
   })();
+
   ImgSlide = (function() {
+
     function ImgSlide(slideContainer) {
       this.slideContainer = slideContainer;
       this.preloadedSlides = [];
     }
+
     ImgSlide.prototype.changeSlide = function(slide) {
       var slideContainer;
       if ($("#" + this.slideContainer + " img").length === 0) {
@@ -327,6 +368,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         $("#" + this.slideContainer + " img")[0].setAttribute("src", slide.url);
       }
     };
+
     ImgSlide.prototype.adjustSize = function() {
       var img, newSize, slideContainer;
       if (!(this.sizer != null)) {
@@ -340,32 +382,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         return img[0].setAttribute("height", newSize.height);
       }
     };
+
     ImgSlide.prototype.preload = function(slides) {
       var image, images, slide, _i, _len, _ref;
       images = [];
       for (_i = 0, _len = slides.length; _i < _len; _i++) {
         slide = slides[_i];
-        if (!(_ref = slide.url, __indexOf.call(this.preloadedSlides, _ref) >= 0)) {
-          image = new Image();
-          image.src = slide.url;
-          images.push(image);
-          this.preloadedSlides.push(slide.url);
+        if (!(!(_ref = slide.url, __indexOf.call(this.preloadedSlides, _ref) >= 0))) {
+          continue;
         }
+        image = new Image();
+        image.src = slide.url;
+        images.push(image);
+        this.preloadedSlides.push(slide.url);
       }
       return images;
     };
+
     return ImgSlide;
+
   })();
+
   SlideShare = (function() {
     var slideNumber;
+
     function SlideShare(slideContainer) {
       this.slideContainer = slideContainer;
       this.currentSlide = 0;
       this.sizer = new Sizer(598, 480, this.slideContainer);
     }
+
     SlideShare.prototype.handle = function(slide) {
       return slide.url.toLowerCase().indexOf("http://www.slideshare.net") !== -1;
     };
+
     SlideShare.prototype.changeSlide = function(slide) {
       var atts, currentSlide, docId, flashvars, nextSlide, params, player;
       if ($("#" + this.slideContainer).children().length === 0) {
@@ -397,9 +447,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         }
       }
     };
+
     slideNumber = function(slide) {
       return parseInt(slide.url.substr(slide.url.lastIndexOf("#") + 1));
     };
+
     SlideShare.prototype.adjustSize = function() {
       var currentSlide, newSize;
       newSize = this.sizer.optimalSize();
@@ -409,18 +461,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         return currentSlide.height = newSize.height;
       }
     };
+
     SlideShare.prototype.preload = function() {};
+
     return SlideShare;
+
   })();
+
   SwfSlide = (function() {
+
     function SwfSlide(slideContainer) {
       this.slideContainer = slideContainer;
       this.sizer = new Sizer(598, 480, this.slideContainer);
       this.preloadedSlides = [];
     }
+
     SwfSlide.prototype.handle = function(slide) {
       return slide.url.toLowerCase().indexOf(".swf") !== -1;
     };
+
     SwfSlide.prototype.changeSlide = function(slide) {
       var atts, swfslide;
       if ($("#" + this.slideContainer + " object").length === 0) {
@@ -435,6 +494,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         swfslide.data = slide.url;
       }
     };
+
     SwfSlide.prototype.adjustSize = function() {
       var currentSlide, newSize;
       newSize = this.sizer.optimalSize();
@@ -444,31 +504,38 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         return currentSlide.height = newSize.height;
       }
     };
+
     SwfSlide.prototype.preload = function(slides) {
       var atts, caller, index, slide, _i, _len, _ref;
       $("#swfpreloadslidecontainer").empty();
       index = 0;
       for (_i = 0, _len = slides.length; _i < _len; _i++) {
         slide = slides[_i];
-        if (!(_ref = slide.url, __indexOf.call(this.preloadedSlides, _ref) >= 0)) {
-          $("#" + this.slideContainer).append("<div id='swfpreloadslidecontainer" + index + "'></div>");
-          atts = {
-            id: "swfpreloadslide" + index
-          };
-          caller = this;
-          swfobject.embedSWF(slide.url, "swfpreloadslidecontainer" + index, "1", "1", "8", null, null, null, atts, function() {
-            return caller.preloadedSlides.push(slide.url);
-          });
+        if (!(!(_ref = slide.url, __indexOf.call(this.preloadedSlides, _ref) >= 0))) {
+          continue;
         }
+        $("#" + this.slideContainer).append("<div id='swfpreloadslidecontainer" + index + "'></div>");
+        atts = {
+          id: "swfpreloadslide" + index
+        };
+        caller = this;
+        swfobject.embedSWF(slide.url, "swfpreloadslidecontainer" + index, "1", "1", "8", null, null, null, atts, function() {
+          return caller.preloadedSlides.push(slide.url);
+        });
       }
     };
+
     return SwfSlide;
+
   })();
+
   Agenda = (function() {
     var computeBarWidths;
+
     function Agenda(agendaContainer) {
       this.agendaContainer = agendaContainer;
     }
+
     Agenda.prototype.build = function(presentation) {
       var agenda, chapter, chapterIndex, slideIndex, title, totalDuration, widths, _i, _len, _ref, _ref2, _ref3;
       totalDuration = 0;
@@ -484,13 +551,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           if (presentation.chapters[chapterIndex].media.slides[slideIndex].title) {
             title = presentation.chapters[chapterIndex].media.slides[slideIndex].title;
           } else {
-            title = "" + presentation.chapters[chapterIndex].title + " - Slide " + (slideIndex + 1);
+            title = "Slide " + (slideIndex + 1);
           }
           agenda += "<div style='width: " + widths[chapterIndex][slideIndex] + "px' onclick='presentz.changeChapter(" + chapterIndex + ", " + slideIndex + ", true);'><div class='progress'></div><div class='info'>" + title + "</div></div>";
         }
       }
       $("#" + this.agendaContainer).html(agenda);
     };
+
     Agenda.prototype.select = function(presentation, chapterIndex, slideIndex) {
       var currentSlideIndex, index, _ref;
       $("#" + this.agendaContainer + " div.agendaselected").removeClass("agendaselected");
@@ -502,6 +570,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       }
       $("#" + this.agendaContainer + " div:nth-child(" + (currentSlideIndex + 1) + ")").addClass("agendaselected");
     };
+
     computeBarWidths = function(duration, maxWidth, chapters) {
       var chapter, chapterIndex, clength, slideIndex, slideWidth, slideWidthSum, slides, widths, _i, _len, _ref;
       widths = new Array();
@@ -513,32 +582,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         slideWidthSum = 0;
         slides = chapter.media.slides;
         for (slideIndex = 1, _ref = slides.length - 1; 1 <= _ref ? slideIndex <= _ref : slideIndex >= _ref; 1 <= _ref ? slideIndex++ : slideIndex--) {
-          if (slides.length > 1) {
-            slideWidth = Math.round(clength * slides[slideIndex].time / chapter.duration - slideWidthSum) - 1;
-            slideWidth = slideWidth > 0 ? slideWidth : 1;
-            slideWidthSum += slideWidth + 1;
-            widths[chapterIndex][slideIndex - 1] = slideWidth;
-          }
+          if (!(slides.length > 1)) continue;
+          slideWidth = Math.round(clength * slides[slideIndex].time / chapter.duration - slideWidthSum) - 1;
+          slideWidth = slideWidth > 0 ? slideWidth : 1;
+          slideWidthSum += slideWidth + 1;
+          widths[chapterIndex][slideIndex - 1] = slideWidth;
         }
         widths[chapterIndex][slides.length - 1] = clength - slideWidthSum - 1;
         chapterIndex++;
       }
       return widths;
     };
+
     return Agenda;
+
   })();
+
   NullAgenda = (function() {
+
     function NullAgenda() {}
+
     NullAgenda.prototype.build = function() {};
+
     NullAgenda.prototype.select = function() {};
+
     return NullAgenda;
+
   })();
+
   Sizer = (function() {
+
     function Sizer(startingWidth, startingHeight, containerName) {
       this.startingWidth = startingWidth;
       this.startingHeight = startingHeight;
       this.containerName = containerName;
     }
+
     Sizer.prototype.optimalSize = function() {
       var containerWidth, newHeight, newWidth, result;
       newHeight = $(window).height() - ($("div.container div.header").height() + $("div.container div.controls").height()) * 2;
@@ -554,9 +633,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       };
       return result;
     };
+
     return Sizer;
+
   })();
+
   Presentz = (function() {
+
     function Presentz(videoContainer, slideContainer, agendaContainer) {
       this.videoPlugins = [new Vimeo(this, videoContainer), new Youtube(this, videoContainer), new BlipTv(this, videoContainer)];
       this.slidePlugins = [new SlideShare(slideContainer), new SwfSlide(slideContainer)];
@@ -569,12 +652,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         this.agenda = new Agenda(agendaContainer);
       }
     }
+
     Presentz.prototype.registerVideoPlugin = function(plugin) {
       this.videoPlugins.push(plugin);
     };
+
     Presentz.prototype.registerSlidePlugin = function(plugin) {
       this.slidePlugins.push(plugin);
     };
+
     Presentz.prototype.init = function(presentation) {
       this.presentation = presentation;
       this.howManyChapters = this.presentation.chapters.length;
@@ -584,6 +670,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.agenda.build(this.presentation);
       this.videoPlugin = this.findVideoPlugin();
     };
+
     Presentz.prototype.changeChapter = function(chapterIndex, slideIndex, play) {
       var currentMedia, currentSlide;
       currentMedia = this.presentation.chapters[chapterIndex].media;
@@ -597,29 +684,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         this.currentChapterIndex = chapterIndex;
       }
     };
+
     Presentz.prototype.checkSlideChange = function(currentTime) {
       var candidateSlide, slide, slides, _i, _len;
       slides = this.presentation.chapters[this.currentChapterIndex].media.slides;
       for (_i = 0, _len = slides.length; _i < _len; _i++) {
         slide = slides[_i];
-        if (slide.time <= currentTime) {
-          candidateSlide = slide;
-        }
+        if (slide.time <= currentTime) candidateSlide = slide;
       }
       if ((candidateSlide != null) && this.currentSlide.url !== candidateSlide.url) {
         this.changeSlide(candidateSlide, this.currentChapterIndex, slides.indexOf(candidateSlide));
       }
     };
+
     Presentz.prototype.changeSlide = function(slide, chapterIndex, slideIndex) {
       var slides;
       this.currentSlide = slide;
       this.slidePlugin = this.findSlidePlugin(slide);
       this.slidePlugin.changeSlide(slide);
       slides = this.presentation.chapters[chapterIndex].media.slides;
-      slides = slides.slice(slideIndex + 1, (slideIndex + 5 + 1) || 9e9);
+      slides = slides.slice(slideIndex + 1, (slideIndex + 5) + 1 || 9e9);
       this.findSlidePlugin(slide).preload(slides);
       this.agenda.select(this.presentation, chapterIndex, slideIndex);
     };
+
     Presentz.prototype.findVideoPlugin = function() {
       var plugin, plugins;
       plugins = (function() {
@@ -628,17 +716,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           plugin = _ref[_i];
-          if (plugin.handle(this.presentation)) {
-            _results.push(plugin);
-          }
+          if (plugin.handle(this.presentation)) _results.push(plugin);
         }
         return _results;
       }).call(this);
-      if (plugins.length > 0) {
-        return plugins[0];
-      }
+      if (plugins.length > 0) return plugins[0];
       return this.defaultVideoPlugin;
     };
+
     Presentz.prototype.findSlidePlugin = function(slide) {
       var plugin, plugins;
       plugins = (function() {
@@ -647,17 +732,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           plugin = _ref[_i];
-          if (plugin.handle(slide)) {
-            _results.push(plugin);
-          }
+          if (plugin.handle(slide)) _results.push(plugin);
         }
         return _results;
       }).call(this);
-      if (plugins.length > 0) {
-        return plugins[0];
-      }
+      if (plugins.length > 0) return plugins[0];
       return this.defaultSlidePlugin;
     };
+
     Presentz.prototype.startTimeChecker = function() {
       var caller, timeChecker;
       clearInterval(this.interval);
@@ -670,14 +752,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       };
       this.interval = setInterval(timeChecker, 500);
     };
+
     Presentz.prototype.stopTimeChecker = function() {
       clearInterval(this.interval);
       this.intervalSet = false;
     };
+
     Presentz.prototype.checkState = function() {
       this.checkSlideChange(this.videoPlugin.currentTime());
     };
+
     return Presentz;
+
   })();
+
   window.Presentz = Presentz;
+
 }).call(this);

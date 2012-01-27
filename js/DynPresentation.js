@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function() {
   var importExternalJS, param, params, _i, _len;
+
   importExternalJS = function(param) {
     var ajaxCall, scriptUrl;
     scriptUrl = param.substr(2);
@@ -28,11 +29,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
     $.ajax(ajaxCall);
   };
+
   params = window.location.search.substring(1).split("&");
+
   for (_i = 0, _len = params.length; _i < _len; _i++) {
     param = params[_i];
-    if (param.indexOf("p=") === 0 && param.length > 2) {
-      importExternalJS(param);
-    }
+    if (param.indexOf("p=") === 0 && param.length > 2) importExternalJS(param);
   }
+
 }).call(this);
