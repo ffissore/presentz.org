@@ -265,11 +265,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       youTube = presentz.videoPlugin;
       youTube.id = id;
       youTube.player = $("#" + id)[0];
-      try {
-        youTube.player.addEventListener("onStateChange", "presentz.videoPlugin.video.handleEvent", false);
-      } catch (error) {
-        console.error(error);
-      }
+      youTube.player.addEventListener("onStateChange", "presentz.videoPlugin.video.handleEvent");
       if (youTube.wouldPlay) {
         if (!presentz.intervalSet) presentz.startTimeChecker();
         youTube.player.playVideo();
