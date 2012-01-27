@@ -53,29 +53,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     }
 
     Html5Video.prototype.changeVideo = function(videoData, wouldPlay) {
-      var availableWidth, caller, playerOptions, videoHtml;
+      var availableWidth, playerOptions, videoHtml,
+        _this = this;
       this.wouldPlay = wouldPlay;
       $("#" + this.videoContainer).empty();
       availableWidth = $("#" + this.videoContainer).width();
       videoHtml = "<video id='html5player' controls preload='none' src='" + videoData.url + "' width='" + availableWidth + "'></video>";
       $("#" + this.videoContainer).append(videoHtml);
-      caller = this;
       playerOptions = {
         enableAutosize: false,
         timerRate: 500,
         success: function(me) {
-          caller.onPlayerLoaded(me);
+          _this.onPlayerLoaded(me);
         }
       };
       new MediaElementPlayer("#html5player", playerOptions);
     };
 
     Html5Video.prototype.onPlayerLoaded = function(player) {
-      var caller, eventHandler;
+      var eventHandler,
+        _this = this;
       this.player = player;
-      caller = this;
       eventHandler = function(event) {
-        caller.video.handleEvent(event.type);
+        _this.video.handleEvent(event.type);
       };
       player.addEventListener("play", eventHandler, false);
       player.addEventListener("pause", eventHandler, false);
@@ -141,7 +141,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
 
     Vimeo.prototype.receiveVideoInfo = function(data) {
-      var caller, height, iframe, movieUrl, onReady, videoHtml, width;
+      var height, iframe, movieUrl, onReady, videoHtml, width,
+        _this = this;
       movieUrl = "http://player.vimeo.com/video/" + (videoId(this.videoData)) + "?api=1&player_id=vimeoPlayer";
       if ($("#" + this.videoContainer).children().length === 0) {
         width = $("#" + this.videoContainer).width();
@@ -150,9 +151,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         videoHtml = "<iframe id='vimeoPlayer' src='" + movieUrl + "' width='" + width + "' height='" + height + "' frameborder='0'></iframe>";
         $("#" + this.videoContainer).append(videoHtml);
         iframe = $("#" + this.videoContainer + " iframe")[0];
-        caller = this;
         onReady = function(id) {
-          caller.onReady(id);
+          _this.onReady(id);
         };
         $f(iframe).addEvent("ready", onReady);
       } else {
@@ -166,23 +166,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
 
     Vimeo.prototype.onReady = function(id) {
-      var caller, video;
+      var video,
+        _this = this;
       video = $f(id);
-      caller = this;
       video.addEvent("play", function() {
-        caller.video.handleEvent("play");
+        _this.video.handleEvent("play");
       });
       video.addEvent("pause", function() {
-        caller.video.handleEvent("pause");
+        _this.video.handleEvent("pause");
       });
       video.addEvent("finish", function() {
-        caller.video.handleEvent("finish");
+        _this.video.handleEvent("finish");
       });
       video.addEvent("playProgress", function(data) {
-        return caller.currentTimeInSeconds = data.seconds;
+        return _this.currentTimeInSeconds = data.seconds;
       });
       video.addEvent("loadProgress", function(data) {
-        return caller.loadedTimeInSeconds = parseInt(parseFloat(data.duration) * parseFloat(data.percent));
+        return _this.loadedTimeInSeconds = parseInt(parseFloat(data.duration) * parseFloat(data.percent));
       });
       if (this.wouldPlay) {
         this.wouldPlay = false;
@@ -502,21 +502,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
 
     SwfSlide.prototype.preload = function(slides) {
-      var atts, caller, index, slide, _i, _len, _ref;
-      $("#swfpreloadslidecontainer").empty();
+      var atts, index, slide, _i, _len, _ref,
+        _this = this;
       index = 0;
       for (_i = 0, _len = slides.length; _i < _len; _i++) {
         slide = slides[_i];
         if (!(!(_ref = slide.url, __indexOf.call(this.preloadedSlides, _ref) >= 0))) {
           continue;
         }
+        $("#swfpreloadslide" + index).remove();
         $("#" + this.slideContainer).append("<div id='swfpreloadslidecontainer" + index + "'></div>");
         atts = {
-          id: "swfpreloadslide" + index
+          id: "swfpreloadslide" + index,
+          style: "visibility: hidden; position: absolute; margin: 0 0 0 0; top: 0;"
         };
-        caller = this;
         swfobject.embedSWF(slide.url, "swfpreloadslidecontainer" + index, "1", "1", "8", null, null, null, atts, function() {
-          return caller.preloadedSlides.push(slide.url);
+          return _this.preloadedSlides.push(slide.url);
         });
       }
     };
@@ -737,14 +738,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
 
     Presentz.prototype.startTimeChecker = function() {
-      var caller, timeChecker;
+      var timeChecker,
+        _this = this;
       clearInterval(this.interval);
       this.intervalSet = true;
-      caller = this;
       timeChecker = function() {
-        caller.videoPlugin.adjustSize();
-        caller.slidePlugin.adjustSize();
-        caller.checkState();
+        _this.videoPlugin.adjustSize();
+        _this.slidePlugin.adjustSize();
+        _this.checkState();
       };
       this.interval = setInterval(timeChecker, 500);
     };
