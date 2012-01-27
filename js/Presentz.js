@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 (function() {
-  var Agenda, BlipTv, Html5Video, ImgSlide, NullAgenda, Presentz, Sizer, SlideShare, SwfSlide, Video, Vimeo, Youtube;
-  var __hasProp = Object.prototype.hasOwnProperty, __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (__hasProp.call(this, i) && this[i] === item) return i; } return -1; };
+  var Agenda, BlipTv, Html5Video, ImgSlide, NullAgenda, Presentz, Sizer, SlideShare, SwfSlide, Video, Vimeo, Youtube,
+    __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   Video = (function() {
 
