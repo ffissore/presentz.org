@@ -2,3 +2,4 @@
 *.ipr
 *.iws
 *.xcf
+node_modules
