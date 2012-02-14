@@ -1,5 +1,6 @@
 fs = require "fs"
 path = require "path"
+_s = require "underscore.string"
 ###
 GET home page.
 ###
@@ -15,8 +16,12 @@ exports.index= (req, res) ->
     title: "Presentz"
   
 exports.show_catalog= (req, res, next) ->
-  catalog_path = "#{__dirname}/../#{req.params.catalog}"
+  catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
   path.exists catalog_path, (exists) =>
     return next new NotFound(catalog_path) if not exists
     fs.readdir catalog_path, (err, files) ->
-      res.send files
+      presentations = (file for file in files when _s.endsWith file, ".js" or _s.endsWith file, ".json")
+      presentations.sort()
+      res.render "catalog", 
+        title: "Catalog",
+        presentations: presentations
