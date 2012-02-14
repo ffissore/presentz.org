@@ -1,4 +1,4 @@
-initPresentz( {
+{
   "title" : "JVM Garbage Collector Tuning Explained",
   "chapters" : [ {
     "title" : "JVM Garbage Collector Tuning Explained",
@@ -178,4 +178,4 @@ initPresentz( {
       } ]
     }
   } ]
-})
+}

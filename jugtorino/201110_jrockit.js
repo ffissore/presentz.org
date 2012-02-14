@@ -1,4 +1,4 @@
-initPresentz( {
+{
   "title" : "How a JVM works with a look to JRockit - Simone Bordet",
   "chapters" : [ {
     "title" : "How a JVM works with a look to JRockit - Simone Bordet",
@@ -174,4 +174,4 @@ initPresentz( {
           } ]
     }
   } ]
-});
+}

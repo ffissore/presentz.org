@@ -1,4 +1,4 @@
-initPresentz( {
+{
 		"title" : "Xtext: un framework per la creazione di DSL",
   "chapters" : [ {
     "title" : "Xtext: un framework per la creazione di DSL",
@@ -54,4 +54,4 @@ initPresentz( {
       } ]
     }
   } ]
-})
+}

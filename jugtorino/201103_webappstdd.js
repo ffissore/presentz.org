@@ -1,4 +1,4 @@
-initPresentz( {
+{
   "title" : "Webapps in TDD",
   "chapters" : [ {
     "title" : "Webapps in TDD",
@@ -131,4 +131,4 @@ initPresentz( {
           } ]
     }
   } ]
-});
+}

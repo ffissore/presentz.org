@@ -1,4 +1,4 @@
-initPresentz( {
+{
   "title" : "Groovy & Grails - Roberto Cappa",
   "chapters" : [ {
     "title" : "Groovy & Grails - Roberto Cappa",
@@ -90,4 +90,4 @@ initPresentz( {
           } ]
     }
   } ]
-});
+}

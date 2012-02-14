@@ -1,4 +1,4 @@
-initPresentz( {
+{
 	"title" : "Stripes: web development is fun again!",
 	"chapters" : [ {
 		"title" : "Stripes: web development is fun again!",
@@ -138,4 +138,4 @@ initPresentz( {
 			} ]
 		}
 	} ]
-})
+}

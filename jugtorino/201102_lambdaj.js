@@ -1,4 +1,4 @@
-initPresentz( {
+{
 	"title" : "No more loops with Lambdaj: an internal DSL to manipulate collections without loops",
 	"chapters" : [ {
 		"title" : "No more loops with Lambdaj: an internal DSL to manipulate collections without loops",
@@ -114,4 +114,4 @@ initPresentz( {
 			} ]
 		}
 	} ]
-})
+}

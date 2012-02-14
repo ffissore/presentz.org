@@ -1,4 +1,4 @@
-initPresentz( {
+{
 	"title" : "Akka - Concurrency, Scalability & Fault Tolerance 2.0 with Actors & STM",
 	"chapters" : [ {
 		"title" : "Akka - Concurrency, Scalability & Fault Tolerance 2.0 with Actors & STM",
@@ -130,5 +130,4 @@ initPresentz( {
 			} ]
 		}
 	} ]
-})
-
+}

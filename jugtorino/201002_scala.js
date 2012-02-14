@@ -1,4 +1,4 @@
-initPresentz( {
+{
   "title" : "Scala, un Java migliore",
   "chapters" : [ {
     "title" : "Scala, un Java migliore",
@@ -333,4 +333,4 @@ initPresentz( {
           } ]
     }
   } ]
-})
+}

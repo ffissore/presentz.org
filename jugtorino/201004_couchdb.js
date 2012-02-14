@@ -1,4 +1,4 @@
-initPresentz( {
+{
   "title" : "Introduzione a CouchDB",
   "chapters" : [ {
     "title" : "Introduzione a CouchDB",
@@ -74,4 +74,4 @@ initPresentz( {
       } ]
     }
   } ]
-})
+}

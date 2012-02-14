@@ -1,4 +1,4 @@
-initPresentz( {
+{
   "title" : "Clean your code!",
   "chapters" : [ {
     "title" : "Clean your code!",
@@ -30,4 +30,4 @@ initPresentz( {
       } ]
     }
   } ]
-})
+}

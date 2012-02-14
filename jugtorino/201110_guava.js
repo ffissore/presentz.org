@@ -1,4 +1,4 @@
-initPresentz( {
+{
   "title" : "Google Guava - Roberto Franchini",
   "chapters" : [ {
     "title" : "Google Guava - Roberto Franchini",
@@ -54,4 +54,4 @@ initPresentz( {
           } ]
     }
   } ]
-});
+}

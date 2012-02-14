@@ -1,4 +1,4 @@
-initPresentz( {
+{
   "title" : "Drools: declarative programming with rules",
   "chapters" : [ {
     "title" : "Drools: declarative programming with rules",
@@ -150,4 +150,4 @@ initPresentz( {
       } ]
     }
   } ]
-});
+}

@@ -1,4 +1,4 @@
-initPresentz( {
+{
   "title" : "GIT, (a) Gentle InTroduction",
   "chapters" : [ {
     "title" : "GIT, (a) Gentle InTroduction",
@@ -302,4 +302,4 @@ initPresentz( {
       } ]
     }
   } ]
-})
+}

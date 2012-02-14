@@ -1,4 +1,4 @@
-initPresentz( {
+{
   "title" : "Le novità di Java 7",
   "chapters" : [ {
     "title" : "Java 7",
@@ -64,4 +64,4 @@ initPresentz( {
       } ]
     }
   } ]
-})
+}

@@ -1,9 +1,6 @@
 fs = require "fs"
 path = require "path"
 _s = require "underscore.string"
-###
-GET home page.
-###
 
 class NotFound extends Error
   constructor: (msg) ->
@@ -20,8 +17,15 @@ exports.show_catalog= (req, res, next) ->
   path.exists catalog_path, (exists) =>
     return next new NotFound(catalog_path) if not exists
     fs.readdir catalog_path, (err, files) ->
-      presentations = (file for file in files when _s.endsWith file, ".js" or _s.endsWith file, ".json")
-      presentations.sort()
-      res.render "catalog", 
-        title: "Catalog",
-        presentations: presentations
+      files = (file for file in files when _s.endsWith file, ".js" or _s.endsWith file, ".json")
+      presentations = []
+      for file in files
+        fs.readFile "#{catalog_path}/#{file}", "utf-8", (err, data) ->
+          presentations.push
+            file: file
+            data: JSON.parse(data)
+          if files.length == presentations.length
+            res.render "catalog", 
+              title: "Catalog",
+              presentations: presentations
+

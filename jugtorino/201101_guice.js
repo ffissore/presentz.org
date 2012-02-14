@@ -1,4 +1,4 @@
-initPresentz( {
+{
 	"title" : "Guice: that's the way I want DI! Without XML!!!",
 	"chapters" : [ {
 		"title" : "Guice: that's the way I want DI! Without XML!!!",
@@ -174,4 +174,4 @@ initPresentz( {
 			} ]
 		}
 	} ]
-})
+}

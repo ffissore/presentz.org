@@ -1,4 +1,4 @@
-initPresentz( {
+{
   "title" : "Apache Pivot",
   "chapters" : [ {
     "title" : "Apache Pivot",
@@ -74,4 +74,4 @@ initPresentz( {
       } ]
     }
   } ]
-})
+}

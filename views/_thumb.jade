@@ -1,8 +1,8 @@
 .thumbcontainer
   .thumb
-    a(href="201111_grails.html",title="2011/11 Groovy & Grails")
+    a(href="#{thumb.file}",title="2011/11 Groovy & Grails")
       img(src="http://b.vimeocdn.com/ts/230/926/230926141_200.jpg",alt="2011/11 Groovy & Grails")
   .comment
-    h2 2011/11 - Roberto Cappa
-    | Groovy & Grails
+    h2= thumb.data.title
+    | #{thumb.data.title}
 

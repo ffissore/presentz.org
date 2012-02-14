@@ -1,4 +1,4 @@
-initPresentz( {
+{
   "title" : "OrientDB - Roberto Franchini",
   "chapters" : [ {
     "title" : "OrientDB - Roberto Franchini",
@@ -150,4 +150,4 @@ initPresentz( {
           } ]
     }
   } ]
-});
+}

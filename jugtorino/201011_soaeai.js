@@ -1,4 +1,4 @@
-initPresentz( {
+{
   "title" : "Apache Synapse VS. Apache Camel",
   "chapters" : [
       {
@@ -175,4 +175,4 @@ initPresentz( {
               } ]
         }
       } ]
-});
+}

@@ -1,4 +1,4 @@
-initPresentz( {
+{
   "title" : "Mocks",
   "chapters" : [ {
     "title" : "Mocks",
@@ -162,4 +162,4 @@ initPresentz( {
       } ]
     }
   } ]
-})
+}
