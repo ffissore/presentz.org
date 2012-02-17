@@ -1,7 +1,7 @@
 .thumbcontainer
   .thumb
-    a(href="#{thumb.file}",title="2011/11 Groovy & Grails")
-      img(src="http://b.vimeocdn.com/ts/230/926/230926141_200.jpg",alt="2011/11 Groovy & Grails")
+    a(href="#{thumb.file}",title="#{thumb.data.title}")
+      img(src="#{thumb.thumb}",alt="#{thumb.data.title}")
   .comment
     h2= thumb.data.title
     | #{thumb.data.title}
