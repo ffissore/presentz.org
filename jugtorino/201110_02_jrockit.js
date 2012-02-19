@@ -1,11 +1,13 @@
 {
-  "title" : "How a JVM works with a look to JRockit - Simone Bordet",
+  "title" : "How a JVM works with a look to JRockit",
+  "time" : "20111019",
+  "speaker" : "Simone Bordet",
   "chapters" : [ {
-    "title" : "How a JVM works with a look to JRockit - Simone Bordet",
     "duration" : 4820,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/33528296"
+        "url" : "http://vimeo.com/33528296",
+        "thumb" : "http://b.vimeocdn.com/ts/227/637/227637923_200.jpg"
       },
       "slides" : [
           {

@@ -1,11 +1,14 @@
 {
-	"title" : "Akka - Concurrency, Scalability & Fault Tolerance 2.0 with Actors & STM",
+	"title" : "Akka",
+	"title_long" : "Akka - Concurrency, Scalability & Fault Tolerance 2.0 with Actors & STM",
+  "time" : "20110223",
+  "speaker" : "Mario Fusco",
 	"chapters" : [ {
-		"title" : "Akka - Concurrency, Scalability & Fault Tolerance 2.0 with Actors & STM",
 		"duration" : 4553.76,
 		"media" : {
 			"video" : {
-				"url" : "http://vimeo.com/30307084"
+				"url" : "http://vimeo.com/30307084",
+        "thumb" : "http://jugtorino.presentz.org/201102_akka.thumb.png"
 			},
 			"slides" : [ {
 				"url" : "http://jugtorino.presentz.org/201102_akka/20110507133718425983.swf",

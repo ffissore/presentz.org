@@ -1,11 +1,14 @@
 {
   "title" : "Mocks",
+  "time" : "20100318",
+  "speaker" : "Marco Faustinelli",
   "chapters" : [ {
     "title" : "Mocks",
     "duration" : 3708.96,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/28604494"
+        "url" : "http://vimeo.com/28604494",
+        "thumb" : "http://b.vimeocdn.com/ts/190/938/190938095_200.jpg"
       },
       "slides" : [ {
         "url" : "http://jugtorino.presentz.org/201003_mocks/201003230757512837173.swf",

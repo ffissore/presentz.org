@@ -1,11 +1,13 @@
 {
   "title" : "Introduzione a CouchDB",
+  "time" : "20100414",
+  "speaker" : "Federico Fissore",
   "chapters" : [ {
-    "title" : "Introduzione a CouchDB",
     "duration" : 3778.69,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/28604724"
+        "url" : "http://vimeo.com/28604724",
+        "thumb" : "http://b.vimeocdn.com/ts/190/939/190939781_200.jpg"
       },
       "slides" : [ {
         "url" : "http://jugtorino.presentz.org/201004_couchdb/20100418214016805295.swf",

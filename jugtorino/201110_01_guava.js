@@ -1,11 +1,13 @@
 {
-  "title" : "Google Guava - Roberto Franchini",
+  "title" : "Google Guava",
+  "time" : "20111019",
+  "speaker" : "Roberto Franchini",
   "chapters" : [ {
-    "title" : "Google Guava - Roberto Franchini",
     "duration" : 760,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/33525589"
+        "url" : "http://vimeo.com/33525589",
+        "thumb" : "http://b.vimeocdn.com/ts/227/617/227617158_200.jpg"
       },
       "slides" : [
           {

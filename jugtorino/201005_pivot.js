@@ -1,11 +1,13 @@
 {
   "title" : "Apache Pivot",
+  "time" : "20100528",
+  "speaker" : "Sandro Martini",
   "chapters" : [ {
-    "title" : "Apache Pivot",
     "duration" : 5901.76,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/28927070"
+        "url" : "http://vimeo.com/28927070",
+        "thumb" : "http://b.vimeocdn.com/ts/193/350/193350394_200.jpg"
       },
       "slides" : [ {
         "url" : "http://jugtorino.presentz.org/201005_pivot/201006150915310945483.swf",

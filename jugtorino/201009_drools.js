@@ -1,11 +1,13 @@
 {
   "title" : "Drools: declarative programming with rules",
+  "time" : "20100922",
+  "speaker" : "Raffaella Ventaglio",
   "chapters" : [ {
-    "title" : "Drools: declarative programming with rules",
     "duration" : 6572.3,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/29249429"
+        "url" : "http://vimeo.com/29249429",
+        "thumb" : "http://b.vimeocdn.com/ts/195/957/195957312_200.jpg"
       },
       "slides" : [ {
         "url" : "http://jugtorino.presentz.org/201009_drools/201010171445036556965.swf",

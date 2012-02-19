@@ -1,11 +1,13 @@
 {
   "title" : "GIT, (a) Gentle InTroduction",
+  "time" : "20101104",
+  "speaker" : "Bruno Bossola",
   "chapters" : [ {
-    "title" : "GIT, (a) Gentle InTroduction",
     "duration" : 5676.14,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/28343315"
+        "url" : "http://vimeo.com/28343315",
+        "thumb" : "http://b.vimeocdn.com/ts/189/402/189402647_200.jpg"
       },
       "slides" : [ {
         "url" : "http://jugtorino.presentz.org/201011_git/201011180806106222558.swf",

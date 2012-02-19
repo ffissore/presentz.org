@@ -1,11 +1,13 @@
 {
 	"title" : "Guice: that's the way I want DI! Without XML!!!",
+  "time" : "20110128",
+  "speaker" : "Bruno Bossola",
 	"chapters" : [ {
-		"title" : "Guice: that's the way I want DI! Without XML!!!",
 		"duration" : 3104,
 		"media" : {
 			"video" : {
-				"url" : "http://vimeo.com/29592823"
+				"url" : "http://vimeo.com/29592823",
+        "thumb" : "http://b.vimeocdn.com/ts/198/305/198305381_200.jpg"
 			},
 			"slides" : [ {
 				"url" : "http://jugtorino.presentz.org/201101_guice/201103192038524311812.swf",

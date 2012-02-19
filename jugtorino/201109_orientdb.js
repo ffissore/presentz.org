@@ -1,11 +1,13 @@
 {
-  "title" : "OrientDB - Roberto Franchini",
+  "title" : "OrientDB",
+  "time" : "20110921",
+  "speaker" : "Roberto Franchini",
   "chapters" : [ {
-    "title" : "OrientDB - Roberto Franchini",
     "duration" : 3290,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/33963256"
+        "url" : "http://vimeo.com/33963256",
+        "thumb" : "http://b.vimeocdn.com/ts/230/924/230924301_200.jpg"
       },
       "slides" : [
           {

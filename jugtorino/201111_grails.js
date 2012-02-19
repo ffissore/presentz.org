@@ -1,11 +1,13 @@
 {
-  "title" : "Groovy & Grails - Roberto Cappa",
+  "title" : "Groovy & Grails",
+  "time" : "20111116",
+  "speaker" : "Roberto Cappa",
   "chapters" : [ {
-    "title" : "Groovy & Grails - Roberto Cappa",
     "duration" : 5720,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/33963414"
+        "url" : "http://vimeo.com/33963414",
+        "thumb" : "http://b.vimeocdn.com/ts/230/926/230926141_200.jpg"
       },
       "slides" : [
           {

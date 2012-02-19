@@ -1,11 +1,13 @@
 {
 	"title" : "Stripes: web development is fun again!",
+  "time" : "20110128",
+  "speaker" : "Bruno Bossola",
 	"chapters" : [ {
-		"title" : "Stripes: web development is fun again!",
 		"duration" : 3999.16,
 		"media" : {
 			"video" : {
-				"url" : "http://vimeo.com/29592472"
+				"url" : "http://vimeo.com/29592472",
+        "thumb" : "http://b.vimeocdn.com/ts/198/302/198302489_200.jpg"
 			},
 			"slides" : [ {
 				"url" : "http://jugtorino.presentz.org/201101_stripes/201105280853328735264.swf",

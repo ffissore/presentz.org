@@ -1,11 +1,13 @@
 {
   "title" : "Clean your code!",
+  "time" : "20100414",
+  "speaker" : "Roberto Franchini",
   "chapters" : [ {
-    "title" : "Clean your code!",
     "duration" : 1539.44,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/28604681"
+        "url" : "http://vimeo.com/28604681",
+        "thumb" : "http://b.vimeocdn.com/ts/190/939/190939161_200.jpg"
       },
       "slides" : [ {
         "url" : "http://jugtorino.presentz.org/201004_cleancode/20100422132437765705.swf",

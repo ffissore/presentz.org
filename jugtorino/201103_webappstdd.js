@@ -1,11 +1,13 @@
 {
   "title" : "Webapps in TDD",
+  "time" : "20110319",
+  "speaker" : "Carlo Bottiglieri",
   "chapters" : [ {
-    "title" : "Webapps in TDD",
     "duration" : 5309.28,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/29249295"
+        "url" : "http://vimeo.com/29249295",
+        "thumb" : "http://b.vimeocdn.com/ts/195/768/195768397_200.jpg"
       },
       "slides" : [
           {

@@ -1,11 +1,14 @@
 {
-		"title" : "Xtext: un framework per la creazione di DSL",
+	"title" : "Xtext",
+	"title_long" : "Xtext: un framework per la creazione di DSL",
+  "time" : "20100318",
+  "speaker" : "Federico Tomassetti",
   "chapters" : [ {
-    "title" : "Xtext: un framework per la creazione di DSL",
     "duration" : 1468,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/28604604"
+        "url" : "http://vimeo.com/28604604",
+        "thumb" : "http://b.vimeocdn.com/ts/190/938/190938490_200.jpg"
       },
       "slides" : [ {
         "url" : "http://jugtorino.presentz.org/201003_xtext/1.swf",

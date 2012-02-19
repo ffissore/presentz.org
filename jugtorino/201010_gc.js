@@ -1,11 +1,13 @@
 {
   "title" : "JVM Garbage Collector Tuning Explained",
+  "time" : "20101014",
+  "speaker" : "Simone Bordet",
   "chapters" : [ {
-    "title" : "JVM Garbage Collector Tuning Explained",
     "duration" : 6349.1,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/28926599"
+        "url" : "http://vimeo.com/28926599",
+        "thumb" : "http://b.vimeocdn.com/ts/193/347/193347007_200.jpg"
       },
       "slides" : [ {
         "url" : "http://jugtorino.presentz.org/201010_gc/20101101155451826288.swf",

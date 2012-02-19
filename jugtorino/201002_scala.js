@@ -1,11 +1,13 @@
 {
   "title" : "Scala, un Java migliore",
+  "time" : "20100212",
+  "speaker" : "Di Mingo/Marrocco",
   "chapters" : [ {
-    "title" : "Scala, un Java migliore",
     "duration" : 5458.53,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/28343448"
+        "url" : "http://vimeo.com/28343448",
+        "thumb" : "http://b.vimeocdn.com/ts/189/007/189007952_200.jpg"
       },
       "slides" : [
           {

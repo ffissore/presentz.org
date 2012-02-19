@@ -19,22 +19,14 @@ render_catalog = (presentations, res) ->
     title: "Catalog",
     presentations: presentations
     
-read_json_response = (urlStr, callback) ->
-  json = ""
-  http.get url.parse(urlStr), (res) ->
-    res.on "data", (chunk) ->
-      json += chunk
-    res.on "end", ->
-      callback json, urlStr
-      
 fill_presentation_data_from_file= (catalog_path, file, files, presentations, pres, res) ->
   fs.readFile "#{catalog_path}/#{file}", "utf-8", (err, data) ->
     pres.data = JSON.parse(data)
-    read_json_response "http://vimeo.com/api/v2/video/#{pres.data.chapters[0].media.video.url.match(/\d+/)}.json", (json) ->
-      vimeo_data = JSON.parse(json)
-      pres.thumb = vimeo_data[0].thumbnail_medium
-      presentations.push pres
-      render_catalog presentations, res if files.length == presentations.length
+    pres.thumb = pres.data.chapters[0].media.video.thumb
+    pres.title1 = "#{pres.data.time} - #{pres.data.speaker}"
+    pres.title2 = pres.data.title
+    presentations.push pres
+    render_catalog presentations, res if files.length == presentations.length
 
 collect_presentations = (err, files, catalog_path, res) ->
   files = (file for file in files when _s.endsWith file, ".js" or _s.endsWith file, ".json")

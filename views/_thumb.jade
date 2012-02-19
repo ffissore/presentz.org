@@ -1,8 +1,8 @@
 .thumbcontainer
   .thumb
-    a(href="#{thumb.file}",title="#{thumb.data.title}")
-      img(src="#{thumb.thumb}",alt="#{thumb.data.title}")
+    a(href="#{thumb.file}",title="#{thumb.title1} - #{thumb.title2}")
+      img(src="#{thumb.thumb}",alt="#{thumb.title1} - #{thumb.title2}")
   .comment
-    h2= thumb.data.title
-    | #{thumb.data.title}
+    h2= thumb.title1
+    | #{thumb.title2}
 

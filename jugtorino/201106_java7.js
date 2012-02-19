@@ -1,11 +1,13 @@
 {
   "title" : "Le novità di Java 7",
+  "time" : "20110623",
+  "speaker" : "Feerico Fissore",
   "chapters" : [ {
-    "title" : "Java 7",
     "duration" : 4800,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/26315250"
+        "url" : "http://vimeo.com/26315250",
+        "thumb" : "http://jugtorino.presentz.org/java7.thumb.png"
       },
       "slides" : [ {
         "url" : "http://jugtorino.presentz.org/java7/slide1.png",

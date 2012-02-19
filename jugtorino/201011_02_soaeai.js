@@ -1,12 +1,14 @@
 {
   "title" : "Apache Synapse VS. Apache Camel",
+  "time" : "20101123",
+  "speaker" : "Cappa/Ughetti",
   "chapters" : [
       {
-        "title" : "Apache Synapse VS. Apache Camel - Parte 1",
         "duration" : 3539.99,
         "media" : {
           "video" : {
-            "url" : "http://vimeo.com/29949105"
+            "url" : "http://vimeo.com/29949105",
+            "thumb" : "http://b.vimeocdn.com/ts/200/879/200879766_200.jpg"
           },
           "slides" : [
               {
@@ -113,7 +115,6 @@
         }
       },
       {
-        "title" : "Apache Synapse VS. Apache Camel - Parte 2",
         "duration" : 3492.39,
         "media" : {
           "video" : {

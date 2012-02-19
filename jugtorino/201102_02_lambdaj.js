@@ -1,11 +1,14 @@
 {
-	"title" : "No more loops with Lambdaj: an internal DSL to manipulate collections without loops",
+	"title" : "No more loops with Lambdaj",
+	"title_long" : "No more loops with Lambdaj: an internal DSL to manipulate collections without loops",
+  "time" : "20110223",
+  "speaker" : "Mario Fusco",
 	"chapters" : [ {
-		"title" : "No more loops with Lambdaj: an internal DSL to manipulate collections without loops",
 		"duration" : 3125.4,
 		"media" : {
 			"video" : {
-				"url" : "http://vimeo.com/29592562"
+				"url" : "http://vimeo.com/29592562",
+        "thumb" : "http://b.vimeocdn.com/ts/198/303/198303338_200.jpg"
 			},
 			"slides" : [ {
 				"url" : "http://jugtorino.presentz.org/201102_lambdaj/201104151904382938085.swf",
