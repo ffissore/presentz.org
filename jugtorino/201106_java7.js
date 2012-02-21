@@ -7,7 +7,7 @@
     "media" : {
       "video" : {
         "url" : "http://vimeo.com/26315250",
-        "thumb" : "http://jugtorino.presentz.org:3000/assets/jugtorino/images/201106_java7.thumb.png"
+        "thumb" : "http://jugtorino.presentz.org/assets/jugtorino/images/201106_java7.thumb.png"
       },
       "slides" : [ {
         "url" : "http://jugtorino.presentz.org/java7/slide1.png",

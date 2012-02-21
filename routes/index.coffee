@@ -20,22 +20,23 @@ render_catalog = (presentations, res) ->
     title: "Catalog",
     presentations: presentations
     
-fill_presentation_data_from_file= (catalog_path, file, files, presentations, pres, res) ->
-  fs.readFile "#{catalog_path}/#{file}", "utf-8", (err, data) ->
-    pres.data = JSON.parse(data)
-    pres.thumb = pres.data.chapters[0].media.video.thumb
-    pres.title1 = "#{dateutil.format(dateutil.parse(pres.data.time, "YYYYMMDD"), "Y/m")} - #{pres.data.speaker}"
-    pres.title2 = pres.data.title
+fill_presentation_data_from_file= (file, file_name, files_length, presentations, req, res) ->
+  fs.readFile file, "utf-8", (err, data) ->
+    data = JSON.parse(data)
+    pres =
+      id: "#{req.params.catalog_name}/#{file_name.substr(0, file_name.indexOf("."))}"
+      data: data
+      thumb: data.chapters[0].media.video.thumb
+      title1: "#{dateutil.format(dateutil.parse(data.time, "YYYYMMDD"), "Y/m")} - #{data.speaker}"
+      title2: data.title
     presentations.push pres
-    render_catalog presentations, res if files.length == presentations.length
+    render_catalog presentations, res if files_length == presentations.length
 
-collect_presentations = (err, files, catalog_path, res) ->
+collect_presentations = (err, files, catalog_path, req, res) ->
   files = (file for file in files when _s.endsWith file, ".js" or _s.endsWith file, ".json")
   presentations = []
   for file in files
-    pres = 
-      id: file.substr(0, file.indexOf("."))
-    fill_presentation_data_from_file catalog_path, file, files, presentations, pres, res
+    fill_presentation_data_from_file "#{catalog_path}/#{file}", file, files.length, presentations, req, res
   return
   
 exports.index= (req, res) ->
@@ -48,7 +49,7 @@ exports.show_catalog= (req, res, next) ->
   path.exists catalog_path, (exists) ->
     return next new NotFound(catalog_path) if not exists
     fs.readdir catalog_path, (err, files) -> 
-      collect_presentations err, files, catalog_path, res
+      collect_presentations err, files, catalog_path, req, res
 
 exports.show_presentation= (req, res, next) ->
   fs.readFile "#{__dirname}/..#{req.path}.js", "utf-8", (err, data) ->
