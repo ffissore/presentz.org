@@ -51,4 +51,15 @@ exports.show_catalog= (req, res, next) ->
       collect_presentations err, files, catalog_path, res
 
 exports.show_presentation= (req, res, next) ->
-  res.send req.url
+  fs.readFile "#{__dirname}/..#{req.path}.js", "utf-8", (err, data) ->
+    console.log req.url_original
+    console.log req.url
+    pres = JSON.parse(data)
+    res.render "presentation",
+      title: pres.title_long || pres.title
+      url: "#{req.url_original || req.url}.js"
+      
+exports.raw_presentation= (req, res, next) ->
+  fs.readFile "#{__dirname}/..#{req.path}", "utf-8", (err, data) ->
+    data = "#{req.query.jsoncallback}(#{data});" if req.query.jsoncallback
+    res.send data

@@ -1,0 +1,41 @@
+#container
+  #main
+    .container
+      .header
+        a(href="/")
+          span#logonormal JUG
+          span#logobold Torino
+        .presentation
+          #videoContainer.slide
+          #slideContainer.slide
+          .floatCloser
+        .controls
+          #agendaContainer
+        .footer
+  footer
+    p
+      a(href="about.html") About 
+      | -
+      a(href="tos.html") Terms of Service
+    p
+      a(href="/") Presentz 
+      | is free (as in free speech) software. You are strongly invited to 
+      a(href="https://github.com/ffissore/presentz.js") hack, fork 
+      | and 
+      a(href="https://github.com/ffissore/presentz.js/issues") criticize the code.
+    p Copyright &copy; 2011 
+      a(href="mailto:federico^_^AT^_^presentz.org") Federico Fissore
+
+script(src="/assets/javascripts/jquery.min.js")      
+script(src="/assets/javascripts/froogaloop.js")      
+script(src="/assets/javascripts/swfobject.js")      
+script(src="/assets/javascripts/mediaelement-and-player.js")      
+script(src="/assets/javascripts/Presentz.js")
+script
+  presentz = new Presentz("videoContainer", "slideContainer", "agendaContainer");
+  function initPresentz(presentation) {
+    presentz.init(presentation);
+    presentz.changeChapter(0, 0, true);
+  }
+script(src="#{url}?jsoncallback=initPresentz")
+
