@@ -3,10 +3,11 @@
   , "version": "0.0.1"
   , "private": true
   , "dependencies": {
-      "express": "2.5.7"
+      "express": ">= 2.5.7"
     , "jade": ">= 0.0.1"
     , "coffee-script": ">= 1.2.0"
     , "underscore.string": ">= 0.0.1"
     , "underscore": ">= 0.0.1"
+    , "dateutil": ">= 0.0.1"
   }
 }

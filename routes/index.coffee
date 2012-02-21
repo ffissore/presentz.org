@@ -4,6 +4,7 @@ _ = require "underscore"
 _s = require "underscore.string"
 http = require "http"
 url = require "url"
+dateutil = require "dateutil"
 
 class NotFound extends Error
   constructor: (msg) ->
@@ -23,7 +24,7 @@ fill_presentation_data_from_file= (catalog_path, file, files, presentations, pre
   fs.readFile "#{catalog_path}/#{file}", "utf-8", (err, data) ->
     pres.data = JSON.parse(data)
     pres.thumb = pres.data.chapters[0].media.video.thumb
-    pres.title1 = "#{pres.data.time} - #{pres.data.speaker}"
+    pres.title1 = "#{dateutil.format(dateutil.parse(pres.data.time, "YYYYMMDD"), "Y/m")} - #{pres.data.speaker}"
     pres.title2 = pres.data.title
     presentations.push pres
     render_catalog presentations, res if files.length == presentations.length
