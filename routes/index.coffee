@@ -40,6 +40,7 @@ collect_presentations = (err, files, catalog_path, res) ->
 exports.index= (req, res) ->
   res.render "index", 
     title: "Presentz"
+    host: req.headers.host
   
 exports.show_catalog= (req, res, next) ->
   catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
@@ -48,3 +49,5 @@ exports.show_catalog= (req, res, next) ->
     fs.readdir catalog_path, (err, files) -> 
       collect_presentations err, files, catalog_path, res
 
+exports.show_presentation= (req, res, next) ->
+  res.send req.url

@@ -8,7 +8,7 @@
 		"media" : {
 			"video" : {
 				"url" : "http://vimeo.com/30307084",
-        "thumb" : "http://jugtorino.presentz.org/201102_akka.thumb.png"
+        "thumb" : "http://jugtorino.presentz.org:3000/assets/jugtorino/images/201102_akka.thumb.png"
 			},
 			"slides" : [ {
 				"url" : "http://jugtorino.presentz.org/201102_akka/20110507133718425983.swf",
