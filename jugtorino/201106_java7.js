@@ -1,7 +1,7 @@
 {
   "title" : "Le novità di Java 7",
   "time" : "20110623",
-  "speaker" : "Feerico Fissore",
+  "speaker" : "Federico Fissore",
   "chapters" : [ {
     "duration" : 4800,
     "media" : {

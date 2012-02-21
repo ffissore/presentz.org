@@ -14,7 +14,7 @@ class NotFound extends Error
     
 render_catalog = (presentations, res) ->
   presentations = _.sortBy presentations, (pres) -> 
-    pres.file
+    pres.id
   presentations = presentations.reverse()
   res.render "catalog", 
     title: "Catalog",
@@ -34,7 +34,7 @@ collect_presentations = (err, files, catalog_path, res) ->
   presentations = []
   for file in files
     pres = 
-      file: file
+      id: file.substr(0, file.indexOf("."))
     fill_presentation_data_from_file catalog_path, file, files, presentations, pres, res
   return
   
