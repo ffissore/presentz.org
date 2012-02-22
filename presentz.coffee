@@ -21,9 +21,11 @@ app.configure "production", ->
   app.use express.errorHandler() 
 
 app.get "/", routes.index 
+app.get "/index.html", routes.index 
 app.get "/:catalog_name/:presentation.json", routes.raw_presentation
 app.get "/:catalog_name/:presentation", routes.show_presentation
 app.get "/:catalog_name", routes.show_catalog
+app.get "/:catalog_name/index.html", routes.show_catalog
 
 app.listen 3000 
 console.log "Express server listening on port %d in %s mode", app.address().port, app.settings.env 
