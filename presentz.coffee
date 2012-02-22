@@ -21,7 +21,7 @@ app.configure "production", ->
   app.use express.errorHandler() 
 
 app.get "/", routes.index 
-app.get "/:catalog_name/:presentation.js", routes.raw_presentation
+app.get "/:catalog_name/:presentation.json", routes.raw_presentation
 app.get "/:catalog_name/:presentation", routes.show_presentation
 app.get "/:catalog_name", routes.show_catalog
 

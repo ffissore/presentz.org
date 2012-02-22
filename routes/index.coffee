@@ -33,7 +33,7 @@ fill_presentation_data_from_file= (file, file_name, files_length, presentations,
     render_catalog presentations, res if files_length == presentations.length
 
 collect_presentations = (err, files, catalog_path, req, res) ->
-  files = (file for file in files when _s.endsWith file, ".js" or _s.endsWith file, ".json")
+  files = (file for file in files when not _s.startsWith(file, "catalog") and _s.endsWith(file, ".json"))
   presentations = []
   for file in files
     fill_presentation_data_from_file "#{catalog_path}/#{file}", file, files.length, presentations, req, res
@@ -52,14 +52,15 @@ exports.show_catalog= (req, res, next) ->
       collect_presentations err, files, catalog_path, req, res
 
 exports.show_presentation= (req, res, next) ->
-  fs.readFile "#{__dirname}/..#{req.path}.js", "utf-8", (err, data) ->
-    return next new NotFound("#{__dirname}/..#{req.path}.js") if err
+  fs.readFile "#{__dirname}/..#{req.path}.json", "utf-8", (err, data) ->
+    return next new NotFound("#{__dirname}/..#{req.path}.json") if err
     pres = JSON.parse(data)
     res.render "presentation",
       title: pres.title_long || pres.title
-      url: "#{req.url_original || req.url}.js"
+      url: "#{req.url_original || req.url}.json"
       
 exports.raw_presentation= (req, res, next) ->
   fs.readFile "#{__dirname}/..#{req.path}", "utf-8", (err, data) ->
+    return next new NotFound("#{__dirname}/..#{req.path}.json") if err
     data = "#{req.query.jsoncallback}(#{data});" if req.query.jsoncallback
     res.send data
