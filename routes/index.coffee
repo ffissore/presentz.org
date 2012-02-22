@@ -38,6 +38,12 @@ collect_presentations = (err, files, catalog_path, req, res) ->
   for file in files
     fill_presentation_data_from_file "#{catalog_path}/#{file}", file, files.length, presentations, req, res
   return
+
+exports.static = (view_name) ->
+  return (req, res) ->
+    res.render view_name,
+      title: "Presentz"
+      host: req.headers.host
   
 exports.index= (req, res) ->
   res.render "index", 
