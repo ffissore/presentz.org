@@ -53,8 +53,7 @@ exports.show_catalog= (req, res, next) ->
 
 exports.show_presentation= (req, res, next) ->
   fs.readFile "#{__dirname}/..#{req.path}.js", "utf-8", (err, data) ->
-    console.log req.url_original
-    console.log req.url
+    return next new NotFound("#{__dirname}/..#{req.path}.js") if err
     pres = JSON.parse(data)
     res.render "presentation",
       title: pres.title_long || pres.title
