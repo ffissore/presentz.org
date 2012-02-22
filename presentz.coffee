@@ -23,6 +23,7 @@ app.configure "production", ->
 app.get "/", routes.index 
 app.get "/index.html", routes.static "index" 
 app.get "/about.html", routes.static "about" 
+app.get "/tos.html", routes.static "tos" 
 app.get "/:catalog_name/:presentation.json", routes.raw_presentation
 app.get "/:catalog_name/:presentation", routes.show_presentation
 app.get "/:catalog_name", routes.show_catalog
