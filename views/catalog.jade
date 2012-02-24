@@ -3,11 +3,13 @@
     .container
       .header
         a(href="/")
-          span#logonormal JUG
-          |  
-          span#logobold Torino
-          |  
-          span.headeradditionaldesc talks archive
+          img(src="/assets/images/logo_icon.png")
+        | 
+        a(href=catalog.website)
+          img(src=catalog.logo)
+        | 
+        a(href="/")
+          span#logonormal=catalog.name
       .intro
         span!= partial("thumb", presentations)
         .floatCloser

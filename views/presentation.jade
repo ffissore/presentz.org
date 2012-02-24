@@ -3,8 +3,13 @@
     .container
       .header
         a(href="/")
-          span#logonormal JUG
-          span#logobold Torino
+          img(src="/assets/images/logo_icon.png")
+        | 
+        a(href=catalog.website)
+          img(src=catalog.logo)
+        | 
+        a(href="/")
+          span#logonormal=title
       .presentation
         #videoContainer.slide
         #slideContainer.slide

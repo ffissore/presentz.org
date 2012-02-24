@@ -129,7 +129,7 @@ body {
 .header, .mainheader, .headeradditionadesc {
 	background: #272b31 10px 10px no-repeat;
 	padding: 10px 10px 0 10px;
-	height: 60px;
+	height: 85px;
 	vertical-align: bottom;
 	position: relative;
 	border-bottom: 1px solid black;
@@ -138,8 +138,7 @@ body {
 }
 
 .mainheader {
-	font-size: 66pt;
-	height: 120px;
+	height: 94px;
 }
 
 .headeradditionaldesc {
@@ -357,6 +356,9 @@ p {
 	-webkit-box-shadow: 0 0 10px #000;
 }
 
+img {
+  vertical-align: middle;
+}
 
 
 
