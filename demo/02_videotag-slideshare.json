@@ -1,11 +1,12 @@
 {
-  "title" : "Youtube player, slideshare player",
+  "title" : "Video tag, slideshare player",
   "chapters" : [ {
     "title" : "Part 1",
     "duration" : 21,
     "media" : {
       "video" : {
-        "url" : "http://youtu.be/hJgncy4I1ig"
+        "url" : "presentations/demo/demo1.webm",
+        "thumb" : "/assets/demo/videotag-slideshare.png"
       },
       "slides" : [ {
         "url" : "http://www.slideshare.net/slides-110818145820-phpapp02#1",
@@ -26,7 +27,7 @@
     "duration" : 7,
     "media" : {
       "video" : {
-        "url" : "http://youtu.be/WK0MSxOUm-o"
+        "url" : "presentations/demo/demo2.webm"
       },
       "slides" : [ {
         "url" : "http://www.slideshare.net/slides-110818145820-phpapp02#5",

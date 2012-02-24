@@ -5,7 +5,8 @@
     "duration" : 28,
     "media" : {
       "video" : {
-        "url" : "http://vimeo.com/27902834"
+        "url" : "http://vimeo.com/27902834",
+        "thumb" : "/assets/demo/vimeo-img.png"
       },
       "slides" : [ {
         "url" : "presentations/demo/slide1.png",

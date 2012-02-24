@@ -1,11 +1,12 @@
 {
-  "title" : "Youtube player, images as slides",
+  "title" : "Video tag, images as slides",
   "chapters" : [ {
     "title" : "Part 1",
     "duration" : 21,
     "media" : {
       "video" : {
-        "url" : "http://youtu.be/hJgncy4I1ig"
+        "url" : "presentations/demo/demo1.webm",
+        "thumb" : "/assets/demo/videotag-img.png"
       },
       "slides" : [ {
         "url" : "presentations/demo/slide1.png",
@@ -26,7 +27,7 @@
     "duration" : 7,
     "media" : {
       "video" : {
-        "url" : "http://youtu.be/WK0MSxOUm-o"
+        "url" : "presentations/demo/demo2.webm"
       },
       "slides" : [ {
         "url" : "presentations/demo/slide5.png",

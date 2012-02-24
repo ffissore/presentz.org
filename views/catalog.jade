@@ -4,9 +4,10 @@
       .header
         a(href="/")
           img(src="/assets/images/logo_icon.png")
-        | 
-        a(href=catalog.website)
-          img(src=catalog.logo)
+        if catalog.website
+          | 
+          a(href=catalog.website)
+            img(src=catalog.logo)
         | 
         a(href="/")
           span#logonormal=catalog.name
