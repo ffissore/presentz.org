@@ -17,7 +17,7 @@ render_catalog = (catalog, presentations, res) ->
     pres.id
   presentations = presentations.reverse()
   res.render "catalog", 
-    title: "#{catalog.name} is Presentz",
+    title: "#{catalog.name} is on Presentz",
     catalog: catalog
     presentations: presentations
     
@@ -83,6 +83,7 @@ exports.show_presentation= (req, res, next) ->
         title: pres.title_long || pres.title
         catalog: catalog
         url: "#{req.url_original || req.url}.json"
+        thumb: pres.chapters[0].media.video.thumb
       
 exports.raw_presentation= (req, res, next) ->
   fs.readFile "#{__dirname}/..#{req.path}", "utf-8", (err, data) ->

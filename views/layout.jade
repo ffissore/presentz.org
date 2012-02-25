@@ -6,7 +6,13 @@ html.no-js(lang="en")
     meta(name="description",content="Presentz.js is a javascript library for synchronizing videos and slides, so to reproduce conference talks as faithfully as possible. Presentz.org is a hosting service powered by presentz.js")
     meta(name="author",content="Federico Fissore")
     meta(name="viewport",content="width=device-width,initial-scale=1.0")
-    title= title
+    meta(property="og:type",content="website")
+    meta(property="og:title",content=title)
+    meta(property="og:description",content=title)
+    meta(property="og:site_name",content="Presentz")
+    if (typeof(thumb) != 'undefined')
+      meta(property="og:image",content=thumb)
+    title=title
     link(rel="icon",href="/assets/images/favicon.ico",type="image/x-icon") 
     link(rel="stylesheet",href="/assets/stylesheets/style.css")
   body!= body
