@@ -2,14 +2,14 @@
   #main(role="main")
     .container
       .header
-        a(href="/")
+        a(href="//#{parent_host}")
           img(src="/assets/images/logo_icon.png")
-        if catalog.website
+        if catalog.website && catalog.logo
           | 
           a(href=catalog.website)
             img(src=catalog.logo)
         | 
-        a(href="/")
+        a(href="//#{host}")
           span#logonormal=catalog.name
       .intro
         span!= partial("thumb", presentations)

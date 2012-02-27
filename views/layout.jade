@@ -13,16 +13,17 @@ html.no-js(lang="en")
     if (typeof(thumb) != 'undefined')
       meta(property="og:image",content=thumb)
     title=title
-    link(rel="icon",href="/assets/images/favicon.ico",type="image/x-icon") 
+    link(rel="icon",href="/assets/images/favicon.ico",type="image/vnd.microsoft.icon") 
+    link(rel="shortcut icon",href="/assets/images/favicon.ico",type="image/vnd.microsoft.icon") 
     link(rel="stylesheet",href="/assets/stylesheets/style.css")
   body!= body
     footer
       p
-        a(href="/about.html") About Presentz
+        a(href="//#{parent_host}/about.html") About Presentz
         |  -
-        a(href="/tos.html") Terms of Service
+        a(href="//#{parent_host}/tos.html") Terms of Service
       p
-        a(href="/") Presentz
+        a(href="//#{parent_host}") Presentz
         |  is free (as in free speech) software. You are strongly invited to 
         a(href="https://github.com/ffissore/presentz.js") hack, fork
         |  and 
@@ -35,6 +36,12 @@ html.no-js(lang="en")
       script(src="js/dd_belatedpng.js")
       script DD_belatedPNG.fix('img, .png_bg');
     script(type="text/javascript")
+      var uvOptions = {};
+      (function() {
+        var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+        uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/BtoAk3pfbifzb1YtVbuWFQ.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+      })();
       var pkBaseURL = (("https:" == document.location.protocol) ? "https://fissore.org/piwik/" : "http://fissore.org/piwik/");
       document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
     script(type="text/javascript")

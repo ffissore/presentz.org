@@ -20,7 +20,7 @@ app.configure "development", ->
 app.configure "production", ->
   app.use express.errorHandler() 
 
-app.get "/", routes.index 
+app.get "/", routes.static "index"
 app.get "/index.html", routes.static "index" 
 app.get "/about.html", routes.static "about" 
 app.get "/tos.html", routes.static "tos" 

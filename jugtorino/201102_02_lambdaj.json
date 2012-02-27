@@ -1,6 +1,5 @@
 {
 	"title" : "No more loops with Lambdaj",
-	"title_long" : "No more loops with Lambdaj: an internal DSL to manipulate collections without loops",
   "time" : "20110223",
   "speaker" : "Mario Fusco",
 	"chapters" : [ {

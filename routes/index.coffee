@@ -12,14 +12,15 @@ class NotFound extends Error
     Error.call this, msg
     Error.captureStackTrace this, arguments.callee
     
-render_catalog = (catalog, presentations, res) ->
+render_catalog = (catalog, presentations, req, res) ->
   presentations = _.sortBy presentations, (pres) -> 
     pres.id
   presentations = presentations.reverse()
-  res.render "catalog", 
-    title: "#{catalog.name} is on Presentz",
-    catalog: catalog
-    presentations: presentations
+  res.render "catalog",
+    add_host_parent_host req,
+      title: "#{catalog.name} is on Presentz",
+      catalog: catalog
+      presentations: presentations
     
 fill_presentation_data_from_file= (file, file_name, files_length, catalog, presentations, req, res) ->
   fs.readFile file, "utf-8", (err, data) ->
@@ -39,7 +40,7 @@ fill_presentation_data_from_file= (file, file_name, files_length, catalog, prese
     pres.title += " - #{pres.title2}" if pres.title2
 
     presentations.push pres
-    render_catalog catalog, presentations, res if files_length == presentations.length
+    render_catalog catalog, presentations, req, res if files_length == presentations.length
 
 collect_presentations = (err, files, catalog_path, req, res, catalog) ->
   files = (file for file in files when not _s.startsWith(file, "catalog") and _s.endsWith(file, ".json"))
@@ -48,42 +49,53 @@ collect_presentations = (err, files, catalog_path, req, res, catalog) ->
     fill_presentation_data_from_file "#{catalog_path}/#{file}", file, files.length, catalog, presentations, req, res
   return
   
-read_catalog = (catalog_path, next, callback) ->
+read_catalog = (catalog_path, req, next, callback) ->
   fs.readFile "#{catalog_path}/catalog.json", "utf-8", (err, data) ->
     return next new NotFound("catalog in #{catalog_path}") if err
     catalog = JSON.parse data
     callback(catalog)
+    
+add_host_parent_host = (req, options) ->
+  host_parts = req.headers.host.split "."
+  if host_parts.length is 1
+    options.parent_host = req.headers.host
+  else if host_parts.length > 2
+    options.parent_host = host_parts.splice(1).join(".")
+  else
+    options.parent_host = req.headers.host
+    
+  if req.params.catalog_name
+    options.host = "#{req.params.catalog_name}.#{options.parent_host}"
+  else
+    options.host = options.parent_host
+  options
 
 exports.static = (view_name) ->
   return (req, res) ->
     res.render view_name,
-      title: "Presentz"
-      host: req.headers.host
-  
-exports.index= (req, res) ->
-  res.render "index", 
-    title: "Presentz"
-    host: req.headers.host
+      add_host_parent_host req,
+        title: "Presentz"
   
 exports.show_catalog= (req, res, next) ->
   catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
   path.exists catalog_path, (exists) ->
     return next new NotFound(catalog_path) if not exists
-    read_catalog catalog_path, next, (catalog) ->
+    read_catalog catalog_path, req, next, (catalog) ->
       fs.readdir catalog_path, (err, files) -> 
         collect_presentations err, files, catalog_path, req, res, catalog
 
 exports.show_presentation= (req, res, next) ->
   catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
-  read_catalog catalog_path, next, (catalog) ->
+  read_catalog catalog_path, req, next, (catalog) ->
     fs.readFile "#{__dirname}/..#{req.path}.json", "utf-8", (err, data) ->
       return next new NotFound("#{__dirname}/..#{req.path}.json") if err
       pres = JSON.parse data
       res.render "presentation",
-        title: pres.title_long || pres.title
-        catalog: catalog
-        url: "#{req.url_original || req.url}.json"
-        thumb: pres.chapters[0].media.video.thumb
+        add_host_parent_host req,
+          title: pres.title_long || pres.title
+          catalog: catalog
+          url: "#{req.url_original || req.url}.json"
+          thumb: pres.chapters[0].media.video.thumb
       
 exports.raw_presentation= (req, res, next) ->
   fs.readFile "#{__dirname}/..#{req.path}", "utf-8", (err, data) ->
