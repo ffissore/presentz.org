@@ -2,11 +2,11 @@
   #main
     .container
       .header
-        a(href="/#{catalog.id}")
+        a(href="/")
           img(src="/assets/images/logo_icon.png")
-        if catalog.website && catalog.logo
+        if catalog.logo
           | 
-          a(href=catalog.website)
+          a(href="/#{catalog.id}")
             img(src=catalog.logo)
         | 
         a(href="/#{catalog.id}")

@@ -71,6 +71,7 @@ exports.static = (view_name) ->
       title: "Presentz"
   
 exports.show_catalog= (req, res, next) ->
+  console.log "show_catalog"
   catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
   path.exists catalog_path, (exists) ->
     return next new NotFound(catalog_path) if not exists
@@ -79,6 +80,7 @@ exports.show_catalog= (req, res, next) ->
         collect_presentations err, files, catalog_path, req, res, catalog
 
 exports.show_presentation= (req, res, next) ->
+  console.log "show_presentation"
   catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
   read_catalog catalog_path, req, next, (catalog) ->
     fs.readFile "#{__dirname}/..#{req.path}.json", "utf-8", (err, data) ->
@@ -91,16 +93,19 @@ exports.show_presentation= (req, res, next) ->
         thumb: pres.chapters[0].media.video.thumb
       
 exports.raw_presentation= (req, res, next) ->
+  console.log "raw_presentation"
   fs.readFile "#{__dirname}/..#{req.path}", "utf-8", (err, data) ->
     return next new NotFound("#{__dirname}/..#{req.path}.json") if err
     data = "#{req.query.jsoncallback}(#{data});" if req.query.jsoncallback
     res.send data
     
 exports.redirect_to_presentation_from_html= (req, res, next) ->
+  console.log "redirect_to_presentation_from_html"
   catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
   find_file catalog_path, req.params.presentation, (file) ->
-    res.redirect "http://#{options.host}/#{file}", 302
+    res.redirect "/#{file}", 302
   
 exports.redirect_to_presentation_from_p_html= (req, res, next) ->
+  console.log "redirect_to_presentation_from_p_html"
   console.log req.params
   res.send req.params
