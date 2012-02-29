@@ -2,14 +2,14 @@
   #main
     .container
       .header
-        a(href="//#{parent_host}")
+        a(href="/#{catalog.id}")
           img(src="/assets/images/logo_icon.png")
         if catalog.website && catalog.logo
           | 
           a(href=catalog.website)
             img(src=catalog.logo)
         | 
-        a(href="//#{host}")
+        a(href="/#{catalog.id}")
           span#logonormal=title
       .presentation
         #videoContainer.slide

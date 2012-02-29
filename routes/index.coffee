@@ -17,10 +17,9 @@ render_catalog = (catalog, presentations, req, res) ->
     pres.id
   presentations = presentations.reverse()
   res.render "catalog",
-    add_host_parent_host req,
-      title: "#{catalog.name} is on Presentz",
-      catalog: catalog
-      presentations: presentations
+    title: "#{catalog.name} is on Presentz",
+    catalog: catalog
+    presentations: presentations
     
 fill_presentation_data_from_file= (file, file_name, files_length, catalog, presentations, req, res) ->
   fs.readFile file, "utf-8", (err, data) ->
@@ -53,28 +52,23 @@ read_catalog = (catalog_path, req, next, callback) ->
   fs.readFile "#{catalog_path}/catalog.json", "utf-8", (err, data) ->
     return next new NotFound("catalog in #{catalog_path}") if err
     catalog = JSON.parse data
+    catalog.id = req.params.catalog_name
     callback(catalog)
     
-add_host_parent_host = (req, options) ->
-  host_parts = req.headers.host.split "."
-  if host_parts.length is 1
-    options.parent_host = req.headers.host
-  else if host_parts.length > 2
-    options.parent_host = host_parts.splice(1).join(".")
-  else
-    options.parent_host = req.headers.host
-    
-  if req.params.catalog_name
-    options.host = "#{req.params.catalog_name}.#{options.parent_host}"
-  else
-    options.host = options.parent_host
-  options
+find_file = (path, filename, callback) ->
+  fs.readdir path, (err, files) ->
+    throw next new NotFound(path) if err
+    filtered_files = _.filter files, (file) ->
+      file.indexOf(filename) isnt -1
+    if filtered_files.length is 1
+      callback filtered_files[0].substring(0, filtered_files[0].indexOf("."))
+    else
+      callback
 
 exports.static = (view_name) ->
   return (req, res) ->
     res.render view_name,
-      add_host_parent_host req,
-        title: "Presentz"
+      title: "Presentz"
   
 exports.show_catalog= (req, res, next) ->
   catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
@@ -91,14 +85,22 @@ exports.show_presentation= (req, res, next) ->
       return next new NotFound("#{__dirname}/..#{req.path}.json") if err
       pres = JSON.parse data
       res.render "presentation",
-        add_host_parent_host req,
-          title: pres.title_long || pres.title
-          catalog: catalog
-          url: "#{req.url_original || req.url}.json"
-          thumb: pres.chapters[0].media.video.thumb
+        title: pres.title_long || pres.title
+        catalog: catalog
+        url: "#{req.url_original || req.url}.json"
+        thumb: pres.chapters[0].media.video.thumb
       
 exports.raw_presentation= (req, res, next) ->
   fs.readFile "#{__dirname}/..#{req.path}", "utf-8", (err, data) ->
     return next new NotFound("#{__dirname}/..#{req.path}.json") if err
     data = "#{req.query.jsoncallback}(#{data});" if req.query.jsoncallback
     res.send data
+    
+exports.redirect_to_presentation_from_html= (req, res, next) ->
+  catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
+  find_file catalog_path, req.params.presentation, (file) ->
+    res.redirect "http://#{options.host}/#{file}", 302
+  
+exports.redirect_to_presentation_from_p_html= (req, res, next) ->
+  console.log req.params
+  res.send req.params
