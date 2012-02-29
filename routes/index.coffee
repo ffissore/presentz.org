@@ -21,9 +21,14 @@ render_catalog = (catalog, presentations, req, res) ->
     catalog: catalog
     presentations: presentations
     
-fill_presentation_data_from_file= (file, file_name, files_length, catalog, presentations, req, res) ->
+fill_presentation_data_from_file= (file, file_name, files_length, catalog, computed_files, presentations, req, res) ->
   fs.readFile file, "utf-8", (err, data) ->
+    computed_files.push file
+    
     data = JSON.parse data
+    
+    return if data.alias_of
+    
     pres =
       id: "#{req.params.catalog_name}/#{file_name.substr(0, file_name.indexOf("."))}"
       data: data
@@ -39,13 +44,14 @@ fill_presentation_data_from_file= (file, file_name, files_length, catalog, prese
     pres.title += " - #{pres.title2}" if pres.title2
 
     presentations.push pres
-    render_catalog catalog, presentations, req, res if files_length == presentations.length
+    render_catalog catalog, presentations, req, res if files_length == computed_files.length
 
 collect_presentations = (err, files, catalog_path, req, res, catalog) ->
   files = (file for file in files when not _s.startsWith(file, "catalog") and _s.endsWith(file, ".json"))
   presentations = []
+  computed_files = []
   for file in files
-    fill_presentation_data_from_file "#{catalog_path}/#{file}", file, files.length, catalog, presentations, req, res
+    fill_presentation_data_from_file "#{catalog_path}/#{file}", file, files.length, catalog, computed_files, presentations, req, res
   return
   
 read_catalog = (catalog_path, req, next, callback) ->
@@ -61,9 +67,19 @@ find_file = (path, filename, callback) ->
     filtered_files = _.filter files, (file) ->
       file.indexOf(filename) isnt -1
     if filtered_files.length is 1
-      callback filtered_files[0].substring(0, filtered_files[0].indexOf("."))
+      fs.readFile "#{path}/#{filtered_files[0]}", "utf-8", (err, data) ->
+        callback filtered_files[0].substring(0, filtered_files[0].indexOf(".")), data
     else
       callback
+
+redirect_to_presentation = (req, res, filename) ->
+  catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
+  find_file catalog_path, filename, (filename, data) ->
+    data = JSON.parse data
+    if data.alias_of
+      res.redirect "/#{req.params.catalog_name}/#{data.alias_of}", 301
+    else
+      res.redirect "/#{req.params.catalog_name}/#{filename}", 301
 
 exports.static = (view_name) ->
   return (req, res) ->
@@ -101,11 +117,8 @@ exports.raw_presentation= (req, res, next) ->
     
 exports.redirect_to_presentation_from_html= (req, res, next) ->
   console.log "redirect_to_presentation_from_html"
-  catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
-  find_file catalog_path, req.params.presentation, (file) ->
-    res.redirect "/#{file}", 302
+  redirect_to_presentation req, res, req.params.presentation
   
 exports.redirect_to_presentation_from_p_html= (req, res, next) ->
-  console.log "redirect_to_presentation_from_p_html"
-  console.log req.params
-  res.send req.params
+  console.log "redirect_to_presentation_from_p"
+  redirect_to_presentation req, res, req.query.p
