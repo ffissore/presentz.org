@@ -9,16 +9,15 @@ app.configure ->
   app.use express.logger()
   app.use express.bodyParser() 
   app.use express.methodOverride() 
+  app.use routes.catalog_name_by_third_domain()
   app.use app.router
   app.use express.static "#{__dirname}/public"
 
 app.configure "development", ->
   app.use express.errorHandler({ dumpExceptions: true, showStack: true })
-  app.set "host", "localhost:3000"
 
 app.configure "production", ->
   app.use express.errorHandler()
-  app.set "host", "presentz.org"
 
 app.get "/", routes.static "index"
 app.get "/index.html", routes.static "index" 

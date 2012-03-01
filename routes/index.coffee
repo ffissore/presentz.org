@@ -80,6 +80,17 @@ redirect_to_presentation = (req, res, filename) ->
       res.redirect "/#{req.params.catalog_name}/#{data.alias_of}", 301
     else
       res.redirect "/#{req.params.catalog_name}/#{filename}", 301
+      
+exports.catalog_name_by_third_domain = () ->
+  third_level_domain_regex = /([\w]+)\.[\w]+\..+/
+  return (req, res, next) ->
+    unless req.url.indexOf("/assets") is 0 
+      proxy = req.headers["x-forwarded-host"]
+      if proxy
+        match = proxy.match third_level_domain_regex
+        if match and req.url.indexOf("/#{match[1]}") isnt 0
+          req.url = "/#{match[1]}#{req.url}"
+    next()
 
 exports.static = (view_name) ->
   return (req, res) ->
