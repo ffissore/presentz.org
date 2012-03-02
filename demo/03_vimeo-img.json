@@ -9,19 +9,19 @@
         "thumb" : "/assets/demo/vimeo-img.png"
       },
       "slides" : [ {
-        "url" : "presentations/demo/slide1.png",
+        "url" : "/assets/demo/slide1.png",
         "time" : 0
       }, {
-        "url" : "presentations/demo/slide2.png",
+        "url" : "/assets/demo/slide2.png",
         "time" : 7
       }, {
-        "url" : "presentations/demo/slide3.png",
+        "url" : "/assets/demo/slide3.png",
         "time" : 9.5
       }, {
-        "url" : "presentations/demo/slide4.png",
+        "url" : "/assets/demo/slide4.png",
         "time" : 14
       }, {
-        "url" : "presentations/demo/slide5.png",
+        "url" : "/assets/demo/slide5.png",
         "time" : 21
       } ]
     }

@@ -5,7 +5,7 @@
     "duration" : 21,
     "media" : {
       "video" : {
-        "url" : "presentations/demo/demo1.webm",
+        "url" : "/assets/demo/demo1.webm",
         "thumb" : "/assets/demo/videotag-slideshare.png"
       },
       "slides" : [ {
@@ -27,7 +27,7 @@
     "duration" : 7,
     "media" : {
       "video" : {
-        "url" : "presentations/demo/demo2.webm"
+        "url" : "/assets/demo/demo2.webm"
       },
       "slides" : [ {
         "url" : "http://www.slideshare.net/slides-110818145820-phpapp02#5",
