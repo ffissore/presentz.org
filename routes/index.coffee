@@ -30,7 +30,7 @@ fill_presentation_data_from_file= (file, file_name, files_length, catalog, compu
     return if data.alias_of
     
     pres =
-      id: "#{req.params.catalog_name}/#{file_name.substr(0, file_name.indexOf("."))}"
+      id: "/#{req.params.catalog_name}/#{file_name.substr(0, file_name.indexOf("."))}"
       data: data
       thumb: data.chapters[0].media.video.thumb
 
