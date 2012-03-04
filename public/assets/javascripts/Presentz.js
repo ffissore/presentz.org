@@ -233,11 +233,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     Youtube.prototype.changeVideo = function(videoData, wouldPlay) {
       var atts, movieUrl, params;
       this.wouldPlay = wouldPlay;
-      movieUrl = "http://www.youtube.com/e/" + (videoId(videoData)) + "?enablejsapi=1&playerapiid=ytplayer";
+      movieUrl = "http://www.youtube.com/e/" + (videoId(videoData)) + "?enablejsapi=1&autohide=1&fs=1&playerapiid=ytplayer";
       if ($("#" + this.videoContainer).children().length === 0) {
         $("#" + this.videoContainer).append("<div id='youtubecontainer'></div>");
         params = {
-          allowScriptAccess: "always"
+          allowScriptAccess: "always",
+          allowFullScreen: true
         };
         atts = {
           id: "ytplayer"
