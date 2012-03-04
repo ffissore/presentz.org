@@ -661,9 +661,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     Presentz.prototype.init = function(presentation) {
       this.presentation = presentation;
       this.howManyChapters = this.presentation.chapters.length;
-      if (this.presentation.title != null) {
-        document.title = this.presentation.title;
-      }
       this.agenda.build(this.presentation);
       this.videoPlugin = this.findVideoPlugin();
     };
