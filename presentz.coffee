@@ -34,4 +34,21 @@ app.get "/:catalog_name/:presentation", routes.show_presentation
 app.get "/:catalog_name", routes.show_catalog
 
 app.listen 3000 
-console.log "Express server listening on port %d in %s mode", app.address().port, app.settings.env 
+console.log "Express server listening on port %d in %s mode", app.address().port, app.settings.env
+
+subdomain = express.createServer()
+
+subdomain.configure ->
+  subdomain.use express.logger()
+  subdomain.use express.methodOverride() 
+  subdomain.use routes.redirect_to_catalog_if_subdomain()
+  subdomain.use routes.redirect_to "http://presentz.org/"
+
+subdomain.configure "development", ->
+  subdomain.use express.errorHandler({ dumpExceptions: true, showStack: true })
+
+subdomain.configure "production", ->
+  subdomain.use express.errorHandler()
+
+subdomain.listen 3001 
+console.log "Express server listening on port %d in %s mode", subdomain.address().port, subdomain.settings.env 
