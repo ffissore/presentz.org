@@ -1,5 +1,5 @@
 {
-    "name": "application-name"
+    "name": "presentz.org"
   , "version": "0.0.1"
   , "private": true
   , "dependencies": {
@@ -10,4 +10,8 @@
     , "underscore": ">= 0.0.1"
     , "dateutil": ">= 0.0.1"
   }
+  , "licenses" : [ {
+        "type" : "GPL v3",
+        "url" : "https://www.gnu.org/copyleft/gpl.html"
+    } ]
 }
