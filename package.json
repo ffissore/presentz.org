@@ -11,7 +11,7 @@
     , "dateutil": ">= 0.0.1"
   }
   , "licenses" : [ {
-        "type" : "GPL v3",
+        "type" : "GPLv3",
         "url" : "https://www.gnu.org/copyleft/gpl.html"
     } ]
 }
