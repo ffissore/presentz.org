@@ -4,3 +4,4 @@
 *.xcf
 node_modules
 config.coffee
+.idea
