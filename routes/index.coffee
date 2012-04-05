@@ -17,8 +17,8 @@ render_catalog = (catalog, presentations, req, res) ->
     pres.id
   presentations = presentations.reverse()
   res.render "catalog",
-    title:         "#{catalog.name} is on Presentz",
-    catalog:       catalog
+    title: "#{catalog.name} is on Presentz",
+    catalog: catalog
     presentations: presentations
 
 fill_presentation_data_from_file = (file, file_name, files_length, catalog, computed_files, presentations, req, res) ->
@@ -30,8 +30,8 @@ fill_presentation_data_from_file = (file, file_name, files_length, catalog, comp
     return if data.alias_of
 
     pres =
-      id:    "/#{req.params.catalog_name}/#{file_name.substr(0, file_name.indexOf("."))}"
-      data:  data
+      id: "/#{req.params.catalog_name}/#{file_name.substr(0, file_name.indexOf("."))}"
+      data: data
       thumb: data.chapters[0].media.video.thumb
 
     if data.speaker
@@ -90,12 +90,11 @@ exports.redirect_to_catalog_if_subdomain = () ->
     if proxy?
       match = proxy.match third_level_domain_regex
       if match?
-        console.log
-        console.log req.path
         res.redirect "http://#{proxy.replace("#{match[1]}.", "")}/#{match[1]}#{req.url}", 302
 
 exports.static = (view_name) ->
   return (req, res) ->
+    console.log req.user
     res.render view_name,
       title: "Presentz"
 
@@ -120,10 +119,10 @@ exports.show_presentation = (req, res, next) ->
         return
       pres = JSON.parse data
       res.render "presentation",
-        title:   pres.title_long || pres.title
+        title: pres.title_long || pres.title
         catalog: catalog
-        url:     "#{req.url_original || req.url}.json"
-        thumb:   pres.chapters[0].media.video.thumb
+        url: "#{req.url_original || req.url}.json"
+        thumb: pres.chapters[0].media.video.thumb
 
 exports.raw_presentation = (req, res, next) ->
   console.log "raw_presentation"

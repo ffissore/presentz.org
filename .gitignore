@@ -3,5 +3,5 @@
 *.iws
 *.xcf
 node_modules
-config.coffee
+config.*
 .idea

@@ -1,15 +1,92 @@
 express = require "express"
 routes = require "./routes"
+orient = require "orientdb"
+
+server = new orient.Server
+  host: "localhost"
+  port: 2424
+
+db = new orient.Db "presentz", server,
+  user_name: "admin"
+  user_password: "admin"
+
+db.open ->
+  console.log("DB connection open")
 
 app = express.createServer()
+
+config = require "./config.#{app.settings.env}"
+everyauth = require "everyauth"
+
+everyauth.everymodule.findUserById (userId, callback) ->
+  db.loadRecord userId, callback
+
+everyauth.facebook.appId(config.auth.facebook.app_id).appSecret(config.auth.facebook.app_secret).findOrCreateUser(
+  (session, accessToken, accessTokenExtra, fb_user) ->
+    promise = @Promise()
+
+    db.command "SELECT @rid FROM User where email = '#{fb_user.email}'", (err, results) ->
+      if results.length isnt 0
+        promise.fulfill
+          id: results[0].rid
+        return
+      else
+        user_doc =
+          "@class": "User"
+          name: fb_user.name
+          email: fb_user.email
+          link: fb_user.link
+
+        db.save user_doc, (err, document) ->
+          promise.fail(err) if err?
+          promise.fulfill
+            id: document["@rid"]
+          return
+
+        return
+
+    return promise
+).redirectPath("/")
+everyauth.facebook.scope("email")
+
+everyauth.twitter.consumerKey(config.auth.twitter.consumer_key).consumerSecret(config.auth.twitter.consumer_secret).findOrCreateUser(
+  (sess, accessToken, accessSecret, twitter_user) ->
+    promise = @Promise()
+
+    db.command "SELECT @rid FROM User where twitter_id = '#{twitter_user.id}'", (err, results) ->
+      if results.length isnt 0
+        promise.fulfill
+          id: results[0].rid
+        return
+      else
+        user_doc =
+          "@class": "User"
+          name: twitter_user.name || twitter_user.screen_name
+          twitter_id: twitter_user.id
+          link: "https://twitter.com/#{twitter_user.screen_name}"
+
+        db.save user_doc, (err, document) ->
+          promise.fail(err) if err?
+          promise.fulfill
+            id: document["@rid"]
+          return
+
+        return
+
+    return promise
+).redirectPath("/")
 
 app.configure ->
   app.set "views", "#{__dirname}/views"
   app.set "view engine", "jade"
   app.use express.logger()
   app.use express.bodyParser()
+  app.use express.cookieParser()
+  app.use express.session
+    secret: config.presentz.session_secret
   app.use express.methodOverride()
   #  app.use routes.catalog_name_by_third_domain()
+  app.use everyauth.middleware()
   app.use app.router
   app.use express.static "#{__dirname}/public"
   app.use routes.redirect_to "/"
@@ -33,6 +110,8 @@ app.get "/:catalog_name/:presentation.html", routes.redirect_to_presentation_fro
 app.get "/:catalog_name/:presentation.json", routes.raw_presentation
 app.get "/:catalog_name/:presentation", routes.show_presentation
 app.get "/:catalog_name", routes.show_catalog
+
+everyauth.helpExpress(app)
 
 app.listen 3000
 console.log "Express server listening on port %d in %s mode", app.address().port, app.settings.env
