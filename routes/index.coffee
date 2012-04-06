@@ -94,7 +94,6 @@ exports.redirect_to_catalog_if_subdomain = () ->
 
 exports.static = (view_name) ->
   return (req, res) ->
-    console.log req.user
     res.render view_name,
       title: "Presentz"
 
