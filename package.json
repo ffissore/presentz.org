@@ -10,7 +10,7 @@
     "underscore": ">= 0.0.1",
     "dateutil": ">= 0.0.1",
     "everyauth": ">= 0.0.1",
-    "orientdb": ">= 0.0.1"
+    "orientdb": "git://github.com/ffissore/node-orientdb.git#master"
   },
   "licenses": [
     {
