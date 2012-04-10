@@ -31,7 +31,7 @@ app.configure ->
   app.use everyauth.middleware()
   app.use app.router
   app.use express.static "#{__dirname}/public"
-  #app.use redirect_routes.redirect_to "/"
+  app.use redirect_routes.redirect_to "/"
 
 app.configure "development", ->
   app.use express.errorHandler { dumpExceptions: true, showStack: true }
