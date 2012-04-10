@@ -3,20 +3,20 @@ routes = require "./routes"
 redirect_routes = require "./routes/redirect"
 orient = require "orientdb"
 
-server = new orient.Server
-  host: "localhost"
-  port: 2424
-
-db = new orient.Db "presentz", server,
-  user_name: "admin"
-  user_password: "admin"
-
-db.open ->
-  console.log("DB connection open")
-
 app = express.createServer()
 
 config = require "./config.#{app.settings.env}"
+
+server = new orient.Server
+  host: config.storage.server.host
+  port: config.storage.server.port
+
+db = new orient.Db "presentz", server,
+  user_name: config.storage.db.user_name
+  user_password: config.storage.db.user_password
+
+db.open ->
+  console.log("DB connection open")
 
 everyauth = require("./auth").init(config, db)
 
