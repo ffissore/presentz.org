@@ -23,6 +23,7 @@ render_catalog = (catalog, presentations, req, res) ->
 
 fill_presentation_data_from_file = (file, file_name, files_length, catalog, computed_files, presentations, req, res) ->
   fs.readFile file, "utf-8", (err, data) ->
+
     computed_files.push file
 
     data = JSON.parse data
@@ -54,14 +55,13 @@ collect_presentations = (err, files, catalog_path, req, res, catalog) ->
     fill_presentation_data_from_file "#{catalog_path}/#{file}", file, files.length, catalog, computed_files, presentations, req, res
   return
 
-read_catalog = (catalog_path, req, next, callback) ->
+read_catalog = (catalog_path, req, callback) ->
   fs.readFile "#{catalog_path}/catalog.json", "utf-8", (err, data) ->
-    if err?
-      next()
-      return
+    return callback(err) if err?
+
     catalog = JSON.parse data
     catalog.id = req.params.catalog_name
-    callback(catalog)
+    callback(undefined, catalog)
 
 exports.static = (view_name) ->
   return (req, res) ->
@@ -72,21 +72,22 @@ exports.show_catalog = (req, res, next) ->
   console.log "show_catalog"
   catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
   path.exists catalog_path, (exists) ->
-    if err?
-      next()
-      return
-    read_catalog catalog_path, req, next, (catalog) ->
+    read_catalog catalog_path, req, (err, catalog) ->
+      return next(err) if err?
+
       fs.readdir catalog_path, (err, files) ->
+        return next(err) if err?
         collect_presentations err, files, catalog_path, req, res, catalog
 
 exports.show_presentation = (req, res, next) ->
   console.log "show_presentation"
   catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
-  read_catalog catalog_path, req, next, (catalog) ->
+  read_catalog catalog_path, req, (err, catalog) ->
+    return next(err) if err?
+
     fs.readFile "#{__dirname}/..#{req.path}.json", "utf-8", (err, data) ->
-      if err?
-        next()
-        return
+      return next(err) if err?
+
       pres = JSON.parse data
       res.render "presentation",
         title: pres.title_long || pres.title
@@ -96,9 +97,9 @@ exports.show_presentation = (req, res, next) ->
 
 exports.raw_presentation = (req, res, next) ->
   console.log "raw_presentation"
+
   fs.readFile "#{__dirname}/..#{req.path}", "utf-8", (err, data) ->
-    if err?
-      next()
-      return
+    return next(err) if err?
+
     data = "#{req.query.jsoncallback}(#{data});" if req.query.jsoncallback
     res.send data
