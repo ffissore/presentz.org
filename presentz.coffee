@@ -26,8 +26,7 @@ app.configure ->
   app.use express.logger()
   app.use express.bodyParser()
   app.use express.cookieParser()
-  app.use express.session
-    secret: config.presentz.session_secret
+  app.use express.session { secret: config.presentz.session_secret }
   app.use express.methodOverride()
   app.use everyauth.middleware()
   app.use app.router
@@ -35,7 +34,7 @@ app.configure ->
   app.use redirect_routes.redirect_to "/"
 
 app.configure "development", ->
-  app.use express.errorHandler({ dumpExceptions: true, showStack: true })
+  app.use express.errorHandler { dumpExceptions: true, showStack: true }
 
 app.configure "production", ->
   app.use express.errorHandler()
