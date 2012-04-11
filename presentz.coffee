@@ -2,6 +2,7 @@ express = require "express"
 routes = require "./routes"
 redirect_routes = require "./routes/redirect"
 orient = require "orientdb"
+dust = require "express-dust"
 
 app = express.createServer()
 
@@ -22,7 +23,7 @@ everyauth = require("./auth").init(config, db)
 
 app.configure ->
   app.set "views", "#{__dirname}/views"
-  app.set "view engine", "jade"
+  #app.set "view engine", "jade"
   app.use express.logger()
   app.use express.bodyParser()
   app.use express.cookieParser()

@@ -12,8 +12,6 @@ class NotFound extends Error
     Error.call this, msg
     Error.captureStackTrace this, arguments.callee
 
-render_catalog = (catalog, presentations, req, res) ->
-
 fill_presentation_data_from_file = (file, file_name, catalog_id, callback) ->
   fs.readFile file, "utf-8", (err, data) ->
     data = JSON.parse data
@@ -86,7 +84,8 @@ exports.show_catalog = (req, res, next) ->
 exports.show_presentation = (req, res, next) ->
   console.log "show_presentation"
   catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
-  read_catalog catalog_path, req, (err, catalog) ->
+  catalog_id = req.params.catalog_name
+  read_catalog catalog_path, catalog_id, (err, catalog) ->
     return next(err) if err?
 
     fs.readFile "#{__dirname}/..#{req.path}.json", "utf-8", (err, data) ->

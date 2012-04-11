@@ -1,0 +1,42 @@
+{>layout/}
+
+{<body}
+<div id="container">
+  <div id="main">
+    <div class="container">
+      <div class="header">
+        <a href="/"><img src="/assets/images/logo_icon.png"/></a>
+        {#catalog}
+          {?logo}
+            <a href="/{id}"><img src="{logo}"/></a>
+          {/logo}
+          <a href="/{id}"><span id="logonormal">{title}</span></a>
+        {/catalog}
+      </div>
+      <div class="presentation">
+        <div id="videoContainer" class="slide"></div>
+        <div id="slideContainer" class="slide"></div>
+        <div class="floatCloser"></div>
+      </div>
+      <div class="controls">
+        <div id="agendaContainer"></div>
+      </div>
+      <div class="footer"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/assets/javascripts/jquery.min.js"></script>
+<script src="/assets/javascripts/froogaloop.js"></script>
+<script src="/assets/javascripts/swfobject.js"></script>
+<script src="/assets/javascripts/mediaelement-and-player.js"></script>
+<script src="/assets/javascripts/Presentz.js"></script>
+<script>
+  presentz = new Presentz("videoContainer", "slideContainer", "agendaContainer");
+  function initPresentz(presentation) {
+    presentz.init(presentation);
+    presentz.changeChapter(0, 0, true);
+  }
+</script>
+<script src="{url}?jsoncallback=initPresentz"></script>
+{/body}

@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "express": ">= 2.5.8",
-    "jade": ">= 0.0.1",
+    "express": ">= 2.5.9",
+    "dust": "git://github.com/mephux/dustjs.git#master",
+    "express-dust": ">= 0.0.1",
     "coffee-script": ">= 1.2.0",
     "underscore.string": ">= 0.0.1",
     "underscore": ">= 0.0.1",

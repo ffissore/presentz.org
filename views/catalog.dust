@@ -1,0 +1,29 @@
+{>layout/}
+
+{<body}
+<div id="container">
+  <div id="main" role="main">
+    <div class="container">
+      <div class="header">
+        <a href="/"><img src="/assets/images/logo_icon.png"/></a>
+        {#catalog}
+          {?website}
+            {?logo}
+              <a href="{website}"><img src="{logo}"/></a>
+            {/logo}
+          {/website}
+          <a href="/{id}"><span id="logonormal">{name}</span></a>
+        {/catalog}
+      </div>
+      <div class="intro">
+        <span>
+          {#presentations}
+            {>_thumb/}
+          {/presentations}
+        </span>
+        <div class="floatCloser"></div>
+      </div>
+    </div>
+  </div>
+</div>
+{/body}
