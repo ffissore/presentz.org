@@ -8,7 +8,7 @@
         <a href="/"><img src="/assets/images/logo_icon.png"/></a>
         {#catalog}
           {@if cond="'{website}' && '{logo}'"}
-              <a href="{website}"><img src="{logo}"/></a>
+            <a href="{website}"><img src="{logo}"/></a>
           {/if}
           <a href="/{id}"><span id="logonormal">{name}</span></a>
         {/catalog}
