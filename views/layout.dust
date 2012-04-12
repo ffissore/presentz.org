@@ -20,6 +20,9 @@
     <link rel="stylesheet" href="/assets/stylesheets/mediaelementplayer.css"/>
   </head>
   <body>
+    {#messages}
+      {error}
+    {/messages}
     {+body}
     {/body}
     <footer>

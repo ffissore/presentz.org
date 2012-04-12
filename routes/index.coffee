@@ -6,12 +6,6 @@ http = require "http"
 url = require "url"
 dateutil = require "dateutil"
 
-class NotFound extends Error
-  constructor: (msg) ->
-    @name = 'NotFound'
-    Error.call this, msg
-    Error.captureStackTrace this, arguments.callee
-
 fill_presentation_data_from_file = (file, file_name, catalog_id, callback) ->
   fs.readFile file, "utf-8", (err, data) ->
     data = JSON.parse data
@@ -106,3 +100,7 @@ exports.raw_presentation = (req, res, next) ->
 
     data = "#{req.query.jsoncallback}(#{data});" if req.query.jsoncallback
     res.send data
+
+exports.ensure_is_logged = (req, res, next) ->
+  req.flash "error", "you need to be logged in"
+  res.redirect "/", 302

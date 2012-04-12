@@ -6,6 +6,8 @@ dust = require "express-dust"
 
 app = express.createServer()
 
+dust.register(app)
+
 config = require "./config.#{app.settings.env}"
 
 server = new orient.Server
@@ -23,7 +25,7 @@ everyauth = require("./auth").init(config, db)
 
 app.configure ->
   app.set "views", "#{__dirname}/views"
-  #app.set "view engine", "jade"
+  app.set "view engine", "dust"
   app.use express.logger()
   app.use express.bodyParser()
   app.use express.cookieParser()
@@ -40,11 +42,17 @@ app.configure "development", ->
 app.configure "production", ->
   app.use express.errorHandler()
 
+app.dynamicHelpers
+  messages: (req, res) ->
+    req.flash()
+
 app.get "/", routes.static "index"
 app.get "/r/index.html", routes.static "index"
 app.get "/r/about.html", routes.static "about"
 app.get "/r/tos.html", routes.static "tos"
 app.get "/p.html", redirect_routes.redirect_to_presentation_from_p_html
+app.get "/m/*.:whatever?", routes.ensure_is_logged
+app.get "/m/manage", routes.static "m/manage"
 app.get "/:catalog_name/p.html", redirect_routes.redirect_to_presentation_from_p_html
 app.get "/:catalog_name/catalog.html", routes.show_catalog
 app.get "/:catalog_name/catalog", routes.show_catalog

@@ -5,7 +5,7 @@
   "dependencies": {
     "express": ">= 2.5.9",
     "dustjs-linkedin": ">= 0.0.1",
-    "express-dust": "git://github.com/ffissore/express-dust.git#master",
+    "express-dust": "git://github.com/kalmiz/express-dust.git#master",
     "coffee-script": ">= 1.2.0",
     "underscore.string": ">= 0.0.1",
     "underscore": ">= 0.0.1",
