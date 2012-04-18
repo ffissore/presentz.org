@@ -21,7 +21,9 @@
   </head>
   <body>
     {#messages}
-      {error}
+      {?error}
+        {error}
+      {/error}
     {/messages}
     {+body}
     {/body}
