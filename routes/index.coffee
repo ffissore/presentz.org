@@ -47,7 +47,7 @@ fill_presentation_data_from_file = (file, file_name, files_length, catalog, comp
     render_catalog catalog, presentations, req, res if files_length == computed_files.length
 
 collect_presentations = (err, files, catalog_path, req, res, catalog) ->
-  files = (file for file in files when not_s.startsWith(file, "catalog") and _s.endsWith(file, ".json"))
+  files = (file for file in files when !_s.startsWith(file, "catalog") and _s.endsWith(file, ".json"))
   presentations = []
   computed_files = []
   for file in files
