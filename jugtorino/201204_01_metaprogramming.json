@@ -1,5 +1,5 @@
 {
-  "title": "Metaprogramming System di JetBrains",
+  "title": "Meta Programming System di JetBrains",
   "time": "20120418",
   "speaker": "Federico Tomassetti",
   "chapters": [
@@ -13,7 +13,7 @@
         "slides": [
           {
             "url": "http://presentz.org/assets/jugtorino/201204_metaprogramming/img0.png",
-            "title": "Estendere Java con il Metaprogramming System di JetBrains",
+            "title": "Estendere Java con il Meta Programming System di JetBrains",
             "time": 0
           },
           {
@@ -38,7 +38,7 @@
           },
           {
             "url": "http://presentz.org/assets/jugtorino/201204_metaprogramming/img5.png",
-            "title": "Cos'è il Metaprogramming System?",
+            "title": "Cos'è il Meta Programming System?",
             "time": 155
           },
           {
