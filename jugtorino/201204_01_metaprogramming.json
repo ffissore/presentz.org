@@ -1,0 +1,88 @@
+{
+  "title": "Metaprogramming System di JetBrains",
+  "time": "20120418",
+  "speaker": "Federico Tomassetti",
+  "chapters": [
+    {
+      "duration": 3212,
+      "media": {
+        "video": {
+          "url": "http://youtu.be/o_J3guFXy64",
+          "thumb": "http://presentz.org/assets/jugtorino/201204_metaprogramming/thumb.jpg"
+        },
+        "slides": [
+          {
+            "url": "http://presentz.org/assets/jugtorino/201204_metaprogramming/img0.png",
+            "title": "Estendere Java con il Metaprogramming System di JetBrains",
+            "time": 0
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201204_metaprogramming/img1.png",
+            "title": "A cosa serve un linguaggio?",
+            "time": 22
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201204_metaprogramming/img2.png",
+            "title": "A cosa serve un linguaggio?",
+            "time": 53
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201204_metaprogramming/img3.png",
+            "title": "A cosa serve un linguaggio?",
+            "time": 85
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201204_metaprogramming/img4.png",
+            "title": "A cosa serve un linguaggio?",
+            "time": 105
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201204_metaprogramming/img5.png",
+            "title": "Cos'è il Metaprogramming System?",
+            "time": 155
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201204_metaprogramming/img6.png",
+            "title": "MPS è un language workbench",
+            "time": 162
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201204_metaprogramming/img7.png",
+            "title": "MPS è un projectional editor",
+            "time": 209
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201204_metaprogramming/img8.png",
+            "title": "MPS è un projectional editor",
+            "time": 281
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201204_metaprogramming/img9.png",
+            "title": "Come si usa?",
+            "time": 362
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201204_metaprogramming/img12.png",
+            "title": "mbeddr",
+            "time": 2304
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201204_metaprogramming/img13.png",
+            "title": "mbeddr",
+            "time": 2351
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201204_metaprogramming/img11.png",
+            "title": "Cosa ci si può fare?",
+            "time": 2396
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201204_metaprogramming/img14.png",
+            "title": "Grazie",
+            "time": 2597
+          }
+        ]
+      }
+    }
+  ]
+}
