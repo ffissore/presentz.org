@@ -7,17 +7,18 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <link href="../assets/stylesheets/bootstrap.css" rel="stylesheet">
+  <link href="/assets/stylesheets/bootstrap.css" rel="stylesheet">
   <style type="text/css">
     body {
       padding-top: 60px;
       padding-bottom: 40px;
     }
+
     .sidebar-nav {
       padding: 9px 0;
     }
   </style>
-  <link href="../assets/stylesheets/bootstrap-responsive.css" rel="stylesheet">
+  <link href="/assets/stylesheets/bootstrap-responsive.css" rel="stylesheet">
 
   <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -25,11 +26,25 @@
 </head>
 
 <body>
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#"><img src="/assets/images/logo_small.png"/></a>
+      <ul class="nav">
+        <li class="active">
+          <a href="#">Home</a>
+        </li>
+        <li><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 {+body}
 {/body}
 
-  <script src="../assets/javascripts/jquery.min.js"></script>
-  <script src="../assets/javascripts/bootstrap.js"></script>
-
+<script src="/assets/javascripts/jquery.min.js"></script>
+<script src="/assets/javascripts/bootstrap.js"></script>
 </body>
 </html>
