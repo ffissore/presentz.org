@@ -2,11 +2,9 @@ express = require "express"
 routes = require "./routes"
 redirect_routes = require "./routes/redirect"
 orient = require "orientdb"
-dust = require "express-dust"
+cons = require "consolidate"
 
-app = express.createServer()
-
-dust.register(app)
+app = express()
 
 config = require "./config.#{app.settings.env}"
 
@@ -23,13 +21,15 @@ db.open ->
 
 everyauth = require("./auth").init(config, db)
 
+app.engine("dust", cons.dust)
+
 app.configure ->
   app.set "views", "#{__dirname}/views"
   app.set "view engine", "dust"
   app.use express.logger()
   app.use express.bodyParser()
-  app.use express.cookieParser()
-  app.use express.session { secret: config.presentz.session_secret }
+  app.use express.cookieParser(config.presentz.session_secret)
+  app.use express.session()
   app.use express.methodOverride()
   app.use everyauth.middleware()
   app.use app.router
@@ -42,9 +42,9 @@ app.configure "development", ->
 app.configure "production", ->
   app.use express.errorHandler()
 
-app.dynamicHelpers
-  messages: (req, res) ->
-    req.flash()
+#app.dynamicHelpers
+#  messages: (req, res) ->
+#    req.flash()
 
 app.get "/", routes.static "index"
 app.get "/favicon.ico", express.static "#{__dirname}/public/assets/images"
@@ -63,9 +63,7 @@ app.get "/:catalog_name/:presentation.json", routes.raw_presentation
 app.get "/:catalog_name/:presentation", routes.show_presentation
 app.get "/:catalog_name", routes.show_catalog
 
-everyauth.helpExpress(app)
-
 app.listen 3000
-console.log "Express server listening on port %d in %s mode", app.address().port, app.settings.env
+console.log "Express server listening on port 3000 in %s mode", app.settings.env
 
 require "./subdomain"
