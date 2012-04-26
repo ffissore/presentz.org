@@ -47,6 +47,7 @@ app.dynamicHelpers
     req.flash()
 
 app.get "/", routes.static "index"
+app.get "/favicon.ico", express.static "#{__dirname}/public/assets/images"
 app.get "/r/index.html", routes.static "index"
 app.get "/r/about.html", routes.static "about"
 app.get "/r/tos.html", routes.static "tos"
