@@ -1,0 +1,63 @@
+{
+  "title" : "Java (senza) Beans",
+  "time" : "20120418",
+  "speaker" : "Federico Fissore",
+  "chapters" : [ {
+    "duration" : 2990,
+    "media" : {
+      "video" : {
+        "url" : "http://youtu.be/yWgINtT3vkw",
+        "thumb" : "http://presentz.org/assets/jugtorino/201204_killbean/thumb.jpg"
+      },
+      "slides" : [ {
+        "url" : "http://presentz.org/assets/jugtorino/201204_killbean/img0.png",
+        "title" : "Java(senza)Bean",
+        "time" : 0
+      }, {
+        "url" : "http://presentz.org/assets/jugtorino/201204_killbean/img1.png",
+        "title" : "Kill Bean",
+        "time" : 63
+      }, {
+        "url" : "http://presentz.org/assets/jugtorino/201204_killbean/img2.png",
+        "title" : "Primo scagnozzo: JSP",
+        "time" : 259
+      }, {
+        "url" : "http://presentz.org/assets/jugtorino/201204_killbean/img3.png",
+        "title" : "Secondo scagnozzo: ORM",
+        "time" : 362
+      }, {
+        "url" : "http://presentz.org/assets/jugtorino/201204_killbean/img4.png",
+        "title" : "Terzo scagnozzo: JSON",
+        "time" : 1118
+      }, {
+        "url" : "http://presentz.org/assets/jugtorino/201204_killbean/img5.png",
+        "title" : "Terzo scagnozzo: JSON",
+        "time" : 1124
+      }, {
+        "url" : "http://presentz.org/assets/jugtorino/201204_killbean/img6.png",
+        "title" : "Map on Steroids",
+        "time" : 1548
+      }, {
+        "url" : "http://presentz.org/assets/jugtorino/201204_killbean/img7.png",
+        "title" : "Map on Steroids - put()",
+        "time" : 1646
+      }, {
+        "url" : "http://presentz.org/assets/jugtorino/201204_killbean/img8.png",
+        "title" : "Map on Steroids - i()",
+        "time" : 1665
+      }, {
+        "url" : "http://presentz.org/assets/jugtorino/201204_killbean/img9.png",
+        "title" : "Map on Steroids - merge()",
+        "time" : 1779
+      }, {
+        "url" : "http://presentz.org/assets/jugtorino/201204_killbean/img10.png",
+        "title" : "Map on Steroids - map()",
+        "time" : 1841
+      }, {
+        "url" : "http://presentz.org/assets/jugtorino/201204_killbean/img11.png",
+        "title" : "Fine",
+        "time" : 1862
+      } ]
+    }
+  } ]
+}
