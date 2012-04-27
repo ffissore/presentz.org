@@ -18,13 +18,10 @@
     <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/vnd.microsoft.icon"/>
     <link rel="stylesheet" href="/assets/stylesheets/style.css"/>
     <link rel="stylesheet" href="/assets/stylesheets/mediaelementplayer.css"/>
+    <link rel="stylesheet" href="/assets/stylesheets/bootstrap.css">
   </head>
   <body>
-    {#messages}
-      {?error}
-        {error}
-      {/error}
-    {/messages}
+    {rendered_messages|s}
     {+body}
     {/body}
     <footer>

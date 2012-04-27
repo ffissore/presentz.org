@@ -1,4 +1,5 @@
 express = require "express"
+messages = require "bootstrap-express-messages"
 routes = require "./routes"
 redirect_routes = require "./routes/redirect"
 orient = require "orientdb"
@@ -30,6 +31,7 @@ app.configure ->
   app.use express.bodyParser()
   app.use express.cookieParser(config.presentz.session_secret)
   app.use express.session()
+  app.use messages(app)
   app.use express.methodOverride()
   app.use everyauth.middleware()
   app.use app.router
@@ -41,10 +43,6 @@ app.configure "development", ->
 
 app.configure "production", ->
   app.use express.errorHandler()
-
-#app.dynamicHelpers
-#  messages: (req, res) ->
-#    req.flash()
 
 app.get "/", routes.static "index"
 app.get "/favicon.ico", express.static "#{__dirname}/public/assets/images"

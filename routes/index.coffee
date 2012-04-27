@@ -104,5 +104,5 @@ exports.raw_presentation = (req, res, next) ->
 exports.ensure_is_logged = (req, res, next) ->
   return next() if req.user
 
-  req.flash "error", "you need to be logged in"
-  res.redirect "/", 302
+  req.notify "error", "you need to be logged in"
+  res.redirect 302, "/"
