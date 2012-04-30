@@ -1,7 +1,7 @@
 express = require "express"
 messages = require "bootstrap-express-messages"
 routes = require "./routes"
-redirect_routes = require "./routes/redirect"
+redirect_routes = require "./routes_redirect"
 orient = require "orientdb"
 cons = require "consolidate"
 
@@ -51,7 +51,7 @@ app.get "/r/about.html", routes.static "about"
 app.get "/r/tos.html", routes.static "tos"
 app.get "/p.html", redirect_routes.redirect_to_presentation_from_p_html
 app.get "/m/*.:whatever?", routes.ensure_is_logged
-app.get "/m/manage", routes.static "m/manage"
+app.get "/m/manage", routes.static "m/index"
 app.get "/:catalog_name/p.html", redirect_routes.redirect_to_presentation_from_p_html
 app.get "/:catalog_name/catalog.html", routes.show_catalog
 app.get "/:catalog_name/catalog", routes.show_catalog

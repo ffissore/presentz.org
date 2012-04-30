@@ -57,7 +57,7 @@ exports.static = (view_name) ->
 
 exports.show_catalog = (req, res, next) ->
   console.log "show_catalog"
-  catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
+  catalog_path = "#{__dirname}/#{req.params.catalog_name}"
   path.exists catalog_path, (exists) ->
     catalog_id = req.params.catalog_name
     read_catalog catalog_path, catalog_id, (err, catalog) ->
@@ -77,12 +77,12 @@ exports.show_catalog = (req, res, next) ->
 
 exports.show_presentation = (req, res, next) ->
   console.log "show_presentation"
-  catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
+  catalog_path = "#{__dirname}/#{req.params.catalog_name}"
   catalog_id = req.params.catalog_name
   read_catalog catalog_path, catalog_id, (err, catalog) ->
     return next(err) if err?
 
-    fs.readFile "#{__dirname}/..#{req.path}.json", "utf-8", (err, data) ->
+    fs.readFile "#{__dirname}/#{req.path}.json", "utf-8", (err, data) ->
       return next(err) if err?
 
       pres = JSON.parse data
@@ -95,7 +95,7 @@ exports.show_presentation = (req, res, next) ->
 exports.raw_presentation = (req, res, next) ->
   console.log "raw_presentation"
 
-  fs.readFile "#{__dirname}/..#{req.path}", "utf-8", (err, data) ->
+  fs.readFile "#{__dirname}/#{req.path}", "utf-8", (err, data) ->
     return next(err) if err?
 
     data = "#{req.query.jsoncallback}(#{data});" if req.query.jsoncallback

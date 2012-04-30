@@ -41,9 +41,6 @@
   </div>
 </div>
 
-{+body}
-{/body}
-
 <script src="/assets/javascripts/jquery.min.js"></script>
 <script src="/assets/javascripts/json2.js"></script>
 <script src="/assets/javascripts/underscore-min.js"></script>

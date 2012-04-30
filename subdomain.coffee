@@ -1,5 +1,5 @@
 express = require "express"
-redirect_routes = require "./routes/redirect"
+redirect_routes = require "./routes_redirect"
 
 subdomain = express()
 
