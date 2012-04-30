@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Bootstrap, from Twitter</title>
+  <title>Presentz Backend</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -45,6 +45,10 @@
 {/body}
 
 <script src="/assets/javascripts/jquery.min.js"></script>
+<script src="/assets/javascripts/json2.js"></script>
+<script src="/assets/javascripts/underscore-min.js"></script>
+<script src="/assets/javascripts/backbone-min.js"></script>
+<script src="/assets/javascripts/manage/app.js"></script>
 <script src="/assets/javascripts/bootstrap.js"></script>
 </body>
 </html>
