@@ -3,4 +3,6 @@ jQuery ->
     el: $("body")
 
     render: ->
-      dust
+      dust.render "prova", @model.toJSON(), (err, output) =>
+        $(@el).html output
+      @
