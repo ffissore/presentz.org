@@ -26,20 +26,6 @@
 </head>
 
 <body>
-<div class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container">
-      <a class="brand" href="#"><img src="/assets/images/logo_small.png"/></a>
-      <ul class="nav">
-        <li class="active">
-          <a href="#">Home</a>
-        </li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
 
 <script src="/assets/javascripts/jquery.min.js"></script>
 <script src="/assets/javascripts/json2.js"></script>
@@ -47,5 +33,7 @@
 <script src="/assets/javascripts/backbone-min.js"></script>
 <script src="/assets/javascripts/bootstrap.js"></script>
 <script src="/assets/javascripts/dust-core-0.4.0.js"></script>
+<script src="/assets/javascripts/manage/index.js"></script>
+<script src="/assets/javascripts/manage/prova.js"></script>
 </body>
 </html>

@@ -50,7 +50,7 @@ app.get "/r/index.html", routes.static "index"
 app.get "/r/about.html", routes.static "about"
 app.get "/r/tos.html", routes.static "tos"
 app.get "/p.html", redirect_routes.redirect_to_presentation_from_p_html
-app.get "/m/*.:whatever?", routes.ensure_is_logged
+#app.get "/m/*.:whatever?", routes.ensure_is_logged
 app.get "/m/manage", routes.static "m/index"
 app.get "/:catalog_name/p.html", redirect_routes.redirect_to_presentation_from_p_html
 app.get "/:catalog_name/catalog.html", routes.show_catalog
