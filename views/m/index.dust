@@ -45,7 +45,7 @@
 <script src="/assets/javascripts/json2.js"></script>
 <script src="/assets/javascripts/underscore-min.js"></script>
 <script src="/assets/javascripts/backbone-min.js"></script>
-<script src="/assets/javascripts/manage/app.js"></script>
 <script src="/assets/javascripts/bootstrap.js"></script>
+<script src="/assets/javascripts/dust-core-0.4.0.js"></script>
 </body>
 </html>

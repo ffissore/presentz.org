@@ -14,6 +14,9 @@
     "everyauth": "git://github.com/bnoguchi/everyauth.git#express3",
     "orientdb": "git://github.com/ffissore/node-orientdb.git#master"
   },
+  "devDependencies": {
+    "watch-tree": "git://github.com/matjaz/node-watch-tree.git#node-0.6"
+  },
   "licenses": [
     {
       "type": "GPLv3",
