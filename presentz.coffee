@@ -13,7 +13,7 @@ server = new orient.Server
   host: config.storage.server.host
   port: config.storage.server.port
 
-db = new orient.Db "presentz", server,
+db = new orient.GraphDb "presentz", server,
   user_name: config.storage.db.user_name
   user_password: config.storage.db.user_password
 
@@ -21,6 +21,7 @@ db.open ->
   console.log("DB connection open")
 
 everyauth = require("./auth").init(config, db)
+api = require("./api").init(db)
 
 app.engine("dust", cons.dust)
 
@@ -45,6 +46,8 @@ app.configure "production", ->
   app.use express.errorHandler()
 
 app.get "/", routes.static "index"
+app.get "/1/me/authored", api.mines_authored
+app.get "/1/me/speaker_of", api.mines_held
 app.get "/favicon.ico", express.static "#{__dirname}/public/assets/images"
 app.get "/r/index.html", routes.static "index"
 app.get "/r/about.html", routes.static "about"
