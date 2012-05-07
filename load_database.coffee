@@ -23,17 +23,29 @@ db.open ->
 
     db.createVertex user, (err, user) ->
       db.createEdge root, user, ->
+        catalogs = [ "demo", "iad11", "jugtorino", "codemotion12" , "presentations" ]
 
-        fs.readdir "demo", (err, files) ->
-          files = (file for file in files when !_s.startsWith(file, "catalog") and _s.endsWith(file, ".json"))
-          files_done = []
-          for file in files
-            fs.readFile "demo/#{file}", "utf-8", (err, presentation) ->
-              presentation = JSON.parse presentation
-              presentation._type = "presentation"
+        load_presentations_for = (user, catalogs) ->
+          return db.close() if catalogs.length is 0
 
-              db.createVertex presentation, (err, presentation) ->
-                delete user["@version"]
+          catalog = catalogs.pop()
+          fs.readdir catalog, (err, files) ->
+            link_user_to_pres = (user, presentations) ->
+              return load_presentations_for user if presentations.length is 0
+
+              db.createVertex presentations.pop(), (err, presentation) ->
                 db.createEdge user, presentation, ->
-                  files_done.push file
-                  db.close() if files_done.length is files.length
+                  link_user_to_pres user, presentations
+
+            files = (file for file in files when !_s.startsWith(file, "catalog") and _s.endsWith(file, ".json"))
+            presentations = []
+            for file in files
+              fs.readFile "#{catalog}/#{file}", "utf-8", (err, presentation) ->
+                console.log err
+                presentation = JSON.parse presentation
+                presentation._type = "presentation"
+                presentations.push presentation
+
+                link_user_to_pres(user, presentations) if presentations.length is files.length
+
+        load_presentations_for user, catalogs

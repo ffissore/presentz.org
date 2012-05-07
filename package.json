@@ -12,7 +12,7 @@
     "underscore": ">= 1.3.3",
     "dateutil": ">= 0.1.0",
     "everyauth": "git://github.com/bnoguchi/everyauth.git#express3",
-    "orientdb": "git://github.com/ffissore/node-orientdb.git#master"
+    "orientdb": "git://github.com/ffissore/node-orientdb.git#rc9"
   },
   "devDependencies": {
     "watch-tree": "git://github.com/matjaz/node-watch-tree.git#node-0.6"
