@@ -31,7 +31,7 @@ db.open ->
           catalog = catalogs.pop()
           fs.readdir catalog, (err, files) ->
             link_user_to_pres = (user, presentations) ->
-              return load_presentations_for user if presentations.length is 0
+              return load_presentations_for user, catalogs if presentations.length is 0
 
               db.createVertex presentations.pop(), (err, presentation) ->
                 db.createEdge user, presentation, ->
@@ -41,7 +41,6 @@ db.open ->
             presentations = []
             for file in files
               fs.readFile "#{catalog}/#{file}", "utf-8", (err, presentation) ->
-                console.log err
                 presentation = JSON.parse presentation
                 presentation._type = "presentation"
                 presentations.push presentation
