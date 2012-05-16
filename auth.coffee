@@ -48,7 +48,7 @@ twitter_init = (config, db) ->
     (session, accessToken, accessSecret, twitter_user) ->
       promise = @Promise()
 
-      db.command "SELECT @rid FROM User where twitter_id = '#{twitter_user.id}'", (err, results) ->
+      db.command "SELECT @rid FROM V where _type = 'user' and twitter_id = '#{twitter_user.id}'", (err, results) ->
         if results.length isnt 0
           promise.fulfill
             id: results[0].rid

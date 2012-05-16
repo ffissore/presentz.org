@@ -22,7 +22,7 @@ db.open ->
       email: "federico@fsfe.org"
 
     db.createVertex user, (err, user) ->
-      db.createEdge root, user, ->
+      db.createEdge root, user, { label: "user" }, ->
         catalogs = [ "demo", "iad11", "jugtorino", "codemotion12" , "presentations" ]
 
         load_presentations_for = (user, catalogs) ->
@@ -34,7 +34,7 @@ db.open ->
               return load_presentations_for user, catalogs if presentations.length is 0
 
               db.createVertex presentations.pop(), (err, presentation) ->
-                db.createEdge user, presentation, ->
+                db.createEdge user, presentation, { label: "authored" }, ->
                   link_user_to_pres user, presentations
 
             files = (file for file in files when !_s.startsWith(file, "catalog") and _s.endsWith(file, ".json"))
