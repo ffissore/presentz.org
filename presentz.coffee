@@ -9,13 +9,9 @@ app = express()
 
 config = require "./config.#{app.settings.env}"
 
-server = new orient.Server
-  host: config.storage.server.host
-  port: config.storage.server.port
+server = new orient.Server config.storage.server
 
-db = new orient.GraphDb "presentz", server,
-  user_name: config.storage.db.user_name
-  user_password: config.storage.db.user_password
+db = new orient.GraphDb "presentz", server, config.storage.db
 
 db.open ->
   console.log("DB connection open")
