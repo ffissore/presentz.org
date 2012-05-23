@@ -1,0 +1,56 @@
+{>layout/}
+
+{<body}
+<section id="talks">
+    <div class="main">
+        <h3>Presentz talks</h3>
+        <div class="search">
+        {!
+            <form action="#">
+                <input type="text" value="Search..." />
+                <input type="submit" value="" id="search_send" />
+            </form>
+        !}
+        </div>
+        <div class="clear"></div>
+        <div id="sort_by">
+        {!
+            Sort by: <a href="javascript:void(0)" class="selected">Alphabetical (A-Z)</a> | <a href="javascript:void(0)">Most viewed</a>
+        !}
+        </div>
+        <div class="box2 item_category">
+            <div class="box_over"><a href="/jugtorino"></a></div>
+            <div class="img_category">
+                <img src="/assets/jugtorino/logo.png" alt="Jug Torino" />
+            </div>
+            <h4><a href="/jugtorino">JUG Torino (40)</a></h4>
+        </div>
+        <div class="box2 item_category">
+            <div class="box_over"><a href="/iad11"></a></div>
+            <div class="img_category">
+                <img src="/assets/iad11/logo.png" alt="Italian Agile Day 2011" />
+            </div>
+            <h4><a href="/iad11">Italian Agile Day (10)</a></h4>
+        </div>
+        <div class="box2 item_category">
+            <div class="box_over"><a href="/codemotion12"></a></div>
+            <div class="img_category">
+                <img src="/assets/codemotion12/banner130x130.gif" alt="Codemotion 2012" />
+            </div>
+            <h4><a href="/codemotion12">Codemotion 2012 (5)</a></h4>
+        </div>
+        {!
+        <div class="clear"></div>
+        <div class="paging">
+            <span class="current">1</span>
+            <span><a href="javascript:void(0)">2</a></span>
+            <span><a href="javascript:void(0)">3</a></span>
+            <span><a href="javascript:void(0)">4</a></span>
+            <span>...</span>
+            <span><a href="javascript:void(0)">10</a></span>
+        </div>
+        <div class="clear"></div>
+        !}
+    </div>
+</section>
+{/body}

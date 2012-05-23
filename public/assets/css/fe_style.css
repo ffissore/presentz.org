@@ -537,8 +537,8 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
 }
 
 .search input[type=text] {
-    width: 178px;
-    height: 28px;
+    width: 220px;
+    height: 30px;
     padding-left: 40px;
     line-height: 28px;
     font-family: 'ChivoRegular';
