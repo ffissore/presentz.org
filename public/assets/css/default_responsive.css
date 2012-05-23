@@ -1,0 +1,287 @@
+@media only screen and (min-width: 320px) and (max-width: 479px) {
+    #griglia {
+        background: none;
+        background-color: #e3edff;
+        margin-left: -150px;
+        width: 300px;
+    }
+
+    .main {
+        width: 300px;
+        background: none;
+        background-color: #e3edff;
+    }
+
+    [class*="box"] {
+        width: 100%;
+        margin-left: 0px;
+        margin-right: 0px;
+        float: none;
+        clear: both;
+    }
+
+    [class*="offset"] {
+        margin-left: 0px;
+    }
+
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+    #griglia {
+        background: none;
+        background-color: #fce6e7;
+        margin-left: -230px;
+        width: 460px;
+    }
+
+    .main {
+        width: 460px;
+        background: none;
+        background-color: #fce6e7;
+    }
+
+    [class*="box"] {
+        width: 100%;
+        margin-left: 0px;
+        margin-right: 0px;
+        float: none;
+        clear: both;
+    }
+
+    [class*="offset"] {
+        margin-left: 0px;
+    }
+
+    .input.text input, .input textarea, .custom_select .input.text, .custom_select .input.text input {
+        width: 438px;
+    }
+
+    .custom_select .select select {
+        width: 460px;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 979px) {
+    #griglia {
+        background-image: url(../img/fe/griglia_700.png);
+        margin-left: -360px;
+        width: 720px;
+    }
+
+    .main {
+        margin: 0px auto;
+        width: 720px;
+    }
+
+    .box1 {
+        width: 40px
+    }
+
+    .box2 {
+        width: 100px
+    }
+
+    .box3 {
+        width: 160px
+    }
+
+    .box4 {
+        width: 220px
+    }
+
+    .box5 {
+        width: 280px
+    }
+
+    .box6 {
+        width: 340px
+    }
+
+    .box7 {
+        width: 400px
+    }
+
+    .box8 {
+        width: 460px
+    }
+
+    .box9 {
+        width: 520px
+    }
+
+    .box10 {
+        width: 580px
+    }
+
+    .box11 {
+        width: 640px
+    }
+
+    .box12 {
+        width: 700px
+    }
+
+    .offset1 {
+        margin-left: 70px
+    }
+
+    .offset2 {
+        margin-left: 130px
+    }
+
+    .offset3 {
+        margin-left: 190px
+    }
+
+    .offset4 {
+        margin-left: 250px
+    }
+
+    .offset5 {
+        margin-left: 310px
+    }
+
+    .offset6 {
+        margin-left: 370px
+    }
+
+    .offset7 {
+        margin-left: 430px
+    }
+
+    .offset8 {
+        margin-left: 490px
+    }
+
+    .offset9 {
+        margin-left: 550px
+    }
+
+    .offset10 {
+        margin-left: 610px
+    }
+
+    .offset11 {
+        margin-left: 670px
+    }
+
+    .input.text input, .input textarea, .custom_select .input.text, .custom_select .input.text input {
+        width: 198px;
+    }
+
+    .custom_select .select select {
+        width: 220px;
+    }
+}
+
+@media only screen and (min-width: 980px) and (max-width: 1289px) {
+    .main {
+        width: 960px;
+        margin: 0px auto;
+    }
+}
+
+@media only screen and (min-width: 1290px) {
+    #griglia {
+        background-image: url(../img/fe/griglia_1200.png);
+        margin-left: -600px;
+        width: 1200px;
+    }
+
+    .main {
+        width: 1200px;
+        margin: 0px auto;
+    }
+
+    .box1 {
+        width: 80px
+    }
+
+    .box2 {
+        width: 180px
+    }
+
+    .box3 {
+        width: 280px
+    }
+
+    .box4 {
+        width: 380px
+    }
+
+    .box5 {
+        width: 480px
+    }
+
+    .box6 {
+        width: 580px
+    }
+
+    .box7 {
+        width: 680px
+    }
+
+    .box8 {
+        width: 780px
+    }
+
+    .box9 {
+        width: 880px
+    }
+
+    .box10 {
+        width: 980px
+    }
+
+    .box11 {
+        width: 1080px
+    }
+
+    .box12 {
+        width: 1180px
+    }
+
+    .offset1 {
+        margin-left: 110px
+    }
+
+    .offset2 {
+        margin-left: 210px
+    }
+
+    .offset3 {
+        margin-left: 310px
+    }
+
+    .offset4 {
+        margin-left: 410px
+    }
+
+    .offset5 {
+        margin-left: 510px
+    }
+
+    .offset6 {
+        margin-left: 610px
+    }
+
+    .offset7 {
+        margin-left: 710px
+    }
+
+    .offset8 {
+        margin-left: 810px
+    }
+
+    .offset9 {
+        margin-left: 910px
+    }
+
+    .offset10 {
+        margin-left: 1010px
+    }
+
+    .offset11 {
+        margin-left: 1110px
+    }
+}

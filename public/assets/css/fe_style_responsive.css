@@ -1,0 +1,489 @@
+/*stili custom progetto*/
+@import url("default_responsive.css");
+
+@media only screen and (min-width: 320px) and (max-width: 479px) {
+    #wrapper {
+        padding-top: 155px;
+    }
+
+    /*header e menu*/
+    header {
+        height: auto;
+        padding-bottom: 20px;
+        background-position: bottom left;
+    }
+
+    #content_header {
+        width: 300px;
+        background-color: #FFFFFF;
+    }
+
+    header h1 {
+        width: 100%;
+        float: none;
+        margin: 0px;
+        background-position: center;
+    }
+
+    header h1 a {
+        width: 100%;
+    }
+
+    nav#menu {
+        margin: 0px;
+        float: none;
+    }
+
+    nav#menu ul li {
+        width: 100%;
+        float: none;
+        text-align: center;
+    }
+
+    /*fine header e menu*/
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+    #wrapper {
+        padding-top: 155px;
+    }
+
+    /*header e menu*/
+    header {
+        height: auto;
+        padding-bottom: 20px;
+        background-position: bottom left;
+    }
+
+    #content_header {
+        width: 460px;
+        background-color: #FFFFFF;
+    }
+
+    header h1 {
+        width: 100%;
+        float: none;
+        margin: 0px;
+        background-position: center;
+    }
+
+    header h1 a {
+        width: 100%;
+    }
+
+    nav#menu {
+        margin: 0px;
+        float: none;
+    }
+
+    nav#menu ul li {
+        width: 100%;
+        float: none;
+        text-align: center;
+    }
+
+    /*fine header e menu*/
+
+}
+
+@media only screen and (min-width: 768px) and (max-width: 979px) {
+    /*IPAD*/
+    h3 {
+        font-size: 40px;
+    }
+
+    .testo p {
+        margin-bottom: 20px;
+    }
+
+    #section_footer {
+        width: 720px;
+    }
+
+    /*header e menu*/
+    #content_header {
+        width: 720px;
+    }
+
+    nav#menu ul li {
+        width: 40px;
+    }
+
+    /*fine header e menu*/
+
+    /*section home*/
+    #home {
+        height: 500px;
+        background-size: 1500px auto;
+    }
+
+    #home .main {
+        width: 720px;
+        padding-top: 80px;
+    }
+
+    #home h2 {
+        font-size: 50px;
+        background-image: url(../img/fe/graffa_open.png), url(../img/fe/graffa_close.png);
+        background-position: left top, right top;
+        background-repeat: no-repeat;
+        margin-bottom: 35px;
+    }
+
+    #home p {
+        font-size: 18px;
+        line-height: 20px;
+        margin-bottom: 30px;
+    }
+
+    #wrapper_link_demos {
+        margin: 0px auto;
+        background-image: url(../img/fe/border_demos_repeat.png), url(../img/fe/border_demos_repeat.png);
+        background-position: top left, bottom left;
+        background-repeat: repeat-x;
+    }
+
+    #link_demos {
+        width: 160px;
+        height: 47px;
+        background-size: 160px auto;
+        text-indent: -999999px;
+    }
+
+    #home p#wrapper_learn_more {
+        font-size: 12px;
+        text-shadow: 0px 1px 0px #003366;
+        margin-top: -10px;
+    }
+
+    #wrapper_learn_more a {
+        font-size: 14px;
+    }
+
+    #ico_play_home {
+        height: 210px;
+        width: 210px;
+        background-size: 210px auto;
+        margin-top: 102px;
+        margin-left: 0px;
+    }
+
+    /*fine section home*/
+    /*section lear*/
+    #learn {
+        background-position: center 74px;
+        padding-top: 370px;
+        background-size: 720px auto;
+    }
+
+    #learn h3 {
+        margin-bottom: 25px;
+    }
+
+    #learn .testo {
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    /*fine section lear*/
+    /*section demo*/
+    #demo_home {
+        height: 355px;
+        background-image: url(../img/fe/ombra_demo.png), url(../img/fe/pattern_demo.gif);
+        background-position: top left, top left;
+        background-repeat: repeat-x, repeat;
+        padding-top: 45px;
+    }
+
+    #demo_home h3 {
+        margin-bottom: 33px;
+    }
+
+    #slider {
+        width: 720px;
+        height: 260px;
+    }
+
+    #navigation_slider {
+        width: 720px;
+        bottom: 16px;
+    }
+
+    .demo_thumb_item {
+        height: 185px;
+        padding-top: 165px;
+        background-size: 220px auto;
+        font-size: 14px;
+    }
+
+    .demo_thumb_item a {
+        height: 185px;
+    }
+
+    .demo_thumb_item_icon {
+        width: 40px;
+    }
+
+    .demo_thumb_item_icon.left {
+        left: 35px;
+    }
+
+    .demo_thumb_item_icon.right {
+        right: 35px;
+    }
+
+    .demo_thumb_item_icon img {
+        margin-top: 60px;
+    }
+
+    /*fine section demo*/
+    /*section talks*/
+    #talks h3 {
+        width: 460px;
+        margin-top: 8px;
+    }
+
+    #talks_detail h3 {
+        width: 400px;
+        margin-top: 8px;
+        margin-bottom: 15px;
+    }
+
+    .search {
+        margin-top: 25px;
+    }
+
+    #sort_by {
+        margin-bottom: 18px;
+    }
+
+    #ico_item_category .img_category {
+        padding: 3px;
+    }
+
+    .box_over {
+        width: 104px;
+        height: 104px;
+        background-size: 104px auto;
+    }
+
+    .item_video .box_over {
+        width: 164px;
+        height: 120px;
+        background-size: 164px auto;
+    }
+
+    #ico_item_category .box_over {
+        width: 44px;
+        height: 44px;
+        background-size: 44px auto;
+    }
+
+    .box_over a {
+        height: 104px;
+        width: 104px;
+    }
+
+    #ico_item_category .box_over a {
+        height: 44px;
+        width: 44px;
+    }
+
+    .item_video .box_over a {
+        width: 164px;
+        height: 120px;
+    }
+
+    .item_category h4 {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    /*fine section talks*/
+    /*section demo*/
+    #player_video, #slideshow_player {
+        height: 310px;
+    }
+
+    #controls {
+        width: 700px;
+    }
+
+    #tools h5, #comments h5, #chapters h5, #embed h5, #share h5 {
+        background-size: 460px auto;
+    }
+
+    #tools li a {
+        padding: 0px 8px;
+    }
+
+    #header_comment_slide .title {
+        width: 280px;
+    }
+
+    #remove_comment_filter {
+        width: 160px;
+    }
+
+    /*fine section demo*/
+}
+
+@media only screen and (min-width: 980px) and (max-width: 1289px) {
+
+}
+
+@media only screen and (min-width: 1290px) {
+    #section_footer {
+        width: 1200px;
+    }
+
+    /*header e menu*/
+    #content_header {
+        width: 1200px;
+    }
+
+    nav#menu ul li {
+        width: 80px;
+    }
+
+    /*fine header e menu*/
+
+    /*section home*/
+    #home h2 {
+        font-size: 75px;
+        background-image: url(../img/fe/graffa_open.png), url(../img/fe/graffa_close.png);
+        background-position: left top, right top;
+        background-repeat: no-repeat;
+    }
+
+    #wrapper_link_demos {
+        margin: 0px auto;
+        background-image: url(../img/fe/border_demos_repeat.png), url(../img/fe/border_demos_repeat.png);
+        background-position: top left, bottom left;
+        background-repeat: repeat-x;
+    }
+
+    #ico_play_home {
+        margin-top: 120px;
+        margin-left: 35px;
+    }
+
+    /*fine section home*/
+    /*section demo*/
+    #demo_home {
+        background-image: url(../img/fe/ombra_demo.png), url(../img/fe/pattern_demo.gif);
+        background-position: top left, top left;
+        background-repeat: repeat-x, repeat;
+        height: 605px;
+    }
+
+    #slider {
+        width: 1200px;
+        height: 470px;
+    }
+
+    #navigation_slider {
+        width: 1200px;
+    }
+
+    .demo_thumb_item {
+        height: 320px;
+        padding-top: 300px;
+        background-image: url(../img/fe/demo_thumb_bg_1200.png);
+    }
+
+    .demo_thumb_item a {
+        height: 320px;
+    }
+
+    .demo_thumb_item_icon {
+        width: 80px;
+    }
+
+    .demo_thumb_item_icon.left {
+        left: 65px;
+    }
+
+    .demo_thumb_item_icon.right {
+        right: 65px;
+    }
+
+    .demo_thumb_item_icon img {
+        margin-top: 100px;
+    }
+
+    /*fine section demo*/
+    /*section talks*/
+    #talks h3, #talks_detail h3 {
+        margin-top: 25px;
+    }
+
+    .search {
+        margin-top: 50px;
+    }
+
+    #sort_by {
+        margin-bottom: 35px;
+    }
+
+    #ico_item_category {
+        margin-top: 18px;
+    }
+
+    .item_category {
+        position: relative;
+        margin-bottom: 40px;
+    }
+
+    .box_over {
+        width: 184px;
+        height: 184px;
+        background-image: url(../img/fe/over_img_1200.png);
+        background-position: left top;
+        background-repeat: no-repeat;
+    }
+
+    #ico_item_category .box_over {
+        width: 84px;
+        height: 84px;
+        background-image: url(../img/fe/over_ico_talk_detail_1200.png);
+    }
+
+    .item_video .box_over {
+        width: 284px;
+        height: 207px;
+        background-image: url(../img/fe/over_item_video_1200.png);
+    }
+
+    .box_over a {
+        height: 184px;
+        width: 184px;
+    }
+
+    #ico_item_category .box_over a {
+        width: 84px;
+        height: 84px;
+    }
+
+    .item_video .box_over a {
+        width: 284px;
+        height: 207px;
+    }
+
+    /*fine section talks*/
+    /*section demo*/
+    #player_video, #slideshow_player {
+        height: 530px;
+    }
+
+    #controls {
+        width: 1180px;
+    }
+
+    #tools h5, #comments h5, #chapters h5, #embed h5, #share h5 {
+        background-size: 780px auto;
+    }
+
+    /*fine section demo*/
+}

@@ -1,18 +1,96 @@
 {>layout/}
 
 {<body}
-<div id="container">
-  <header class="mainheader"><img src="/assets/images/logo.png"/></header>
-  <div id="main" class="intro" role="main">
-    <div class="introtext">
-      <p><span id="logonormal">Present</span><span id="logobold">z</span> is a javascript library for synchronizing videos and slides, so to reproduce conference talks as faithfully as possible.</p>
-      <p>&nbsp;</p>
-      <p>It's a mashup, as it merges things like Vimeo, Youtube, Blip.tv and Slideshare together. But you can use raw images, swf and video files as well, unleashing the HTML5 video tag power.</p>
-      <p>&nbsp;</p>
-      <p><span id="logonormal">Present</span><span id="logobold">z</span> is a work-in-progress.</p>
-      <p>&nbsp;</p>
-      <p>You can <a href="mailto:federico^_^AT^_^presentz.org">drop an email</a> and ask questions, take a look at the <a href="/demo">demo talks</a> or enjoy the <a href="/jugtorino">JUG Torino</a>, the <a href="/iad11">8th Italian Agile Day</a> and the <a href="/codemotion12">Codemotion 2012 talks catalog</a>.</p>
+<section id="home">
+    <div class="main">
+        <div class="box4">
+            <h2>Presentz</h2>
+            <p>A javascript library<br /> for synchronizing<br /> videos and slides.</p>
+            <div id="wrapper_link_demos" class="box3">
+                <a href="#demo_home" id="link_demos">View the demos</a>
+            </div>
+            <p id="wrapper_learn_more"><span>or</span> <br /> <a href="#learn" id="link_learn_more">Learn More</a></p>
+        </div>
+        <div class="box8">
+            <span id="ico_play_home"></span>
+        </div>
+        <div class="clear"></div>
     </div>
-  </div>
-</div>
+</section>
+<section id="learn">
+    <div class="main">
+        <div class="box6">
+            <h3>Learn More</h3>
+            <div class="testo">
+                <p>
+                    Presentz is a mashup, as it merges things like Vimeo, Youtube, Blip.tv and Slideshare together. But you can use images and video files as well, unleashing the HTML5 video tag power.
+                </p>
+                <p>
+                    Presentz is a work-in-progress. Soon there will be an editor, while more video and slide backends will be supported.
+                </p>
+                <p>
+                    For now, <a href="mailto:federico^_^AT^_^presentz.org">drop an email</a> and ask questions, take a look at the <a class="link_demos" href="#demo_home">demo talks</a> or enjoy the <a href="/jugtorino">JUG Torino</a>, the <a href="/iad11">8th Italian Agile Day </a> and the <a href="/codemotion12">Codemotion 2012 talks catalog</a>.
+                </p>
+            </div>
+        </div>
+        <div class="box6">
+            <h3>About</h3>
+            <div class="testo">
+                <p>Purpose of Presentz.js is to make everyone able to faithfully reproduce presentations and conference talks, without imposing any technology constraint.</p>
+                <p>Most alternatives to Presentz.js have a centralized approach: you give them your video or audio, your slides, you use their tool to mix them, and they will host and publish the result.</p>
+                <p>We don't. There are enough streaming and slide sharing services available not to make another. And if you prefer to host your files on your own, do that. With Presentz.js you just mix them all.</p>
+                <p>Well, not really ALL of them. Not yet. In Presentz.js, there are what we call video and slides "backends". For each backend, there is a plugin. So, if we don't support your favourite slide sharing or streaming service, poke us on the <a href="https://github.com/ffissore/presentz.js/issues">issue tracker</a> and join us in developing <a href="https://github.com/ffissore/presentz.js">Presentz.js</a>.</p>
+                <p>As of now, Presentz.js supports these video backends: Youtube, Vimeo, Blip.tv, video files. And these slides backends: Slideshare, custom SWF files, images. Take a look at the <a class="link_demos" href="#demo_home">demos</a> to see them working.</p>
+                <p>Thank you for your interest in Presentz.js.</p>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</section>
+<section id="demo_home">
+    <div class="main">
+        <h3>Our <span>demos</span></h3>
+        <div id="slider">
+            <div id="content_slider">
+                <ul>
+                    <!-- Inserire i link corretti verso le demo -->
+                    <li class="box4 demo_thumb_item">
+                        <a href="javascript:void(0)" title="Demo: Youtube player, Slideshare player">Demo: Youtube player, Slideshare player</a>
+                        <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_youtube.png" alt="youtube icon"/></span>
+                        <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_slideshare.png" alt="slideshare icon"/></span>
+                        Youtube player, Slideshare player
+                    </li>
+
+                    <li class="box4 demo_thumb_item">
+                        <a href="javascript:void(0)" title="Demo: Vimeo player, images as slides">Demo: Vimeo player, images as slides</a>
+                        <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_vimeo.png" alt="vimeo icon"/></span>
+                        <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_images.png" alt="images icon"/></span>
+                        Vimeo player, images as slides
+                    </li>
+
+                    <li class="box4 demo_thumb_item">
+                        <a href="javascript:void(0)" title="Demo: Youtube player, images as slides">Demo: Youtube player, images as slides</a>
+                        <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_youtube.png" alt="youtube icon"/></span>
+                        <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_images.png" alt="images icon"/></span>
+                        Youtube player, images as slides
+                    </li>
+
+                    <li class="box4 demo_thumb_item">
+                        <a href="javascript:void(0)" title="Demo: Video tag, Slideshare player">Demo: Video tag, Slideshare player</a>
+                        <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_video.png" alt="video tag icon"/></span>
+                        <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_slideshare.png" alt="slideshare icon"/></span>
+                        Video tag, Slideshare player
+                    </li>
+
+                    <li class="box4 demo_thumb_item">
+                        <a href="javascript:void(0)" title="Demo: Video tag, images as slides">Demo: Video tag, images as slides</a>
+                        <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_video.png" alt="video tag icon"/></span>
+                        <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_images.png" alt="images icon"/></span>
+                        Video tag, images as slides
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
 {/body}

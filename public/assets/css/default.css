@@ -1,0 +1,305 @@
+nav, footer, section, header {
+    display: block;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+#wrapper {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+
+}
+
+html > body #wrapper {
+    height: auto
+}
+
+#site_wrapper {
+    padding-top: 60px;
+    padding-bottom: 300px;
+}
+
+p, h1, h2, h3, h4, h5, .abstract {
+    margin: 0px;
+    padding: 0px;
+}
+
+img {
+    line-height: 0px;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: auto;
+    outline: 0;
+}
+
+a {
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:focus {
+    outline: 0;
+}
+
+a img {
+    border: none;
+}
+
+textarea {
+    resize: none;
+}
+
+.clear {
+    clear: both;
+    height: 0px;
+    overflow: hidden;
+}
+
+/*grid system 960*/
+#griglia {
+    background-image: url(../img/fe/griglia.png);
+    background-position: center top;
+    background-repeat: repeat-y;
+    height: 100%;
+    left: 50%;
+    margin-left: -470px;
+    position: absolute;
+    width: 940px;
+    z-index: 200;
+}
+
+.main {
+    width: 960px;
+    margin: 0px auto;
+}
+
+.row {
+    height: 40px;
+    clear: both;
+}
+
+.box1, .box2, .box3, .box4, .box5, .box6, .box7, .box8, .box9, .box10, .box11, .box12 {
+    float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.box1 {
+    width: 60px;
+}
+
+.box2 {
+    width: 140px;
+}
+
+.box3 {
+    width: 220px;
+}
+
+.box4 {
+    width: 300px;
+}
+
+.box5 {
+    width: 380px;
+}
+
+.box6 {
+    width: 460px;
+}
+
+.box7 {
+    width: 540px;
+}
+
+.box8 {
+    width: 620px;
+}
+
+.box9 {
+    width: 700px;
+}
+
+.box10 {
+    width: 780px;
+}
+
+.box11 {
+    width: 860px;
+}
+
+.box12 {
+    width: 940px;
+}
+
+.offset1 {
+    margin-left: 90px;
+}
+
+.offset2 {
+    margin-left: 170px;
+}
+
+.offset3 {
+    margin-left: 250px;
+}
+
+.offset4 {
+    margin-left: 330px;
+}
+
+.offset5 {
+    margin-left: 410px;
+}
+
+.offset6 {
+    margin-left: 490px;
+}
+
+.offset7 {
+    margin-left: 570px;
+}
+
+.offset8 {
+    margin-left: 640px;
+}
+
+.offset9 {
+    margin-left: 730px;
+}
+
+.offset10 {
+    margin-left: 810px;
+}
+
+.offset11 {
+    margin-left: 890px;
+}
+
+/*fine grid system 960*/
+
+/*paginazione*/
+#paging {
+}
+
+.paging {
+    clear: both;
+    text-align: center;
+    height: 20px;
+    margin-bottom: 20px;
+}
+
+.paging span {
+    line-height: 18px;
+}
+
+.paging span.current {
+    color: #CCCCCC;
+    padding: 0px 3px;
+    text-align: center;
+}
+
+.paging a {
+    padding: 0px 3px;
+    text-decoration: none;
+    text-align: center;
+    color: #000000;
+}
+
+.paging a:hover {
+    color: #CCCCCC;
+}
+
+/*fine paginazione*/
+
+/*fomr*/
+.input {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.input label {
+    display: block;
+}
+
+.input.text input {
+    width: 278px;
+    border: 1px solid #cfcfcf;
+    padding: 0px 10px;
+    height: 38px;
+    line-height: 38px;
+}
+
+.input textarea {
+    width: 278px;
+    padding: 5px 10px;
+    border: 1px solid #cfcfcf;
+}
+
+.custom_select {
+    height: 62px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.custom_select .input.text {
+    position: absolute;
+    left: 0px;
+    top: 20px;
+    width: 278px;
+}
+
+.custom_select .input.text input {
+    border: 1px solid #cfcfcf;
+    width: 278px;
+    height: 41px;
+    line-height: 41px;
+    padding: 0px 10px;
+}
+
+.custom_select .select {
+    clear: both;
+}
+
+.custom_select .select select {
+    clear: both;
+    height: 43px;
+    width: 300px;
+    line-height: 41px;
+    margin-top: 0px;
+    filter: alpha(opacity = 0);
+    opacity: 0;
+}
+
+.checkbox input {
+    margin-right: 10px;
+}
+
+.submit input {
+    background: none;
+    display: block;
+    background-color: #cfcfcf;
+    border: 0px;
+    height: 38px;
+    line-height: 38px;
+    padding: 0px 15px;
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+
+/*fine form*/
