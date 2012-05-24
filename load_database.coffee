@@ -13,7 +13,7 @@ db = new orient.GraphDb "presentz", server,
   user_password: config.storage.db.user_password
 
 db.open ->
-  db.createVertex {}, (err, root) ->
+  db.createVertex { _type: "root" }, (err, root) ->
     user =
       _type: "user"
       name: "Federico Fissore"
@@ -22,29 +22,37 @@ db.open ->
       email: "federico@fsfe.org"
 
     db.createVertex user, (err, user) ->
-      db.createEdge root, user, { label: "user" }, ->
+      db.createEdge root, user, { label: "user" }, (err, edge) ->
         catalogs = [ "demo", "iad11", "jugtorino", "codemotion12" , "presentations" ]
 
         load_presentations_for = (user, catalogs) ->
           return db.close() if catalogs.length is 0
 
-          catalog = catalogs.pop()
-          fs.readdir catalog, (err, files) ->
-            link_user_to_pres = (user, presentations) ->
+          catalog_folder = catalogs.pop()
+          fs.readdir catalog_folder, (err, files) ->
+            link_user_to_pres = (user, catalog, presentations) ->
               return load_presentations_for user, catalogs if presentations.length is 0
 
               db.createVertex presentations.pop(), (err, presentation) ->
                 db.createEdge user, presentation, { label: "authored" }, ->
-                  link_user_to_pres user, presentations
+                  db.createEdge presentation, catalog, { label: "part_of" }, ->
+                    link_user_to_pres user, catalog, presentations
 
-            files = (file for file in files when !_s.startsWith(file, "catalog") and _s.endsWith(file, ".json"))
-            presentations = []
-            for file in files
-              fs.readFile "#{catalog}/#{file}", "utf-8", (err, presentation) ->
-                presentation = JSON.parse presentation
-                presentation._type = "presentation"
-                presentations.push presentation
+            fs.readFile "#{catalog_folder}/catalog.json", "utf-8", (err, catalog) ->
+              catalog = JSON.parse catalog
+              catalog._type = "catalog"
 
-                link_user_to_pres(user, presentations) if presentations.length is files.length
+              db.createVertex catalog, (err, catalog) ->
+                db.createEdge root, catalog, { label: "catalog" }, ->
+                  db.createEdge user, catalog, { label: "admin_of" }, ->
+                    presentations_files = (file for file in files when !_s.startsWith(file, "catalog") and _s.endsWith(file, ".json"))
+                    presentations = []
+                    for file in presentations_files
+                      fs.readFile "#{catalog_folder}/#{file}", "utf-8", (err, presentation) ->
+                        presentation = JSON.parse presentation
+                        presentation._type = "presentation"
+                        presentations.push presentation
+
+                        link_user_to_pres(user, catalog, presentations) if presentations.length is presentations_files.length
 
         load_presentations_for user, catalogs
