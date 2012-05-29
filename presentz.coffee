@@ -4,6 +4,8 @@ routes = require "./routes"
 redirect_routes = require "./routes_redirect"
 orient = require "orientdb"
 cons = require "consolidate"
+OrientDBStore = require("connect-orientdb")(express)
+_ = require "underscore"
 
 app = express()
 
@@ -16,6 +18,9 @@ db = new orient.GraphDb "presentz", server, config.storage.db
 db.open ->
   console.log("DB connection open")
 
+session_store_options = _.clone(config.storage)
+session_store_options.database = "presentz"
+
 everyauth = require("./auth").init(config, db)
 api = require("./api").init(db)
 
@@ -27,7 +32,8 @@ app.configure ->
   app.use express.logger()
   app.use express.bodyParser()
   app.use express.cookieParser(config.presentz.session_secret)
-  app.use express.session()
+  app.use express.session
+    store: new OrientDBStore(session_store_options)
   app.use messages(app)
   app.use express.methodOverride()
   app.use everyauth.middleware()
