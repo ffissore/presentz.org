@@ -18,27 +18,15 @@
             Sort by: <a href="javascript:void(0)" class="selected">Alphabetical (A-Z)</a> | <a href="javascript:void(0)">Most viewed</a>
         !}
         </div>
-        <div class="box2 item_category">
-            <div class="box_over"><a href="/jugtorino"></a></div>
-            <div class="img_category">
-                <img src="/assets/jugtorino/logo.png" alt="Jug Torino" />
-            </div>
-            <h4><a href="/jugtorino">JUG Torino (40)</a></h4>
-        </div>
-        <div class="box2 item_category">
-            <div class="box_over"><a href="/iad11"></a></div>
-            <div class="img_category">
-                <img src="/assets/iad11/logo.png" alt="Italian Agile Day 2011" />
-            </div>
-            <h4><a href="/iad11">Italian Agile Day (10)</a></h4>
-        </div>
-        <div class="box2 item_category">
-            <div class="box_over"><a href="/codemotion12"></a></div>
-            <div class="img_category">
-                <img src="/assets/codemotion12/banner130x130.gif" alt="Codemotion 2012" />
-            </div>
-            <h4><a href="/codemotion12">Codemotion 2012 (5)</a></h4>
-        </div>
+        {#catalogs}
+          <div class="box2 item_category">
+              <div class="box_over"><a href="/{id}"></a></div>
+              <div class="img_category">
+                  <img src="{logo}" alt="{name}" />
+              </div>
+              <h4><a href="/{id}">{name} (40)</a></h4>
+          </div>
+        {/catalogs}
         {!
         <div class="clear"></div>
         <div class="paging">

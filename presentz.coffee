@@ -1,6 +1,5 @@
 express = require "express"
 messages = require "bootstrap-express-messages"
-routes = require "./routes"
 redirect_routes = require "./routes_redirect"
 orient = require "orientdb"
 cons = require "consolidate"
@@ -23,6 +22,7 @@ session_store_options.database = "presentz"
 
 everyauth = require("./auth").init(config, db)
 api = require("./api").init(db)
+routes = require("./routes").init(db)
 
 app.engine("dust", cons.dust)
 
@@ -53,7 +53,7 @@ app.get "/1/me/speaker_of", api.mines_held
 app.get "/favicon.ico", express.static "#{__dirname}/public/assets/images"
 app.get "/r/index.html", routes.static "index"
 app.get "/r/tos.html", routes.static "tos"
-app.get "/r/talks.html", routes.static "talks"
+app.get "/r/talks.html", routes.list_catalogs
 app.get "/p.html", redirect_routes.redirect_to_presentation_from_p_html
 #app.get "/m/*.:whatever?", routes.ensure_is_logged
 app.get "/m/manage", routes.static "m/index"

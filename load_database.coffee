@@ -41,6 +41,7 @@ db.open ->
             fs.readFile "#{catalog_folder}/catalog.json", "utf-8", (err, catalog) ->
               catalog = JSON.parse catalog
               catalog._type = "catalog"
+              catalog.id = catalog_folder
 
               db.createVertex catalog, (err, catalog) ->
                 db.createEdge root, catalog, { label: "catalog" }, ->

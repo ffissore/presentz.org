@@ -6,6 +6,18 @@ http = require "http"
 url = require "url"
 dateutil = require "dateutil"
 
+routes = {}
+
+exports.init = (db) ->
+  routes.db = db
+  @
+
+exports.list_catalogs = (req, res, next) ->
+  routes.db.command "SELECT FROM V WHERE _type = 'catalog' and (hidden is null or hidden = 'false') ORDER BY name", (err, results) ->
+    return next(err) if err?
+    res.render "talks",
+      catalogs: results
+
 fill_presentation_data_from_file = (file, file_name, catalog_id, callback) ->
   fs.readFile file, "utf-8", (err, data) ->
     data = JSON.parse data
