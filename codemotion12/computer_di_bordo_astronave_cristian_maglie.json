@@ -1,0 +1,242 @@
+{
+  "title": "Crea il computer di bordo per la tua astronave",
+  "speaker": "Cristian Maglie",
+  "chapters": [
+    {
+      "duration": 2108,
+      "media": {
+        "video": {
+          "url": "http://youtu.be/ex7mdPJIksI",
+          "thumb": "http://presentz.org/assets/codemotion12/maglie.jpg"
+        },
+        "slides": [
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#1",
+            "title": "Crea il computer di bordo per la tua astronave",
+            "time": 0
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#2",
+            "title": "Notizie sull'autore",
+            "time": 3
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#4",
+            "title": "Interfacce utente",
+            "time": 52
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#5",
+            "title": "Schermi piatti",
+            "time": 91
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#6",
+            "title": "Touch screen",
+            "time": 121
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#7",
+            "title": "Cellulare",
+            "time": 127
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#8",
+            "title": "Tablet",
+            "time": 134
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#9",
+            "title": "Interfacce",
+            "time": 144
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#10",
+            "title": "Evoluzione delle interfacce",
+            "time": 196
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#12",
+            "title": "Riconoscimento vocale",
+            "time": 331
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#13",
+            "title": "Interfacce",
+            "time": 352
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#14",
+            "title": "Interfacce",
+            "time": 356
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#15",
+            "title": "Comando vocale",
+            "time": 437
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#16",
+            "title": "Riconoscimento vocale",
+            "time": 595
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#17",
+            "title": "Speech Input API",
+            "time": 616
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#18",
+            "title": "Speech Input API",
+            "time": 632
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#19",
+            "title": "Speech Input API",
+            "time": 691
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#20",
+            "title": "Online Speech Recognition",
+            "time": 701
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#21",
+            "title": "Speech Input API",
+            "time": 769
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#22",
+            "title": "Speech Input API",
+            "time": 779
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#23",
+            "title": "Online Speech Recognition",
+            "time": 787
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#24",
+            "title": "Online Speech Recognition",
+            "time": 796
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#25",
+            "title": "Speech Input API",
+            "time": 825
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#26",
+            "title": "Speech Input API",
+            "time": 930
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#27",
+            "title": "Speech Input API",
+            "time": 962
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#28",
+            "title": "Siri",
+            "time": 1013
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#29",
+            "title": "Siri",
+            "time": 1051
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#30",
+            "title": "Siri",
+            "time": 1071
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#31",
+            "title": "Siri",
+            "time": 1135
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#32",
+            "title": "EasyVR Vbot",
+            "time": 1142
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#33",
+            "title": "Vbot",
+            "time": 1192
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#34",
+            "title": "Vbot",
+            "time": 1239
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#35",
+            "title": "VRobot",
+            "time": 1293
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#36",
+            "title": "CMU Sphinx",
+            "time": 1339
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#37",
+            "title": "CMU Sphinx",
+            "time": 1357
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#38",
+            "title": "Recognize Speech Intents multipli",
+            "time": 1413
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#39",
+            "title": "CMU Sphinx",
+            "time": 1494
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#40",
+            "title": "CMU Sphinx",
+            "time": 1518
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#42",
+            "title": "Interconnesione",
+            "time": 1575
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#43",
+            "title": "Interconnesione",
+            "time": 1623
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#44",
+            "title": "Interconnesione",
+            "time": 1633
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#45",
+            "title": "Interconnesione",
+            "time": 1698
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#46",
+            "title": "Arduino",
+            "time": 1777
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#47",
+            "title": "Arduino Ethernet",
+            "time": 1783
+          },
+          {
+            "url": "http://www.slideshare.net/presentazione2012-120529095349-phpapp02#48",
+            "title": "Conclusioni e domande",
+            "time": 1849
+          }
+        ]
+      }
+    }
+  ]
+}
