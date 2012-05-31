@@ -15,8 +15,19 @@ exports.init = (db) ->
 exports.list_catalogs = (req, res, next) ->
   routes.db.command "SELECT FROM V WHERE _type = 'catalog' and (hidden is null or hidden = 'false') ORDER BY name", (err, results) ->
     return next(err) if err?
-    res.render "talks",
+    res.render "catalogs",
       catalogs: results
+      
+exports.show_catalog = (req, res, next) ->
+  routes.db.command "SELECT FROM V WHERE _type = 'catalog' and id = '#{req.params.catalog_name}'", (err, results) ->
+    return next(err) if err?
+    return next("no record found") if results.length is 0
+    
+    catalog = results[0]
+    routes.db.fromVertex(catalog).outVertexes "part_of", (err, presentations) ->
+      res.render "talks", 
+        catalog: catalog
+        presentations: presentations
 
 fill_presentation_data_from_file = (file, file_name, catalog_id, callback) ->
   fs.readFile file, "utf-8", (err, data) ->
@@ -67,6 +78,7 @@ exports.static = (view_name) ->
     res.render view_name,
       title: "Presentz"
 
+###
 exports.show_catalog = (req, res, next) ->
   console.log "show_catalog"
   catalog_path = "#{__dirname}/#{req.params.catalog_name}"
@@ -86,6 +98,7 @@ exports.show_catalog = (req, res, next) ->
             title: "#{catalog.name} is on Presentz",
             catalog: catalog
             presentations: presentations
+###
 
 exports.show_presentation = (req, res, next) ->
   console.log "show_presentation"
