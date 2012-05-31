@@ -258,13 +258,21 @@
     }
 
     #ico_item_category .img_category {
-        padding: 3px;
+        padding: 1px;
+        width: 37px;
+        height: 37px;
+
     }
 
     .box_over {
         width: 104px;
         height: 104px;
         background-size: 104px auto;
+    }
+
+    .item_video .img_category {
+        width: 154px;
+        height: 109px;
     }
 
     .item_video .box_over {
@@ -436,6 +444,12 @@
         margin-bottom: 40px;
     }
 
+    #ico_item_category .img_category {
+        padding: 3px;
+        width: 74px;
+        height: 74px;
+    }
+
     .box_over {
         width: 184px;
         height: 184px;
@@ -448,6 +462,11 @@
         width: 84px;
         height: 84px;
         background-image: url(../img/fe/over_ico_talk_detail_1200.png);
+    }
+
+    .item_video .img_category {
+        width: 274px;
+        height: 196px;
     }
 
     .item_video .box_over {

@@ -44,7 +44,7 @@ h3 {
 }
 
 .testo p {
-    margin-bottom: 15px;
+    margin-bottom: 40px;
 }
 
 #footer {
@@ -593,12 +593,15 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
 }
 
 .img_category {
-    padding: 5px;
+    padding: 3px;
     margin-bottom: 15px;
 }
 
 #ico_item_category .img_category {
     margin-bottom: 0px;
+    height: 53px;
+    width: 53px;
+    overflow: hidden;
 }
 
 .box_over {
@@ -622,6 +625,12 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     width: 224px;
     height: 164px;
     background-image: url(../img/fe/over_item_video.png);
+}
+
+.item_video .img_category {
+    width: 214px;
+    height: 153px;
+    overflow: hidden;
 }
 
 .box_over a {
