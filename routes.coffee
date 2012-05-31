@@ -15,20 +15,51 @@ exports.init = (db) ->
 exports.list_catalogs = (req, res, next) ->
   routes.db.command "SELECT FROM V WHERE _type = 'catalog' and (hidden is null or hidden = 'false') ORDER BY name", (err, results) ->
     return next(err) if err?
-    res.render "catalogs",
-      catalogs: results
-      
+    catalogs = []
+    
+    number_of_presentations = (catalog, callback) ->
+      routes.db.getInEdges catalog, "part_of", (err, edges) ->
+        return next(err) if err?
+        catalog.presentations = edges.length
+        catalogs.push catalog
+        
+        if catalogs.length is results.length
+          return callback()
+          
+    for catalog in results
+      number_of_presentations catalog, ->
+        res.render "catalogs",
+          catalogs: results
+
 exports.show_catalog = (req, res, next) ->
   routes.db.command "SELECT FROM V WHERE _type = 'catalog' and id = '#{req.params.catalog_name}'", (err, results) ->
     return next(err) if err?
     return next("no record found") if results.length is 0
     
     catalog = results[0]
-    routes.db.fromVertex(catalog).outVertexes "part_of", (err, presentations) ->
+    routes.db.fromVertex(catalog).inVertexes "part_of", (err, presentations) ->
+      return next(err) if err?
+      
+      presentations = (pres_to_thumb(pres) for pres in presentations when !pres.alias_of?)
+      presentations = _.sortBy presentations, (presentation) ->
+        return presentation.time if presentation.time?
+        return presentation.title
+      if presentations[0].time?
+        presentations = presentations.reverse()
+
       res.render "talks", 
         catalog: catalog
         presentations: presentations
 
+pres_to_thumb = (presentation) ->
+  pres =
+    thumb: presentation.chapters[0].media.video.thumb
+    speaker: presentation.speaker
+    title: presentation.title
+    
+  pres.time = dateutil.format(dateutil.parse(presentation.time, "YYYYMMDD"), "Y/m") if presentation.time
+  pres
+    
 fill_presentation_data_from_file = (file, file_name, catalog_id, callback) ->
   fs.readFile file, "utf-8", (err, data) ->
     data = JSON.parse data

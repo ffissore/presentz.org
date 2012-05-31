@@ -2,83 +2,39 @@
 
 {<body}
 <section id="talks_detail">
-    <div class="main">
-      <div id="ico_item_category" class="box1">
-          <div class="box_over"><a href="javascript:void(0)"></a></div>
-            <div class="img_category">
-              <img src="img/fe/img_category1.jpg" alt="Jug Torino" /></a>                        </div>
-        </div>
-      <h3>JUG Torino talks</h3>
-        <div class="search">
-            <form action="#">
-                <input type="text" value="Search..." />
-                <input type="submit" value="" id="search_send" />
-            </form>
-        </div>
-        <div class="clear"></div>
-        <div id="sort_by">
-          Sort by: <a href="javascript:void(0)" class="selected">Alphabetical (A-Z)</a> | <a href="javascript:void(0)">Most viewed</a> | <a href="javascript:void(0)">Chronological</a>
-        </div>
-        <div class="box3 item_video">
-          <div class="box_over"><a href="javascript:void(0)"></a></div>
+  <div class="main">
+    {#catalog}
+      {?logo}
+        <div id="ico_item_category" class="box1">
+          <div class="box_over">
+            <a href="javascript:void(0)"></a>
+          </div>
           <div class="img_category">
-              <img src="img/fe/anteprima_video.jpg" alt="Jug Torino" /></a>
-            </div>
-            <div class="info_item">
-                <p class="date">2012/02</p>
-                <h4>Joshua Davis</h4>
-                <p>Guice: that's the way I want DI! Without XML!!!</p>
-            </div>
+            <img src="{logo}" alt="{name}" /></a>
+          </div>
         </div>
-         <div class="box3 item_video">
-          <div class="box_over"><a href="javascript:void(0)"></a></div>
-          <div class="img_category">
-              <img src="img/fe/anteprima_video.jpg" alt="Jug Torino" /></a>
-            </div>
-            <div class="info_item">
-                <p class="date">2012/02</p>
-                <h4>Joshua Davis</h4>
-                <p>Guice: that's the way I want DI! Without XML!!!</p>
-            </div>
-        </div>
-         <div class="box3 item_video">
-          <div class="box_over"><a href="javascript:void(0)"></a></div>
-          <div class="img_category">
-              <img src="img/fe/anteprima_video.jpg" alt="Jug Torino" /></a>
-            </div>
-            <div class="info_item">
-                <p class="date">2012/02</p>
-                <h4>Joshua Davis</h4>
-                <p>Guice: that's the way I want DI! Without XML!!!</p>
-            </div>
-        </div>
-         <div class="box3 item_video">
-          <div class="box_over"><a href="javascript:void(0)"></a></div>
-          <div class="img_category">
-              <img src="img/fe/anteprima_video.jpg" alt="Jug Torino" /></a>
-            </div>
-            <div class="info_item">
-                <p class="date">2012/02</p>
-                <h4>Joshua Davis</h4>
-                <p>Guice: that's the way I want DI! Without XML!!!</p>
-            </div>
-        </div>
-         <div class="box3 item_video">
-          <div class="box_over"><a href="javascript:void(0)"></a></div>
-          <div class="img_category">
-              <img src="img/fe/anteprima_video.jpg" alt="Jug Torino" /></a>
-            </div>
-            <div class="info_item">
-                <p class="date">2012/02</p>
-                <h4>Joshua Davis</h4>
-                <p>Guice: that's the way I want DI! Without XML!!!</p>
-            </div>
-        </div>
-        
-      <div class="clear"></div>
-        
-        
-        <div class="clear"></div>
+      {/logo}
+    {/catalog}
+    <h3>{catalog.name} talks</h3>
+    <div class="search">
+    {!
+      <form action="#">
+        <input type="text" value="Search..." />
+        <input type="submit" value="" id="search_send" />
+      </form>
+    !}
     </div>
+    <div class="clear"></div>
+    <div id="sort_by">
+      {!
+      Sort by: <a href="javascript:void(0)" class="selected">Alphabetical (A-Z)</a> | <a href="javascript:void(0)">Most viewed</a> | <a href="javascript:void(0)">Chronological</a>
+      !}
+    </div>
+    {#presentations}
+      {>_presentation_thumb/}
+    {/presentations}
+    <div class="clear"></div>
+    <div class="clear"></div>
+  </div>
 </section>
 {/body}

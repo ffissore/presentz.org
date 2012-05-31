@@ -24,21 +24,21 @@
               <div class="img_category">
                   <img src="{logo}" alt="{name}" />
               </div>
-              <h4><a href="/{id}">{name} (40)</a></h4>
+              <h4><a href="/{id}">{name} ({presentations})</a></h4>
           </div>
         {/catalogs}
-        {!
         <div class="clear"></div>
         <div class="paging">
+        {!
             <span class="current">1</span>
             <span><a href="javascript:void(0)">2</a></span>
             <span><a href="javascript:void(0)">3</a></span>
             <span><a href="javascript:void(0)">4</a></span>
             <span>...</span>
             <span><a href="javascript:void(0)">10</a></span>
+        !}
         </div>
         <div class="clear"></div>
-        !}
     </div>
 </section>
 {/body}
