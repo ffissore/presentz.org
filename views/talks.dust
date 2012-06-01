@@ -30,9 +30,9 @@
       Sort by: <a href="javascript:void(0)" class="selected">Alphabetical (A-Z)</a> | <a href="javascript:void(0)">Most viewed</a> | <a href="javascript:void(0)">Chronological</a>
       !}
     </div>
-    {#presentations}
+    {#list:presentations}
       {>_presentation_thumb/}
-    {/presentations}
+    {/list}
     <div class="clear"></div>
     <div class="clear"></div>
   </div>

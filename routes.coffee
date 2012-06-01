@@ -50,6 +50,16 @@ exports.show_catalog = (req, res, next) ->
       res.render "talks", 
         catalog: catalog
         presentations: presentations
+        list: (chunk, context, bodies) ->
+          presentations = context.current()
+          index = 0
+          for presentation in presentations
+            index++
+            chunk = chunk.render(bodies.block, context.push(presentation))
+            if index is 4
+              chunk = chunk.write("<div class=\"clear\"></div>")
+              index = 0
+          return chunk
 
 pres_to_thumb = (presentation) ->
   pres =
