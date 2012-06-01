@@ -1,7 +1,7 @@
 <div class="box3 item_video">
-  <div class="box_over"><a href="javascript:void(0)"></a></div>
+  <div class="box_over"><a href="/{catalog}/{id}"></a></div>
   <div class="img_category">
-    <img class="thumb" src="{thumb}" alt="Jug Torino" />
+    <img class="thumb" src="{thumb}" alt="{?speaker}{speaker} - {/speaker}{title}" />
   </div>
   <div class="info_item">
     <p class="date">{time}</p>

@@ -52,6 +52,7 @@ db.open ->
                       fs.readFile "#{catalog_folder}/#{file}", "utf-8", (err, presentation) ->
                         presentation = JSON.parse presentation
                         presentation._type = "presentation"
+                        presentation.id = file.substr(0, file.indexOf(".json"))
                         presentations.push presentation
 
                         link_user_to_pres(user, catalog, presentations) if presentations.length is presentations_files.length

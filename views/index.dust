@@ -9,7 +9,7 @@
             <div id="wrapper_link_demos" class="box3">
                 <a href="#demo_home" id="link_demos">View the demos</a>
             </div>
-            <p id="wrapper_learn_more"><span>or</span> <br /> <a href="#learn" id="link_learn_more">Learn More</a></p>
+            <p id="wrapper_learn_more"><span>or</span> <br /> <a href="#learn1" id="link_learn_more">Learn More</a></p>
         </div>
         <div class="box8">
             <span id="ico_play_home"></span>
@@ -19,7 +19,7 @@
 </section>
 <section id="learn">
     <div class="main">
-        <div class="box6">
+        <div class="box6" id="learn1">
             <h3>Learn More</h3>
             <div class="testo">
                 <p>
