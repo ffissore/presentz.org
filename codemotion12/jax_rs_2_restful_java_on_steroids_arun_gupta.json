@@ -1,0 +1,257 @@
+{
+  "title": "JAX-RS 2.0: RESTful Java on Steroids",
+  "speaker": "Arun Gupta",
+  "chapters": [
+    {
+      "duration": 2269,
+      "media": {
+        "video": {
+          "url": "http://youtu.be/1pU6yWyo5Yo",
+          "thumb": "http://presentz.org/assets/codemotion12/gupta.jpg"
+        },
+        "slides": [
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#1",
+            "title": "JAX-RS 2.0: RESTful Java on Steroids",
+            "time": 0
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#2",
+            "title": "Legal",
+            "time": 51
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#3",
+            "title": "Part I: How we got here?",
+            "time": 63
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#4",
+            "title": "How we got here?",
+            "time": 76
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#5",
+            "title": "JAX-RS Origins",
+            "time": 99
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#6",
+            "title": "JAX-RS 1.0 Goals",
+            "time": 238
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#7",
+            "title": "Example: JAX-RS API",
+            "time": 266
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#8",
+            "title": "Example: JAX-RS API (contd.)",
+            "time": 426
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#9",
+            "title": "Requested Features",
+            "time": 473
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#10",
+            "title": "JSR 339 Expert Group",
+            "time": 617
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#11",
+            "title": "Part II: Where We Are Going",
+            "time": 635
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#9",
+            "title": "Requested Features",
+            "time": 647
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#12",
+            "title": "New in JAX-RS 2.0",
+            "time": 678
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#13",
+            "title": "New in JAX-RS 2.0",
+            "time": 701
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#14",
+            "title": "Motivation",
+            "time": 704
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#15",
+            "title": "Example: Client API",
+            "time": 772
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#16",
+            "title": "Example: Client API (contd.)",
+            "time": 842
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#17",
+            "title": "Example: Generic Interface (Command pattern, Batch processing)",
+            "time": 875
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#18",
+            "title": "Example: Generic Interface (contd.)",
+            "time": 916
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#19",
+            "title": "New in JAX-RS 2.0",
+            "time": 942
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#20",
+            "title": "Motivation",
+            "time": 948
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#21",
+            "title": "Filters",
+            "time": 998
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#22",
+            "title": "Filter Example: LogginFilter",
+            "time": 1073
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#23",
+            "title": "Filter Example: LogginFilter (contd.)",
+            "time": 1112
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#24",
+            "title": "Interceptors",
+            "time": 1121
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#25",
+            "title": "Handler Example: GzipInterceptor",
+            "time": 1138
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#26",
+            "title": "Order of Execution",
+            "time": 1179
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#27",
+            "title": "Binding Example: LoggingFilter",
+            "time": 1231
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#28",
+            "title": "Binding Example: LoggingFilter",
+            "time": 1265
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#29",
+            "title": "New in JAX-RS 2.0",
+            "time": 1286
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#30",
+            "title": "Motivation",
+            "time": 1296
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#31",
+            "title": "Example: Constraint Annotations",
+            "time": 1359
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#32",
+            "title": "Example: User Defined Constraints",
+            "time": 1472
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#33",
+            "title": "Example: Request Entity Validation",
+            "time": 1515
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#34",
+            "title": "New in JAX-RS 2.0",
+            "time": 1573
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#35",
+            "title": "Motivation",
+            "time": 1582
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#36",
+            "title": "Example: Suspend and Resume",
+            "time": 1699
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#37",
+            "title": "Example: @Suspend Annotation",
+            "time": 1799
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#38",
+            "title": "Example: Client API Async Support",
+            "time": 1809
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#39",
+            "title": "New in JAX-RS 2.0",
+            "time": 1878
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#40",
+            "title": "Motivation",
+            "time": 1880
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#41",
+            "title": "Example: Structural vs. Traditional Links",
+            "time": 1963
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#42",
+            "title": "Example: Using Traditional Links",
+            "time": 2016
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#43",
+            "title": "New in JAX-RS 2.0",
+            "time": 2061
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#44",
+            "title": "Improved Conneg",
+            "time": 2121
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#45",
+            "title": "Improved Conneg (contd.)",
+            "time": 2144
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#46",
+            "title": "Other Topics Under Consideration",
+            "time": 2184
+          },
+          {
+            "url": "http://www.slideshare.net/entn14guptajax-rs2-0-120531145118-phpapp02#47",
+            "title": "More Information",
+            "time": 2228
+          }
+        ]
+      }
+    }
+  ]
+}
