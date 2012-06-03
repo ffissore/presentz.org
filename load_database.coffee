@@ -48,7 +48,8 @@ db.open ->
                   db.createEdge user, catalog, { label: "admin_of" }, ->
                     presentations_files = (file for file in files when !_s.startsWith(file, "catalog") and _s.endsWith(file, ".json"))
                     presentations = []
-                    for file in presentations_files
+
+                    make_presentation = (file, presentations) ->
                       fs.readFile "#{catalog_folder}/#{file}", "utf-8", (err, presentation) ->
                         presentation = JSON.parse presentation
                         presentation._type = "presentation"
@@ -56,5 +57,7 @@ db.open ->
                         presentations.push presentation
 
                         link_user_to_pres(user, catalog, presentations) if presentations.length is presentations_files.length
+                    
+                    make_presentation(file, presentations) for file in presentations_files
 
         load_presentations_for user, catalogs
