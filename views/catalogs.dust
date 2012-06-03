@@ -18,7 +18,7 @@
             Sort by: <a href="javascript:void(0)" class="selected">Alphabetical (A-Z)</a> | <a href="javascript:void(0)">Most viewed</a>
         !}
         </div>
-        {#catalogs}
+        {#list:catalogs}
           <div class="box2 item_category">
               <div class="box_over"><a href="/{id}"></a></div>
               <div class="img_category">
@@ -26,7 +26,7 @@
               </div>
               <h4><a href="/{id}">{name} ({presentations})</a></h4>
           </div>
-        {/catalogs}
+        {/list}
         <div class="clear"></div>
         <div class="paging">
         {!

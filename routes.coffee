@@ -42,6 +42,7 @@ exports.list_catalogs = (req, res, next) ->
       number_of_presentations catalog, ->
         res.render "catalogs",
           catalogs: catalogs
+          list: draw_boxes(6)
 
 exports.show_catalog = (req, res, next) ->
   routes.db.command "SELECT FROM V WHERE _type = 'catalog' and id = '#{req.params.catalog_name}'", (err, results) ->
