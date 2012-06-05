@@ -114,7 +114,7 @@ exports.show_presentation = (req, res, next) ->
   console.log "show_presentation"
   catalog_path = "#{__dirname}/../#{req.params.catalog_name}"
   read_catalog catalog_path, req, next, (catalog) ->
-    fs.readFile "#{__dirname}/..#{req.path}.json", "utf-8", (err, data) ->
+    fs.readFile "#{__dirname}/..#{decodeURIComponent(req.path)}.json", "utf-8", (err, data) ->
       if err?
         next()
         return
@@ -127,7 +127,7 @@ exports.show_presentation = (req, res, next) ->
 
 exports.raw_presentation = (req, res, next) ->
   console.log "raw_presentation"
-  fs.readFile "#{__dirname}/..#{req.path}", "utf-8", (err, data) ->
+  fs.readFile "#{__dirname}/..#{decodeURIComponent(req.path)}", "utf-8", (err, data) ->
     if err?
       next()
       return
