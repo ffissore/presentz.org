@@ -14,7 +14,8 @@ server = new orient.Server config.storage.server
 
 db = new orient.GraphDb "presentz", server, config.storage.db
 
-db.open ->
+db.open (err) ->
+  throw new Error(err) if err?
   console.log("DB connection open")
 
 session_store_options = _.clone(config.storage)
