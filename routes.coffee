@@ -5,6 +5,7 @@ _s = require "underscore.string"
 http = require "http"
 url = require "url"
 dateutil = require "dateutil"
+moment = require "moment"
 
 routes = {}
 
@@ -95,6 +96,46 @@ exports.raw_presentation = (req, res, next) ->
     presentation = "#{req.query.jsoncallback}(#{JSON.stringify(presentation)});" if req.query.jsoncallback
     res.send presentation
 
+exports.show_presentation = (req, res, next) ->
+  path = decodeURIComponent(req.path).substring(1)
+  load_presentation_from_path path, (err, presentation) ->
+    return next(err) if err?
+
+    duration = _.reduce (chapter.duration for chapter in presentation.chapters), (one, two) -> one + two
+    slides = []
+    duration = 0
+    for chapter in presentation.chapters
+      for slide in chapter.media.slides
+        slide = _.clone slide
+        delete slide.url
+        slide.time = slide.time + duration
+        slides.push slide
+      duration += chapter.duration
+    percent_per_second = 100 / duration
+    width_used = 0
+    for slide_num in [0...slides.length]
+      slide = slides[slide_num]
+      if slide_num + 1 < slides.length
+        slide.duration = (slides[slide_num + 1].time - slide.time)
+        slide.width = slide.duration * percent_per_second
+        slide.width = 0.1 if slide.width < 0.1
+        width_used += slide.width
+        slide.width = "#{slide.width.toFixed(2)}%"
+      else
+        slide.duration = duration - slide.time
+        slide.width = "#{(100 - width_used).toFixed(2)}%"
+      pretty_duration = moment.duration(slide.duration, "seconds")
+      slide.duration = "#{pretty_duration.minutes()}'#{pretty_duration.seconds()}\""
+
+    console.log slides
+    
+    res.render "presentation",
+      title: presentation.title_long || presentation.title
+      slides: slides
+      #catalog: catalog
+      url: "#{req.url_original || req.url}.json"
+      thumb: presentation.chapters[0].media.video.thumb
+
 fill_presentation_data_from_file = (file, file_name, catalog_id, callback) ->
   fs.readFile file, "utf-8", (err, data) ->
     data = JSON.parse data
@@ -164,7 +205,6 @@ exports.show_catalog = (req, res, next) ->
             title: "#{catalog.name} is on Presentz",
             catalog: catalog
             presentations: presentations
-###
 
 exports.show_presentation = (req, res, next) ->
   console.log "show_presentation"
@@ -183,7 +223,6 @@ exports.show_presentation = (req, res, next) ->
         url: "#{req.url_original || req.url}.json"
         thumb: pres.chapters[0].media.video.thumb
 
-###
 exports.raw_presentation = (req, res, next) ->
   console.log "raw_presentation"
 

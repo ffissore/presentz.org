@@ -1,42 +1,155 @@
 {>layout/}
 
 {<body}
-<div id="container">
-  <div id="main">
-    <div class="container">
-      <div class="header">
-        <a href="/"><img src="/assets/images/logo_icon.png"/></a>
-        {#catalog}
-          {?logo}
-            <a href="/{id}"><img src="{logo}"/></a>
-          {/logo}
-          <a href="/{id}"><span id="logonormal">{title}</span></a>
-        {/catalog}
-      </div>
-      <div class="presentation">
-        <div id="videoContainer" class="slide"></div>
-        <div id="slideContainer" class="slide"></div>
-        <div class="floatCloser"></div>
-      </div>
-      <div class="controls">
-        <div id="agendaContainer"></div>
-      </div>
-      <div class="footer"></div>
-    </div>
-  </div>
-</div>
+<section id="presentation">
+  <div class="main">
+    <h3>Our <span>demos</span></h3>
+    <h4>{title}</h4>
 
-<script src="/assets/javascripts/jquery.min.js"></script>
-<script src="/assets/javascripts/froogaloop.js"></script>
-<script src="/assets/javascripts/swfobject.js"></script>
-<script src="/assets/javascripts/mediaelement-and-player.js"></script>
-<script src="/assets/javascripts/Presentz.js"></script>
-<script>
-  presentz = new Presentz("videoContainer", "slideContainer", "agendaContainer");
-  function initPresentz(presentation) {
-    presentz.init(presentation);
-    presentz.changeChapter(0, 0, true);
-  }
-</script>
-<script src="{url}?jsoncallback=initPresentz"></script>
+    <div id="player">
+      <div id="container_player">
+        <div id="player_video" class="box6">
+          <object width="100%" height="100%" type="application/x-shockwave-flash" id="ytplayer" data="http://www.youtube.com/e/yWgINtT3vkw?enablejsapi=1&amp;autohide=1&amp;fs=1&amp;playerapiid=ytplayer" ><param name="allowScriptAccess" value="always"><param name="allowFullScreen" value="true"><param name="wmode" value="transparent"></object>
+        </div>
+        <div id="slideshow_player" class="box6">
+          <object width="100%" height="100%" type="application/x-shockwave-flash" id="slideshareplayer" data="http://static.slidesharecdn.com/swf/ssplayer2.swf"><param  name="allowScriptAccess" value="always"><param name="flashvars" value="doc=mps-120419021609-phpapp02&amp;rel=0"><param name="wmode" value="transparent"></object>
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div id="controls">
+        {!
+          class="chapter past"
+          class="chapter selected"
+          class="chapter"
+        !}
+        {#slides}
+        <div class="chapter past" style="width:{width};">
+          <div class="info">
+            <p class="title"><a href="javascript:void(0);">{title}</a> &mdash; {duration}</p>
+            <div class="comments"><span>5</span><a href="javascript:void(0);">comments</a></div>
+          </div>
+        </div>
+        {/slides}
+        {!
+        <div class="chapter past" style="width:10%;">
+          <div class="info">
+            <p class="title"><a href="javascript:void(0);">"Titolo della slide"</a> &mdash; 01'20"</p>
+            <div class="comments"><span>5</span><a href="javascript:void(0);">comments</a></div>
+          </div>
+        </div>
+        <div class="chapter past" style="width:30%;">
+          <div class="info">
+            <p class="title"><a href="javascript:void(0);">"Titolo della slide"</a> &mdash; 01'20"</p>
+            <div class="comments"><span>5</span><a href="javascript:void(0);">comments</a></div>
+          </div>
+        </div>
+        <div class="chapter selected" style="width:5%;">
+          <div class="info">
+            <p class="title"><a href="javascript:void(0);">"Titolo della slide"</a> &mdash; 01'20"</p>
+            <div class="comments"><span>5</span><a href="javascript:void(0);">comments</a></div>
+          </div>
+        </div>
+        <div class="chapter" style="width:35%;">
+          <div class="info">
+            <p class="title"><a href="javascript:void(0);">"Titolo della slide"</a> &mdash; 01'20"</p>
+            <div class="comments"><span>5</span><a href="javascript:void(0);">comments</a></div>
+          </div>
+        </div>
+        !}
+      </div>
+      <div id="tools">
+        <h5>Tools</h5>
+        <ul>
+          <li><a href="javascript:void(0)">Show all comments</a></li>
+          <li><a href="javascript:void(0)">Comment this slide</a></li>
+          <li><a href="javascript:void(0)">Comment this presentation</a></li>
+          <li><a href="javascript:void(0)">Show chapters list</a></li>
+          <li><a href="javascript:void(0)">Embed</a></li>
+          <li><a href="javascript:void(0)">Share</a></li>
+        </ul>
+      </div>
+      {! box commenti !}
+      <div id="comments" class="box8" style="display:none;">
+        <div class="content_comments">
+          <h5>Comments</h5>
+          {! da visualizzare solo quando siamo nei commenti della singola slide !}
+          <div id="header_comment_slide" style="display:none;">
+            <p class="box6 title">Comments on slide:<a href="javascript:void(0)">"Titolo slide 1"</a></p>
+            <a href="javascript:void(0)" class="box2" id="remove_comment_filter">Remove Comment Filter</a>
+            <div class="clear"></div>
+          </div>
+          {! FINE commenti della singola slide !}
+      
+          {! form commenti !}
+          <div id="comment_form" style="display:none;">
+            <form action="#">
+              <p class="alert"><a href="">Login</a> or <a href="">Signin</a> to add a comment</p>
+              <textarea name="comment"></textarea>
+              <input type="submit" value="Publish" />
+              <div class="clear"></div>
+            </form>
+          </div>
+      
+          {! fine form commenti !}
+          <div class="item_comment">
+            <p><span class="user">Emanuele Tortolone,</span> <span class="time">2h ago</span> on slide <a href="javascript:void(0)" class="slide_title">"Titolo slide 1"</a> - <a href="javascript:void(0)" class="slide_time">minute 01:51</a> </p>
+            <div class="text_comment">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id sem eget urna malesuada euismod pellentesque et mauris. Nulla tempus est sit amet ante bibendum ullamcorper eget quis neque. Ut in diam in turpis ultricies facilisis. Aenean dictum blandit quam. Aenean quam ante, pretium ac placerat bibendum, sagittis ac enim.
+            </div>
+          </div>
+          <div class="item_comment">
+            <p><span class="user">Emanuele Tortolone,</span> <span class="time">2h ago</span> on slide <a href="javascript:void(0)" class="slide_title">"Titolo slide 1"</a> - <a href="javascript:void(0)" class="slide_time">minute 01:51</a> </p>
+            <div class="text_comment">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id sem eget urna malesuada euismod pellentesque et mauris. Nulla tempus est sit amet ante bibendum ullamcorper eget quis neque. Ut in diam in turpis ultricies facilisis. Aenean dictum blandit quam. Aenean quam ante, pretium ac placerat bibendum, sagittis ac enim.
+            </div>
+          </div>
+          <div class="item_comment">
+            <p><span class="user">Emanuele Tortolone,</span> <span class="time">2h ago</span> on slide <a href="javascript:void(0)" class="slide_title">"Titolo slide 1"</a> - <a href="javascript:void(0)" class="slide_time">minute 01:51</a> </p>
+            <div class="text_comment">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id sem eget urna malesuada euismod pellentesque et mauris. Nulla tempus est sit amet ante bibendum ullamcorper eget quis neque. Ut in diam in turpis ultricies facilisis. Aenean dictum blandit quam. Aenean quam ante, pretium ac placerat bibendum, sagittis ac enim.
+            </div>
+          </div>
+        </div>
+        <div class="paging">
+          <span class="current">1</span> .
+          <span><a href="javascript:void(0)">2</a></span> .
+          <span><a href="javascript:void(0)">3</a></span>
+        </div>
+      </div>
+      {! fine box commenti !}
+              
+      {! box capitoli !}
+      <div id="chapters" class="box8" style="display:none;">
+        <h5>Chapters</h5>
+        <ol>
+          <li><a href="javascript:void(0)">01. Cras elit tellus; volutpat quis venenatis et, convallis condimentum ligula. Fusce mi elit, mattis ut commodo quis, dapibus at nisl</a></li>
+          <li class="even"><a href="javascript:void(0)">02. Titolo slide 2</a></li>
+          <li><a href="javascript:void(0)">03. Titolo slide 3</a></li>
+          <li class="even"><a href="javascript:void(0)">04. Titolo slide 4</a></li>
+          <li><a href="javascript:void(0)">05. Titolo slide 5</a></li>
+        </ol>
+      </div>
+      {! fine box capitoli !}
+              
+      {! box embed !}
+      <div id="embed" class="box8" style="display:none">
+        <h5>Embed</h5>
+        <textarea><iframe width="960" height="800" src="http://www.presentz.org/embed/21X1Q_mhVWE" frameborder="0"></iframe></textarea>
+      </div>
+      {! fine box embed !}
+      
+      {! box share !}
+      <div id="share" class="box8" style="display:none">
+        <h5>Share</h5>
+        <ul>
+          <li class="li_share_facebook"><a href="javascript:void(0)" title="Condividi su Facebook">Facebook</a></li>
+          <li class="li_share_twitter"><a href="javascript:void(0)" title="Condividi su Twitter">Twitter</a></li>
+          <li class="li_share_gplus"><a target="_blank" href="https://plusone.google.com/_/+1/confirm?hl=it&url=URL" title="Condividi su Google Plus">Google Plus</a></li>
+        </ul>
+      </div>
+      {! fine box share !}
+    </div>
+    <div class="clear"></div>
+  </div>
+</section>
 {/body}
