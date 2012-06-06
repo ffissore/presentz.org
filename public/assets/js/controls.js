@@ -15,11 +15,10 @@ var Controls = {
                 .data("defaultPercentW", percentW)
                 .unbind("mouseenter")
                 .bind("mouseenter", function(e) {
-                    $(".chapter", "#controls").not($(instance)).stop(true, true).animate({"width": String($this.overScale) + "%"}, 0, "easeOutQuart");
+                    $(".chapter", "#controls").not($(instance)).css("width", String($this.overScale) + "%");
 
-                    $(instance).stop(true, true).animate({"width": String(100 - ($this.totalChapters - 1) * $this.overScale) + "%"}, 0, "easeOutQuart", function() {
-                        $(instance).find(".info").stop(true, true).delay(200).fadeIn(800);
-                    });
+                    $(instance).css("width", String(100 - ($this.totalChapters - 1) * $this.overScale) + "%");
+                    $(instance).find(".info").stop(true, true).delay(200).fadeIn(800);
                 })
                 .unbind("mouseleave")
                 .bind("mouseleave", function(e) {
@@ -44,7 +43,7 @@ var Controls = {
     restoreOriginalWidth: function() {
         $(".chapter", "#controls").each(function() {
             $(this).find(".info").stop(true, true).hide();
-            $(this).stop(true, true).animate({"width": $(this).data("defaultPercentW")}, 0, "easeInOutQuart");
+            $(this).css("width", $(this).data("defaultPercentW"));
         });
 
     },
