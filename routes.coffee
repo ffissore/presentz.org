@@ -20,6 +20,28 @@ draw_boxes = (number_of_boxes) ->
         index = 0
     return chunk
 
+pres_to_thumb = (presentation, catalog_name) ->
+  pres =
+    id: presentation.id
+    catalog: catalog_name
+    thumb: presentation.chapters[0].media.video.thumb
+    speaker: presentation.speaker
+    title: presentation.title
+
+  pres.time = dateutil.format(dateutil.parse(presentation.time, "YYYYMMDD"), "Y/m") if presentation.time
+  pres
+
+load_presentation_from_path = (path, callback) ->
+  path_parts = path.split("/")
+  catalog_name = path_parts[0]
+  presentation_name = path_parts[1]
+
+  query = "select from V where _type = 'presentation' and id = '#{presentation_name}' and out.label CONTAINSALL 'part_of' and out.in.id CONTAINSALL '#{catalog_name}'"
+  routes.db.command query, (err, results) ->
+    return callback(err) if err?
+    return callback("no record found") if results.length is 0
+    callback(undefined, results[0])
+
 exports.init = (db) ->
   routes.db = db
   @
@@ -65,16 +87,13 @@ exports.show_catalog = (req, res, next) ->
         presentations: presentations
         list: draw_boxes(4)
 
-pres_to_thumb = (presentation, catalog_name) ->
-  pres =
-    id: presentation.id
-    catalog: catalog_name
-    thumb: presentation.chapters[0].media.video.thumb
-    speaker: presentation.speaker
-    title: presentation.title
-
-  pres.time = dateutil.format(dateutil.parse(presentation.time, "YYYYMMDD"), "Y/m") if presentation.time
-  pres
+exports.raw_presentation = (req, res, next) ->
+  path = decodeURIComponent(req.path).substring(1)
+  path = path.substring(0, path.length - ".json".length)
+  load_presentation_from_path path, (err, presentation) ->
+    return next(err) if err?
+    presentation = "#{req.query.jsoncallback}(#{JSON.stringify(presentation)});" if req.query.jsoncallback
+    res.send presentation
 
 fill_presentation_data_from_file = (file, file_name, catalog_id, callback) ->
   fs.readFile file, "utf-8", (err, data) ->
@@ -83,7 +102,7 @@ fill_presentation_data_from_file = (file, file_name, catalog_id, callback) ->
     return callback(data) if data.alias_of?
 
     pres =
-      id: "/#{catalog_id}/#{file_name.substr(0, file_name.indexOf("."))}"
+      id: "/#{catalog_id}/#{file_name.substring(0, file_name.indexOf("."))}"
       data: data
       thumb: data.chapters[0].media.video.thumb
 
@@ -164,6 +183,7 @@ exports.show_presentation = (req, res, next) ->
         url: "#{req.url_original || req.url}.json"
         thumb: pres.chapters[0].media.video.thumb
 
+###
 exports.raw_presentation = (req, res, next) ->
   console.log "raw_presentation"
 
@@ -172,6 +192,7 @@ exports.raw_presentation = (req, res, next) ->
 
     data = "#{req.query.jsoncallback}(#{data});" if req.query.jsoncallback
     res.send data
+###
 
 exports.ensure_is_logged = (req, res, next) ->
   return next() if req.user
