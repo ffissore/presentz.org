@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     //	GENERAL BEHAVIORS
     if ($("#home").length > 0) {
-        $("h1 a")
+        $("h1 a, #menu ul li:first-child a")
             .unbind("click")
             .bind("click", function(e) {
                 e.preventDefault();
