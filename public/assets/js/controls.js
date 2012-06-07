@@ -2,23 +2,28 @@
 var Controls = {
 
     totalChapters: 0,
-    overScale: 3,
 
     init: function() {
         var $this = this;
         $this.totalChapters = $(".chapter ", "#controls").length;
         $(".chapter", "#controls").each(function() {
             var instance = this;
-            var percentW = parseInt(Math.ceil(100 * $(this).width() / $("#controls").width())) + "%";
+            var percentW = 100 * ($(this).width() + 1) / ($("#controls").width() + 1);
+            if (percentW < 0.25) {
+                percentW = 0.25;
+            }
+            percentW += "%";
 
             $(this)
                 .data("defaultPercentW", percentW)
                 .unbind("mouseenter")
                 .bind("mouseenter", function(e) {
-                    $(".chapter", "#controls").not($(instance)).css("width", String($this.overScale) + "%");
+                    var selectedChapterWidth = $("#controls").width() + 2 - ($this.totalChapters * 2);
 
-                    $(instance).css("width", String(100 - ($this.totalChapters - 1) * $this.overScale) + "%");
-                    $(instance).find(".info").stop(true, true).delay(200).fadeIn(800);
+                    $(".chapter", "#controls").not($(instance)).css("width", "2px");
+
+                    $(instance).css("width", selectedChapterWidth + "px");
+                    $(instance).find(".info").stop(true, true).delay(200).fadeIn(500);
                 })
                 .unbind("mouseleave")
                 .bind("mouseleave", function(e) {
