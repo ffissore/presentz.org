@@ -3,7 +3,7 @@
 {<body}
 <section id="talks">
     <div class="main">
-        <h3>Presentz talks</h3>
+        <h3>{title}</h3>
         <div class="search">
         {!
             <form action="#">

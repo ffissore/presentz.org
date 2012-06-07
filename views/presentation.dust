@@ -3,8 +3,8 @@
 {<body}
 <section id="presentation">
   <div class="main">
-    <h3>Our <span>demos</span></h3>
-    <h4>{title}</h4>
+    <h3>{talk_title|s}</h3>
+    <h4>{speaker}</h4>
 
     <div id="player">
       <div id="container_player">

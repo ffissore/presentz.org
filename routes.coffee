@@ -64,6 +64,7 @@ exports.list_catalogs = (req, res, next) ->
     for catalog in results
       number_of_presentations catalog, ->
         res.render "catalogs",
+          title: "Presentz talks"
           catalogs: catalogs
           list: draw_boxes(6)
 
@@ -84,6 +85,7 @@ exports.show_catalog = (req, res, next) ->
         presentations = presentations.reverse()
 
       res.render "talks",
+        title: "#{catalog.name} talks"
         catalog: catalog
         presentations: presentations
         list: draw_boxes(4)
@@ -118,7 +120,7 @@ exports.show_presentation = (req, res, next) ->
       if slide_num + 1 < slides.length
         slide.duration = (slides[slide_num + 1].time - slide.time)
         slide.width = slide.duration * percent_per_second
-        slide.width = 0.1 if slide.width < 0.1
+        slide.width = 0.25 if slide.width < 0.25
         width_used += slide.width
         slide.width = "#{slide.width.toFixed(2)}%"
       else
@@ -127,10 +129,13 @@ exports.show_presentation = (req, res, next) ->
       pretty_duration = moment.duration(slide.duration, "seconds")
       slide.duration = "#{pretty_duration.minutes()}'#{pretty_duration.seconds()}\""
 
-    console.log slides
-    
+    title_parts = presentation.title.split(" ")
+    title_parts[title_parts.length - 1] = "<span>#{title_parts[title_parts.length - 1]}</span>"
+    talk_title = title_parts.join(" ")
     res.render "presentation",
-      title: presentation.title_long || presentation.title
+      title: "#{presentation.title} - #{presentation.speaker}"
+      talk_title: talk_title
+      speaker: presentation.speaker
       slides: slides
       #catalog: catalog
       url: "#{req.url_original || req.url}.json"
