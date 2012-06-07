@@ -7,23 +7,16 @@ var Controls = {
         var $this = this;
         $this.totalChapters = $(".chapter ", "#controls").length;
         $(".chapter", "#controls").each(function() {
-            var instance = this;
-            var percentW = 100 * ($(this).width() + 1) / ($("#controls").width() + 1);
-            if (percentW < 0.25) {
-                percentW = 0.25;
-            }
-            percentW += "%";
-
+            var $instance = $(this);
             $(this)
-                .data("defaultPercentW", percentW)
                 .unbind("mouseenter")
                 .bind("mouseenter", function(e) {
-                    var selectedChapterWidth = $("#controls").width() + 2 - ($this.totalChapters * 2);
+                    var selectedChapterWidth = $("#controls").width() + 1 - ($this.totalChapters * 2);
 
-                    $(".chapter", "#controls").not($(instance)).css("width", "2px");
+                    $(".chapter", "#controls").not($instance).css("width", "2px");
 
-                    $(instance).css("width", selectedChapterWidth + "px");
-                    $(instance).find(".info").stop(true, true).delay(200).fadeIn(500);
+                    $instance.css("width", selectedChapterWidth + "px");
+                    $instance.find(".info").stop(true, true).delay(200).fadeIn(500);
                 })
                 .unbind("mouseleave")
                 .bind("mouseleave", function(e) {
@@ -48,7 +41,7 @@ var Controls = {
     restoreOriginalWidth: function() {
         $(".chapter", "#controls").each(function() {
             $(this).find(".info").stop(true, true).hide();
-            $(this).css("width", $(this).data("defaultPercentW"));
+            $(this).css("width", $(this).attr("original_width"));
         });
 
     },
