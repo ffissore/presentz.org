@@ -36,7 +36,7 @@ h2 {
 
 h3 {
     font-family: 'AharoniBold';
-    font-size: 56px;
+    font-size: 50px;
     line-height: 60px;
     color: #666666;
     letter-spacing: -3px;
@@ -728,7 +728,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     color: #FFFFFF;
     margin-left: 10px;
     text-shadow: 0px 1px 0px #000000;
-    margin-bottom: 3px;
+    margin-bottom: 10px;
 }
 
 #presentation h3 span {
