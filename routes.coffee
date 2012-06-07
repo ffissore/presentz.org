@@ -65,6 +65,7 @@ exports.list_catalogs = (req, res, next) ->
       number_of_presentations catalog, ->
         res.render "catalogs",
           title: "Presentz talks"
+          section: "talks"
           catalogs: catalogs
           list: draw_boxes(6)
 
@@ -141,6 +142,12 @@ exports.show_presentation = (req, res, next) ->
       url: "#{req.url_original || req.url}.json"
       thumb: presentation.chapters[0].media.video.thumb
 
+exports.static = (view_name) ->
+  return (req, res) ->
+    res.render view_name,
+      title: "Presentz"
+      section: view_name
+
 fill_presentation_data_from_file = (file, file_name, catalog_id, callback) ->
   fs.readFile file, "utf-8", (err, data) ->
     data = JSON.parse data
@@ -184,11 +191,6 @@ read_catalog = (catalog_path, catalog_id, callback) ->
     catalog = JSON.parse data
     catalog.id = catalog_id
     callback(undefined, catalog)
-
-exports.static = (view_name) ->
-  return (req, res) ->
-    res.render view_name,
-      title: "Presentz"
 
 ###
 exports.show_catalog = (req, res, next) ->
