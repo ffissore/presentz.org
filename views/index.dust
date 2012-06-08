@@ -54,37 +54,32 @@
         <div id="slider">
             <div id="content_slider">
                 <ul>
-                    <!-- Inserire i link corretti verso le demo -->
                     <li class="box4 demo_thumb_item">
-                        <a href="javascript:void(0)" title="Demo: Youtube player, Slideshare player">Demo: Youtube player, Slideshare player</a>
+                        <a href="/demo/05_youtube-slideshare" title="Demo: Youtube player, Slideshare player">Demo: Youtube player, Slideshare player</a>
                         <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_youtube.png" alt="youtube icon"/></span>
                         <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_slideshare.png" alt="slideshare icon"/></span>
                         Youtube player, Slideshare player
                     </li>
-
                     <li class="box4 demo_thumb_item">
-                        <a href="javascript:void(0)" title="Demo: Vimeo player, images as slides">Demo: Vimeo player, images as slides</a>
+                        <a href="/demo/03_vimeo-img" title="Demo: Vimeo player, images as slides">Demo: Vimeo player, images as slides</a>
                         <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_vimeo.png" alt="vimeo icon"/></span>
                         <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_images.png" alt="images icon"/></span>
                         Vimeo player, images as slides
                     </li>
-
                     <li class="box4 demo_thumb_item">
-                        <a href="javascript:void(0)" title="Demo: Youtube player, images as slides">Demo: Youtube player, images as slides</a>
+                        <a href="/demo/04_youtube-img" title="Demo: Youtube player, images as slides">Demo: Youtube player, images as slides</a>
                         <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_youtube.png" alt="youtube icon"/></span>
                         <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_images.png" alt="images icon"/></span>
                         Youtube player, images as slides
                     </li>
-
                     <li class="box4 demo_thumb_item">
-                        <a href="javascript:void(0)" title="Demo: Video tag, Slideshare player">Demo: Video tag, Slideshare player</a>
+                        <a href="/demo/02_videotag-slideshare" title="Demo: Video tag, Slideshare player">Demo: Video tag, Slideshare player</a>
                         <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_video.png" alt="video tag icon"/></span>
                         <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_slideshare.png" alt="slideshare icon"/></span>
                         Video tag, Slideshare player
                     </li>
-
                     <li class="box4 demo_thumb_item">
-                        <a href="javascript:void(0)" title="Demo: Video tag, images as slides">Demo: Video tag, images as slides</a>
+                        <a href="/demo/01_videotag-img" title="Demo: Video tag, images as slides">Demo: Video tag, images as slides</a>
                         <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_video.png" alt="video tag icon"/></span>
                         <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_images.png" alt="images icon"/></span>
                         Video tag, images as slides
