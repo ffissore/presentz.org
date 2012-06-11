@@ -6,6 +6,12 @@ cons = require "consolidate"
 OrientDBStore = require("connect-orientdb")(express)
 _ = require "underscore"
 
+Number::pad = (pad) ->
+  s = @.toString()
+  while s.length < pad
+    s = "0" + s
+  s
+
 app = express()
 
 config = require "./config.#{app.settings.env}"

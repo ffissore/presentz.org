@@ -63,7 +63,7 @@
           <li><a href="javascript:void(0)">Show all comments</a></li>
           <li><a href="javascript:void(0)">Comment this slide</a></li>
           <li><a href="javascript:void(0)">Comment this presentation</a></li>
-          <li><a href="javascript:void(0)">Show chapters list</a></li>
+          <li><a href="javascript:toogle_css('#chapters', 'display', 'none');">Show chapters list</a></li>
           <li><a href="javascript:void(0)">Embed</a></li>
           <li><a href="javascript:void(0)">Share</a></li>
         </ul>
@@ -122,11 +122,9 @@
       <div id="chapters" class="box8" style="display:none;">
         <h5>Chapters</h5>
         <ol>
-          <li><a href="javascript:void(0)">01. Cras elit tellus; volutpat quis venenatis et, convallis condimentum ligula. Fusce mi elit, mattis ut commodo quis, dapibus at nisl</a></li>
-          <li class="even"><a href="javascript:void(0)">02. Titolo slide 2</a></li>
-          <li><a href="javascript:void(0)">03. Titolo slide 3</a></li>
-          <li class="even"><a href="javascript:void(0)">04. Titolo slide 4</a></li>
-          <li><a href="javascript:void(0)">05. Titolo slide 5</a></li>
+          {#slides}
+            <li {css}><a href="javascript:void(0)">{index}. {title}</a></li>
+          {/slides}
         </ol>
       </div>
       {! fine box capitoli !}

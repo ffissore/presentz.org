@@ -117,6 +117,7 @@ exports.show_presentation = (req, res, next) ->
     percent_per_second = 100 / duration
     percent_used = 0
     duration_used = 0
+    number_of_zeros_in_index = slides.length.toString().length
     for slide_num in [0...slides.length]
       slide = slides[slide_num]
       if slide_num + 1 < slides.length
@@ -132,6 +133,9 @@ exports.show_presentation = (req, res, next) ->
       percent_per_second = (100 - percent_used) / (duration - duration_used)
       pretty_duration = moment.duration(slide.duration, "seconds")
       slide.duration = "#{pretty_duration.minutes()}'#{pretty_duration.seconds()}\""
+      slide.index = (slide_num + 1)
+      slide.index = slide.index.pad(number_of_zeros_in_index)
+      slide.css = "class=\"even\"" if slide.index % 2 is 0
 
     title_parts = presentation.title.split(" ")
     title_parts[title_parts.length - 1] = "<span>#{title_parts[title_parts.length - 1]}</span>"
