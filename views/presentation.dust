@@ -151,6 +151,7 @@
 {/body}
 
 {<presentz}
+<script src="/assets/js/swfobject.js" type="text/javascript"></script>
 <script src="/assets/js/presentz.js" type="text/javascript"></script>
 <script type="text/javascript">
 presentz = new Presentz("#player_video", "#slideshow_player");
