@@ -1,5 +1,5 @@
 {
-  "title": "Calabash, an open-source automated testing technology for native mobile",
+  "title": "Calabash, opensource testing for native mobile",
   "speaker": "Karl Krukow",
   "chapters": [
     {
@@ -21,9 +21,9 @@
             "time": 45
           },
           {
-            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#7",
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#10",
             "title": "Agenda",
-            "time": 10
+            "time": 106
           },
           {
             "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#13",
@@ -43,7 +43,7 @@
           {
             "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#17",
             "title": "Cucumber",
-            "time": 412
+            "time": 421
           },
           {
             "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#18",
