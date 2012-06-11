@@ -130,7 +130,7 @@ exports.show_presentation = (req, res, next) ->
         slide.width = 100 - percent_used
       duration_used += slide.duration
       percent_per_second = (100 - percent_used) / (duration - duration_used)
-      pretty_duration = moment.duration(slide.duration, "seconds")
+      pretty_duration = moment.duration(Math.round(slide.duration), "seconds")
       slide.duration = "#{pretty_duration.minutes()}'#{pretty_duration.seconds()}\""
       slide.index = (slide_num + 1).pad(number_of_zeros_in_index)
       slide.css = "class=\"even\"" if slide.index % 2 is 0
