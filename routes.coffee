@@ -144,7 +144,7 @@ exports.show_presentation = (req, res, next) ->
       speaker: presentation.speaker
       slides: slides
       #catalog: catalog
-      url: "#{req.url_original || req.url}.json"
+      to_json_url: "#{req.url_original || req.url}.json"
       thumb: presentation.chapters[0].media.video.thumb
 
 exports.static = (view_name) ->
