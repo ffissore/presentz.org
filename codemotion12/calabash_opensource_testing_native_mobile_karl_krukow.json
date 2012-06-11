@@ -1,0 +1,162 @@
+{
+  "title": "Calabash, an open-source automated testing technology for native mobile",
+  "speaker": "Karl Krukow",
+  "chapters": [
+    {
+      "duration": 2153,
+      "media": {
+        "video": {
+          "url": "http://youtu.be/0an8l1RAe0M",
+          "thumb": "http://presentz.org/assets/codemotion12/krukow.jpg"
+        },
+        "slides": [
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#1",
+            "title": "Introducing Calabash",
+            "time": 0
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#6",
+            "title": "About me",
+            "time": 45
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#7",
+            "title": "Agenda",
+            "time": 10
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#13",
+            "title": "Functional Testing",
+            "time": 153
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#15",
+            "title": "Functional Testing Desiderata",
+            "time": 311
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#16",
+            "title": "Cucumber and Calabash",
+            "time": 408
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#17",
+            "title": "Cucumber",
+            "time": 412
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#18",
+            "title": "Cucumber Example",
+            "time": 475
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#19",
+            "title": "Cucumber Example",
+            "time": 524
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#20",
+            "title": "Cucumber Example",
+            "time": 528
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#21",
+            "title": "Cucumber Example",
+            "time": 530
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#22",
+            "title": "Cucumber Example",
+            "time": 538
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#23",
+            "title": "Cucumber Example",
+            "time": 550
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#24",
+            "title": "Step definitions",
+            "time": 583
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#25",
+            "title": "Step definitions",
+            "time": 595
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#26",
+            "title": "Step definitions",
+            "time": 622
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#27",
+            "title": "Calabash",
+            "time": 665
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#29",
+            "title": "Architecture iOS",
+            "time": 749
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#30",
+            "title": "LessPainful Test Execution in the Cloud",
+            "time": 814
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#32",
+            "title": "Mobile Test Lab",
+            "time": 871
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#33",
+            "title": "Mobile Test Lab",
+            "time": 883
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#34",
+            "title": "Calabash iOS: more detail",
+            "time": 936
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#35",
+            "title": "Calabash iOS: more detail",
+            "time": 938
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#36",
+            "title": "Queries",
+            "time": 1014
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#37",
+            "title": "Queries",
+            "time": 1016
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#38",
+            "title": "Demo",
+            "time": 1102
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#39",
+            "title": "iOS Comparisons",
+            "time": 1994
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#40",
+            "title": "References",
+            "time": 2004
+          },
+          {
+            "url": "http://www.slideshare.net/calabashcodemotion2012-120609071214-phpapp01#41",
+            "title": "Questions?",
+            "time": 2006
+          }
+        ]
+      }
+    }
+  ]
+}
