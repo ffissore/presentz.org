@@ -9,10 +9,10 @@
     <div id="player">
       <div id="container_player">
         <div id="player_video" class="box6">
-          <object width="100%" height="100%" type="application/x-shockwave-flash" id="ytplayer" data="http://www.youtube.com/e/yWgINtT3vkw?enablejsapi=1&amp;autohide=1&amp;fs=1&amp;playerapiid=ytplayer" ><param name="allowScriptAccess" value="always"><param name="allowFullScreen" value="true"><param name="wmode" value="transparent"></object>
+          {!<object width="100%" height="100%" type="application/x-shockwave-flash" id="ytplayer" data="http://www.youtube.com/e/yWgINtT3vkw?enablejsapi=1&amp;autohide=1&amp;fs=1&amp;playerapiid=ytplayer" ><param name="allowScriptAccess" value="always"><param name="allowFullScreen" value="true"><param name="wmode" value="transparent"></object>!}
         </div>
         <div id="slideshow_player" class="box6">
-          <object width="100%" height="100%" type="application/x-shockwave-flash" id="slideshareplayer" data="http://static.slidesharecdn.com/swf/ssplayer2.swf"><param  name="allowScriptAccess" value="always"><param name="flashvars" value="doc=mps-120419021609-phpapp02&amp;rel=0"><param name="wmode" value="transparent"></object>
+          {!<object width="100%" height="100%" type="application/x-shockwave-flash" id="slideshareplayer" data="http://static.slidesharecdn.com/swf/ssplayer2.swf"><param  name="allowScriptAccess" value="always"><param name="flashvars" value="doc=mps-120419021609-phpapp02&amp;rel=0"><param name="wmode" value="transparent"></object>!}
         </div>
       </div>
       <div class="clear"></div>

@@ -115,18 +115,21 @@ exports.show_presentation = (req, res, next) ->
         slides.push slide
       duration += chapter.duration
     percent_per_second = 100 / duration
-    width_used = 0
+    percent_used = 0
+    duration_used = 0
     for slide_num in [0...slides.length]
       slide = slides[slide_num]
       if slide_num + 1 < slides.length
         slide.duration = (slides[slide_num + 1].time - slide.time)
         slide.width = slide.duration * percent_per_second
         slide.width = 0.25 if slide.width < 0.25
-        width_used += slide.width
+        percent_used += slide.width
         slide.width = "#{slide.width.toFixed(2)}%"
       else
         slide.duration = duration - slide.time
-        slide.width = "#{(100 - width_used).toFixed(2)}%"
+        slide.width = "#{(100 - percent_used).toFixed(2)}%"
+      duration_used += slide.duration
+      percent_per_second = (100 - percent_used) / (duration - duration_used)
       pretty_duration = moment.duration(slide.duration, "seconds")
       slide.duration = "#{pretty_duration.minutes()}'#{pretty_duration.seconds()}\""
 
