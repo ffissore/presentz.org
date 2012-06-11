@@ -23,7 +23,7 @@
           class="chapter"
         !}
         {#slides}
-        <div class="chapter past" original_width="{width}" style="width:{width};">
+        <div class="chapter past" original_width="{width}" style="width:2px">
           <div class="info">
             <p class="title"><a href="javascript:void(0);">{title}</a> &mdash; {duration}</p>
             <div class="comments"><span>5</span><a href="javascript:void(0);">comments</a></div>

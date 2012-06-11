@@ -1,17 +1,16 @@
 //GENERAL BEHAVIORS
 var Controls = {
 
-    totalChapters: 0,
-
     init: function() {
+        Controls.resize();
         var $this = this;
-        $this.totalChapters = $(".chapter ", "#controls").length;
+        var totalChapters = $(".chapter ", "#controls").length;
         $(".chapter", "#controls").each(function() {
             var $instance = $(this);
-            $(this)
+            $instance
                 .unbind("mouseenter")
                 .bind("mouseenter", function(e) {
-                    var selectedChapterWidth = $("#controls").width() + 1 - ($this.totalChapters * 2);
+                    var selectedChapterWidth = $("#controls").width() + 1 - (totalChapters * 2);
 
                     $(".chapter", "#controls").not($instance).css("width", "2px");
 
@@ -41,13 +40,27 @@ var Controls = {
     restoreOriginalWidth: function() {
         $(".chapter", "#controls").each(function() {
             $(this).find(".info").stop(true, true).hide();
-            $(this).css("width", $(this).attr("original_width"));
         });
-
+        Controls.resize();
     },
 
     resize: function() {
+        var container_width = $("#controls").width();
+        var remaining_width = container_width;
+        $(".chapter", "#controls").each(function() {
+            var $instance = $(this);
+            var px_width = Math.floor(container_width / 100 * parseFloat($instance.attr("original_width"))) + 1;
 
+            if (px_width <= 1) {
+                px_width = 2;
+            }
+            if (remaining_width - px_width > 0) {
+                remaining_width -= px_width;
+            } else {
+                px_width = remaining_width;
+            }
+            $instance.css("width", px_width + "px");
+        });
     }
 };
 
@@ -190,6 +203,9 @@ $(document).ready(function() {
         .bind("resize", function(e) {
             if ($("#content_slider").length > 0) {
                 DemoScroller.resize();
+            }
+            if ($("#controls")) {
+                Controls.resize();
             }
         });
 
