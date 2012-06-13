@@ -107,10 +107,14 @@ exports.show_presentation = (req, res, next) ->
     duration = _.reduce (chapter.duration for chapter in presentation.chapters), (one, two) -> one + two
     slides = []
     duration = 0
-    for chapter in presentation.chapters
-      for slide in chapter.media.slides
+    for chapter_index in [0...presentation.chapters.length]
+      chapter = presentation.chapters[chapter_index]
+      for slide_index in [0...chapter.media.slides.length]
+        slide = chapter.media.slides[slide_index]
         slide = _.clone slide
         delete slide.url
+        slide.chapter_index = chapter_index
+        slide.slide_index = slide_index
         slide.time = slide.time + duration
         slides.push slide
       duration += chapter.duration

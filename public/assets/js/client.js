@@ -30,11 +30,13 @@ var Controls = {
                 alert("SHOW COMMENT FOR THIS SLIDE!");
             });
 
-        $("#controls .chapter .info .title a")
-            .unbind("click")
-            .bind("click", function(e) {
-                alert("GO TO THIS SLIDE!");
-            });
+        /*
+         $("#controls .chapter .info .title a")
+         .unbind("click")
+         .bind("click", function(e) {
+         alert("GO TO THIS SLIDE!");
+         });
+         */
     },
 
     restoreOriginalWidth: function() {
@@ -213,7 +215,6 @@ $(document).ready(function() {
 
 var toogle_css = function(selector, key, value) {
     var $elem = $(selector);
-    console.log($elem.css(key));
     if ($elem.css(key) !== "") {
         $elem.css(key, "");
     } else {
