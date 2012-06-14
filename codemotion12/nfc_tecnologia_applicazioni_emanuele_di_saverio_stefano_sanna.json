@@ -1,0 +1,217 @@
+{
+  "title": "NFC: tecnologia e applicazioni",
+  "speaker": "Emanuele Di Saverio, Stefano Sanna",
+  "chapters": [
+    {
+      "duration": 2122,
+      "media": {
+        "video": {
+          "url": "http://youtu.be/tY8lAk1H97I",
+          "thumb": "http://presentz.org/assets/codemotion12/sanna.jpg"
+        },
+        "slides": [
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#1",
+            "title": "NFC: tecnologia e applicazioni",
+            "time": 0
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#3",
+            "title": "Agenda",
+            "time": 99
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#4",
+            "title": "Speaker ('Lei non sa chi sono io!')",
+            "time": 106
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#6",
+            "title": "Near Field Communication",
+            "time": 131
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#7",
+            "title": "Principio di funzionamento",
+            "time": 211
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#8",
+            "title": "NFC in numeri",
+            "time": 311
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#9",
+            "title": "Scenari applicativi",
+            "time": 348
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#10",
+            "title": "Modalità operative",
+            "time": 439
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#11",
+            "title": "Modalità operative per piattaforma",
+            "time": 502
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#12",
+            "title": "Alcuni tipi di tag",
+            "time": 579
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#13",
+            "title": "Si fa presto a dire tag...",
+            "time": 604
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#14",
+            "title": "NDEF: NFC Data Exchange Format",
+            "time": 703
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#15",
+            "title": "API Android",
+            "time": 806
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#16",
+            "title": "NFC su Android",
+            "time": 1094
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#17",
+            "title": "Android NFC API",
+            "time": 1129
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#18",
+            "title": "android.nfc (reader/writer)",
+            "time": 1157
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#19",
+            "title": "android.nfc (P2P)",
+            "time": 1229
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#20",
+            "title": "Permission",
+            "time": 1241
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#21",
+            "title": "android.nfc.tech",
+            "time": 1263
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#22",
+            "title": "Note sul dispatching degli eventi NFC",
+            "time": 1296
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#23",
+            "title": "Tipo di eventi (ACTION) di lettura di tag",
+            "time": 1382
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#24",
+            "title": "Logica di dispatching dell'intent",
+            "time": 1446
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#25",
+            "title": "IntenFilter sul manifest",
+            "time": 1548
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#26",
+            "title": "IntentFilter per NDEF_DISCOVERED",
+            "time": 1565
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#27",
+            "title": "IntentFilter per TECH_DISCOVERED",
+            "time": 1580
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#28",
+            "title": "Elenco tecnologie per TECH_DISCOVERED",
+            "time": 1582
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#29",
+            "title": "IntentFilter per TAG_DISCOVERED",
+            "time": 1591
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#31",
+            "title": "E' ora di leggere un tag!",
+            "time": 1628
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#32",
+            "title": "Lettura di un NDEF Message",
+            "time": 1717
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#33",
+            "title": "Decodifica del payload RTD_TEXT",
+            "time": 1718
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#34",
+            "title": "Application Record e Android Beam",
+            "time": 1724
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#35",
+            "title": "Dagli smartphone agli oggetti (extra)",
+            "time": 1920
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#36",
+            "title": "Dagli smartphone agli oggetti (Arduino)",
+            "time": 1922
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#37",
+            "title": "Arduino MEGA + MFRC522",
+            "time": 1951
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#38",
+            "title": "Lettura dell'ID di un tag MIFARE",
+            "time": 1962
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#39",
+            "title": "Risorse",
+            "time": 2012
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#40",
+            "title": "Alcuni dei terminali NFC venduti in Italia",
+            "time": 2014
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#41",
+            "title": "Dove acquistare tag e lettori",
+            "time": 2036
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#42",
+            "title": "Bibliografia",
+            "time": 2064
+          },
+          {
+            "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#43",
+            "title": "Contatti",
+            "time": 2091
+          }
+        ]
+      }
+    }
+  ]
+}

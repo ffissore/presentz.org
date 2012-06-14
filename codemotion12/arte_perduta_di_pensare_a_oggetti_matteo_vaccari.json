@@ -1,0 +1,230 @@
+{
+  "title": "L'arte perduta di pensare ad oggetti",
+  "speaker": "Matteo Vaccari",
+  "chapters": [
+    {
+      "duration": 1899,
+      "media": {
+        "video": {
+          "url": "http://youtu.be/jO6Z3wOdfWc",
+          "thumb": "http://presentz.org/assets/codemotion12/vaccari.jpg"
+        },
+        "slides": [
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#1",
+            "title": "L'arte perduta di pensare ad oggetti",
+            "time": 0
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#2",
+            "title": "Che obiettivo ci diamo?",
+            "time": 63
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#3",
+            "title": "Costo del cambiamento",
+            "time": 77
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#4",
+            "title": "Può essere così?",
+            "time": 98
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#5",
+            "title": "OCP,DIP,SRP,LSP,...",
+            "time": 139
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#6",
+            "title": "minimal yet flexible",
+            "time": 157
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#7",
+            "title": "Minimo ma flessibile",
+            "time": 170
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#8",
+            "title": "Una storia",
+            "time": 206
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#9",
+            "title": "Che cos'è un'oggetto?",
+            "time": 441
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#10",
+            "title": "Che cos'è un'oggetto?",
+            "time": 462
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#11",
+            "title": "OOP",
+            "time": 771
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#12",
+            "time": 821
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#13",
+            "time": 880
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#14",
+            "title": "Pensiero a oggetti vs. Pensiero formale",
+            "time": 949
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#19",
+            "title": "Un esempio: http access log report",
+            "time": 1171
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#20",
+            "title": "Access log report",
+            "time": 1180
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#21",
+            "time": 1221
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#20",
+            "title": "Access log report",
+            "time": 1242
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#21",
+            "time": 1269
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#22",
+            "title": "Usa la forza degli oggetti, Luke!",
+            "time": 1287
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#23",
+            "time": 1289
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#24",
+            "title": "Usa la forza del TDD, Luke!",
+            "time": 1363
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#25",
+            "title": "First test",
+            "time": 1368
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#26",
+            "title": "Second test",
+            "time": 1433
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#27",
+            "title": "Semplici strutture dati",
+            "time": 1493
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#28",
+            "title": "Everything is an object is a myth",
+            "time": 1496
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#29",
+            "title": "Clean coders episode VII",
+            "time": 1526
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#30",
+            "title": "New Registration",
+            "time": 1558
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#31",
+            "time": 1568
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#32",
+            "time": 1574
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#33",
+            "time": 1600
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#34",
+            "time": 1621
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#35",
+            "title": "Recursive design",
+            "time": 1638
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#32",
+            "time": 1674
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#31",
+            "time": 1677
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#32",
+            "time": 1685
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#35",
+            "title": "Recursive design",
+            "time": 1688
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#36",
+            "time": 1689
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#35",
+            "title": "Recursive design",
+            "time": 1692
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#36",
+            "time": 1727
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#37",
+            "time": 1775
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#38",
+            "time": 1799
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#39",
+            "time": 1815
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#41",
+            "title": "OOP è umanesimo",
+            "time": 1819
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#44",
+            "title": "Per saperne di più: Francesco Cirillo",
+            "time": 1844
+          },
+          {
+            "url": "http://www.slideshare.net/20120324-object-thinking-codemotion-120428045816-phpapp02#43",
+            "title": "Per saperne di più: Clean Coders",
+            "time": 1853
+          }
+        ]
+      }
+    }
+  ]
+}
