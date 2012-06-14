@@ -47,11 +47,14 @@ var Controls = {
     },
 
     resize: function() {
-        var container_width = $("#controls").width() - 2;
+        var container_width = $("#controls").width();
         var remaining_width = container_width;
+        var remaining_percentage = 100.0;
         $("#controls .chapter").each(function() {
             var $chapter = $(this);
-            var px_width = Math.floor(container_width / 100 * parseFloat($chapter.attr("original_width"))) + 1;
+            var chapter_percentage = parseFloat($chapter.attr("original_width"));
+            var px_width = Math.floor(remaining_width / remaining_percentage * chapter_percentage) + 1;
+            remaining_percentage -= chapter_percentage;
 
             if (px_width <= 1) {
                 px_width = 2;

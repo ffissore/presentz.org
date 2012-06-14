@@ -32,11 +32,13 @@
       <div id="tools">
         <h5>Tools</h5>
         <ul>
+          {!
           <li><a href="javascript:void(0)">Show all comments</a></li>
           <li><a href="javascript:void(0)">Comment this slide</a></li>
           <li><a href="javascript:void(0)">Comment this presentation</a></li>
+          !}
           <li><a href="javascript:toogle_css('#player .box8', '#chapters', 'display', 'none');">Show chapters list</a></li>
-          <li><a href="javascript:toogle_css('#player .box8', '#embed', 'display', 'none');">Embed</a></li>
+          {!<li><a href="javascript:toogle_css('#player .box8', '#embed', 'display', 'none');">Embed</a></li>!}
           <li><a href="javascript:toogle_css('#player .box8', '#share', 'display', 'none');">Share</a></li>
         </ul>
       </div>
@@ -95,7 +97,7 @@
         <h5>Chapters</h5>
         <ol>
           {#slides}
-            <li {css}><a chapter_index="{chapter_index}" slide_index="{slide_index}" href="javascript:void(0)">{index}. {title}</a></li>
+            <li {css}><a chapter_index="{chapter_index}" slide_index="{slide_index}" href="javascript:void(0)">{index}. {title} &mdash; {duration}</a></li>
           {/slides}
         </ol>
       </div>
