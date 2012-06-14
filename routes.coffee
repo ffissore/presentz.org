@@ -31,6 +31,37 @@ pres_to_thumb = (presentation, catalog_name) ->
 
   pres.time = dateutil.format(dateutil.parse(presentation.time, "YYYYMMDD"), "Y/m") if presentation.time
   pres
+  
+slide_to_slide = (slide, chapter_index, slide_index, duration) ->
+  slide = _.clone(slide)
+  delete slide.url
+  slide.title = "Slide #{ slide_index + 1 }" if !slide.title?
+  slide.chapter_index = chapter_index
+  slide.slide_index = slide_index
+  slide.time = slide.time + duration
+  slide
+  
+slides_duration_width_css = (slides, duration) ->
+  percent_per_second = 100 / duration
+  percent_used = 0
+  duration_used = 0
+  number_of_zeros_in_index = slides.length.toString().length
+  for slide_num in [0...slides.length]
+    slide = slides[slide_num]
+    if slide_num + 1 < slides.length
+      slide.duration = slides[slide_num + 1].time - slide.time
+      slide.width = slide.duration * percent_per_second
+      percent_used += slide.width
+    else
+      slide.duration = duration - slide.time
+      slide.width = 100 - percent_used
+    duration_used += slide.duration
+    percent_per_second = (100 - percent_used) / (duration - duration_used)
+    pretty_duration = moment.duration(Math.round(slide.duration), "seconds")
+    slide.duration = "#{pretty_duration.minutes()}'#{pretty_duration.seconds()}\""
+    slide.index = (slide_num + 1).pad(number_of_zeros_in_index)
+    slide.css = "class=\"even\"" if slide.index % 2 is 0
+
 
 load_presentation_from_path = (path, callback) ->
   path_parts = path.split("/")
@@ -43,6 +74,15 @@ load_presentation_from_path = (path, callback) ->
     return callback("no record found") if results.length is 0
     callback(undefined, results[0])
 
+number_of_presentations = (catalog, catalogs, callback) ->
+  routes.db.getInEdges catalog, "part_of", (err, edges) ->
+    return next(err) if err?
+    catalog.presentations = edges.length
+    catalogs.push catalog
+
+    if catalogs.length is results.length
+      return callback()
+
 exports.init = (db) ->
   routes.db = db
   @
@@ -50,19 +90,11 @@ exports.init = (db) ->
 exports.list_catalogs = (req, res, next) ->
   routes.db.command "SELECT FROM V WHERE _type = 'catalog' and (hidden is null or hidden = 'false') ORDER BY name", (err, results) ->
     return next(err) if err?
+    
     catalogs = []
 
-    number_of_presentations = (catalog, callback) ->
-      routes.db.getInEdges catalog, "part_of", (err, edges) ->
-        return next(err) if err?
-        catalog.presentations = edges.length
-        catalogs.push catalog
-
-        if catalogs.length is results.length
-          return callback()
-
     for catalog in results
-      number_of_presentations catalog, ->
+      number_of_presentations catalog, catalogs, ->
         res.render "catalogs",
           title: "Presentz talks"
           section: "talks"
@@ -82,6 +114,7 @@ exports.show_catalog = (req, res, next) ->
       presentations = _.sortBy presentations, (presentation) ->
         return presentation.time if presentation.time?
         return presentation.title
+        
       if presentations[0].time?
         presentations = presentations.reverse()
 
@@ -96,7 +129,11 @@ exports.raw_presentation = (req, res, next) ->
   path = path.substring(0, path.length - ".json".length)
   load_presentation_from_path path, (err, presentation) ->
     return next(err) if err?
-    presentation = "#{req.query.jsoncallback}(#{JSON.stringify(presentation)});" if req.query.jsoncallback
+    if req.query.jsoncallback
+      presentation = "#{req.query.jsoncallback}(#{JSON.stringify(presentation)});"
+      res.contentType("text/javascript")
+    else
+      res.contentType("application/json")
     res.send presentation
 
 exports.show_presentation = (req, res, next) ->
@@ -110,35 +147,10 @@ exports.show_presentation = (req, res, next) ->
     for chapter_index in [0...presentation.chapters.length]
       chapter = presentation.chapters[chapter_index]
       for slide_index in [0...chapter.media.slides.length]
-        slide = chapter.media.slides[slide_index]
-        slide = _.clone slide
-        slide.title = "Slide #{ slide_index + 1 }" if !slide.title?
-        delete slide.url
-        slide.chapter_index = chapter_index
-        slide.slide_index = slide_index
-        slide.time = slide.time + duration
-        slides.push slide
+        slides.push slide_to_slide(chapter.media.slides[slide_index], chapter_index, slide_index, duration)
       duration += chapter.duration
-    
-    percent_per_second = 100 / duration
-    percent_used = 0
-    duration_used = 0
-    number_of_zeros_in_index = slides.length.toString().length
-    for slide_num in [0...slides.length]
-      slide = slides[slide_num]
-      if slide_num + 1 < slides.length
-        slide.duration = (slides[slide_num + 1].time - slide.time)
-        slide.width = slide.duration * percent_per_second
-        percent_used += slide.width
-      else
-        slide.duration = duration - slide.time
-        slide.width = 100 - percent_used
-      duration_used += slide.duration
-      percent_per_second = (100 - percent_used) / (duration - duration_used)
-      pretty_duration = moment.duration(Math.round(slide.duration), "seconds")
-      slide.duration = "#{pretty_duration.minutes()}'#{pretty_duration.seconds()}\""
-      slide.index = (slide_num + 1).pad(number_of_zeros_in_index)
-      slide.css = "class=\"even\"" if slide.index % 2 is 0
+
+    slides_duration_width_css(slides, duration)
 
     title_parts = presentation.title.split(" ")
     title_parts[title_parts.length - 1] = "<span>#{title_parts[title_parts.length - 1]}</span>"
