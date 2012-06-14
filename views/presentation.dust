@@ -35,9 +35,9 @@
           <li><a href="javascript:void(0)">Show all comments</a></li>
           <li><a href="javascript:void(0)">Comment this slide</a></li>
           <li><a href="javascript:void(0)">Comment this presentation</a></li>
-          <li><a href="javascript:toogle_css('#chapters', 'display', 'none');">Show chapters list</a></li>
-          <li><a href="javascript:void(0)">Embed</a></li>
-          <li><a href="javascript:void(0)">Share</a></li>
+          <li><a href="javascript:toogle_css('#player .box8', '#chapters', 'display', 'none');">Show chapters list</a></li>
+          <li><a href="javascript:toogle_css('#player .box8', '#embed', 'display', 'none');">Embed</a></li>
+          <li><a href="javascript:toogle_css('#player .box8', '#share', 'display', 'none');">Share</a></li>
         </ul>
       </div>
       {! box commenti !}
@@ -112,7 +112,7 @@
       <div id="share" class="box8" style="display:none">
         <h5>Share</h5>
         <ul>
-          <li class="li_share_facebook"><a href="javascript:void(0)" title="Condividi su Facebook">Facebook</a></li>
+          <li class="li_share_facebook"><a href="javascript:fbShare();" title="Condividi su Facebook">Facebook</a></li>
           <li class="li_share_twitter"><a href="javascript:void(0)" title="Condividi su Twitter">Twitter</a></li>
           <li class="li_share_gplus"><a target="_blank" href="https://plusone.google.com/_/+1/confirm?hl=it&url=URL" title="Condividi su Google Plus">Google Plus</a></li>
         </ul>
@@ -152,7 +152,19 @@ function initPresentz(presentation) {
   });
 
   presentz.init(presentation);
-  presentz.changeChapter(0, 0, true);
+  presentz.changeChapter(0, 0, false);
+}
+function fbShare() {
+  var $window = $(window);
+  var left = ($window.width() - 640) / 2 + window.screenX;
+  if (left < 0) {
+    left = 0;
+  }
+  var top = ($window.height() - 350) / 2 + window.screenY;
+  if (top < 0) {
+    top = 0;
+  }
+  window.open("https://www.facebook.com/sharer.php?u=" + document.location + "&t=" + document.title, "fbshare", "height=350,location=no,menubar=no,width=640,top=" + top + ",left=" + left);
 }
 </script>
 <script src="{to_json_url}?jsoncallback=initPresentz" type="text/javascript"></script>

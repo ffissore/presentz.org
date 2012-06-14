@@ -212,11 +212,9 @@ $(document).ready(function() {
 
 });
 
-var toogle_css = function(selector, key, value) {
-    var $elem = $(selector);
-    if ($elem.css(key) !== "") {
-        $elem.css(key, "");
-    } else {
-        $elem.css(key, value);
-    }
+window.toogle_css = function(elements_to_hide_selector, element_to_show_selector, key, value) {
+    $(elements_to_hide_selector).each(function(idx, elem) {
+        $(elem).css(key, value);
+    });
+    $(element_to_show_selector).css(key, "");
 };
