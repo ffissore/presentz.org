@@ -30,13 +30,12 @@ var Controls = {
                 alert("SHOW COMMENT FOR THIS SLIDE!");
             });
 
-        /*
-         $("#controls .chapter .info .title a")
-         .unbind("click")
-         .bind("click", function(e) {
-         alert("GO TO THIS SLIDE!");
-         });
-         */
+        $("#controls .chapter .info .title a, #chapters ol li a")
+            .unbind("click")
+            .bind("click", function(e) {
+                var $this = $(this);
+                presentz.changeChapter(parseInt($this.attr("chapter_index")), parseInt($this.attr("slide_index")), true);
+            });
     },
 
     restoreOriginalWidth: function() {

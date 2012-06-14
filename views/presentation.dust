@@ -23,37 +23,11 @@
         {#slides}
         <div class="chapter" original_width="{width}" style="width:2px">
           <div class="info">
-            <p class="title"><a href="javascript:presentz.changeChapter({chapter_index}, {slide_index}, true);;">{title}</a> &mdash; {duration}</p>
+            <p class="title"><a chapter_index="{chapter_index}" slide_index="{slide_index}" href="javascript:void(0);">{title}</a> &mdash; {duration}</p>
             <div class="comments"><span>5</span><a href="javascript:void(0);">comments</a></div>
           </div>
         </div>
         {/slides}
-        {!
-        <div class="chapter past" style="width:10%;">
-          <div class="info">
-            <p class="title"><a href="javascript:void(0);">"Titolo della slide"</a> &mdash; 01'20"</p>
-            <div class="comments"><span>5</span><a href="javascript:void(0);">comments</a></div>
-          </div>
-        </div>
-        <div class="chapter past" style="width:30%;">
-          <div class="info">
-            <p class="title"><a href="javascript:void(0);">"Titolo della slide"</a> &mdash; 01'20"</p>
-            <div class="comments"><span>5</span><a href="javascript:void(0);">comments</a></div>
-          </div>
-        </div>
-        <div class="chapter selected" style="width:5%;">
-          <div class="info">
-            <p class="title"><a href="javascript:void(0);">"Titolo della slide"</a> &mdash; 01'20"</p>
-            <div class="comments"><span>5</span><a href="javascript:void(0);">comments</a></div>
-          </div>
-        </div>
-        <div class="chapter" style="width:35%;">
-          <div class="info">
-            <p class="title"><a href="javascript:void(0);">"Titolo della slide"</a> &mdash; 01'20"</p>
-            <div class="comments"><span>5</span><a href="javascript:void(0);">comments</a></div>
-          </div>
-        </div>
-        !}
       </div>
       <div id="tools">
         <h5>Tools</h5>
@@ -121,7 +95,7 @@
         <h5>Chapters</h5>
         <ol>
           {#slides}
-            <li {css}><a href="javascript:void(0)">{index}. {title}</a></li>
+            <li {css}><a chapter_index="{chapter_index}" slide_index="{slide_index}" href="javascript:void(0)">{index}. {title}</a></li>
           {/slides}
         </ol>
       </div>

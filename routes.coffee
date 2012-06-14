@@ -112,6 +112,7 @@ exports.show_presentation = (req, res, next) ->
       for slide_index in [0...chapter.media.slides.length]
         slide = chapter.media.slides[slide_index]
         slide = _.clone slide
+        slide.title = "Slide #{ slide_index + 1 }" if !slide.title?
         delete slide.url
         slide.chapter_index = chapter_index
         slide.slide_index = slide_index
