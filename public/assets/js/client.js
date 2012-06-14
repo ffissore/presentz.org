@@ -4,21 +4,22 @@ var Controls = {
     init: function() {
         Controls.resize();
         var $this = this;
-        var totalChapters = $(".chapter ", "#controls").length;
-        $(".chapter", "#controls").each(function() {
+        var $chapters = $("#controls .chapter");
+        var totalChapters = $chapters.length;
+        $chapters.each(function() {
             var $instance = $(this);
             $instance
                 .unbind("mouseenter")
-                .bind("mouseenter", function(e) {
+                .bind("mouseenter", function() {
                     var selectedChapterWidth = $("#controls").width() + 1 - (totalChapters * 2);
 
-                    $(".chapter", "#controls").not($instance).css("width", "2px");
+                    $chapters.not($instance).css("width", "2px");
 
                     $instance.css("width", selectedChapterWidth + "px");
                     $instance.find(".info").stop(true, true).delay(200).fadeIn(500);
                 })
                 .unbind("mouseleave")
-                .bind("mouseleave", function(e) {
+                .bind("mouseleave", function() {
                     $this.restoreOriginalWidth();
                 });
 
@@ -26,31 +27,31 @@ var Controls = {
 
         $("#controls .chapter .info .comments a")
             .unbind("click")
-            .bind("click", function(e) {
+            .bind("click", function() {
                 alert("SHOW COMMENT FOR THIS SLIDE!");
             });
 
         $("#controls .chapter .info .title a, #chapters ol li a")
             .unbind("click")
-            .bind("click", function(e) {
+            .bind("click", function() {
                 var $this = $(this);
                 presentz.changeChapter(parseInt($this.attr("chapter_index")), parseInt($this.attr("slide_index")), true);
             });
     },
 
     restoreOriginalWidth: function() {
-        $(".chapter", "#controls").each(function() {
+        $("#controls .chapter").each(function() {
             $(this).find(".info").stop(true, true).hide();
         });
         Controls.resize();
     },
 
     resize: function() {
-        var container_width = $("#controls").width();
+        var container_width = $("#controls").width() - 2;
         var remaining_width = container_width;
-        $(".chapter", "#controls").each(function() {
-            var $instance = $(this);
-            var px_width = Math.floor(container_width / 100 * parseFloat($instance.attr("original_width"))) + 1;
+        $("#controls .chapter").each(function() {
+            var $chapter = $(this);
+            var px_width = Math.floor(container_width / 100 * parseFloat($chapter.attr("original_width"))) + 1;
 
             if (px_width <= 1) {
                 px_width = 2;
@@ -60,7 +61,7 @@ var Controls = {
             } else {
                 px_width = remaining_width;
             }
-            $instance.css("width", px_width + "px");
+            $chapter.css("width", px_width + "px");
         });
     }
 };
@@ -181,7 +182,7 @@ $(document).ready(function() {
                 });
         });
 
-    $(".search form").submit(function(e) {
+    $(".search form").submit(function() {
         var value = $(".search input:first").val();
         var pattern = /[ ,\n,\r]/g;
         if (value.replace(pattern, "").length > 0) {
@@ -201,7 +202,7 @@ $(document).ready(function() {
 
     $(window)
         .unbind("resize")
-        .bind("resize", function(e) {
+        .bind("resize", function() {
             if ($("#content_slider").length > 0) {
                 DemoScroller.resize();
             }

@@ -113,8 +113,8 @@
         <h5>Share</h5>
         <ul>
           <li class="li_share_facebook"><a href="javascript:fbShare();" title="Condividi su Facebook">Facebook</a></li>
-          <li class="li_share_twitter"><a href="javascript:void(0)" title="Condividi su Twitter">Twitter</a></li>
-          <li class="li_share_gplus"><a target="_blank" href="https://plusone.google.com/_/+1/confirm?hl=it&url=URL" title="Condividi su Google Plus">Google Plus</a></li>
+          <li class="li_share_twitter"><a href="javascript:twitterShare();" title="Condividi su Twitter">Twitter</a></li>
+          <li class="li_share_gplus"><a href="javascript:plusShare();" title="Condividi su Google Plus">Google Plus</a></li>
         </ul>
       </div>
       {! fine box share !}
@@ -154,17 +154,27 @@ function initPresentz(presentation) {
   presentz.init(presentation);
   presentz.changeChapter(0, 0, false);
 }
-function fbShare() {
-  var $window = $(window);
-  var left = ($window.width() - 640) / 2 + window.screenX;
+function openPopupTo(width, height, url) {
+  var left = (screen.width - width) / 2;
   if (left < 0) {
     left = 0;
   }
-  var top = ($window.height() - 350) / 2 + window.screenY;
+  var top = (screen.height - height) / 2;
   if (top < 0) {
     top = 0;
   }
-  window.open("https://www.facebook.com/sharer.php?u=" + document.location + "&t=" + document.title, "fbshare", "height=350,location=no,menubar=no,width=640,top=" + top + ",left=" + left);
+  window.open(url, "share", "height=" + height + ",location=no,menubar=no,width=" + width + ",top=" + top + ",left=" + left);
+}
+function fbShare() {
+  openPopupTo(640, 350, "https://www.facebook.com/sharer.php?u=" + encodeURIComponent(document.location) + "&t=" + encodeURIComponent(document.title));
+}
+
+function twitterShare() {
+  openPopupTo(640, 300, "https://twitter.com/intent/tweet?text=" + encodeURIComponent(document.title + " " + document.location + " via @presentzorg"));
+}
+
+function plusShare() {
+  openPopupTo(640, 350, "https://plus.google.com/share?url=" + encodeURIComponent(document.location));
 }
 </script>
 <script src="{to_json_url}?jsoncallback=initPresentz" type="text/javascript"></script>
