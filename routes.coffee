@@ -74,13 +74,13 @@ load_presentation_from_path = (path, callback) ->
     return callback("no record found") if results.length is 0
     callback(undefined, results[0])
 
-number_of_presentations = (catalog, catalogs, callback) ->
+number_of_presentations = (catalog, catalogs, number_of_catalogs, callback) ->
   routes.db.getInEdges catalog, "part_of", (err, edges) ->
     return next(err) if err?
     catalog.presentations = edges.length
     catalogs.push catalog
 
-    if catalogs.length is results.length
+    if catalogs.length is number_of_catalogs
       return callback()
 
 exports.init = (db) ->
@@ -94,7 +94,7 @@ exports.list_catalogs = (req, res, next) ->
     catalogs = []
 
     for catalog in results
-      number_of_presentations catalog, catalogs, ->
+      number_of_presentations catalog, catalogs, results.length, ->
         res.render "catalogs",
           title: "Presentz talks"
           section: "talks"
