@@ -1,5 +1,4 @@
 /*stili custom progetto*/
-@import url("default_responsive.css");
 
 @media only screen and (min-width: 320px) and (max-width: 479px) {
     #wrapper {
@@ -29,12 +28,12 @@
         width: 100%;
     }
 
-    nav#menu {
+    #menu {
         margin: 0px;
         float: none;
     }
 
-    nav#menu ul li {
+    #menu li {
         width: 100%;
         float: none;
         text-align: center;
@@ -71,12 +70,12 @@
         width: 100%;
     }
 
-    nav#menu {
+    #menu {
         margin: 0px;
         float: none;
     }
 
-    nav#menu ul li {
+    #menu li {
         width: 100%;
         float: none;
         text-align: center;
@@ -105,7 +104,7 @@
         width: 720px;
     }
 
-    nav#menu ul li {
+    #menu li {
         width: 40px;
     }
 
@@ -351,7 +350,7 @@
         width: 1200px;
     }
 
-    nav#menu ul li {
+    #menu li {
         width: 80px;
     }
 
