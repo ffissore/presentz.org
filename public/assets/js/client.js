@@ -3,6 +3,7 @@ var Controls = {
 
     init: function() {
         Controls.resize();
+
         var $this = this;
         var $chapters = $("#controls .chapter");
         var totalChapters = $chapters.length;
@@ -50,43 +51,69 @@ var Controls = {
         var container_width = $("#controls").width();
         var min_pixel_width = 2;
         var min_pixel_width_as_percentage = 100 * min_pixel_width / container_width;
-        console.log([container_width, min_pixel_width, min_pixel_width_as_percentage]);
         var $chapters = $("#controls .chapter");
         var stolen_percentage = 0;
         var long_chapters_percentage = 0;
-        $chapters.each(function() {
-            var $chapter = $(this);
+        var percentages = [];
+
+        for (var i = 0; i < $chapters.length; i++) {
+            var $chapter = $($chapters[i]);
             var percentage = parseFloat($chapter.attr("percentage"));
             if (percentage < min_pixel_width_as_percentage) {
                 stolen_percentage += (min_pixel_width_as_percentage - percentage);
-                $chapter.attr("percentage", min_pixel_width_as_percentage);
+                percentage = min_pixel_width_as_percentage;
             } else {
                 long_chapters_percentage += percentage;
             }
-        });
-        var percentage_to_remove_from_long_chapters = 100 * stolen_percentage / long_chapters_percentage;
-        console.log([stolen_percentage, long_chapters_percentage, percentage_to_remove_from_long_chapters]);
-        $chapters.each(function() {
-            var $chapter = $(this);
-            var percentage = parseFloat($chapter.attr("percentage"));
-            if (percentage > min_pixel_width_as_percentage) {
-                console.log(["old perce", percentage, percentage_to_remove_from_long_chapters]);
-                percentage -= (percentage / 100 * percentage_to_remove_from_long_chapters);
-                console.log(["new perce", percentage]);
-                $chapter.attr("percentage", percentage);
-            }
-        });
+            percentages.push(percentage);
+        }
 
-        
-        var sum = 0;
-        $chapters.each(function() {
-            var $chapter = $(this);
-            var percentage = parseFloat($chapter.attr("percentage"));
-            sum += percentage;
-            var px_width = container_width / 100 * percentage;
-            $chapter.css("width", px_width + "px");
-        });
-        console.log(sum);
+        var long_chapter_removed = false;
+        var rounds = 0;
+        do {
+            long_chapter_removed = false;
+            var percentage_to_remove_from_long_chapters = 100 * stolen_percentage / long_chapters_percentage;
+            for (var i = 0; i < percentages.length; i++) {
+                var percentage = percentages[i];
+                if (percentage > min_pixel_width_as_percentage) {
+                    var new_percentage = percentage - (percentage / 100 * percentage_to_remove_from_long_chapters);
+                    if (new_percentage < min_pixel_width_as_percentage) {
+                        min_pixel_width_as_percentage = percentage;
+                        long_chapter_removed = true;
+                        long_chapters_percentage -= percentage;
+                    }
+                }
+            }
+            rounds++;
+        } while (long_chapter_removed && rounds < 6);
+
+        var percentage_to_remove_from_long_chapters = 100 * stolen_percentage / long_chapters_percentage;
+        for (var i = 0; i < percentages.length; i++) {
+            var percentage = percentages[i];
+            if (percentage > min_pixel_width_as_percentage) {
+                percentage -= (percentage / 100 * percentage_to_remove_from_long_chapters);
+                percentages[i] = percentage;
+            }
+        }
+
+        var sum_of_pixels = 0;
+        var pixel_widths = [];
+        for (var i = 0; i < percentages.length; i++) {
+            var chapter_pixels = Math.floor(container_width / 100 * percentages[i]);
+            sum_of_pixels += chapter_pixels;
+            pixel_widths.push(chapter_pixels);
+        }
+
+        while ((container_width - sum_of_pixels) > 0) {
+            for (var i = 0; i < pixel_widths.length && (container_width - sum_of_pixels) > 0; i++) {
+                pixel_widths[i] = pixel_widths[i] + 1;
+                sum_of_pixels += 1;
+            }
+        }
+
+        for (var i = 0; i < pixel_widths.length; i++) {
+            $($chapters[i]).css("width", pixel_widths[i] + "px");
+        }
     }
 };
 
