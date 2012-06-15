@@ -16,7 +16,7 @@
     "orientdb": "git://github.com/ffissore/node-orientdb.git#master",
     "connect-orientdb": ">= 0.1.0",
     "connect-assetmanager": ">= 0.0.1",
-    "connect-assetmanager-handlers": ">= 0.0.1"
+    "connect-assetmanager-handlers": "git://github.com/ffissore/connect-assetmanager-handlers.git"
   },
   "devDependencies": {
     "watch-tree": "git://github.com/matjaz/node-watch-tree.git#node-0.6"
