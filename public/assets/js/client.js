@@ -52,7 +52,7 @@ var Controls = {
         var remaining_percentage = 100.0;
         $("#controls .chapter").each(function() {
             var $chapter = $(this);
-            var chapter_percentage = parseFloat($chapter.attr("original_width"));
+            var chapter_percentage = parseFloat($chapter.attr("percentage"));
             var px_width = Math.floor(remaining_width / remaining_percentage * chapter_percentage) + 1;
             remaining_percentage -= chapter_percentage;
 

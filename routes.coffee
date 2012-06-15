@@ -41,7 +41,7 @@ slide_to_slide = (slide, chapter_index, slide_index, duration) ->
   slide.time = slide.time + duration
   slide
   
-slides_duration_width_css = (slides, duration) ->
+slides_duration_percentage_css = (slides, duration) ->
   percent_per_second = 100 / duration
   percent_used = 0
   duration_used = 0
@@ -50,11 +50,11 @@ slides_duration_width_css = (slides, duration) ->
     slide = slides[slide_num]
     if slide_num + 1 < slides.length
       slide.duration = slides[slide_num + 1].time - slide.time
-      slide.width = slide.duration * percent_per_second
-      percent_used += slide.width
+      slide.percentage = slide.duration * percent_per_second
+      percent_used += slide.percentage
     else
       slide.duration = duration - slide.time
-      slide.width = 100 - percent_used
+      slide.percentage = 100 - percent_used
     duration_used += slide.duration
     percent_per_second = (100 - percent_used) / (duration - duration_used)
     pretty_duration = moment.duration(Math.round(slide.duration), "seconds")
@@ -150,7 +150,7 @@ exports.show_presentation = (req, res, next) ->
         slides.push slide_to_slide(chapter.media.slides[slide_index], chapter_index, slide_index, duration)
       duration += chapter.duration
 
-    slides_duration_width_css(slides, duration)
+    slides_duration_percentage_css(slides, duration)
 
     title_parts = presentation.title.split(" ")
     title_parts[title_parts.length - 1] = "<span>#{title_parts[title_parts.length - 1]}</span>"
