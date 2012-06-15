@@ -36,7 +36,7 @@ routes = require("./routes").init(db)
 
 assetsMiddleware = assetManager
   js_main:
-    route: /\/assets\/js\/[a-z0-9]+\/main\.js/
+    route: /\/assets\/js\/[a-z0-9]+main\.js/
     path: "./public/assets/js/"
     dataType: "javascript"
     files: [
@@ -46,7 +46,7 @@ assetsMiddleware = assetManager
       "modernizr.2.0.6.js",
       "main.js"
     ]
-    debug: true
+    stale: true
     preManipulate:
       "^": [
         handlers.coffeeRenderer
@@ -56,7 +56,7 @@ assetsMiddleware = assetManager
         assetHandler.uglifyJsOptimize
       ]
   js_pres:
-    route: /\/assets\/js\/[a-z0-9]+\/pres\.js/
+    route: /\/assets\/js\/[a-z0-9]+pres\.js/
     path: "./public/assets/js/"
     dataType: "javascript"
     files: [
@@ -64,7 +64,7 @@ assetsMiddleware = assetManager
       "swfobject.js",
       "presentz.js"
     ]
-    debug: true
+    stale: true
     preManipulate:
       "^": [
         handlers.coffeeRenderer
@@ -74,10 +74,18 @@ assetsMiddleware = assetManager
         assetHandler.uglifyJsOptimize
       ]
   css:
-    route: /\/assets\/css\/[0-9]+\/.*\.css/
+    route: /\/assets\/css\/[a-z0-9]+\.css/
     path: "./public/assets/css/"
     dataType: "css"
-    files: []
+    files: [
+      "reset.css",
+      "default.css",
+      "font_style.css",
+      "fe_style.css",
+      "default_responsive.css",
+      "fe_style_responsive.css"
+    ]
+    stale: true
     preManipulate:
       MSIE: [
         assetHandler.yuiCssOptimize,
@@ -89,7 +97,7 @@ assetsMiddleware = assetManager
         assetHandler.yuiCssOptimize,
         assetHandler.fixVendorPrefixes,
         assetHandler.fixGradients,
-        assetHandler.replaceImageRefToBase64(root)
+        assetHandler.replaceImageRefToBase64(__dirname + "/public/assets/img/")
       ]
 
 app.engine("dust", cons.dust)

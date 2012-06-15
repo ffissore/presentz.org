@@ -127,7 +127,7 @@
 {/body}
 
 {<presentz}
-<script src="/assets/js/{assetsCacheHashes.js_main}/pres.js" type="text/javascript"></script>
+<script src="/assets/js/{assetsCacheHashes.js_main}pres.js" type="text/javascript"></script>
 <script type="text/javascript">
 presentz = new Presentz("#player_video", "460x420", "#slideshow_player", "460x420");
 function initPresentz(presentation) {

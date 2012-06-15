@@ -57,7 +57,7 @@ h3 {
     height: 240px;
     padding-top: 60px;
     background-color: #0071BC;
-    background-image: url(../img/fe/bg_footer.jpg);
+    background-image: data-url(../img/fe/bg_footer.jpg);
     background-position: top left;
     background-repeat: repeat-x;
     color: #FFFFFF;
@@ -79,7 +79,7 @@ h3 {
 #footer h2 {
     width: 220px;
     height: 48px;
-    background-image: url(../img/fe/logo_bianco.png);
+    background-image: data-url(../img/fe/logo_bianco.png);
     background-position: top left;
     background-repeat: no-repeat;
     text-indent: -999999px;
@@ -94,7 +94,7 @@ h3 {
 header {
     height: 67px;
     width: 100%;
-    background-image: url(../img/fe/bg_header.png);
+    background-image: data-url(../img/fe/bg_header.png);
     background-repeat: repeat-x;
     background-position: top left;
     position: fixed;
@@ -122,7 +122,7 @@ header h1 {
     height: 60px;
     float: left;
     margin-left: 10px;
-    background-image: url(../img/fe/logo.jpg);
+    background-image: data-url(../img/fe/logo.jpg);
     background-position: left center;
     background-repeat: no-repeat;
 }
@@ -169,11 +169,11 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     top: 100px;
     left: 50%;
     margin-left: -115px;
-    background-image: url(../img/fe/bg_login.png);
+    background-image: data-url(../img/fe/bg_login.png);
     background-position: left top;
     background-repeat: repeat;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
+    -vendor-border-radius: 8px;
+    /*border-radius: 8px;*/
     padding: 18px;
     z-index: 500;
 }
@@ -182,11 +182,11 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     width: 100%;
     height: 100%;
     background-color: #242424;
-    background-image: url(../img/fe/bg_cont_login.jpg);
+    background-image: data-url(../img/fe/bg_cont_login.jpg);
     background-position: left top;
     background-repeat: repeat-x;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
+    -vendor-border-radius: 6px;
+    /*border-radius: 6px;*/
 }
 
 #content_login .close {
@@ -196,7 +196,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     width: 7px;
     margin-right: 10px;
     margin-top: 10px;
-    background-image: url(../img/fe/close.png);
+    background-image: data-url(../img/fe/close.png);
     background-position: left top;
     background-repeat: no-repeat;
     text-indent: -999999px;
@@ -208,7 +208,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     color: #FFFFFF;
     height: 50px;
     line-height: 48px;
-    background-image: url(../img/fe/bg_item_login.png);
+    background-image: data-url(../img/fe/bg_item_login.png);
     background-position: left bottom;
     background-repeat: repeat-x;
     padding: 0px 10px;
@@ -223,7 +223,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
 #content_login li {
     height: 35px;
     line-height: 35px;
-    background-image: url(../img/fe/bg_item_login.png);
+    background-image: data-url(../img/fe/bg_item_login.png);
     background-position: left top;
     background-repeat: repeat-x;
 }
@@ -265,7 +265,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
 #home {
     width: 100%;
     height: 700px;
-    background-image: url(../img/fe/bg_section_home.jpg);
+    background-image: data-url(../img/fe/bg_section_home.jpg);
     background-position: center top;
     background-repeat: no-repeat;
     color: #FFFFFF;
@@ -276,7 +276,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
 }
 
 #home h2 {
-    background-image: url(../img/fe/graffe_home.png);
+    background-image: data-url(../img/fe/graffe_home.png);
     background-position: left top;
     background-repeat: no-repeat;
     margin-bottom: 45px;
@@ -294,7 +294,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
 #wrapper_link_demos {
     margin: 0px auto;
     float: none;
-    background-image: url(../img/fe/border_demos.png);
+    background-image: data-url(../img/fe/border_demos.png);
     background-position: top left;
     background-repeat: repeat-x;
     padding-top: 30px;
@@ -306,7 +306,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     width: 220px;
     height: 65px;
     margin: 0px auto;
-    background-image: url(../img/fe/btn_link_demos.png);
+    background-image: data-url(../img/fe/btn_link_demos.png);
     background-position: left top;
     background-repeat: no-repeat;
     text-indent: -999999px;
@@ -323,7 +323,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
 #wrapper_learn_more span {
     display: inline-block;
     padding: 0px 7px;
-    background-image: url(../img/fe/home_pattern.jpg);
+    background-image: data-url(../img/fe/home_pattern.jpg);
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -338,7 +338,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     display: block;
     height: 286px;
     width: 286px;
-    background-image: url(../img/fe/play_home.png);
+    background-image: data-url(../img/fe/play_home.png);
     background-repeat: no-repeat;
     background-position: top left;
     margin-top: 102px;
@@ -353,7 +353,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     -moz-box-shadow: 0px -4px 4px 0px #005E9C;
     padding-top: 495px;
     background-color: #F1F1F1;
-    background-image: url(../img/fe/bg_learn.jpg);
+    background-image: data-url(../img/fe/bg_learn.jpg);
     background-position: center 100px;
     background-repeat: no-repeat;
     padding-bottom: 13px;
@@ -377,7 +377,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     padding-top: 65px;
     height: 505px;
 
-    background-image: url(../img/fe/pattern_demo.gif);
+    background-image: data-url(../img/fe/pattern_demo.gif);
     background-position: top left;
     background-repeat: repeat;
 }
@@ -436,7 +436,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     outline: none;
     width: 34px;
     height: 34px;
-    background-image: url(../img/fe/bullet_slider_home.png);
+    background-image: data-url(../img/fe/bullet_slider_home.png);
     background-position: top left;
     background-repeat: no-repeat;
 }
@@ -459,7 +459,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     position: relative;
     height: 250px;
     padding-top: 230px;
-    background-image: url(../img/fe/demo_thumb_bg.png);
+    background-image: data-url(../img/fe/demo_thumb_bg.png);
     background-repeat: no-repeat;
     background-position: top left;
 }
@@ -545,9 +545,9 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     font-size: 12px;
     color: #CCCCCC;
     border: 1px solid #C0C0C0;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    background-image: url(../img/fe/bg_input.jpg);
+    -vendor-border-radius: 15px;
+    /*border-radius: 15px;*/
+    background-image: data-url(../img/fe/bg_input.jpg);
     background-position: top left;
     background-repeat: repeat-x;
 }
@@ -560,7 +560,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     height: 26px;
     cursor: pointer;
     border: none;
-    background-image: url(../img/fe/btn_search.jpg);
+    background-image: data-url(../img/fe/btn_search.jpg);
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -605,7 +605,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
 }
 
 .box_over {
-    background-image: url(../img/fe/over_img.png);
+    background-image: data-url(../img/fe/over_img.png);
     background-position: top left;
     background-repeat: no-repeat;
     width: 144px;
@@ -618,13 +618,13 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
 #ico_item_category .box_over {
     width: 64px;
     height: 64px;
-    background-image: url(../img/fe/over_ico_talk_detail.png);
+    background-image: data-url(../img/fe/over_ico_talk_detail.png);
 }
 
 .item_video .box_over {
     width: 224px;
     height: 164px;
-    background-image: url(../img/fe/over_item_video.png);
+    background-image: data-url(../img/fe/over_item_video.png);
 }
 
 .item_video .img_category {
@@ -687,7 +687,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
 .paging span a {
     padding: 0px;
     color: #666666;
-    background-image: url(../img/fe/bg_paging.png);
+    background-image: data-url(../img/fe/bg_paging.png);
     background-position: left top;
     background-repeat: no-repeat;
 }
@@ -779,19 +779,19 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     box-sizing: border-box;
     *behavior: url(../js/boxsizing.htc);
     border-left: 1px solid #202020;
-    background-image: url(../img/fe/chapter_future.jpg);
+    background-image: data-url(../img/fe/chapter_future.jpg);
     background-position: left top;
     background-repeat: repeat-x;
     position: relative;
 }
 
 #controls .chapter.past {
-    background-image: url(../img/fe/chapter_past.jpg);
+    background-image: data-url(../img/fe/chapter_past.jpg);
 }
 
 #controls .chapter.selected {
     height: 33px;
-    background-image: url(../img/fe/chapter_selected.jpg);
+    background-image: data-url(../img/fe/chapter_selected.jpg);
 }
 
 #controls .chapter:first-child {
@@ -838,11 +838,11 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     width: 16px;
     padding: 0px 8px;
     margin-right: 5px;
-    background-image: url(../img/fe/bg_chapter_comments.png);
+    background-image: data-url(../img/fe/bg_chapter_comments.png);
     background-position: top left;
     background-repeat: repeat-x;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
+    -vendor-border-radius: 8px;
+    /*border-radius: 8px;*/
     border-bottom: 1px solid #cccccc;
     border-top: 1px solid #666666;
 }
@@ -866,7 +866,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
 
 #tools h5, #comments h5, #chapters h5, #embed h5, #share h5 {
     text-align: center;
-    background-image: url(../img/fe/bg_title.png);
+    background-image: data-url(../img/fe/bg_title.png);
     background-position: center;
     background-repeat: no-repeat;
     color: #666666;
@@ -896,14 +896,14 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     padding: 0px 10px;
     margin: 0px 4px;
     text-shadow: 0px 1px 0px #ffffff;
-    background-image: url(../img/fe/bg_btn_tools.jpg);
+    background-image: data-url(../img/fe/bg_btn_tools.jpg);
     background-position: left top;
     background-repeat: repeat-x;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    -moz-box-shadow: 0px 4px 3px #0C0C0C;
-    -webkit-box-shadow: 0px 4px 3px #0C0C0C;
-    box-shadow: 0px 4px 3px #0C0C0C;
+    -vendor-border-radius: 4px;
+    /*border-radius: 4px;*/
+    -vendor-box-shadow: 0px 4px 3px #0C0C0C;
+    /*-webkit-box-shadow: 0px 4px 3px #0C0C0C;
+    box-shadow: 0px 4px 3px #0C0C0C;*/
 }
 
 #comments {
@@ -917,7 +917,7 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
 .content_comments {
     padding-bottom: 20px;
     margin-bottom: 20px;
-    background-image: url(../img/fe/bg_close_comment.png);
+    background-image: data-url(../img/fe/bg_close_comment.png);
     background-position: bottom left;
     background-repeat: no-repeat;
 }
@@ -1017,11 +1017,11 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
     font-family: 'ChivoItalic';
     padding: 0px 10px;
     text-shadow: 0px 1px 0px #ffffff;
-    background-image: url(../img/fe/bg_btn_tools.jpg);
+    background-image: data-url(../img/fe/bg_btn_tools.jpg);
     background-position: left top;
     background-repeat: repeat-x;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
+    -vendor-border-radius: 4px;
+    /*border-radius: 4px;*/
     margin-top: 20px;
     cursor: pointer;
 }
@@ -1047,8 +1047,8 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
 #chapters ol li a {
     display: block;
     color: #999999;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
+    -vendor-border-radius: 4px;
+    /*border-radius: 4px;*/
     background-color: #1A1A1A;
     margin-bottom: 1px;
     padding: 6px 15px;
@@ -1117,17 +1117,17 @@ nav#menu ul li a:hover, nav#menu ul li.selected a {
 
 #share li.li_share_facebook a {
     width: 15px;
-    background-image: url(../img/fe/ico_share_facebook.png);
+    background-image: data-url(../img/fe/ico_share_facebook.png);
 }
 
 #share li.li_share_twitter a {
     width: 45px;
-    background-image: url(../img/fe/ico_share_twitter.png);
+    background-image: data-url(../img/fe/ico_share_twitter.png);
 }
 
 #share li.li_share_gplus a {
     width: 41px;
-    background-image: url(../img/fe/ico_share_gplus.png);
+    background-image: data-url(../img/fe/ico_share_gplus.png);
 }
 
 /*fine section  demo*/

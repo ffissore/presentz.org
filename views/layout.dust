@@ -11,8 +11,7 @@
         <meta property="og:image" content="{thumb}"/>
     {/thumb}
     <title>{title}</title>
-    <link href="/assets/css/fe_style.css" rel="stylesheet" type="text/css"/>
-    <link href="/assets/css/fe_style_responsive.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/css/{assetsCacheHashes.css}.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="wrapper">
@@ -77,7 +76,7 @@
         </section>
     </footer>
 </div>
-<script src="/assets/js/{assetsCacheHashes.js_main}/main.js" type="text/javascript"></script>
+<script src="/assets/js/{assetsCacheHashes.js_main}main.js" type="text/javascript"></script>
 {+presentz}
 {/presentz}
 <script type="text/javascript">

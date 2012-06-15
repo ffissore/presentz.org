@@ -12,7 +12,7 @@
     position: relative;
     height: 250px;
     padding-top: 230px;
-    background-image: url("../img/fe/demo_thumb_bg.png");
+    background-image: data-url(../img/fe/demo_thumb_bg.png);
     background-repeat: no-repeat;
     background-position: top left;
 }
