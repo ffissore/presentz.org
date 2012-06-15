@@ -47,4 +47,4 @@ exports.redirect_to_presentation_from_p_html = (req, res, next) ->
 
 exports.redirect_to = (url) ->
   return (req, res, next) ->
-    res.redirect url, 302
+    res.redirect 302, url

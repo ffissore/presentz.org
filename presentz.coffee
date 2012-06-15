@@ -5,8 +5,11 @@ orient = require "orientdb"
 cons = require "consolidate"
 OrientDBStore = require("connect-orientdb")(express)
 _ = require "underscore"
+assetManager = require("connect-assetmanager")
+assetHandler = require("connect-assetmanager-handlers")
+handlers = require "./handlers"
 
-Number::pad = (pad) ->
+Number:: pad = (pad) ->
   s = @.toString()
   while s.length < pad
     s = "0" + s
@@ -31,6 +34,64 @@ everyauth = require("./auth").init(config, db)
 api = require("./api").init(db)
 routes = require("./routes").init(db)
 
+assetsMiddleware = assetManager
+  js_main:
+    route: /\/assets\/js\/[a-z0-9]+\/main\.js/
+    path: "./public/assets/js/"
+    dataType: "javascript"
+    files: [
+      "jquery/jquery-1.7.1.min.js",
+      "jquery/jquery.easing.1.3.js",
+      "jquery/jquery.scrollTo-1.4.2-min.js",
+      "modernizr.2.0.6.js",
+      "main.js"
+    ]
+    debug: true
+    preManipulate:
+      "^": [
+        handlers.coffeeRenderer
+      ]
+    postManipulate:
+      "^": [
+        assetHandler.uglifyJsOptimize
+      ]
+  js_pres:
+    route: /\/assets\/js\/[a-z0-9]+\/pres\.js/
+    path: "./public/assets/js/"
+    dataType: "javascript"
+    files: [
+      "froogaloop.js",
+      "swfobject.js",
+      "presentz.js"
+    ]
+    debug: true
+    preManipulate:
+      "^": [
+        handlers.coffeeRenderer
+      ]
+    postManipulate:
+      "^": [
+        assetHandler.uglifyJsOptimize
+      ]
+  css:
+    route: /\/assets\/css\/[0-9]+\/.*\.css/
+    path: "./public/assets/css/"
+    dataType: "css"
+    files: []
+    preManipulate:
+      MSIE: [
+        assetHandler.yuiCssOptimize,
+        assetHandler.fixVendorPrefixes,
+        assetHandler.fixGradients,
+        assetHandler.stripDataUrlsPrefix
+      ]
+      "^": [
+        assetHandler.yuiCssOptimize,
+        assetHandler.fixVendorPrefixes,
+        assetHandler.fixGradients,
+        assetHandler.replaceImageRefToBase64(root)
+      ]
+
 app.engine("dust", cons.dust)
 
 app.configure ->
@@ -39,6 +100,7 @@ app.configure ->
   app.use express.logger()
   app.use express.bodyParser()
   app.use express.cookieParser(config.presentz.session_secret)
+  app.use assetsMiddleware
   app.use express.session
     store: new OrientDBStore(session_store_options)
   app.use messages(app)
@@ -53,6 +115,10 @@ app.configure "development", ->
 
 app.configure "production", ->
   app.use express.errorHandler()
+
+app.locals.use (req, res, done) ->
+  res.locals.assetsCacheHashes = assetsMiddleware.cacheHashes
+  done()
 
 app.get "/", routes.static "index"
 app.get "/1/me/authored", api.mines_authored

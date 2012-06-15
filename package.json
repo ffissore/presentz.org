@@ -14,7 +14,9 @@
     "moment": ">= 0.1.0",
     "everyauth": "git://github.com/bnoguchi/everyauth.git#express3",
     "orientdb": "git://github.com/ffissore/node-orientdb.git#master",
-    "connect-orientdb": ">= 0.1.0"
+    "connect-orientdb": ">= 0.1.0",
+    "connect-assetmanager": ">= 0.0.1",
+    "connect-assetmanager-handlers": ">= 0.0.1"
   },
   "devDependencies": {
     "watch-tree": "git://github.com/matjaz/node-watch-tree.git#node-0.6"
