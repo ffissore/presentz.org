@@ -48,24 +48,45 @@ var Controls = {
 
     resize: function() {
         var container_width = $("#controls").width();
-        var remaining_width = container_width;
-        var remaining_percentage = 100.0;
-        $("#controls .chapter").each(function() {
+        var min_pixel_width = 2;
+        var min_pixel_width_as_percentage = 100 * min_pixel_width / container_width;
+        console.log([container_width, min_pixel_width, min_pixel_width_as_percentage]);
+        var $chapters = $("#controls .chapter");
+        var stolen_percentage = 0;
+        var long_chapters_percentage = 0;
+        $chapters.each(function() {
             var $chapter = $(this);
-            var chapter_percentage = parseFloat($chapter.attr("percentage"));
-            var px_width = Math.floor(remaining_width / remaining_percentage * chapter_percentage) + 1;
-            remaining_percentage -= chapter_percentage;
-
-            if (px_width <= 1) {
-                px_width = 2;
-            }
-            if (remaining_width - px_width > 0) {
-                remaining_width -= px_width;
+            var percentage = parseFloat($chapter.attr("percentage"));
+            if (percentage < min_pixel_width_as_percentage) {
+                stolen_percentage += (min_pixel_width_as_percentage - percentage);
+                $chapter.attr("percentage", min_pixel_width_as_percentage);
             } else {
-                px_width = remaining_width;
+                long_chapters_percentage += percentage;
             }
+        });
+        var percentage_to_remove_from_long_chapters = 100 * stolen_percentage / long_chapters_percentage;
+        console.log([stolen_percentage, long_chapters_percentage, percentage_to_remove_from_long_chapters]);
+        $chapters.each(function() {
+            var $chapter = $(this);
+            var percentage = parseFloat($chapter.attr("percentage"));
+            if (percentage > min_pixel_width_as_percentage) {
+                console.log(["old perce", percentage, percentage_to_remove_from_long_chapters]);
+                percentage -= (percentage / 100 * percentage_to_remove_from_long_chapters);
+                console.log(["new perce", percentage]);
+                $chapter.attr("percentage", percentage);
+            }
+        });
+
+        
+        var sum = 0;
+        $chapters.each(function() {
+            var $chapter = $(this);
+            var percentage = parseFloat($chapter.attr("percentage"));
+            sum += percentage;
+            var px_width = container_width / 100 * percentage;
             $chapter.css("width", px_width + "px");
         });
+        console.log(sum);
     }
 };
 
