@@ -8,9 +8,9 @@
 
     <div id="player">
       <div id="container_player">
-        <div id="player_video" class="box6">
+        <div id="player_video" class="fluid_container box6">
         </div>
-        <div id="slideshow_player" class="box6">
+        <div id="slideshow_player" class="fluid_container box6">
         </div>
       </div>
       <div class="clear"></div>
