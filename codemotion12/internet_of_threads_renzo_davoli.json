@@ -12,122 +12,122 @@
         "slides": [
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#1",
-            "title" : "Internet of Threads",
+            "title": "Internet of Threads",
             "time": 0
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#2",
-            "title" : "What is an Internet Node?",
+            "title": "What is an Internet Node?",
             "time": 106
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#3",
-            "title" : "Yesterday: historical view",
+            "title": "Yesterday: historical view",
             "time": 149
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#4",
-            "title" : "Today: virtual Internet nodes",
+            "title": "Today: virtual Internet nodes",
             "time": 222
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#5",
-            "title" : "Internet of Threads (IoTh)",
+            "title": "Internet of Threads (IoTh)",
             "time": 281
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#6",
-            "title" : "Why the IoTh?",
+            "title": "Why the IoTh?",
             "time": 302
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#7",
-            "title" : "Why the IoTh?",
+            "title": "Why the IoTh?",
             "time": 421
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#8",
-            "title" : "Why the IoTh?",
+            "title": "Why the IoTh?",
             "time": 467
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#9",
-            "title" : "Why the IoTh?",
+            "title": "Why the IoTh?",
             "time": 532
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#10",
-            "title" : "Why the IoTh?",
+            "title": "Why the IoTh?",
             "time": 573
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#11",
-            "title" : "Internet of Threads: examples",
+            "title": "Internet of Threads: examples",
             "time": 594
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#12",
-            "title" : "Internet of Threads: where is the LAN?",
+            "title": "Internet of Threads: where is the LAN?",
             "time": 653
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#13",
-            "title" : "Virtual Ethernet",
+            "title": "Virtual Ethernet",
             "time": 683
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#14",
-            "title" : "Virtual Square Lab",
+            "title": "Virtual Square Lab",
             "time": 691
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#15",
-            "title" : "Virtual Square",
+            "title": "Virtual Square",
             "time": 750
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#17",
-            "title" : "Virtual Square does it better!",
+            "title": "Virtual Square does it better!",
             "time": 755
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#18",
-            "title" : "DEMO#1: Client side IoTh",
+            "title": "DEMO#1: Client side IoTh",
             "time": 790
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#19",
-            "title" : "DEMO#2: Server side IoTh",
+            "title": "DEMO#2: Server side IoTh",
             "time": 1028
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#20",
-            "title" : "DEMO#3: One Time Internet Protocol (OTIP)",
+            "title": "DEMO#3: One Time Internet Protocol (OTIP)",
             "time": 1323
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#21",
-            "title" : "OTIP addresses",
+            "title": "OTIP addresses",
             "time": 1341
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#20",
-            "title" : "DEMO#3: One Time Internet Protocol (OTIP)",
+            "title": "DEMO#3: One Time Internet Protocol (OTIP)",
             "time": 1441
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#22",
-            "title" : "One word about security",
+            "title": "One word about security",
             "time": 1804
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#23",
-            "title" : "A word about performance",
+            "title": "A word about performance",
             "time": 1879
           },
           {
             "url": "http://www.slideshare.net/davoli-codemotion-120502044111-phpapp01#24",
-            "title" : "Domande",
+            "title": "Domande",
             "time": 1952
           }
         ]
