@@ -33,10 +33,37 @@ db.open ->
             link_user_to_pres = (user, catalog, presentations) ->
               return load_presentations_for user, catalogs if presentations.length is 0
 
-              db.createVertex presentations.pop(), (err, presentation) ->
+              presentation = presentations.pop()
+              chapters = presentation.chapters
+              delete presentation.chapters
+
+              db.createVertex presentation, (err, presentation) ->
                 db.createEdge user, presentation, { label: "authored" }, ->
                   db.createEdge presentation, catalog, { label: "part_of" }, ->
-                    link_user_to_pres user, catalog, presentations
+
+                    link_chapters_to_pres = (chapters, presentation) ->
+                      return link_user_to_pres user, catalog, presentations if chapters.length is 0
+
+                      chapter = chapters.pop()
+                      chapter.video = chapter.media.video
+                      slides = chapter.media.slides
+                      delete chapter.media
+
+                      db.createVertex chapter, (err, chapter) ->
+                        db.createEdge chapter, presentation, { label: "chapter_of" }, ->
+
+                          link_slides_to_chapter = (slides, chapter) ->
+                            return link_chapters_to_pres chapters, presentation if slides.length is 0
+
+                            slide = slides.pop()
+
+                            db.createVertex slide, (err, slide) ->
+                              db.createEdge slide, chapter, { label: "slide_of" }, ->
+                                link_slides_to_chapter slides, chapter
+
+                          link_slides_to_chapter slides, chapter
+
+                    link_chapters_to_pres chapters, presentation
 
             fs.readFile "#{catalog_folder}/catalog.json", "utf-8", (err, catalog) ->
               catalog = JSON.parse catalog
@@ -48,16 +75,26 @@ db.open ->
                   db.createEdge user, catalog, { label: "admin_of" }, ->
                     presentations_files = (file for file in files when !_s.startsWith(file, "catalog") and _s.endsWith(file, ".json"))
                     presentations = []
+                    aliases = 0
 
                     make_presentation = (file, presentations) ->
                       fs.readFile "#{catalog_folder}/#{file}", "utf-8", (err, presentation) ->
                         presentation = JSON.parse presentation
-                        presentation._type = "presentation"
-                        presentation.id = file.substr(0, file.indexOf(".json"))
-                        presentations.push presentation
+                        if presentation.alias_of?
+                          aliases++
+                        else
+                          presentation._type = "presentation"
+                          presentation.id = file.substr(0, file.indexOf(".json"))
+                          for chapter_index in [0...presentation.chapters.length]
+                            chapter = presentation.chapters[chapter_index]
+                            chapter._type = "chapter"
+                            chapter._index = chapter_index
+                            for slide in chapter.media.slides
+                              slide._type = "slide"
+                          presentations.push presentation
 
-                        link_user_to_pres(user, catalog, presentations) if presentations.length is presentations_files.length
-                    
+                        link_user_to_pres(user, catalog, presentations) if (presentations.length + aliases) is presentations_files.length
+
                     make_presentation(file, presentations) for file in presentations_files
 
         load_presentations_for user, catalogs

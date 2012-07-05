@@ -25,7 +25,7 @@ pres_to_thumb = (presentation, catalog_name) ->
   pres =
     id: presentation.id
     catalog: catalog_name
-    thumb: presentation.chapters[0].media.video.thumb
+    thumb: presentation.chapters[0].video.thumb
     speaker: presentation.speaker
     title: presentation.title
 
@@ -80,8 +80,20 @@ number_of_presentations = (catalog, catalogs, number_of_catalogs, callback) ->
     catalog.presentations = edges.length
     catalogs.push catalog
 
-    if catalogs.length is number_of_catalogs
-      return callback()
+    return callback() if catalogs.length is number_of_catalogs
+
+load_chapters_of = (presentations, callback) ->
+  loaded_presentations = []
+
+  chapter_of = (presentation) ->
+    routes.db.fromVertex(presentation).inVertexes "chapter_of", (err, chapters) ->
+      return callback(err) if err?
+      presentation.chapters = chapters
+      loaded_presentations.push presentation
+      return callback() if loaded_presentations.length is presentations.length
+
+
+  chapter_of(presentation) for presentation in presentations
 
 exports.init = (db) ->
   routes.db = db
@@ -110,19 +122,21 @@ exports.show_catalog = (req, res, next) ->
     routes.db.fromVertex(catalog).inVertexes "part_of", (err, presentations) ->
       return next(err) if err?
 
-      presentations = (pres_to_thumb(pres, req.params.catalog_name) for pres in presentations when !pres.alias_of?)
-      presentations = _.sortBy presentations, (presentation) ->
-        return presentation.time if presentation.time?
-        return presentation.title
-        
-      if presentations[0].time?
-        presentations = presentations.reverse()
+      load_chapters_of presentations, (err) ->
+        return next(err) if err?
+        presentations = (pres_to_thumb(pres, req.params.catalog_name) for pres in presentations)
+        presentations = _.sortBy presentations, (presentation) ->
+          return presentation.time if presentation.time?
+          return presentation.title
 
-      res.render "talks",
-        title: "#{catalog.name} talks"
-        catalog: catalog
-        presentations: presentations
-        list: draw_boxes(4)
+        if presentations[0].time?
+          presentations = presentations.reverse()
+
+        res.render "talks",
+          title: "#{catalog.name} talks"
+          catalog: catalog
+          presentations: presentations
+          list: draw_boxes(4)
 
 exports.raw_presentation = (req, res, next) ->
   path = decodeURIComponent(req.path).substring(1)
@@ -162,7 +176,7 @@ exports.show_presentation = (req, res, next) ->
       slides: slides
       #catalog: catalog
       to_json_url: "#{req.url_original || req.url}.json"
-      thumb: presentation.chapters[0].media.video.thumb
+      thumb: presentation.chapters[0].video.thumb
 
 exports.static = (view_name) ->
   return (req, res) ->
@@ -179,7 +193,7 @@ fill_presentation_data_from_file = (file, file_name, catalog_id, callback) ->
     pres =
       id: "/#{catalog_id}/#{file_name.substring(0, file_name.indexOf("."))}"
       data: data
-      thumb: data.chapters[0].media.video.thumb
+      thumb: data.chapters[0].video.thumb
 
     if data.speaker
       pres.title1 = data.speaker
