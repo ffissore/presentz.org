@@ -44,7 +44,7 @@ assetsMiddleware = assetManager
       "jquery/jquery.easing.1.3.js",
       "jquery/jquery.scrollTo-1.4.2-min.js",
       "modernizr.2.0.6.js",
-      "main.js"
+      "main.coffee"
     ]
     stale: true
     preManipulate:
@@ -63,7 +63,7 @@ assetsMiddleware = assetManager
       "froogaloop.js",
       "swfobject.js",
       "presentz.js",
-      "presentz.org.coffee"
+      "show_presentation.coffee"
     ]
     stale: true
     preManipulate:

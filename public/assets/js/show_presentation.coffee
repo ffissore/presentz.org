@@ -19,6 +19,7 @@ init_presentz = (presentation) ->
     $to = $("#controls .chapter:nth-child(#{toSlide})")
     $to.removeClass "past"
     $to.addClass "selected"
+    return
 
   presentz.init presentation
   presentz.changeChapter 0, 0, false
@@ -31,15 +32,19 @@ openPopupTo = (width, height, url) ->
   top = 0 if top < 0
 
   window.open url, "share", "height=#{height},location=no,menubar=no,width=#{width},top=#{top},left=#{left}"
+  return
 
 fbShare = ->
   openPopupTo 640, 350, "https://www.facebook.com/sharer.php?u=#{encodeURIComponent(document.location)}&t=#{encodeURIComponent(document.title)}"
+  return
 
 twitterShare = ->
   openPopupTo 640, 300, "https://twitter.com/intent/tweet?text=#{encodeURIComponent("#{document.title} #{document.location} via @presentzorg")}"
+  return
 
 plusShare = ->
   openPopupTo 640, 350, "https://plus.google.com/share?url=#{encodeURIComponent(document.location)}"
+  return
 
 window.presentz = presentz
 window.init_presentz = init_presentz
