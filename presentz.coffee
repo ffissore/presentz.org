@@ -62,7 +62,8 @@ assetsMiddleware = assetManager
     files: [
       "froogaloop.js",
       "swfobject.js",
-      "presentz.js"
+      "presentz.js",
+      "presentz.org.coffee"
     ]
     stale: true
     preManipulate:

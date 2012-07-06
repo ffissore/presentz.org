@@ -128,54 +128,5 @@
 
 {<presentz}
 <script src="/assets/js/{assetsCacheHashes.js_main}pres.js" type="text/javascript"></script>
-<script type="text/javascript">
-presentz = new Presentz("#player_video", "460x420", "#slideshow_player", "460x420");
-function initPresentz(presentation) {
-  function oneBasedAbsoluteSlideIndex(presentation, chapterIndex, slideIndex) {
-    var absoluteSlideIndex = 0;
-    for (var i = 0; i < chapterIndex; i++ ) {
-      absoluteSlideIndex += presentation.chapters[i].slides.length;
-    }
-    return absoluteSlideIndex + slideIndex + 1;
-  }
-  presentz.on("slidechange", function(previousChapterIndex, previousSlideIndex, newChapterIndex, newSlideIndex) {
-    var fromSlide = oneBasedAbsoluteSlideIndex(presentation, previousChapterIndex, previousSlideIndex);
-    var toSlide = oneBasedAbsoluteSlideIndex(presentation, newChapterIndex, newSlideIndex);
-
-    var $from = $("#controls .chapter:nth-child(" + fromSlide + ")");
-    $from.removeClass("selected");
-    $from.addClass("past");
-
-    var $to = $("#controls .chapter:nth-child(" + toSlide + ")");
-    $to.removeClass("past");
-    $to.addClass("selected");
-  });
-
-  presentz.init(presentation);
-  presentz.changeChapter(0, 0, false);
-}
-function openPopupTo(width, height, url) {
-  var left = (screen.width - width) / 2;
-  if (left < 0) {
-    left = 0;
-  }
-  var top = (screen.height - height) / 2;
-  if (top < 0) {
-    top = 0;
-  }
-  window.open(url, "share", "height=" + height + ",location=no,menubar=no,width=" + width + ",top=" + top + ",left=" + left);
-}
-function fbShare() {
-  openPopupTo(640, 350, "https://www.facebook.com/sharer.php?u=" + encodeURIComponent(document.location) + "&t=" + encodeURIComponent(document.title));
-}
-
-function twitterShare() {
-  openPopupTo(640, 300, "https://twitter.com/intent/tweet?text=" + encodeURIComponent(document.title + " " + document.location + " via @presentzorg"));
-}
-
-function plusShare() {
-  openPopupTo(640, 350, "https://plus.google.com/share?url=" + encodeURIComponent(document.location));
-}
-</script>
-<script src="{to_json_url}?jsoncallback=initPresentz" type="text/javascript"></script>
+<script src="{to_json_url}?jsoncallback=init_presentz" type="text/javascript"></script>
 {/presentz}
