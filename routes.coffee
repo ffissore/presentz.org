@@ -74,6 +74,39 @@ load_presentation_from_path = (path, callback) ->
     return callback("no record found") if results.length is 0
     callback(undefined, results[0])
 
+load_chapters_of = (presentations, callback) ->
+  loaded_presentations = []
+
+  chapter_of = (presentation) ->
+    routes.db.fromVertex(presentation).inVertexes "chapter_of", (err, chapters) ->
+      return callback(err) if err?
+      presentation.chapters = _.sortBy chapters, (chapter) -> chapter._index
+      loaded_presentations.push presentation
+      return callback() if loaded_presentations.length is presentations.length
+
+  chapter_of(presentation) for presentation in presentations
+
+load_slides_of = (chapters, callback) ->
+  loaded_chapters = []
+
+  slides_of = (chapter) ->
+    routes.db.fromVertex(chapter).inVertexes "slide_of", (err, slides) ->
+      return callback(err) if err?
+      chapter.slides = _.sortBy slides, (slide) -> slide.time
+      loaded_chapters.push chapter
+      return callback() if loaded_chapters.length is chapters.length
+
+  slides_of(chapter) for chapter in chapters
+
+load_entire_presentation_from_path = (path, callback) ->
+  load_presentation_from_path path, (err, presentation) ->
+    return callback(err) if err?
+    load_chapters_of [presentation], (err) ->
+      return callback(err) if err?
+      load_slides_of presentation.chapters, (err) ->
+        return callback(err) if err?
+        return callback(undefined, presentation)
+
 number_of_presentations = (catalog, catalogs, number_of_catalogs, callback) ->
   routes.db.getInEdges catalog, "part_of", (err, edges) ->
     return next(err) if err?
@@ -82,18 +115,21 @@ number_of_presentations = (catalog, catalogs, number_of_catalogs, callback) ->
 
     return callback() if catalogs.length is number_of_catalogs
 
-load_chapters_of = (presentations, callback) ->
-  loaded_presentations = []
+wipe_out_storage_fields = (presentation) ->
+  wipe_out_from = (element) ->
+    delete element.in
+    delete element.out
+    delete element._type
+    delete element["@class"]
+    delete element["@type"]
+    delete element["@version"]
+    delete element["@rid"]
 
-  chapter_of = (presentation) ->
-    routes.db.fromVertex(presentation).inVertexes "chapter_of", (err, chapters) ->
-      return callback(err) if err?
-      presentation.chapters = chapters
-      loaded_presentations.push presentation
-      return callback() if loaded_presentations.length is presentations.length
-
-
-  chapter_of(presentation) for presentation in presentations
+  wipe_out_from presentation
+  for chapter in presentation.chapters
+    wipe_out_from chapter
+    for slide in chapter.slides
+      wipe_out_from slide
 
 exports.init = (db) ->
   routes.db = db
@@ -141,8 +177,11 @@ exports.show_catalog = (req, res, next) ->
 exports.raw_presentation = (req, res, next) ->
   path = decodeURIComponent(req.path).substring(1)
   path = path.substring(0, path.length - ".json".length)
-  load_presentation_from_path path, (err, presentation) ->
+  load_entire_presentation_from_path path, (err, presentation) ->
     return next(err) if err?
+
+    wipe_out_storage_fields presentation
+
     if req.query.jsoncallback
       presentation = "#{req.query.jsoncallback}(#{JSON.stringify(presentation)});"
       res.contentType("text/javascript")
@@ -152,7 +191,7 @@ exports.raw_presentation = (req, res, next) ->
 
 exports.show_presentation = (req, res, next) ->
   path = decodeURIComponent(req.path).substring(1)
-  load_presentation_from_path path, (err, presentation) ->
+  load_entire_presentation_from_path path, (err, presentation) ->
     return next(err) if err?
 
     duration = _.reduce (chapter.duration for chapter in presentation.chapters), (one, two) -> one + two
@@ -160,8 +199,8 @@ exports.show_presentation = (req, res, next) ->
     duration = 0
     for chapter_index in [0...presentation.chapters.length]
       chapter = presentation.chapters[chapter_index]
-      for slide_index in [0...chapter.media.slides.length]
-        slides.push slide_to_slide(chapter.media.slides[slide_index], chapter_index, slide_index, duration)
+      for slide_index in [0...chapter.slides.length]
+        slides.push slide_to_slide(chapter.slides[slide_index], chapter_index, slide_index, duration)
       duration += chapter.duration
 
     slides_duration_percentage_css(slides, duration)

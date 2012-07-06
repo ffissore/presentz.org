@@ -134,7 +134,7 @@ function initPresentz(presentation) {
   function oneBasedAbsoluteSlideIndex(presentation, chapterIndex, slideIndex) {
     var absoluteSlideIndex = 0;
     for (var i = 0; i < chapterIndex; i++ ) {
-      absoluteSlideIndex += presentation.chapters[i].media.slides.length;
+      absoluteSlideIndex += presentation.chapters[i].slides.length;
     }
     return absoluteSlideIndex + slideIndex + 1;
   }
