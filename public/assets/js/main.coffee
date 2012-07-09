@@ -32,7 +32,7 @@ Controls =
         if !$this.is("a")
           #this is NOT a typo
           $this = $(".info .title a", this)
-        presentz.changeChapter(parseInt($this.attr("chapter_index")), parseInt($this.attr("slide_index")), true)
+        prsntz.changeChapter(parseInt($this.attr("chapter_index")), parseInt($this.attr("slide_index")), true)
 
   restoreOriginalWidth: ->
     $("#controls .chapter").each ->

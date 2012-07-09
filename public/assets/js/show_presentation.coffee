@@ -1,4 +1,4 @@
-presentz = new Presentz("#player_video", "460x420", "#slideshow_player", "460x420")
+prsntz = new Presentz("#player_video", "460x420", "#slideshow_player", "460x420")
 
 init_presentz = (presentation) ->
   oneBasedAbsoluteSlideIndex = (presentation, chapter_index, slide_index) ->
@@ -9,7 +9,7 @@ init_presentz = (presentation) ->
 
     absoluteSlideIndex + slide_index + 1
 
-  presentz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
+  prsntz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
     fromSlide = oneBasedAbsoluteSlideIndex presentation, previous_chapter_index, previous_slide_index
     $from = $("#controls .chapter:nth-child(#{fromSlide})")
     $from.removeClass "selected"
@@ -21,8 +21,8 @@ init_presentz = (presentation) ->
     $to.addClass "selected"
     return
 
-  presentz.init presentation
-  presentz.changeChapter 0, 0, false
+  prsntz.init presentation
+  prsntz.changeChapter 0, 0, true
 
 openPopupTo = (width, height, url) ->
   left = (screen.width - width) / 2
@@ -46,7 +46,7 @@ plusShare = ->
   openPopupTo 640, 350, "https://plus.google.com/share?url=#{encodeURIComponent(document.location)}"
   return
 
-window.presentz = presentz
+window.prsntz = prsntz
 window.init_presentz = init_presentz
 window.fbShare = fbShare
 window.twitterShare = twitterShare

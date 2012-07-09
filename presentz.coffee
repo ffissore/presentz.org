@@ -62,6 +62,7 @@ assetsMiddleware = assetManager
     files: [
       "froogaloop.js",
       "swfobject.js",
+      "mediaelement-and-player.js",
       "presentz.js",
       "show_presentation.coffee"
     ]
@@ -79,6 +80,7 @@ assetsMiddleware = assetManager
     path: "./public/assets/css/"
     dataType: "css"
     files: [
+      "mediaelementplayer.css",
       "reset.css",
       "default.css",
       "font_style.css",

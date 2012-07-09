@@ -128,5 +128,15 @@
 
 {<presentz}
 <script src="/assets/js/{assetsCacheHashes.js_main}pres.js" type="text/javascript"></script>
-<script src="{to_json_url}?jsoncallback=init_presentz" type="text/javascript"></script>
+<script src="https://www.youtube.com/player_api" type="text/javascript"></script>
+<script type="text/javascript">
+$().ready(function() {
+  $.ajax({
+    url: "{to_json_url}",
+    dataType: "jsonp",
+    jsonp: "jsoncallback",
+    jsonpCallback: "init_presentz"
+  })
+ });
+</script>
 {/presentz}
