@@ -148,13 +148,6 @@ DemoScroller =
 
       $("#navigation_slider ul li a.active").click()
 
-toogle_css = (elements_to_hide_selector, element_to_show_selector, key, value) ->
-  $(elements_to_hide_selector).each (idx, elem) ->
-    $(elem).css(key, value)
-  $(element_to_show_selector).css(key, "")
-  return
-
-window.toogle_css = toogle_css
 window.Controls = Controls
 window.DemoScroller = DemoScroller
 

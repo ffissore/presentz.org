@@ -32,14 +32,14 @@
       <div id="tools">
         <h5>Tools</h5>
         <ul>
+          <li><a href="javascript:void(0)" onclick="show('#comments');">Show all comments</a></li>
+          <li><a href="javascript:void(0)" onclick="show('#comments, #comment_form');">Comment this slide</a></li>
+          <li><a href="javascript:void(0)" onclick="show('#comments, #comment_form');">Comment this presentation</a></li>
+          <li><a href="javascript:void(0)" onclick="show('#chapters');">Show chapters list</a></li>
           {!
-          <li><a href="javascript:void(0)">Show all comments</a></li>
-          <li><a href="javascript:void(0)">Comment this slide</a></li>
-          <li><a href="javascript:void(0)">Comment this presentation</a></li>
+          <li><a href="javascript:void(0)" onclick="show('#embed');">Embed</a></li>
           !}
-          <li><a href="javascript:toogle_css('#player .box8', '#chapters', 'display', 'none');">Show chapters list</a></li>
-          {!<li><a href="javascript:toogle_css('#player .box8', '#embed', 'display', 'none');">Embed</a></li>!}
-          <li><a href="javascript:toogle_css('#player .box8', '#share', 'display', 'none');">Share</a></li>
+          <li><a href="javascript:void(0)" onclick="show('#share');">Share</a></li>
         </ul>
       </div>
       {! box commenti !}
@@ -63,8 +63,8 @@
               <div class="clear"></div>
             </form>
           </div>
-      
           {! fine form commenti !}
+
           <div class="item_comment">
             <p><span class="user">Emanuele Tortolone,</span> <span class="time">2h ago</span> on slide <a href="javascript:void(0)" class="slide_title">"Titolo slide 1"</a> - <a href="javascript:void(0)" class="slide_time">minute 01:51</a> </p>
             <div class="text_comment">

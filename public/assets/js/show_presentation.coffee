@@ -25,7 +25,7 @@ init_presentz = (presentation) ->
 #    console.log "nothing"
 
   prsntz.init presentation
-  prsntz.changeChapter 0, 0, true
+  prsntz.changeChapter 0, 0, false
 
 openPopupTo = (width, height, url) ->
   left = (screen.width - width) / 2
@@ -49,8 +49,19 @@ plusShare = ->
   openPopupTo 640, 350, "https://plus.google.com/share?url=#{encodeURIComponent(document.location)}"
   return
 
+hide = (to_hide_selector) ->
+  $(to_hide_selector).css "display", "none"
+  true
+
+show = (to_show_selector) ->
+  hide "#player .box8, #player .box8 #comment_form"
+  $(to_show_selector).css "display", ""
+  true
+
 window.prsntz = prsntz
 window.init_presentz = init_presentz
 window.fbShare = fbShare
 window.twitterShare = twitterShare
 window.plusShare = plusShare
+window.hide = hide
+window.show = show
