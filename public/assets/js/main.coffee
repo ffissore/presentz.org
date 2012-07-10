@@ -215,3 +215,10 @@ $().ready ->
   #PRESENTZ PLAYER
   if $("#presentation").length > 0
     Controls.init()
+
+  $window = $(window)
+  $window.unbind "resize"
+  $window.bind "resize", () ->
+    DemoScroller.resize() if $("#content_slider").length > 0
+    Controls.resize() if $("#controls").length > 0
+  return

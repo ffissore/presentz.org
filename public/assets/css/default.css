@@ -307,6 +307,8 @@ textarea {
     padding: 0;
 }
 
+.fluid_container .mejs-container,
+.fluid_container video,
 .fluid_container iframe,
 .fluid_container object,
 .fluid_container embed {

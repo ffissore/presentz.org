@@ -21,6 +21,9 @@ init_presentz = (presentation) ->
     $to.addClass "selected"
     return
 
+#  prsntz.on "videochange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
+#    console.log "nothing"
+
   prsntz.init presentation
   prsntz.changeChapter 0, 0, true
 

@@ -2291,9 +2291,11 @@ if (typeof jQuery != 'undefined') {
 					
 				if ( newHeight != 0 ) {
 					// set outer container size
+          /*
 					t.container
 						.width(parentWidth)
 						.height(newHeight);
+					*/
 						
 					// set native <video>
 					t.$media

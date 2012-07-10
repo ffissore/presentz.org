@@ -1,5 +1,4 @@
 express = require "express"
-messages = require "bootstrap-express-messages"
 redirect_routes = require "./routes_redirect"
 orient = require "orientdb"
 cons = require "consolidate"
@@ -114,7 +113,6 @@ app.configure ->
   app.use assetsMiddleware
   app.use express.session
     store: new OrientDBStore(session_store_options)
-  app.use messages(app)
   app.use express.methodOverride()
   app.use everyauth.middleware()
   app.use app.router
@@ -127,9 +125,8 @@ app.configure "development", ->
 app.configure "production", ->
   app.use express.errorHandler()
 
-app.locals.use (req, res, done) ->
-  res.locals.assetsCacheHashes = assetsMiddleware.cacheHashes
-  done()
+app.locals
+  assetsCacheHashes: assetsMiddleware.cacheHashes
 
 app.get "/", routes.static "index"
 app.get "/1/me/authored", api.mines_authored
