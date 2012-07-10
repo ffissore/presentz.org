@@ -11,12 +11,12 @@ init_presentz = (presentation) ->
 
   prsntz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
     fromSlide = oneBasedAbsoluteSlideIndex presentation, previous_chapter_index, previous_slide_index
-    $from = $("#controls .chapter:nth-child(#{fromSlide})")
+    $from = $("#controls .chapter:nth-child(#{fromSlide}), #chapters ol li:nth-child(#{fromSlide}) a")
     $from.removeClass "selected"
     $from.addClass "past"
 
     toSlide = oneBasedAbsoluteSlideIndex presentation, new_chapter_index, new_slide_index
-    $to = $("#controls .chapter:nth-child(#{toSlide})")
+    $to = $("#controls .chapter:nth-child(#{toSlide}), #chapters ol li:nth-child(#{toSlide}) a")
     $to.removeClass "past"
     $to.addClass "selected"
     return

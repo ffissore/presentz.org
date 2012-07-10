@@ -1058,6 +1058,12 @@ header h1 a {
     text-shadow: 0px 1px 0px #D3FF4F;
 }
 
+#chapters ol li a.selected {
+    background-color: #99CC00;
+    color: #333333;
+    text-shadow: 0px 1px 0px #D3FF4F;
+}
+
 #embed {
     float: none;
     margin: 0px auto;

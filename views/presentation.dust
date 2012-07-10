@@ -97,7 +97,7 @@
         <h5>Chapters</h5>
         <ol>
           {#slides}
-            <li {css}><a chapter_index="{chapter_index}" slide_index="{slide_index}" href="javascript:void(0)">{index}. {title} &mdash; {duration}</a></li>
+            <li {css|s}><a chapter_index="{chapter_index}" slide_index="{slide_index}" href="javascript:void(0)">{index}. {title} &mdash; {duration}</a></li>
           {/slides}
         </ol>
       </div>
