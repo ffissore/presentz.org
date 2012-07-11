@@ -24,7 +24,7 @@
               <div class="img_category">
                   <img src="{logo}" alt="{name}" />
               </div>
-              <h4><a href="/{id}">{name} ({presentations})</a></h4>
+              <h4><a href="/{id}">{name} ({presentations_length})</a></h4>
           </div>
         {/list}
         <div class="clear"></div>

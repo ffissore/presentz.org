@@ -23,6 +23,15 @@ dustjs.helpers.draw_boxes = (number_of_boxes) ->
         index = 0
     return chunk
 
+utils = {}
+utils.exec_for_each = (callable, elements, callback) ->
+  exec_times = 0
+  for element in elements
+    callable element, (err) ->
+      return callback(err) if err?
+      exec_times++
+      return callback(undefined, elements) if exec_times is elements.length
+
 storage = {}
 storage.load_presentation_from_path = (path, callback) ->
   path_parts = path.split("/")
@@ -59,89 +68,36 @@ storage.load_slides_of = (chapter, callback) ->
         slides_with_loaded_comments++
         return callback(undefined, chapter) if slides_with_loaded_comments is slides.length
 
-storage.exec_for_each = (callable, elements, callback) ->
-  exec_times = 0
-  for element in elements
-    callable element, (err) ->
-      return callback(err) if err?
-      exec_times++
-      return callback(undefined, elements) if exec_times is elements.length
-
 storage.load_entire_presentation_from_path = (path, callback) ->
   storage.load_presentation_from_path path, (err, presentation) ->
     return callback(err) if err?
     storage.load_chapters_of presentation, (err) ->
       return callback(err) if err?
-      storage.exec_for_each storage.load_slides_of, presentation.chapters, (err) ->
+      utils.exec_for_each storage.load_slides_of, presentation.chapters, (err) ->
         return callback(err) if err?
         return callback(undefined, presentation)
-
-###
-load_chapters_of = (presentations, callback) ->
-  loaded_presentations = []
-
-  chapter_of= (presentation) ->
-    routes.db.fromVertex(presentation).inVertexes "chapter_of", (err, chapters) ->
-      return callback(err) if err?
-      presentation.chapters = _.sortBy chapters, (chapter) -> chapter._index
-      loaded_presentations.push presentation
-      return callback() if loaded_presentations.length is presentations.length
-
-  chapter_of(presentation) for presentation in presentations
-
-load_slides_of = (chapters, callback) ->
-  loaded_chapters = []
-  loaded_slides = []
-
-  comments_of= (slide, callback) ->
-    routes.db.fromVertex(slide).inVertexes "comment_of", (err, comments) ->
-      return callback(err) if err?
-      slide.comments = _.sortBy comments, (comment) -> comment.time
-      loaded_slides.push slide
-      return callback()
-
-  slides_of= (chapter) ->
-    routes.db.fromVertex(chapter).inVertexes "slide_of", (err, slides) ->
-      return callback(err) if err?
-      chapter.slides = _.sortBy slides, (slide) -> slide.time
-      loaded_slides = []
-      for slide in chapter.slides
-        comments_of slide, (err) ->
-          return callback(err) if err?
-          if loaded_slides.length is chapter.slides.length
-            loaded_chapters.push chapter
-            return callback() if loaded_chapters.length is chapters.length
-      return
-
-  slides_of(chapter) for chapter in chapters
-  return
-###
 
 exports.init = (db) ->
   routes.db = db
   @
 
 exports.list_catalogs = (req, res, next) ->
-  number_of_presentations = (catalog, catalogs, number_of_catalogs, callback) ->
+  number_of_presentations = (catalog, callback) ->
     routes.db.getInEdges catalog, "part_of", (err, edges) ->
       return next(err) if err?
-      catalog.presentations = edges.length
-      catalogs.push catalog
+      catalog.presentations_length = edges.length
+      callback(undefined, catalog)
 
-      return callback() if catalogs.length is number_of_catalogs
-
-  routes.db.command "SELECT FROM V WHERE _type = 'catalog' and (hidden is null or hidden = 'false') ORDER BY name", (err, results) ->
+  routes.db.command "SELECT FROM V WHERE _type = 'catalog' and (hidden is null or hidden = 'false') ORDER BY name", (err, catalogs) ->
     return next(err) if err?
 
-    catalogs = []
-
-    for catalog in results
-      number_of_presentations catalog, catalogs, results.length, () ->
-        res.render "catalogs",
-          title: "Presentz talks"
-          section: "talks"
-          catalogs: catalogs
-          list: dustjs.helpers.draw_boxes(6)
+    utils.exec_for_each number_of_presentations, catalogs, (err) ->
+      return next(err) if err?
+      res.render "catalogs",
+        title: "Presentz talks"
+        section: "talks"
+        catalogs: catalogs
+        list: dustjs.helpers.draw_boxes(6)
 
 exports.show_catalog = (req, res, next) ->
   pres_to_thumb= (presentation, catalog_name) ->
@@ -163,7 +119,7 @@ exports.show_catalog = (req, res, next) ->
     routes.db.fromVertex(catalog).inVertexes "part_of", (err, presentations) ->
       return next(err) if err?
 
-      storage.exec_for_each storage.load_chapters_of, presentations, (err) ->
+      utils.exec_for_each storage.load_chapters_of, presentations, (err) ->
         return next(err) if err?
         presentations = (pres_to_thumb(pres, req.params.catalog_name) for pres in presentations)
         presentations = _.sortBy presentations, (presentation) ->
