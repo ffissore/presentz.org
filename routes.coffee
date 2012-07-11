@@ -164,6 +164,7 @@ exports.raw_presentation = (req, res, next) ->
       res.contentType("text/javascript")
     else
       res.contentType("application/json")
+
     res.send presentation
 
 exports.show_presentation = (req, res, next) ->
@@ -221,6 +222,7 @@ exports.show_presentation = (req, res, next) ->
     talk_title = title_parts.join(" ")
     pres_title = presentation.title
     pres_title = "#{pres_title} - #{presentation.speaker}" if presentation.speaker?
+
     res.render "presentation",
       title: pres_title
       talk_title: talk_title
@@ -236,6 +238,7 @@ exports.static = (view_name) ->
       title: "Presentz"
       section: view_name
 
+###
 fill_presentation_data_from_file = (file, file_name, catalog_id, callback) ->
   fs.readFile file, "utf-8", (err, data) ->
     data = JSON.parse data
@@ -258,7 +261,6 @@ fill_presentation_data_from_file = (file, file_name, catalog_id, callback) ->
 
     callback(undefined, pres)
 
-###
 collect_presentations = (files, catalog_path, catalog_id, callback) ->
   files = (file for file in files when !_s.startsWith(file, "catalog") and _s.endsWith(file, ".json"))
   presentations = []
