@@ -135,6 +135,14 @@ header h1 a {
     margin-top: 20px;
 }
 
+#menu span {
+    float: left;
+}
+
+#menu nav {
+    float: right;
+}
+
 #menu li {
     float: left;
     width: 60px;

@@ -27,7 +27,7 @@ Controls =
     $chapters.bind "click", (e) ->
       $this = $(e.target)
       if $this.hasClass("comments") or $this.parent(".comments").length > 0
-        alert("SHOW COMMENT FOR THIS SLIDE!")
+        show('#comments')
       else
         if !$this.is("a")
           #this is NOT a typo
@@ -170,7 +170,7 @@ $().ready ->
     $.scrollTo($(e.target).attr("href"), 1200, {easing: "easeInOutQuart", offset:
       {top: -60}}))
 
-  $("#link_login")
+  $("#link_login, #link_login_in_comment")
   .unbind("click")
   .bind("click", (e) ->
     e.preventDefault()

@@ -56,12 +56,7 @@
       
           {! form commenti !}
           <div id="comment_form" style="display:none;">
-            <form action="#">
-              <p class="alert"><a href="">Login</a> or <a href="">Signin</a> to add a comment</p>
-              <textarea name="comment"></textarea>
-              <input type="submit" value="Publish" />
-              <div class="clear"></div>
-            </form>
+            {>_comment_form/}
           </div>
           {! fine form commenti !}
 

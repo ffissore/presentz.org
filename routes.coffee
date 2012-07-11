@@ -228,9 +228,9 @@ exports.show_presentation = (req, res, next) ->
       talk_title: talk_title
       speaker: presentation.speaker
       slides: slides
-      #catalog: catalog
-      to_json_url: "#{req.url_original || req.url}.json"
+      to_json_url: "/#{path}.json"
       thumb: presentation.chapters[0].video.thumb
+      logged_in: req.session.auth? and req.session.auth.loggedIn
 
 exports.static = (view_name) ->
   return (req, res) ->

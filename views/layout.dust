@@ -1,95 +1,98 @@
 <!DOCTYPE>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:title" content="{title}"/>
-    <meta property="og:description" content="{title}"/>
-    <meta property="og:site_name" content="Presentz"/>
-    {?thumb}
-        <meta property="og:image" content="{thumb}"/>
-    {/thumb}
-    <title>{title}</title>
-    <link href="/assets/css/{assetsCacheHashes.css}.css" rel="stylesheet" type="text/css"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="{title}"/>
+  <meta property="og:description" content="{title}"/>
+  <meta property="og:site_name" content="Presentz"/>
+  {?thumb}
+    <meta property="og:image" content="{thumb}"/>
+  {/thumb}
+  <title>{title}</title>
+  <link href="/assets/css/{assetsCacheHashes.css}.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="wrapper">
-    <header id="header">
-        <div id="content_header">
-            <h1><a href="/">Presentz</a></h1>
-            <nav id="menu">
-                <ul>
-                    <li{@if cond="'{section}' == 'index'"} class="selected"{/if}><a href="/">Home</a></li>
-                    <li{@if cond="'{section}' == 'talks'"} class="selected"{/if}><a href="/r/talks.html">Talks</a></li>
-                    {!<li><a href="/#demos">Demo</a></li>!}
-                    <li><a href="javascript:void(0)" id="link_login">Login</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    <div id="site_wrapper">
-        <div id="login" style="display:none;">
-            <div id="content_login">
-                <a href="javascript:void(0)" class="close">Close</a>
-                <p class="title">Login with:</p>
-                <ul>
-                    <li><a href="/auth/facebook"><span><img src="/assets/img/fe/login_facebook.png" title="Login with Facebook" alt="Login with Facebook"/></span>Facebook</a></li>
-                    <li><a href="/auth/twitter"><span><img src="/assets/img/fe/login_twitter.png" title="Login with Twitter" alt="Login with Twitter"/></span>Twitter</a></li>
-                    {!
-                    <li><a href="javascript:void(0)"><span><img src="/assets/img/fe/login_gplus.png" title="Login with Google+" alt="Login with Google+"/></span>Google+</a></li>
-                    <li><a href="javascript:void(0)"><span><img src="/assets/img/fe/login_instagram.png" title="Login with Instagram" alt="Login with Instagram"/></span>Instagram</a></li>
-                    <li><a href="javascript:void(0)"><span><img src="/assets/img/fe/login_linkedin.png" title="Login with Linkedin" alt="Login with Linkedin"/></span>Linkedin</a></li>
-                    <li><a href="javascript:void(0)"><span><img src="/assets/img/fe/login_github.png" title="Login with Github" alt="Login with Github"/></span>Github</a></li>
-                    <li><a href="javascript:void(0)"><span><img src="/assets/img/fe/login_openid.png" title="Login with OpenId" alt="Login with OpenId"/></span>OpenId</a></li>
-                    <li><a href="javascript:void(0)"><span><img src="/assets/img/fe/login_foursquare.png" title="Login with Foursquare" alt="Login with Foursquare"/></span>Foursquare</a></li>
-                    !}
-                </ul>
-            </div>
-        </div>
-
-    {rendered_messages|s}
-    
-    {+body}
-    {/body}
-    
+  <header id="header">
+    <div id="content_header">
+      <h1><a href="/">Presentz</a></h1>
+      <span id="menu">
+        <span>Hello, {username}</span>
+        <nav>
+          <ul>
+            <li{@if cond="'{section}' == 'index'"} class="selected"{/if}><a href="/">Home</a></li>
+            <li{@if cond="'{section}' == 'talks'"} class="selected"{/if}><a href="/r/talks.html">Talks</a></li>
+            {!<li><a href="/#demos">Demo</a></li>!}
+            <li><a href="javascript:void(0)" id="link_login">Login</a></li>
+          </ul>
+        </nav>
+      </span>
     </div>
-    <footer id="footer">
-        <section id="section_footer">
-            <div class="box6 offset6">
-                <h2>Presentz</h2>
-                <div class="testo">
-                    <p>
-                        is free (as in free speech) software.
-                        <br/>
-                        You are strongly invited to <br/>
-                        <a href="https://github.com/ffissore/presentz.js" target="blank">hack</a>, 
-                        <a href="https://github.com/ffissore/presentz.js" target="blank">fork</a> and 
-                        <a href="https://github.com/ffissore/presentz.js/issues" target="blank">criticize</a> the code.
-                    </p>
-                    {!<p><a href="/r/tos.html">Terms of service</a></p>!}
-                    <p id="copy">Copyright &copy; 2012 <a href="mailto:federico^_^AT^_^presentz.org">Federico Fissore</a>
-                    </p>
-                </div>
-            </div>
-            <div class="clear"></div>
-        </section>
-    </footer>
+  </header>
+  <div id="site_wrapper">
+    <div id="login" style="display:none;">
+      <div id="content_login">
+        <a href="javascript:void(0)" class="close">Close</a>
+        <p class="title">Login with:</p>
+        <ul>
+          <li><a href="/auth/facebook"><span><img src="/assets/img/fe/login_facebook.png" title="Login with Facebook" alt="Login with Facebook"/></span>Facebook</a></li>
+          <li><a href="/auth/twitter"><span><img src="/assets/img/fe/login_twitter.png" title="Login with Twitter" alt="Login with Twitter"/></span>Twitter</a></li>
+          {!
+          <li><a href="javascript:void(0)"><span><img src="/assets/img/fe/login_gplus.png" title="Login with Google+" alt="Login with Google+"/></span>Google+</a></li>
+          <li><a href="javascript:void(0)"><span><img src="/assets/img/fe/login_instagram.png" title="Login with Instagram" alt="Login with Instagram"/></span>Instagram</a></li>
+          <li><a href="javascript:void(0)"><span><img src="/assets/img/fe/login_linkedin.png" title="Login with Linkedin" alt="Login with Linkedin"/></span>Linkedin</a></li>
+          <li><a href="javascript:void(0)"><span><img src="/assets/img/fe/login_github.png" title="Login with Github" alt="Login with Github"/></span>Github</a></li>
+          <li><a href="javascript:void(0)"><span><img src="/assets/img/fe/login_openid.png" title="Login with OpenId" alt="Login with OpenId"/></span>OpenId</a></li>
+          <li><a href="javascript:void(0)"><span><img src="/assets/img/fe/login_foursquare.png" title="Login with Foursquare" alt="Login with Foursquare"/></span>Foursquare</a></li>
+          !}
+        </ul>
+      </div>
+    </div>
+
+  {rendered_messages|s}
+  
+  {+body}
+  {/body}
+  
+  </div>
+  <footer id="footer">
+    <section id="section_footer">
+      <div class="box6 offset6">
+        <h2>Presentz</h2>
+        <div class="testo">
+          <p>
+            is free (as in free speech) software.
+            <br/>
+            You are strongly invited to <br/>
+            <a href="https://github.com/ffissore/presentz.js" target="blank">hack</a>, 
+            <a href="https://github.com/ffissore/presentz.js" target="blank">fork</a> and 
+            <a href="https://github.com/ffissore/presentz.js/issues" target="blank">criticize</a> the code.
+          </p>
+          {!<p><a href="/r/tos.html">Terms of service</a></p>!}
+          <p id="copy">Copyright &copy; 2012 <a href="mailto:federico^_^AT^_^presentz.org">Federico Fissore</a>
+          </p>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </section>
+  </footer>
 </div>
 <script src="/assets/js/{assetsCacheHashes.js_main}main.js" type="text/javascript"></script>
 {+presentz}
 {/presentz}
 <script type="text/javascript">
-    var pkBaseURL = (("https:" == document.location.protocol) ? "https://fissore.org/piwik/" : "http://fissore.org/piwik/");
-    document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+  var pkBaseURL = (("https:" == document.location.protocol) ? "https://fissore.org/piwik/" : "http://fissore.org/piwik/");
+  document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
 </script>
 <script type="text/javascript">
-    try {
-        var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 2);
-        piwikTracker.trackPageView();
-        piwikTracker.enableLinkTracking();
-    } catch (err) {
-    }
+  try {
+    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 2);
+    piwikTracker.trackPageView();
+    piwikTracker.enableLinkTracking();
+  } catch (err) {
+  }
 </script>
 <noscript><p><img src="http://fissore.org/piwik/piwik.php?idsite=2" style="border:0"/></p></noscript>
 </body>
