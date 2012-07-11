@@ -1,7 +1,7 @@
 prsntz = new Presentz("#player_video", "460x420", "#slideshow_player", "460x420")
 
-init_presentz = (presentation) ->
-  oneBasedAbsoluteSlideIndex = (presentation, chapter_index, slide_index) ->
+init_presentz= (presentation) ->
+  oneBasedAbsoluteSlideIndex= (presentation, chapter_index, slide_index) ->
     absoluteSlideIndex = 0
     if chapter_index > 0
       for idx in [0...chapter_index]
@@ -27,7 +27,7 @@ init_presentz = (presentation) ->
   prsntz.init presentation
   prsntz.changeChapter 0, 0, false
 
-openPopupTo = (width, height, url) ->
+openPopupTo= (width, height, url) ->
   left = (screen.width - width) / 2
   left = 0 if left < 0
 
@@ -49,11 +49,11 @@ plusShare = ->
   openPopupTo 640, 350, "https://plus.google.com/share?url=#{encodeURIComponent(document.location)}"
   return
 
-hide = (to_hide_selector) ->
+hide= (to_hide_selector) ->
   $(to_hide_selector).css "display", "none"
   true
 
-show = (to_show_selector) ->
+show= (to_show_selector) ->
   hide "#player .box8, #player .box8 #comment_form"
   $(to_show_selector).css "display", ""
   true

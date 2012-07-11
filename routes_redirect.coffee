@@ -1,6 +1,6 @@
 fs = require "fs"
 
-find_file = (path, filename, callback) ->
+find_file= (path, filename, callback) ->
   fs.readdir path, (err, files) ->
     throw next new NotFound(path) if err?
     filtered_files = _.filter files, (file) ->
@@ -11,7 +11,7 @@ find_file = (path, filename, callback) ->
     else
       callback
 
-redirect_to_presentation = (req, res, catalog, filename) ->
+redirect_to_presentation= (req, res, catalog, filename) ->
   catalog_path = "#{__dirname}/../#{catalog}"
   find_file catalog_path, filename, (filename, data) ->
     data = JSON.parse data
@@ -20,7 +20,7 @@ redirect_to_presentation = (req, res, catalog, filename) ->
     else
       res.redirect "/#{catalog}/#{filename}", 301
 
-exports.redirect_to_catalog_if_subdomain = () ->
+exports.redirect_to_catalog_if_subdomain= () ->
   third_level_domain_regex = /([\w]+)\.[\w]+\..+/
   return (req, res, next) ->
     proxy = req.headers["x-forwarded-host"]
@@ -29,11 +29,11 @@ exports.redirect_to_catalog_if_subdomain = () ->
       if match?
         res.redirect "http://#{proxy.replace("#{match[1]}.", "")}/#{match[1]}#{req.url}", 302
 
-exports.redirect_to_presentation_from_html = (req, res, next) ->
+exports.redirect_to_presentation_from_html= (req, res, next) ->
   console.log "redirect_to_presentation_from_html"
   redirect_to_presentation req, res, req.params.catalog_name, req.params.presentation
 
-exports.redirect_to_presentation_from_p_html = (req, res, next) ->
+exports.redirect_to_presentation_from_p_html= (req, res, next) ->
   console.log "redirect_to_presentation_from_p"
 
   if req.query.p.indexOf("/") is -1
@@ -45,6 +45,6 @@ exports.redirect_to_presentation_from_p_html = (req, res, next) ->
 
   redirect_to_presentation req, res, catalog_name, filename
 
-exports.redirect_to = (url) ->
+exports.redirect_to= (url) ->
   return (req, res, next) ->
     res.redirect 302, url

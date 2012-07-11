@@ -25,12 +25,12 @@ db.open ->
       db.createEdge root, user, { label: "user" }, (err, edge) ->
         catalogs = [ "demo", "iad11", "jugtorino", "codemotion12" , "presentations" ]
 
-        load_presentations_for = (user, catalogs) ->
+        load_presentations_for= (user, catalogs) ->
           return db.close() if catalogs.length is 0
 
           catalog_folder = catalogs.pop()
           fs.readdir catalog_folder, (err, files) ->
-            link_user_to_pres = (user, catalog, presentations) ->
+            link_user_to_pres= (user, catalog, presentations) ->
               return load_presentations_for user, catalogs if presentations.length is 0
 
               presentation = presentations.pop()
@@ -41,7 +41,7 @@ db.open ->
                 db.createEdge user, presentation, { label: "authored" }, ->
                   db.createEdge presentation, catalog, { label: "part_of" }, ->
 
-                    link_chapters_to_pres = (chapters, presentation) ->
+                    link_chapters_to_pres= (chapters, presentation) ->
                       return link_user_to_pres user, catalog, presentations if chapters.length is 0
 
                       chapter = chapters.pop()
@@ -52,7 +52,7 @@ db.open ->
                       db.createVertex chapter, (err, chapter) ->
                         db.createEdge chapter, presentation, { label: "chapter_of" }, ->
 
-                          link_slides_to_chapter = (slides, chapter) ->
+                          link_slides_to_chapter= (slides, chapter) ->
                             return link_chapters_to_pres chapters, presentation if slides.length is 0
 
                             slide = slides.pop()
@@ -77,7 +77,7 @@ db.open ->
                     presentations = []
                     aliases = 0
 
-                    make_presentation = (file, presentations) ->
+                    make_presentation= (file, presentations) ->
                       fs.readFile "#{catalog_folder}/#{file}", "utf-8", (err, presentation) ->
                         presentation = JSON.parse presentation
                         if presentation.alias_of?
