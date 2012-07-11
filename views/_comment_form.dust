@@ -1,11 +1,11 @@
 <form action="#">
-  {?logged_in}
+  {?user}
     <textarea name="comment"></textarea>
     <input type="submit" value="Publish" />
   {:else}
     <p class="alert"><a id="link_login_in_comment" href="javascript:void(0)">Login</a> to add a comment</p>
     <textarea name="comment" disabled="true"></textarea>
     <input type="submit" value="Publish" disabled="true" />
-  {/logged_in}
+  {/user}
   <div class="clear"></div>
 </form>

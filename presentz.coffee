@@ -131,20 +131,17 @@ app.locals
   assetsCacheHashes: assetsMiddleware.cacheHashes
 
 app.get "/", routes.static "index"
+app.get "/back_to_referer", redirect_routes.back_to_referer
 app.get "/1/me/authored", api.mines_authored
 app.get "/1/me/speaker_of", api.mines_held
 app.get "/favicon.ico", express.static "#{__dirname}/public/assets/images"
 app.get "/r/index.html", routes.static "index"
 app.get "/r/tos.html", routes.static "tos"
 app.get "/r/talks.html", routes.list_catalogs
-app.get "/p.html", redirect_routes.redirect_to_presentation_from_p_html
-#app.get "/m/*.:whatever?", routes.ensure_is_logged
 app.get "/m/manage", routes.static "m/index"
-app.get "/:catalog_name/p.html", redirect_routes.redirect_to_presentation_from_p_html
 app.get "/:catalog_name/catalog.html", routes.show_catalog
 app.get "/:catalog_name/catalog", routes.show_catalog
 app.get "/:catalog_name/index.html", routes.show_catalog
-app.get "/:catalog_name/:presentation.html", redirect_routes.redirect_to_presentation_from_html
 app.get "/:catalog_name/:presentation.json", routes.raw_presentation
 app.get "/:catalog_name/:presentation", routes.show_presentation
 app.get "/:catalog_name", routes.show_catalog
