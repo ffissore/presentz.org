@@ -230,7 +230,6 @@ exports.show_presentation = (req, res, next) ->
       slides: slides
       to_json_url: "/#{path}.json"
       thumb: presentation.chapters[0].video.thumb
-      logged_in: req.session.auth? and req.session.auth.loggedIn
 
 exports.static = (view_name) ->
   return (req, res) ->

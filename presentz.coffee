@@ -7,6 +7,7 @@ _ = require "underscore"
 assetManager = require("connect-assetmanager")
 assetHandler = require("connect-assetmanager-handlers")
 handlers = require "./handlers"
+auth = require "./auth"
 
 Number:: pad= (pad) ->
   s = @.toString()
@@ -29,7 +30,7 @@ db.open (err) ->
 session_store_options = _.clone(config.storage)
 session_store_options.database = "presentz"
 
-everyauth = require("./auth").init(config, db)
+everyauth = auth.init(config, db)
 api = require("./api").init(db)
 routes = require("./routes").init(db)
 
@@ -115,6 +116,7 @@ app.configure ->
     store: new OrientDBStore(session_store_options)
   app.use express.methodOverride()
   app.use everyauth.middleware()
+  app.use auth.expose_user
   app.use app.router
   app.use express.static "#{__dirname}/public"
   app.use redirect_routes.redirect_to "/"

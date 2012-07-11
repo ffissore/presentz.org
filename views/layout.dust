@@ -19,7 +19,9 @@
     <div id="content_header">
       <h1><a href="/">Presentz</a></h1>
       <span id="menu">
-        <span>Hello, {username}</span>
+        {#user}
+          {>_welcome/}
+        {/user}
         <nav>
           <ul>
             <li{@if cond="'{section}' == 'index'"} class="selected"{/if}><a href="/">Home</a></li>
