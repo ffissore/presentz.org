@@ -32,6 +32,10 @@ utils.exec_for_each = (callable, elements, callback) ->
       exec_times++
       return callback(undefined, elements) if exec_times is elements.length
 
+utils.pretty_duration = (seconds, minutes_char = "'", seconds_char = "\"") ->
+  duration = moment.duration(Math.round(seconds), "seconds")
+  "#{duration.minutes().pad(2)}#{minutes_char}#{duration.seconds().pad(2)}#{seconds_char}"
+
 storage = {}
 storage.load_presentation_from_path = (path, callback) ->
   path_parts = path.split("/")
@@ -146,7 +150,6 @@ exports.show_catalog = (req, res, next) ->
 
 exports.raw_presentation = (req, res, next) ->
   wipe_out_storage_fields = (presentation) ->
-
     wipe_out_from_comments_in = (element) ->
       for comment in element.comments
         wipe_out_from comment
@@ -187,7 +190,6 @@ exports.raw_presentation = (req, res, next) ->
 
 exports.show_presentation = (req, res, next) ->
   slide_to_slide = (slide, chapter_index, slide_index, duration) ->
-    slide = _.clone(slide)
     slide.title = "Slide #{ slide_index + 1 }" if !slide.title?
     slide.chapter_index = chapter_index
     slide.slide_index = slide_index
@@ -214,17 +216,28 @@ exports.show_presentation = (req, res, next) ->
         slide.percentage = 100 - percent_used
       duration_used += slide.duration
       percent_per_second = (100 - percent_used) / (duration - duration_used)
-      pretty_duration = moment.duration(Math.round(slide.duration), "seconds")
-      slide.duration = "#{pretty_duration.minutes()}'#{pretty_duration.seconds()}\""
+      slide.duration = utils.pretty_duration slide.duration
       slide.index = (slide_num + 1).pad(number_of_zeros_in_index)
       slide.css = "class=\"even\"" if slide.index % 2 is 0
 
   comments_of = (presentation) ->
-    comments = presentation.comments
+    comments = []
+    for comment in presentation.comments
+      comment.nice_time = moment(comment.time).fromNow()
+      comments.push comment
+
+    accumulated_time = 0
     for chapter in presentation.chapters
       for slide in chapter.slides
+        accumulated_time += slide.time
         for comment in slide.comments
+          comment.slide_title = slide.title
+          comment.slide_nice_time = utils.pretty_duration accumulated_time, ":", ""
+          comment.nice_time = moment(comment.time).fromNow()
           comments.push comment
+      accumulated_time = chapter.duration
+
+    comments = _.sortBy comments, (comment) -> comment.time
     comments
 
   path = decodeURIComponent(req.path).substring(1)
@@ -249,7 +262,6 @@ exports.show_presentation = (req, res, next) ->
     pres_title = "#{pres_title} - #{presentation.speaker}" if presentation.speaker?
 
     comments = comments_of presentation
-    comments = _.sortBy comments, (comment) -> comment.time
 
     res.render "presentation",
       title: pres_title

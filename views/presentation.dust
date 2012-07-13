@@ -60,30 +60,20 @@
           </div>
           {! fine form commenti !}
 
+          {#comments}
           <div class="item_comment">
-            <p><span class="user">Emanuele Tortolone,</span> <span class="time">2h ago</span> on slide <a href="javascript:void(0)" class="slide_title">"Titolo slide 1"</a> - <a href="javascript:void(0)" class="slide_time">minute 01:51</a> </p>
-            <div class="text_comment">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id sem eget urna malesuada euismod pellentesque et mauris. Nulla tempus est sit amet ante bibendum ullamcorper eget quis neque. Ut in diam in turpis ultricies facilisis. Aenean dictum blandit quam. Aenean quam ante, pretium ac placerat bibendum, sagittis ac enim.
-            </div>
+            <p><span class="user">{user.name},</span> <span class="time">{nice_time}</span>{?slide_title} on slide <a href="javascript:void(0)" class="slide_title">"{slide_title}"</a> - <a href="javascript:void(0)" class="slide_time">minute {slide_nice_time}</a>{/slide_title}</p>
+            <div class="text_comment">{text}</div>
           </div>
-          <div class="item_comment">
-            <p><span class="user">Emanuele Tortolone,</span> <span class="time">2h ago</span> on slide <a href="javascript:void(0)" class="slide_title">"Titolo slide 1"</a> - <a href="javascript:void(0)" class="slide_time">minute 01:51</a> </p>
-            <div class="text_comment">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id sem eget urna malesuada euismod pellentesque et mauris. Nulla tempus est sit amet ante bibendum ullamcorper eget quis neque. Ut in diam in turpis ultricies facilisis. Aenean dictum blandit quam. Aenean quam ante, pretium ac placerat bibendum, sagittis ac enim.
-            </div>
-          </div>
-          <div class="item_comment">
-            <p><span class="user">Emanuele Tortolone,</span> <span class="time">2h ago</span> on slide <a href="javascript:void(0)" class="slide_title">"Titolo slide 1"</a> - <a href="javascript:void(0)" class="slide_time">minute 01:51</a> </p>
-            <div class="text_comment">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id sem eget urna malesuada euismod pellentesque et mauris. Nulla tempus est sit amet ante bibendum ullamcorper eget quis neque. Ut in diam in turpis ultricies facilisis. Aenean dictum blandit quam. Aenean quam ante, pretium ac placerat bibendum, sagittis ac enim.
-            </div>
-          </div>
+          {/comments}
         </div>
+        {!
         <div class="paging">
           <span class="current">1</span> .
           <span><a href="javascript:void(0)">2</a></span> .
           <span><a href="javascript:void(0)">3</a></span>
         </div>
+        !}
       </div>
       {! fine box commenti !}
               
