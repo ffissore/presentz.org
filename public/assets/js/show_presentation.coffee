@@ -5,12 +5,12 @@ Controls =
 
     $agenda_chapters = $("#controls .chapter")
     totalChapters = $agenda_chapters.length
-    $agenda_chapters.each ->
+    $agenda_chapters.each () ->
       $instance = $(this)
 
       $instance.unbind "mouseenter"
 
-      $instance.bind "mouseenter", ->
+      $instance.bind "mouseenter", () ->
         selectedChapterWidth = $("#controls").width() + 1 - (totalChapters * 2)
 
         $agenda_chapters.not($instance).css "width", "2px"
@@ -20,7 +20,7 @@ Controls =
 
       $instance.unbind "mouseleave"
 
-      $instance.bind "mouseleave", ->
+      $instance.bind "mouseleave", () ->
         Controls.restoreOriginalWidth()
 
     $chapters = $("#controls .chapter, #chapters ol li")
@@ -36,7 +36,7 @@ Controls =
         prsntz.changeChapter(parseInt($this.attr("chapter_index")), parseInt($this.attr("slide_index")), true)
 
   restoreOriginalWidth: () ->
-    $("#controls .chapter").each ->
+    $("#controls .chapter").each () ->
       $(this).find(".info").stop(true, true).hide()
     Controls.resize()
 
@@ -63,7 +63,7 @@ Controls =
     #resize chapters considering stolen_percentage and fix small chapters
     long_chapter_removed = false
     rounds = 0
-    fix_as_many_small_chapters_as_possibile = ->
+    fix_as_many_small_chapters_as_possibile = () ->
       long_chapter_removed = false
       percentage_to_remove_from_long_chapters = 100 * stolen_percentage / long_chapters_percentage
       for percentage in percentages
@@ -142,15 +142,15 @@ openPopupTo = (width, height, url) ->
   window.open url, "share", "height=#{height},location=no,menubar=no,width=#{width},top=#{top},left=#{left}"
   return
 
-fbShare = ->
+fbShare = () ->
   openPopupTo 640, 350, "https://www.facebook.com/sharer.php?u=#{encodeURIComponent(document.location)}&t=#{encodeURIComponent(document.title)}"
   return
 
-twitterShare = ->
+twitterShare = () ->
   openPopupTo 640, 300, "https://twitter.com/intent/tweet?text=#{encodeURIComponent("#{document.title} #{document.location} via @presentzorg")}"
   return
 
-plusShare = ->
+plusShare = () ->
   openPopupTo 640, 350, "https://plus.google.com/share?url=#{encodeURIComponent(document.location)}"
   return
 
@@ -163,7 +163,6 @@ show = (to_show_selector) ->
   $(to_show_selector).css "display", ""
   true
 
-window.prsntz = prsntz
 window.init_presentz = init_presentz
 window.fbShare = fbShare
 window.twitterShare = twitterShare
@@ -178,4 +177,8 @@ $().ready () ->
   $window.unbind "resize"
   $window.bind "resize", () ->
     Controls.resize() if $("#controls").length > 0
+
+  $("#comment_form form").submit (e) ->
+    console.log e
+    false
   return

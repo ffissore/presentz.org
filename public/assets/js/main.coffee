@@ -91,7 +91,7 @@ $().ready () ->
       $this.val $.trim($this.val())
       $this.val $this.data("default") if $this.val() is $this.data("default") || $this.val() is ""
 
-  $(".search form").submit ->
+  $(".search form").submit () ->
     value = $(".search input:first").val()
     pattern = /[ ,\n,\r]/g
     if value.replace(pattern, "").length > 0

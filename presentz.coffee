@@ -9,7 +9,7 @@ assetHandler = require("connect-assetmanager-handlers")
 handlers = require "./handlers"
 auth = require "./auth"
 
-Number:: pad= (pad) ->
+Number:: pad = (pad) ->
   s = @.toString()
   while s.length < pad
     s = "0" + s
