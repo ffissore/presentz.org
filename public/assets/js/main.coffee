@@ -2,7 +2,6 @@ DemoScroller =
 
   displayItemNumber: 3
   itemNumber: 0
-  content_slider_w: null
 
   init: () ->
     DemoScroller.resize()
@@ -38,15 +37,16 @@ DemoScroller =
     $("#content_slider").stop(true, false).animate({"left": -(value * $("#slider").width())}, 1200, "easeInOutQuart")
 
   resize: () ->
-    if $("#content_slider").length > 0
-      $content_slider_li_box4 = $("#content_slider li.box4")
-      DemoScroller.content_slider_w = $content_slider_li_box4.length * parseInt(parseInt($content_slider_li_box4.css("width").replace("px", "")) + (parseInt($content_slider_li_box4.css("margin-left").replace("px", "")) * 2))
-      $("#content_slider").css("width", DemoScroller.content_slider_w)
+    if $("#content_slider").length is 0
+      return
 
-      $("#navigation_slider ul li a.active").click()
+    $content_slider_li_box4 = $("#content_slider li.box4")
+    content_slider_w = $content_slider_li_box4.length * parseInt(parseInt($content_slider_li_box4.css("width").replace("px", "")) + (parseInt($content_slider_li_box4.css("margin-left").replace("px", "")) * 2))
+    $("#content_slider").css("width", content_slider_w)
+
+    $("#navigation_slider ul li a.active").click()
 
 $().ready () ->
-  #GENERAL BEHAVIORS
   if $("#home").length > 0
     $h1_a_menu_ul_li_a = $("h1 a, #menu ul li:first-child a")
     $h1_a_menu_ul_li_a.unbind "click"
@@ -85,13 +85,11 @@ $().ready () ->
     $this = $(this)
     $this.data "default", $this.val()
     $this.focus () ->
-      if $this.val() == $this.data("default")
-        $this.val("")
+      $this.val("") if $this.val() is $this.data("default")
 
     $this.blur () ->
       $this.val $.trim($this.val())
-      if $this.val() == $this.data("default") || $this.val() == ""
-        $this.val $this.data("default")
+      $this.val $this.data("default") if $this.val() is $this.data("default") || $this.val() is ""
 
   $(".search form").submit ->
     value = $(".search input:first").val()
@@ -100,8 +98,7 @@ $().ready () ->
       alert("SEARCHING: " + value)
 
   #SCROLLER DEMO
-  if $("#content_slider").length > 0
-    DemoScroller.init()
+  DemoScroller.init() if $("#content_slider").length > 0
 
   $window = $(window)
   $window.unbind "resize"
