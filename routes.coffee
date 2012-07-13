@@ -24,6 +24,7 @@ dustjs.helpers.draw_boxes = (number_of_boxes) ->
 
 utils = {}
 utils.exec_for_each = (callable, elements, callback) ->
+  return callback(undefined, elements) if elements.length is 0
   exec_times = 0
   for element in elements
     callable element, (err) ->
@@ -44,11 +45,20 @@ storage.load_presentation_from_path = (path, callback) ->
     presentation = results[0]
     storage.load_comments_of presentation, callback
 
+storage.load_user_of = (comment, callback) ->
+  routes.db.fromVertex(comment).inVertexes "authored_comment", (err, users) ->
+    return callback(err) if err?
+    return callback("Too many users") if users.length > 1
+    comment.user = users[0]
+    callback()
+
 storage.load_comments_of = (node, callback) ->
   routes.db.fromVertex(node).inVertexes "comment_of", (err, comments) ->
     return callback(err) if err?
     node.comments = _.sortBy comments, (comment) -> comment.time
-    callback(undefined, node)
+    utils.exec_for_each storage.load_user_of, node.comments, (err) ->
+      return callback(err) if err?
+      callback(undefined, node)
 
 storage.load_chapters_of = (presentation, callback) ->
   routes.db.fromVertex(presentation).inVertexes "chapter_of", (err, chapters) ->
@@ -136,20 +146,29 @@ exports.show_catalog = (req, res, next) ->
 
 exports.raw_presentation = (req, res, next) ->
   wipe_out_storage_fields = (presentation) ->
+
+    wipe_out_from_comments_in = (element) ->
+      for comment in element.comments
+        wipe_out_from comment
+        delete comment.user
+
     wipe_out_from= (element) ->
       delete element.in
       delete element.out
       delete element._type
+      delete element._index
       delete element["@class"]
       delete element["@type"]
       delete element["@version"]
       delete element["@rid"]
 
     wipe_out_from presentation
+    wipe_out_from_comments_in presentation
     for chapter in presentation.chapters
       wipe_out_from chapter
       for slide in chapter.slides
         wipe_out_from slide
+        wipe_out_from_comments_in slide
 
   path = decodeURIComponent(req.path).substring(1)
   path = path.substring(0, path.length - ".json".length)
@@ -169,7 +188,6 @@ exports.raw_presentation = (req, res, next) ->
 exports.show_presentation = (req, res, next) ->
   slide_to_slide = (slide, chapter_index, slide_index, duration) ->
     slide = _.clone(slide)
-    delete slide.url
     slide.title = "Slide #{ slide_index + 1 }" if !slide.title?
     slide.chapter_index = chapter_index
     slide.slide_index = slide_index
@@ -201,6 +219,14 @@ exports.show_presentation = (req, res, next) ->
       slide.index = (slide_num + 1).pad(number_of_zeros_in_index)
       slide.css = "class=\"even\"" if slide.index % 2 is 0
 
+  comments_of = (presentation) ->
+    comments = presentation.comments
+    for chapter in presentation.chapters
+      for slide in chapter.slides
+        for comment in slide.comments
+          comments.push comment
+    comments
+
   path = decodeURIComponent(req.path).substring(1)
   storage.load_entire_presentation_from_path path, (err, presentation) ->
     return next(err) if err?
@@ -222,11 +248,15 @@ exports.show_presentation = (req, res, next) ->
     pres_title = presentation.title
     pres_title = "#{pres_title} - #{presentation.speaker}" if presentation.speaker?
 
+    comments = comments_of presentation
+    comments = _.sortBy comments, (comment) -> comment.time
+
     res.render "presentation",
       title: pres_title
       talk_title: talk_title
       speaker: presentation.speaker
       slides: slides
+      comments: comments
       to_json_url: "/#{path}.json"
       thumb: presentation.chapters[0].video.thumb
 
