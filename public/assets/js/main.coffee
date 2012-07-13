@@ -23,15 +23,14 @@ DemoScroller =
     ulWidth = (parseInt($("#navigation_slider ul li:first").width()) + parseInt($("#navigation_slider ul li:first").css("marginLeft").replace("px", "") * 2)) * numLi
     $navigation_slider_ul.css("width", ulWidth + "px")
 
-    $("#navigation_slider ul li a")
-    .unbind("click")
-    .bind("click", (e) ->
+    $navigation_slider_ul_li_a = $("#navigation_slider ul li a")
+    $navigation_slider_ul_li_a.unbind "click"
+    $navigation_slider_ul_li_a.bind "click", (e) ->
       e.preventDefault()
+      $navigation_slider_ul_li_a.removeClass()
       $this = $(this)
-      $("#navigation_slider ul li a").removeClass()
       $this.addClass("active")
-      DemoScroller.moveScroll(parseInt($this.attr("rel"))))
-
+      DemoScroller.moveScroll(parseInt($this.attr("rel")))
 
     $("a", "#navigation_slider ul li:first").trigger("click")
 
@@ -40,7 +39,8 @@ DemoScroller =
 
   resize: () ->
     if $("#content_slider").length > 0
-      DemoScroller.content_slider_w = $("#content_slider li.box4").length * parseInt(parseInt($(".box4").css("width").replace("px", "")) + (parseInt($(".box4").css("margin-left").replace("px", "")) * 2))
+      $content_slider_li_box4 = $("#content_slider li.box4")
+      DemoScroller.content_slider_w = $content_slider_li_box4.length * parseInt(parseInt($content_slider_li_box4.css("width").replace("px", "")) + (parseInt($content_slider_li_box4.css("margin-left").replace("px", "")) * 2))
       $("#content_slider").css("width", DemoScroller.content_slider_w)
 
       $("#navigation_slider ul li a.active").click()
@@ -48,46 +48,50 @@ DemoScroller =
 $().ready () ->
   #GENERAL BEHAVIORS
   if $("#home").length > 0
-    $("h1 a, #menu ul li:first-child a")
-    .unbind("click")
-    .bind("click", (e) ->
+    $h1_a_menu_ul_li_a = $("h1 a, #menu ul li:first-child a")
+    $h1_a_menu_ul_li_a.unbind "click"
+    $h1_a_menu_ul_li_a.bind "click", (e) ->
       e.preventDefault()
       $.scrollTo.window().queue([]).stop()
-      $.scrollTo(0, 1200, {easing: "easeInOutQuart", offset:
-        {top: 0}}))
+      $.scrollTo 0, 1200,
+        easing: "easeInOutQuart"
+        offset:
+          top: 0
 
-  $("#link_demos, .link_demos, #link_learn_more")
-  .unbind("click")
-  .bind("click", (e) ->
+  $link_demos_link_learn_more = $("#link_demos, .link_demos, #link_learn_more")
+  $link_demos_link_learn_more.unbind "click"
+  $link_demos_link_learn_more.bind "click", (e) ->
     e.preventDefault()
     $.scrollTo.window().queue([]).stop()
-    $.scrollTo($(e.target).attr("href"), 1200, {easing: "easeInOutQuart", offset:
-      {top: -60}}))
+    $.scrollTo $(e.target).attr("href"), 1200,
+      easing: "easeInOutQuart",
+      offset:
+        top: -60
 
-  $("#link_login, #link_login_in_comment")
-  .unbind("click")
-  .bind("click", (e) ->
+  $link_login_link_in_comment = $("#link_login, #link_login_in_comment")
+  $link_login_link_in_comment.unbind "click"
+  $link_login_link_in_comment.bind "click", (e) ->
     e.preventDefault()
-    $("#login:not(:visible)").fadeIn("slow"))
+    $("#login:not(:visible)").fadeIn("slow")
 
-  $("#content_login .close")
-  .unbind("click")
-  .bind("click", (e) ->
+  $content_login_close = $("#content_login .close")
+  $content_login_close.unbind "click"
+  $content_login_close.bind "click", (e) ->
     e.preventDefault()
-    $("#login:visible").fadeOut("fast"))
+    $("#login:visible").fadeOut("fast")
 
   #SEARCH INPUT
   $(".search input:first").each ->
-    $(this)
-    .data("default", $(this).val())
-    .focus(->
-      if $(this).val() == $(this).data("default")
-        $(this).val("")
-    )
-    .blur(->
-      $(this).val($.trim($(this).val()))
-      if $(this).val() == $(this).data("default") || $(this).val() == ""
-        $(this).val($(this).data("default")))
+    $this = $(this)
+    $this.data "default", $this.val()
+    $this.focus () ->
+      if $this.val() == $this.data("default")
+        $this.val("")
+
+    $this.blur () ->
+      $this.val $.trim($this.val())
+      if $this.val() == $this.data("default") || $this.val() == ""
+        $this.val $this.data("default")
 
   $(".search form").submit ->
     value = $(".search input:first").val()
