@@ -60,14 +60,14 @@ facebook_init = (config, db) ->
     appSecret: config.auth.facebook.app_secret
     findOrCreateUser: find_or_create_user(db, "SELECT @rid FROM V where _type = 'user' and facebook_id = ", merge_facebook_user_data)
     scope: "email"
-    redirectPath: "/back_to_referer"
+    redirectPath: "/r/back_to_referer"
 
 twitter_init = (config, db) ->
   everyauth.twitter.configure
     consumerKey: config.auth.twitter.consumer_key
     consumerSecret: config.auth.twitter.consumer_secret
     findOrCreateUser: find_or_create_user(db, "SELECT @rid FROM V where _type = 'user' and twitter_id = ", merge_twitter_user_data)
-    redirectPath: "/back_to_referer"
+    redirectPath: "/r/back_to_referer"
 
 exports.init = (config, db) ->
   everyauth.everymodule.findUserById (userId, callback) ->

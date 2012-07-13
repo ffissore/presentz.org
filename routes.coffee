@@ -1,5 +1,4 @@
 fs = require "fs"
-path = require "path"
 _ = require "underscore"
 _s = require "underscore.string"
 http = require "http"
@@ -230,6 +229,44 @@ exports.show_presentation = (req, res, next) ->
       slides: slides
       to_json_url: "/#{path}.json"
       thumb: presentation.chapters[0].video.thumb
+
+exports.comment_presentation = (req, res, next) ->
+  params = req.body
+
+  get_node_to_link_to = (callback) ->
+    path = decodeURIComponent(req.path).substring(1)
+    path = path.substring(0, path.lastIndexOf("/"))
+
+    storage.load_entire_presentation_from_path path, (err, presentation) ->
+      return callback(err) if err?
+
+      node_to_link_to = presentation
+
+      if params.chapter? and params.slide?
+        node_to_link_to = presentation.chapters[params.chapter].slides[params.slide]
+
+      callback(undefined, node_to_link_to)
+
+  save_comment_and_link = (node_to_link_to, callback) ->
+    comment =
+      _type: "comment"
+      text: params.comment
+      time: new Date()
+
+    routes.db.createVertex comment, (err, comment) ->
+      return callback(err) if err?
+      routes.db.createEdge comment, node_to_link_to, { label: "comment_of" }, (err) ->
+        return callback(err) if err?
+        routes.db.createEdge req.user, comment, { label: "authored_comment" }, callback
+
+  get_node_to_link_to (err, node_to_link_to) ->
+    return next(err) if err?
+
+    save_comment_and_link node_to_link_to, (err) ->
+      if err?
+        res.send 500
+      else
+        res.send 201
 
 exports.static = (view_name) ->
   return (req, res) ->

@@ -106,6 +106,8 @@ Controls =
 prsntz = new Presentz("#player_video", "460x420", "#slideshow_player", "460x420")
 
 init_presentz = (presentation) ->
+  window.presentation_id = presentation.id
+
   oneBasedAbsoluteSlideIndex= (presentation, chapter_index, slide_index) ->
     absoluteSlideIndex = 0
     if chapter_index > 0
@@ -124,10 +126,10 @@ init_presentz = (presentation) ->
     $to = $("#controls .chapter:nth-child(#{toSlide}), #chapters ol li:nth-child(#{toSlide}) a")
     $to.removeClass "past"
     $to.addClass "selected"
-    return
 
-  #  prsntz.on "videochange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
-  #    console.log "nothing"
+    window.current_chapter = new_chapter_index
+    window.current_slide = new_slide_index
+    return
 
   prsntz.init presentation
   prsntz.changeChapter 0, 0, false
@@ -179,6 +181,20 @@ $().ready () ->
     Controls.resize() if $("#controls").length > 0
 
   $("#comment_form form").submit (e) ->
-    console.log e
+    $textarea = $(e.currentTarget.comment)
+    text = $.trim($textarea.val())
+    return false if text is ""
+
+    $.ajax
+      type: "POST"
+      url: "#{document.location}/comment"
+      data:
+        comment: text
+        chapter: window.current_chapter
+        slide: window.current_slide
+      success: () ->
+        $textarea.val ""
+      error: () ->
+        alert("An error occured while saving your comment")
     false
   return
