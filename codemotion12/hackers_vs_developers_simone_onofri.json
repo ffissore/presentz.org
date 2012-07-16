@@ -1,0 +1,321 @@
+{
+  "title": "Hackers vs developers",
+  "speaker": "Simone Onofri",
+  "chapters": [
+    {
+      "duration": 2144,
+      "media": {
+        "video": {
+          "url": "http://youtu.be/H4Biihq73ns",
+          "thumb": "http://presentz.org/assets/codemotion12/onofri.jpg"
+        },
+        "slides": [
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#1",
+            "title": "Hackers vs. Developers",
+            "time": 0
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#2",
+            "title": "Critical Services Security",
+            "time": 269
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#3",
+            "title": "www.siatec.net",
+            "time": 311
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#4",
+            "title": "Grazie!",
+            "time": 320
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#5",
+            "title": "Hackers vs. Developers",
+            "time": 326
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#6",
+            "time": 340
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#7",
+            "title": "OSSTMM",
+            "time": 359
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#8",
+            "title": "Rain",
+            "time": 383
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#9",
+            "title": "Security is about protection",
+            "time": 439
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#10",
+            "title": "Beni, attacchi e agenti di minaccia",
+            "time": 455
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#11",
+            "title": "Separazione tra beni e minacce",
+            "time": 476
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#12",
+            "title": "Visibility",
+            "time": 575
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#13",
+            "title": "Exposure!",
+            "time": 604
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#14",
+            "title": "Access",
+            "time": 631
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#15",
+            "title": "Trust",
+            "time": 650
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#16",
+            "title": "Vulnerability!",
+            "time": 686
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#17",
+            "title": "Authentication",
+            "time": 729
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#18",
+            "title": "Indemnification",
+            "time": 762
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#19",
+            "title": "Resilience",
+            "time": 815
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#20",
+            "title": "Subjugation",
+            "time": 853
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#21",
+            "title": "Continuity",
+            "time": 877
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#22",
+            "title": "Weakness!",
+            "time": 890
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#23",
+            "title": "Non-Repudiation",
+            "time": 903
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#24",
+            "title": "Confidentiality",
+            "time": 923
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#25",
+            "title": "Privacy",
+            "time": 936
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#26",
+            "title": "Integrity",
+            "time": 949
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#27",
+            "title": "Alarm",
+            "time": 957
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#28",
+            "title": "Concern!",
+            "time": 998
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#29",
+            "title": "OSSTMM – Limitations mapping",
+            "time": 1012
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#30",
+            "title": "Threat modelling for dummies",
+            "time": 1064
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#31",
+            "title": "Struttura tipo di un'applicazione",
+            "time": 1079
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#32",
+            "title": "Host e Infrastruttura",
+            "time": 1279
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#33",
+            "title": "Non-Repudiation",
+            "time": 1295
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#34",
+            "title": "Continuity",
+            "time": 1310
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#35",
+            "title": "Alarm",
+            "time": 1320
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#36",
+            "title": "Indemnification",
+            "time": 1343
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#37",
+            "title": "Autenticazione",
+            "time": 1355
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#38",
+            "title": "L'autenticazione di per sé",
+            "time": 1379
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#39",
+            "title": "Form di autenticazione",
+            "time": 1488
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#40",
+            "title": "Credenziali",
+            "time": 1531
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#41",
+            "title": "Autorizzazione",
+            "time": 1577
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#42",
+            "title": "L'autorizzazione su Risorse",
+            "time": 1586
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#43",
+            "title": "Session Management",
+            "time": 1653
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#44",
+            "title": "La sessione di per sé",
+            "time": 1668
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#45",
+            "title": "Identificativo di Sessione",
+            "time": 1742
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#46",
+            "title": "Cookie",
+            "time": 1781
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#47",
+            "title": "Business Logic",
+            "time": 1811
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#48",
+            "title": "La logica di per sé",
+            "time": 1819
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#49",
+            "title": "Data Validation",
+            "time": 1855
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#50",
+            "title": "La Data Validation di per sé",
+            "time": 1858
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#51",
+            "title": "Dati e File inviati",
+            "time": 1879
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#52",
+            "title": "Transport Layer Protection",
+            "time": 1959
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#53",
+            "title": "La comunicazione",
+            "time": 1972
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#54",
+            "title": "SSL e cifrari",
+            "time": 1996
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#55",
+            "title": "Certificati",
+            "time": 2015
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#56",
+            "title": "Error Handling e Logging",
+            "time": 2036
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#57",
+            "title": "I log",
+            "time": 2056
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#58",
+            "title": "Errori",
+            "time": 2081
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#59",
+            "title": "Grazie! Q/A",
+            "time": 2094
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#60",
+            "title": "Credits",
+            "time": 2119
+          },
+          {
+            "url": "http://www.slideshare.net/hackers-vs-developers-dalla-parte-degli-sviluppatori-web-mobile-e-non-solo-tra-owasp-e-osstmm-120329062235-phpapp01#61",
+            "title": "Riferimenti",
+            "time": 2122
+          }
+        ]
+      }
+    }
+  ]
+}
