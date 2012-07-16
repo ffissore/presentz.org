@@ -137,6 +137,8 @@ header h1 a {
 
 #menu span {
     float: left;
+    font-size: 13px;
+    text-transform: uppercase;
 }
 
 #menu nav {
