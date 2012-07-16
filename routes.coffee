@@ -59,7 +59,7 @@ storage.load_user_of = (comment, callback) ->
 storage.load_comments_of = (node, callback) ->
   routes.db.fromVertex(node).inVertexes "comment_of", (err, comments) ->
     return callback(err) if err?
-    node.comments = _.sortBy comments, (comment) -> comment.time
+    node.comments = _.sortBy comments, (comment) -> -1 * comment.time
     utils.exec_for_each storage.load_user_of, node.comments, (err) ->
       return callback(err) if err?
       callback(undefined, node)
@@ -227,6 +227,8 @@ exports.show_presentation = (req, res, next) ->
       comments.push comment
 
     accumulated_time = 0
+    chapter_index = 0
+    slide_index = 0
     for chapter in presentation.chapters
       for slide in chapter.slides
         accumulated_time += slide.time
@@ -234,10 +236,13 @@ exports.show_presentation = (req, res, next) ->
           comment.slide_title = slide.title
           comment.slide_nice_time = utils.pretty_duration accumulated_time, ":", ""
           comment.nice_time = moment(comment.time).fromNow()
+          comment.slide_index = slide_index
+          comment.chapter_index = chapter_index
           comments.push comment
+        slide_index++
+      chapter_index++
       accumulated_time = chapter.duration
 
-    comments = _.sortBy comments, (comment) -> comment.time
     comments
 
   path = decodeURIComponent(req.path).substring(1)
