@@ -316,8 +316,8 @@ comments_of = (presentation) ->
 
   accumulated_time = 0
   chapter_index = 0
-  slide_index = 0
   for chapter in presentation.chapters
+    slide_index = 0
     for slide in chapter.slides
       accumulated_time += slide.time
       for comment in slide.comments

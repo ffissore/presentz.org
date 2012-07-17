@@ -1,6 +1,11 @@
 {#comments}
-  <div chapter="{chapter_index}" slide="{slide_index}" class="item_comment">
-    <p><span class="user">{user.name},</span> <span class="time">{nice_time}</span>{?slide_title} on slide <a href="javascript:void(0)" class="slide_title">"{slide_title}"</a> - <a href="javascript:void(0)" class="slide_time">@ {slide_nice_time}</a>{/slide_title}</p>
+  <div chapter_index="{chapter_index}" slide_index="{slide_index}" class="item_comment">
+    <p><span class="user">{user.name},</span> <span class="time">{nice_time}</span> 
+    {?slide_title}
+    on slide <a href="javascript:void(0)" class="slide_title">"{slide_title}"</a> - @ {slide_nice_time}
+    {:else}
+    on presentation
+    {/slide_title}</p>
     <div class="text_comment">{text}</div>
   </div>
 {/comments}

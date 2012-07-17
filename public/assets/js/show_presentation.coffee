@@ -35,6 +35,13 @@ Controls =
           #this is NOT a typo
           $this = $(".info .title a", this)
         prsntz.changeChapter(parseInt($this.attr("chapter_index")), parseInt($this.attr("slide_index")), true)
+    
+    $slides_in_comments = $("a.slide_title")
+    $slides_in_comments.unbind "click"
+    $slides_in_comments.bind "click", (e) ->
+      $("html:not(:animated),body:not(:animated)").animate({ scrollTop: $("div.main h3").position().top }, 400)
+      $this = $(e.target).parent().parent()
+      prsntz.changeChapter(parseInt($this.attr("chapter_index")), parseInt($this.attr("slide_index")), true)
 
   restoreOriginalWidth: () ->
     $("#controls .chapter").each () ->
