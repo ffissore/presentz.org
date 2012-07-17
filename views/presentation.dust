@@ -33,8 +33,8 @@
         <h5>Tools</h5>
         <ul>
           <li><a href="javascript:void(0)" onclick="show('#comments');">Show all comments</a></li>
-          <li><a href="javascript:void(0)" onclick="comment_this_slide('#comments, #comment_form');">Comment this slide</a></li>
-          <li><a href="javascript:void(0)" onclick="show('#comments, #comment_form');">Comment this presentation</a></li>
+          <li><a href="javascript:void(0)" onclick="comment_this_slide('#comments, #comment_form', '#comment_form span');">Comment this slide</a></li>
+          <li><a href="javascript:void(0)" onclick="comment_this_presentation('#comments, #comment_form', '#comment_form span');">Comment this presentation</a></li>
           <li><a href="javascript:void(0)" onclick="show('#chapters');">Show chapters list</a></li>
           {!
           <li><a href="javascript:void(0)" onclick="show('#embed');">Embed</a></li>
@@ -56,7 +56,7 @@
       
           {! form commenti !}
           <div id="comment_form" style="display:none;">
-            You are commenting
+            You are commenting <span></span>
             {>_comment_form/}
           </div>
           {! fine form commenti !}

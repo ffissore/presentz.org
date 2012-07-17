@@ -114,7 +114,7 @@ Controls =
 prsntz = new Presentz("#player_video", "460x420", "#slideshow_player", "460x420")
 
 init_presentz = (presentation) ->
-  window.presentation_id = presentation.id
+  window.presentation = presentation
 
   oneBasedAbsoluteSlideIndex= (presentation, chapter_index, slide_index) ->
     absoluteSlideIndex = 0
@@ -184,11 +184,17 @@ show = (to_show_selector) ->
 
   true
 
-comment_this_slide = (to_show_selector) ->
+comment_this_slide = (to_show_selector, notify_label_selector) ->
   comment to_show_selector, window.current_chapter, window.current_slide
+  title = presentation.chapters[window.current_chapter].slides[window.current_slide].title
+  if title?
+    $(notify_label_selector).text "slide \"#{title}\""
+  else
+    $(notify_label_selector).text "slide #{window.current_slide + 1}"
 
-comment_this_presentation = (to_show_selector) ->
+comment_this_presentation = (to_show_selector, notify_label_selector) ->
   comment to_show_selector, "", ""
+  $(notify_label_selector).text "the presentation"
 
 comment = (to_show_selector, chapter_index_val, slide_index_val) ->
   show to_show_selector
@@ -204,6 +210,7 @@ window.plusShare = plusShare
 window.hide = hide
 window.show = show
 window.comment_this_slide = comment_this_slide
+window.comment_this_presentation = comment_this_presentation
 
 $().ready () ->
   Controls.init()
