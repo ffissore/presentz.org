@@ -1,4 +1,6 @@
 <form action="#">
+  <input type="hidden" name="chapter_index" value="" />
+  <input type="hidden" name="slide_index" value="" />
   {?user}
     <textarea name="comment"></textarea>
     <input type="submit" value="Publish" />

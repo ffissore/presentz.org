@@ -30,6 +30,7 @@ Controls =
       if $this.hasClass("comments") or $this.parent(".comments").length > 0
         show('#comments')
       else
+        $("html:not(:animated),body:not(:animated)").animate({ scrollTop: $("div.main h3").position().top }, 400)
         if !$this.is("a")
           #this is NOT a typo
           $this = $(".info .title a", this)
@@ -162,7 +163,31 @@ hide = (to_hide_selector) ->
 
 show = (to_show_selector) ->
   hide "#player .box8, #player .box8 #comment_form"
+  $to_show_selector = $(to_show_selector)
   $(to_show_selector).css "display", ""
+
+  $player_video = $("#player_video")
+  if $to_show_selector.height() < $player_video.height()
+    scroll_destination = $to_show_selector.height() + $player_video.position().top + 31
+  else
+    scroll_destination = $to_show_selector.offset().top - ($player_video.position().top + 3)
+
+  if $(window).scrollTop() < scroll_destination
+    $("html:not(:animated),body:not(:animated)").animate({ scrollTop: scroll_destination }, 400)
+
+  true
+
+comment_this_slide = (to_show_selector) ->
+  comment to_show_selector, window.current_chapter, window.current_slide
+
+comment_this_presentation = (to_show_selector) ->
+  comment to_show_selector, "", ""
+
+comment = (to_show_selector, chapter_index_val, slide_index_val) ->
+  show to_show_selector
+  prsntz.pause()
+  $("#comment_form form input[name=chapter_index]").val chapter_index_val
+  $("#comment_form form input[name=slide_index]").val slide_index_val
   true
 
 window.init_presentz = init_presentz
@@ -171,6 +196,7 @@ window.twitterShare = twitterShare
 window.plusShare = plusShare
 window.hide = hide
 window.show = show
+window.comment_this_slide = comment_this_slide
 
 $().ready () ->
   Controls.init()
@@ -185,15 +211,26 @@ $().ready () ->
     text = $.trim($textarea.val())
     return false if text is ""
 
+    $chapter_index = $(e.currentTarget.chapter_index)
+    chapter_index_val = $chapter_index.val()
+    $slide_index = $(e.currentTarget.slide_index)
+    slide_index_val = $slide_index.val()
+
     $.ajax
       type: "POST"
       url: "#{document.location}/comment"
       data:
         comment: text
-        chapter: window.current_chapter
-        slide: window.current_slide
-      success: () ->
+        chapter: chapter_index_val
+        slide: slide_index_val
+      success: (new_comments_html) ->
         $textarea.val ""
+        $chapter_index.val ""
+        $slide_index.val ""
+        hide "#comment_form"
+        $("div.item_comment").remove()
+        $("#comments div.content_comments").append(new_comments_html)
+        prsntz.play()
       error: () ->
         alert("An error occured while saving your comment")
     false

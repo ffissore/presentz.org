@@ -33,7 +33,7 @@
         <h5>Tools</h5>
         <ul>
           <li><a href="javascript:void(0)" onclick="show('#comments');">Show all comments</a></li>
-          <li><a href="javascript:void(0)" onclick="show('#comments, #comment_form');">Comment this slide</a></li>
+          <li><a href="javascript:void(0)" onclick="comment_this_slide('#comments, #comment_form');">Comment this slide</a></li>
           <li><a href="javascript:void(0)" onclick="show('#comments, #comment_form');">Comment this presentation</a></li>
           <li><a href="javascript:void(0)" onclick="show('#chapters');">Show chapters list</a></li>
           {!
@@ -56,16 +56,12 @@
       
           {! form commenti !}
           <div id="comment_form" style="display:none;">
+            You are commenting
             {>_comment_form/}
           </div>
           {! fine form commenti !}
 
-          {#comments}
-          <div name="{chapter_index}_{slide_index}" class="item_comment">
-            <p><span class="user">{user.name},</span> <span class="time">{nice_time}</span>{?slide_title} on slide <a href="javascript:void(0)" class="slide_title">"{slide_title}"</a> - <a href="javascript:void(0)" class="slide_time">@ {slide_nice_time}</a>{/slide_title}</p>
-            <div class="text_comment">{text}</div>
-          </div>
-          {/comments}
+          {>_comments/}
         </div>
         {!
         <div class="paging">

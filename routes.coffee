@@ -220,36 +220,10 @@ exports.show_presentation = (req, res, next) ->
       slide.index = (slide_num + 1).pad(number_of_zeros_in_index)
       slide.css = "class=\"even\"" if slide.index % 2 is 0
 
-  comments_of = (presentation) ->
-    comments = []
-    for comment in presentation.comments
-      comment.nice_time = moment(comment.time).fromNow()
-      comments.push comment
-
-    accumulated_time = 0
-    chapter_index = 0
-    slide_index = 0
-    for chapter in presentation.chapters
-      for slide in chapter.slides
-        accumulated_time += slide.time
-        for comment in slide.comments
-          comment.slide_title = slide.title
-          comment.slide_nice_time = utils.pretty_duration accumulated_time, ":", ""
-          comment.nice_time = moment(comment.time).fromNow()
-          comment.slide_index = slide_index
-          comment.chapter_index = chapter_index
-          comments.push comment
-        slide_index++
-      chapter_index++
-      accumulated_time = chapter.duration
-
-    comments
-
   path = decodeURIComponent(req.path).substring(1)
   storage.load_entire_presentation_from_path path, (err, presentation) ->
     return next(err) if err?
 
-    duration = _.reduce (chapter.duration for chapter in presentation.chapters), (one, two) -> one + two
     slides = []
     duration = 0
     for chapter_index in [0...presentation.chapters.length]
@@ -289,10 +263,10 @@ exports.comment_presentation = (req, res, next) ->
 
       node_to_link_to = presentation
 
-      if params.chapter? and params.slide?
+      if params.chapter? and params.chapter isnt "" and params.slide? and params.slide isnt ""
         node_to_link_to = presentation.chapters[params.chapter].slides[params.slide]
 
-      callback(undefined, node_to_link_to)
+      callback(undefined, node_to_link_to, presentation)
 
   save_comment_and_link = (node_to_link_to, callback) ->
     comment =
@@ -304,16 +278,23 @@ exports.comment_presentation = (req, res, next) ->
       return callback(err) if err?
       routes.db.createEdge comment, node_to_link_to, { label: "comment_of" }, (err) ->
         return callback(err) if err?
-        routes.db.createEdge req.user, comment, { label: "authored_comment" }, callback
+        node_to_link_to.comments.push comment
+        node_to_link_to.comments = _.sortBy node_to_link_to.comments, (comment) -> -1 * comment.time
+        routes.db.createEdge req.user, comment, { label: "authored_comment" }, (err) ->
+          return callback(err) if err?
+          comment.user = req.user
+          callback()
 
-  get_node_to_link_to (err, node_to_link_to) ->
+  get_node_to_link_to (err, node_to_link_to, presentation) ->
     return next(err) if err?
 
     save_comment_and_link node_to_link_to, (err) ->
       if err?
         res.send 500
       else
-        res.send 201
+        comments = comments_of presentation
+        res.render "_comments",
+          comments: comments
 
 exports.static = (view_name) ->
   return (req, res) ->
@@ -326,3 +307,28 @@ exports.ensure_is_logged = (req, res, next) ->
 
   req.notify "error", "you need to be logged in"
   res.redirect 302, "/"
+
+comments_of = (presentation) ->
+  comments = []
+  for comment in presentation.comments
+    comment.nice_time = moment(comment.time).fromNow()
+    comments.push comment
+
+  accumulated_time = 0
+  chapter_index = 0
+  slide_index = 0
+  for chapter in presentation.chapters
+    for slide in chapter.slides
+      accumulated_time += slide.time
+      for comment in slide.comments
+        comment.slide_title = slide.title or "Slide #{slide_index + 1}"
+        comment.slide_nice_time = utils.pretty_duration accumulated_time, ":", ""
+        comment.nice_time = moment(comment.time).fromNow()
+        comment.slide_index = slide_index
+        comment.chapter_index = chapter_index
+        comments.push comment
+      slide_index++
+    chapter_index++
+    accumulated_time = chapter.duration
+
+  comments
