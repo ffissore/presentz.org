@@ -1,0 +1,3 @@
+{#comment}
+  {>_comment/}
+{/comment}

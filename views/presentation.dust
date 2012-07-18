@@ -61,7 +61,9 @@
           </div>
           {! fine form commenti !}
 
-          {>_comments/}
+          {#comments}
+            {>_comment/}
+          {/comments}
         </div>
         {!
         <div class="paging">

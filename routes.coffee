@@ -6,8 +6,7 @@ url = require "url"
 dateutil = require "dateutil"
 moment = require "moment"
 
-routes = {}
-
+db = undefined
 dustjs = {}
 dustjs.helpers = {}
 dustjs.helpers.draw_boxes = (number_of_boxes) ->
@@ -43,21 +42,21 @@ storage.load_presentation_from_path = (path, callback) ->
   presentation_name = path_parts[1]
 
   query = "select from V where _type = 'presentation' and id = '#{presentation_name}' and out.label CONTAINSALL 'part_of' and out.in.id CONTAINSALL '#{catalog_name}'"
-  routes.db.command query, (err, results) ->
+  db.command query, (err, results) ->
     return callback(err) if err?
     return callback("no record found") if results.length is 0
     presentation = results[0]
     storage.load_comments_of presentation, callback
 
 storage.load_user_of = (comment, callback) ->
-  routes.db.fromVertex(comment).inVertexes "authored_comment", (err, users) ->
+  db.fromVertex(comment).inVertexes "authored_comment", (err, users) ->
     return callback(err) if err?
     return callback("Too many users") if users.length > 1
     comment.user = users[0]
     callback()
 
 storage.load_comments_of = (node, callback) ->
-  routes.db.fromVertex(node).inVertexes "comment_of", (err, comments) ->
+  db.fromVertex(node).inVertexes "comment_of", (err, comments) ->
     return callback(err) if err?
     node.comments = _.sortBy comments, (comment) -> -1 * comment.time
     utils.exec_for_each storage.load_user_of, node.comments, (err) ->
@@ -65,13 +64,13 @@ storage.load_comments_of = (node, callback) ->
       callback(undefined, node)
 
 storage.load_chapters_of = (presentation, callback) ->
-  routes.db.fromVertex(presentation).inVertexes "chapter_of", (err, chapters) ->
+  db.fromVertex(presentation).inVertexes "chapter_of", (err, chapters) ->
     return callback(err) if err?
     presentation.chapters = _.sortBy chapters, (chapter) -> chapter._index
     return callback(undefined, presentation)
 
 storage.load_slides_of = (chapter, callback) ->
-  routes.db.fromVertex(chapter).inVertexes "slide_of", (err, slides) ->
+  db.fromVertex(chapter).inVertexes "slide_of", (err, slides) ->
     return callback(err) if err?
     chapter.slides = _.sortBy slides, (slide) -> slide.time
     slides_with_loaded_comments = 0
@@ -90,18 +89,18 @@ storage.load_entire_presentation_from_path = (path, callback) ->
         return callback(err) if err?
         return callback(undefined, presentation)
 
-exports.init = (db) ->
-  routes.db = db
+exports.init = (database) ->
+  db = database
   @
 
 exports.list_catalogs = (req, res, next) ->
   number_of_presentations = (catalog, callback) ->
-    routes.db.getInEdges catalog, "part_of", (err, edges) ->
+    db.getInEdges catalog, "part_of", (err, edges) ->
       return next(err) if err?
       catalog.presentations_length = edges.length
       callback(undefined, catalog)
 
-  routes.db.command "SELECT FROM V WHERE _type = 'catalog' and (hidden is null or hidden = 'false') ORDER BY name", (err, catalogs) ->
+  db.command "SELECT FROM V WHERE _type = 'catalog' and (hidden is null or hidden = 'false') ORDER BY name", (err, catalogs) ->
     return next(err) if err?
 
     utils.exec_for_each number_of_presentations, catalogs, (err) ->
@@ -124,12 +123,12 @@ exports.show_catalog = (req, res, next) ->
     pres.time = dateutil.format(dateutil.parse(presentation.time, "YYYYMMDD"), "Y/m") if presentation.time
     pres
 
-  routes.db.command "SELECT FROM V WHERE _type = 'catalog' and id = '#{req.params.catalog_name}'", (err, results) ->
+  db.command "SELECT FROM V WHERE _type = 'catalog' and id = '#{req.params.catalog_name}'", (err, results) ->
     return next(err) if err?
     return next("no record found") if results.length is 0
 
     catalog = results[0]
-    routes.db.fromVertex(catalog).inVertexes "part_of", (err, presentations) ->
+    db.fromVertex(catalog).inVertexes "part_of", (err, presentations) ->
       return next(err) if err?
 
       utils.exec_for_each storage.load_chapters_of, presentations, (err) ->
@@ -189,6 +188,27 @@ exports.raw_presentation = (req, res, next) ->
     res.send presentation
 
 exports.show_presentation = (req, res, next) ->
+  comments_of = (presentation) ->
+    comments = []
+    for comment in presentation.comments
+      comment.nice_time = moment(comment.time).fromNow()
+      comments.push comment
+
+    chapter_index = 0
+    for chapter in presentation.chapters
+      slide_index = 0
+      for slide in chapter.slides
+        for comment in slide.comments
+          comment.slide_title = slide.title or "Slide #{slide_index + 1}"
+          comment.nice_time = moment(comment.time).fromNow()
+          comment.slide_index = slide_index
+          comment.chapter_index = chapter_index
+          comments.push comment
+        slide_index++
+      chapter_index++
+
+    comments
+
   slide_to_slide = (slide, chapter_index, slide_index, duration) ->
     slide.title = "Slide #{ slide_index + 1 }" if !slide.title?
     slide.chapter_index = chapter_index
@@ -266,35 +286,38 @@ exports.comment_presentation = (req, res, next) ->
       if params.chapter? and params.chapter isnt "" and params.slide? and params.slide isnt ""
         node_to_link_to = presentation.chapters[params.chapter].slides[params.slide]
 
-      callback(undefined, node_to_link_to, presentation)
+      callback(undefined, node_to_link_to)
 
-  save_comment_and_link = (node_to_link_to, callback) ->
+  save_and_link_comment = (node_to_link_to, callback) ->
     comment =
       _type: "comment"
       text: params.comment
       time: new Date()
 
-    routes.db.createVertex comment, (err, comment) ->
+    db.createVertex comment, (err, comment) ->
       return callback(err) if err?
-      routes.db.createEdge comment, node_to_link_to, { label: "comment_of" }, (err) ->
+      db.createEdge comment, node_to_link_to, { label: "comment_of" }, (err) ->
         return callback(err) if err?
-        node_to_link_to.comments.push comment
-        node_to_link_to.comments = _.sortBy node_to_link_to.comments, (comment) -> -1 * comment.time
-        routes.db.createEdge req.user, comment, { label: "authored_comment" }, (err) ->
+        db.createEdge req.user, comment, { label: "authored_comment" }, (err) ->
           return callback(err) if err?
-          comment.user = req.user
-          callback()
+          callback(undefined, comment)
 
-  get_node_to_link_to (err, node_to_link_to, presentation) ->
+  get_node_to_link_to (err, node_to_link_to) ->
     return next(err) if err?
 
-    save_comment_and_link node_to_link_to, (err) ->
+    save_and_link_comment node_to_link_to, (err, comment) ->
+      comment.user = req.user
+      comment.chapter_index = params.chapter
+      comment.slide_index = params.slide
+      comment.nice_time = moment(comment.time).fromNow()
+      if node_to_link_to._type is "slide"
+        comment.slide_title = node_to_link_to.title or "Slide #{params.slide + 1}"
+
       if err?
         res.send 500
       else
-        comments = comments_of presentation
-        res.render "_comments",
-          comments: comments
+        res.render "_comment_",
+          comment: comment
 
 exports.static = (view_name) ->
   return (req, res) ->
@@ -307,28 +330,3 @@ exports.ensure_is_logged = (req, res, next) ->
 
   req.notify "error", "you need to be logged in"
   res.redirect 302, "/"
-
-comments_of = (presentation) ->
-  comments = []
-  for comment in presentation.comments
-    comment.nice_time = moment(comment.time).fromNow()
-    comments.push comment
-
-  accumulated_time = 0
-  chapter_index = 0
-  for chapter in presentation.chapters
-    slide_index = 0
-    for slide in chapter.slides
-      accumulated_time += slide.time
-      for comment in slide.comments
-        comment.slide_title = slide.title or "Slide #{slide_index + 1}"
-        comment.slide_nice_time = utils.pretty_duration accumulated_time, ":", ""
-        comment.nice_time = moment(comment.time).fromNow()
-        comment.slide_index = slide_index
-        comment.chapter_index = chapter_index
-        comments.push comment
-      slide_index++
-    chapter_index++
-    accumulated_time = chapter.duration
-
-  comments
