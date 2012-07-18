@@ -311,7 +311,7 @@ exports.comment_presentation = (req, res, next) ->
       comment.slide_index = params.slide
       comment.nice_time = moment(comment.time).fromNow()
       if node_to_link_to._type is "slide"
-        comment.slide_title = node_to_link_to.title or "Slide #{params.slide + 1}"
+        comment.slide_title = node_to_link_to.title or "Slide #{parseInt(params.slide) + 1}"
 
       if err?
         res.send 500

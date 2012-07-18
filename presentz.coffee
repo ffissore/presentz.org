@@ -40,10 +40,11 @@ assetsMiddleware = assetManager
     path: "./public/assets/js/"
     dataType: "javascript"
     files: [
-      "jquery/jquery-1.7.1.min.js",
+      "jquery/jquery-1.7.2.min.js",
       "jquery/jquery.easing.1.3.js",
       "jquery/jquery.scrollTo-1.4.2-min.js",
-      "modernizr.2.0.6.js",
+      "jquery/jquery-ui-1.8.21.custom.min.js",
+      "modernizr.js",
       "main.coffee"
     ]
     stale: true

@@ -203,6 +203,35 @@ comment = (to_show_selector, chapter_index_val, slide_index_val) ->
   $("#comment_form form input[name=slide_index]").val slide_index_val
   true
 
+insert_new_comment = ($container, chapter, slide, new_comment_html) ->
+  if $("div.item_comment", $container).length is 0
+    $("div.content_comments", $container).append(new_comment_html)
+    return
+
+  if chapter is "" and slide is ""
+    $("div.item_comment", $container).first().before(new_comment_html)
+    return
+    
+  if $("div.item_comment[chapter_index=#{chapter}][slide_index=#{slide}]", $container).length isnt 0
+    $("div.item_comment[chapter_index=#{chapter}][slide_index=#{slide}]", $container).first().before(new_comment_html)
+    return
+
+  chapter = parseInt(chapter)
+  slide = parseInt(slide)
+  $target_comment = undefined
+  for c in $("div.item_comment", $container) when !$target_comment?
+    $comment = $(c)
+    current_chapter = parseInt($comment.attr("chapter_index"))
+    current_slide = parseInt($comment.attr("slide_index"))
+    if current_chapter > chapter or (current_chapter is chapter and current_slide > slide)
+      $target_comment = $comment
+    
+  if $target_comment?
+    $target_comment.before(new_comment_html)
+    return
+  
+  $("div.content_comments", $container).append(new_comment_html)
+
 window.init_presentz = init_presentz
 window.fbShare = fbShare
 window.twitterShare = twitterShare
@@ -237,14 +266,16 @@ $().ready () ->
         comment: text
         chapter: chapter_index_val
         slide: slide_index_val
-      success: (new_comments_html) ->
+      success: (new_comment_html) ->
+        $comments = $("#comments")
+        insert_new_comment($comments, chapter_index_val, slide_index_val, new_comment_html)
+        #$new_comment = $("div.item_comment[chapter_index=#{$chapter_index.val()}][slide_index=#{$slide_index.val()}]").first()
+        #$("p", $new_comment).effect("highlight", {color: "#5d7908"}, 1500)
+        prsntz.play()
+        hide "#comment_form"
         $textarea.val ""
         $chapter_index.val ""
         $slide_index.val ""
-        hide "#comment_form"
-        $("div.item_comment").remove()
-        $("#comments div.content_comments").append(new_comments_html)
-        prsntz.play()
       error: () ->
         alert("An error occured while saving your comment")
     false
