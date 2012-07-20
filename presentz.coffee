@@ -4,10 +4,8 @@ orient = require "orientdb"
 cons = require "consolidate"
 OrientDBStore = require("connect-orientdb")(express)
 _ = require "underscore"
-assetManager = require("connect-assetmanager")
-assetHandler = require("connect-assetmanager-handlers")
-handlers = require "./handlers"
 auth = require "./auth"
+assets = require "./assets"
 
 Number:: pad = (pad, pad_char = "0") ->
   s = @.toString()
@@ -34,76 +32,6 @@ everyauth = auth.init(config, db)
 api = require("./api").init(db)
 routes = require("./routes").init(db)
 
-assetsMiddleware = assetManager
-  js_main:
-    route: /\/assets\/js\/[a-z0-9]+main\.js/
-    path: "./public/assets/js/"
-    dataType: "javascript"
-    files: [
-      "jquery/jquery-1.7.2.min.js",
-      "jquery/jquery.easing.1.3.js",
-      "jquery/jquery.scrollTo-1.4.2-min.js",
-      "jquery/jquery-ui-1.8.21.custom.min.js",
-      "modernizr.js",
-      "main.coffee"
-    ]
-    stale: true
-    preManipulate:
-      "^": [
-        handlers.coffeeRenderer
-      ]
-    postManipulate:
-      "^": [
-        assetHandler.uglifyJsOptimize
-      ]
-  js_pres:
-    route: /\/assets\/js\/[a-z0-9]+pres\.js/
-    path: "./public/assets/js/"
-    dataType: "javascript"
-    files: [
-      "froogaloop.js",
-      "swfobject.js",
-      "mediaelement-and-player.js",
-      "presentz.js",
-      "show_presentation.coffee"
-    ]
-    stale: true
-    preManipulate:
-      "^": [
-        handlers.coffeeRenderer
-      ]
-    postManipulate:
-      "^": [
-        assetHandler.uglifyJsOptimize
-      ]
-  css:
-    route: /\/assets\/css\/[a-z0-9]+\.css/
-    path: "./public/assets/css/"
-    dataType: "css"
-    files: [
-      "mediaelementplayer.css",
-      "reset.css",
-      "default.css",
-      "font_style.css",
-      "fe_style.css",
-      "default_responsive.css",
-      "fe_style_responsive.css"
-    ]
-    stale: true
-    preManipulate:
-      MSIE: [
-        assetHandler.yuiCssOptimize,
-        assetHandler.fixVendorPrefixes,
-        assetHandler.fixGradients,
-        assetHandler.stripDataUrlsPrefix
-      ]
-      "^": [
-        assetHandler.yuiCssOptimize,
-        assetHandler.fixVendorPrefixes,
-        assetHandler.fixGradients,
-        assetHandler.replaceImageRefToBase64(__dirname + "/public/assets/img/")
-      ]
-
 app.engine("dust", cons.dust)
 
 app.configure ->
@@ -112,7 +40,7 @@ app.configure ->
   app.use express.logger()
   app.use express.bodyParser()
   app.use express.cookieParser(config.presentz.session_secret)
-  app.use assetsMiddleware
+  app.use assets.assetsMiddleware
   app.use express.session
     store: new OrientDBStore(session_store_options)
   app.use express.methodOverride()
@@ -129,7 +57,7 @@ app.configure "production", ->
   app.use express.errorHandler()
 
 app.locals
-  assetsCacheHashes: assetsMiddleware.cacheHashes
+  assetsCacheHashes: assets.assetsMiddleware.cacheHashes
 
 app.get "/", routes.static "index"
 app.get "/favicon.ico", express.static "#{__dirname}/public/assets/images"

@@ -109,7 +109,11 @@
 </section>
 {/body}
 
-{<presentz}
+{<presentz_css}
+<link href="/assets/css/{assetsCacheHashes.css}pres.css" rel="stylesheet" type="text/css"/>
+{/presentz_css}
+
+{<presentz_script}
 <script src="/assets/js/{assetsCacheHashes.js_main}pres.js" type="text/javascript"></script>
 <script src="https://www.youtube.com/player_api" type="text/javascript"></script>
 <script type="text/javascript">
@@ -122,4 +126,4 @@ $().ready(function() {
   })
  });
 </script>
-{/presentz}
+{/presentz_script}
