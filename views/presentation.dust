@@ -32,7 +32,8 @@
       <div id="tools">
         <h5>Tools</h5>
         <ul>
-          <li><a href="javascript:void(0)" onclick="show('#comments');">Show all comments</a></li>
+          <li><a href="javascript:void(0)" onclick="show('#allcomments');">Show all comments</a></li>
+          <li><a href="javascript:void(0)" onclick="show('#comments');">Show chapters comments</a></li>
           <li><a href="javascript:void(0)" onclick="comment_this_slide('#comments, #comment_form', '#comment_form span');">Comment this slide</a></li>
           <li><a href="javascript:void(0)" onclick="comment_this_presentation('#comments, #comment_form', '#comment_form span');">Comment this presentation</a></li>
           <li><a href="javascript:void(0)" onclick="show('#chapters');">Show chapters list</a></li>
@@ -42,16 +43,29 @@
           <li><a href="javascript:void(0)" onclick="show('#share');">Share</a></li>
         </ul>
       </div>
+      {! box tutti i commenti !}
+      <div id="allcomments" class="box8" style="display:none;">
+        <div class="content_comments">
+          <h5>Comments</h5>
+          {#comments}
+            {>_comment/}
+          {/comments}
+        </div>
+      </div>
+      {! fine box tutti i commenti !}
+
       {! box commenti !}
       <div id="comments" class="box8" style="display:none;">
         <div class="content_comments">
           <h5>Comments</h5>
           {! da visualizzare solo quando siamo nei commenti della singola slide !}
+          {!
           <div id="header_comment_slide" style="display:none;">
             <p class="box6 title">Comments on slide:<a href="javascript:void(0)">"Titolo slide 1"</a></p>
             <a href="javascript:void(0)" class="box2" id="remove_comment_filter">Remove Comment Filter</a>
             <div class="clear"></div>
           </div>
+          !}
           {! FINE commenti della singola slide !}
       
           {! form commenti !}

@@ -140,6 +140,13 @@ init_presentz = (presentation) ->
 
     window.current_chapter = new_chapter_index
     window.current_slide = new_slide_index
+
+    $("#comments div.item_comment").each (idx, elem) ->
+      $elem = $(elem)
+      if parseInt($elem.attr("chapter_index")) isnt window.current_chapter or parseInt($elem.attr("slide_index")) isnt window.current_slide
+        $elem.hide()
+      else
+        $elem.show()
     return
 
   prsntz.init presentation

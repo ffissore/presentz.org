@@ -317,7 +317,7 @@
         width: 700px;
     }
 
-    #tools h5, #comments h5, #chapters h5, #embed h5, #share h5 {
+    #tools h5, #allcomments h5, #comments h5, #chapters h5, #embed h5, #share h5 {
         background-size: 460px auto;
     }
 
@@ -499,7 +499,7 @@
         width: 1180px;
     }
 
-    #tools h5, #comments h5, #chapters h5, #embed h5, #share h5 {
+    #tools h5, #allcomments h5, #comments h5, #chapters h5, #embed h5, #share h5 {
         background-size: 780px auto;
     }
 

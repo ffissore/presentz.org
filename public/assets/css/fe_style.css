@@ -870,7 +870,7 @@ header h1 a {
     padding-bottom: 50px;
 }
 
-#tools h5, #comments h5, #chapters h5, #embed h5, #share h5 {
+#tools h5, #allcomments h5, #comments h5, #chapters h5, #embed h5, #share h5 {
     text-align: center;
     background-image: data-url(../img/fe/bg_title.png);
     background-position: center;
@@ -920,6 +920,14 @@ header h1 a {
     padding-bottom: 40px;
 }
 
+#allcomments {
+    float: none;
+    margin: 0px auto;
+    font-size: 12px;
+    text-shadow: 0px 1px 0px #000000;
+    padding-bottom: 40px;
+}
+
 .content_comments {
     padding-bottom: 20px;
     margin-bottom: 20px;
@@ -938,6 +946,16 @@ header h1 a {
 }
 
 #comments .text_comment {
+    margin-top: 10px;
+    border-left: 3px solid #494949;
+    padding-left: 20px;
+}
+
+#allcomments .user {
+    color: #FFFFFF;
+}
+
+#allcomments .text_comment {
     margin-top: 10px;
     border-left: 3px solid #494949;
     padding-left: 20px;
