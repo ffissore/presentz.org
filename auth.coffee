@@ -82,6 +82,7 @@ twitter_init = (config, db) ->
   everyauth.twitter.configure
     consumerKey: config.auth.twitter.consumer_key
     consumerSecret: config.auth.twitter.consumer_secret
+    myHostname: config.auth.hostname
     findOrCreateUser: find_or_create_user(db, "SELECT @rid FROM V where _type = 'user' and twitter_id = ", merge_twitter_user_data)
     redirectPath: "/r/back_to_referer"
 
@@ -98,6 +99,7 @@ linkedin_init = (config, db) ->
   everyauth.linkedin.configure
     consumerKey: config.auth.linkedin.consumer_key
     consumerSecret: config.auth.linkedin.consumer_secret
+    myHostname: config.auth.hostname
     findOrCreateUser: find_or_create_user(db, "SELECT @rid FROM V where _type = 'user' and linkedin_id = ", merge_linkedin_user_data)
     redirectPath: "/r/back_to_referer"
 
