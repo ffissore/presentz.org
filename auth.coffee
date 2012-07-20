@@ -2,8 +2,8 @@ everyauth = require "everyauth"
 
 merge_facebook_user_data = (user, ext_user) ->
   user.name ?= ext_user.name
-  user.email ?= ext_user.email
   user.link ?= ext_user.link
+  user.email ?= ext_user.email
   user.facebook_id ?= ext_user.id
 
 merge_twitter_user_data = (user, ext_user) ->
@@ -13,13 +13,13 @@ merge_twitter_user_data = (user, ext_user) ->
 
 merge_google_user_data = (user, ext_user) ->
   user.name ?= ext_user.name || ext_user.given_name
-  user.google_id ?= ext_user.id
   user.link ?= ext_user.link
+  user.google_id ?= ext_user.id
 
 merge_linkedin_user_data = (user, ext_user) ->
   user.name ?= "#{ext_user.firstName} #{ext_user.lastName}"
-  user.linkedin_id ?= ext_user.id
   user.link = ext_user.publicProfileUrl
+  user.linkedin_id ?= ext_user.id
 
 merge_github_user_data = (user, ext_user) ->
   user.link ?= ext_user.html_url
@@ -27,9 +27,9 @@ merge_github_user_data = (user, ext_user) ->
   user.github_id ?= ext_user.login
 
 merge_foursquare_user_data = (user, ext_user) ->
-  user.foursquare_id ?= ext_user.id
   user.name ?= "#{ext_user.firstName} #{ext_user.lastName}"
   user.email ?= ext_user.contact.email
+  user.foursquare_id ?= ext_user.id
 
 create_or_update_user = (db, session, user_data, merge_function, promise) ->
   save = (user) ->
