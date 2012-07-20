@@ -2,15 +2,13 @@ fs = require "fs"
 orient = require "orientdb"
 _s = require "underscore.string"
 
-config = require "./config.development"
-
 server = new orient.Server
-  host: config.storage.server.host
-  port: config.storage.server.port
+  host: "localhost"
+  port: 2424
 
 db = new orient.GraphDb "presentz", server,
-  user_name: config.storage.db.user_name
-  user_password: config.storage.db.user_password
+  user_name: "admin"
+  user_password: "admin"
 
 db.open ->
   db.createVertex { _type: "root" }, (err, root) ->
