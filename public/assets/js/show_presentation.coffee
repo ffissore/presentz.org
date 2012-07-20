@@ -140,13 +140,7 @@ init_presentz = (presentation) ->
 
     window.current_chapter = new_chapter_index
     window.current_slide = new_slide_index
-
-    $("#comments div.item_comment").each (idx, elem) ->
-      $elem = $(elem)
-      if parseInt($elem.attr("chapter_index")) isnt window.current_chapter or parseInt($elem.attr("slide_index")) isnt window.current_slide
-        $elem.hide()
-      else
-        $elem.show()
+    show_comments_for_slide(new_chapter_index, new_slide_index)
     return
 
   prsntz.init presentation
@@ -194,6 +188,14 @@ show = (to_show_selector) ->
 
   true
 
+show_comments_for_slide = (chapter, slide) ->
+  $("#comments div.item_comment").each (idx, elem) ->
+    $elem = $(elem)
+    if $elem.attr("chapter_index") isnt "#{chapter}" or $elem.attr("slide_index") isnt "#{slide}"
+      $elem.hide()
+    else
+      $elem.show()
+
 comment_this_slide = (to_show_selector, notify_label_selector) ->
   comment to_show_selector, window.current_chapter, window.current_slide
   title = presentation.chapters[window.current_chapter].slides[window.current_slide].title
@@ -201,10 +203,12 @@ comment_this_slide = (to_show_selector, notify_label_selector) ->
     $(notify_label_selector).text "slide \"#{title}\""
   else
     $(notify_label_selector).text "slide #{window.current_slide + 1}"
+  show_comments_for_slide(window.current_chapter, window.current_slide)
 
 comment_this_presentation = (to_show_selector, notify_label_selector) ->
   comment to_show_selector, "", ""
   $(notify_label_selector).text "the presentation"
+  show_comments_for_slide("", "")
 
 comment = (to_show_selector, chapter_index_val, slide_index_val) ->
   show to_show_selector
