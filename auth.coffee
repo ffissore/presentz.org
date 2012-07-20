@@ -74,6 +74,7 @@ facebook_init = (config, db) ->
     appId: config.auth.facebook.app_id
     appSecret: config.auth.facebook.app_secret
     scope: "email"
+    myHostname: config.auth.hostname
     findOrCreateUser: find_or_create_user(db, "SELECT @rid FROM V where _type = 'user' and facebook_id = ", merge_facebook_user_data)
     redirectPath: "/r/back_to_referer"
 
@@ -89,7 +90,7 @@ google_init = (config, db) ->
     appId: config.auth.google.app_id
     appSecret: config.auth.google.app_secret
     scope: "https://www.googleapis.com/auth/userinfo.profile"
-    myHostname: config.auth.google.hostname
+    myHostname: config.auth.hostname
     findOrCreateUser: find_or_create_user(db, "SELECT @rid FROM V where _type = 'user' and google_id = ", merge_google_user_data)
     redirectPath: "/r/back_to_referer"
 
@@ -104,6 +105,7 @@ github_init = (config, db) ->
   everyauth.github.configure
     appId: config.auth.github.app_id
     appSecret: config.auth.github.app_secret
+    myHostname: config.auth.hostname
     findOrCreateUser: find_or_create_user(db, "SELECT @rid FROM V where _type = 'user' and github_id = ", merge_github_user_data)
     callbackPath: "/auth/github/callback"
     redirectPath: "/r/back_to_referer"
@@ -112,6 +114,7 @@ foursquare_init = (config, db) ->
   everyauth.foursquare.configure
     appId: config.auth.foursquare.app_id
     appSecret: config.auth.foursquare.app_secret
+    myHostname: config.auth.hostname
     findOrCreateUser: find_or_create_user(db, "SELECT @rid FROM V where _type = 'user' and foursquare_id = ", merge_foursquare_user_data)
     redirectPath: "/r/back_to_referer"
 
