@@ -76,7 +76,7 @@ app.get "/:catalog_name/:presentation", routes.show_presentation
 app.get "/:catalog_name", routes.show_catalog
 app.post "/:catalog_name/:presentation/comment", routes.comment_presentation
 
-app.listen 3000
-console.log "Express server listening on port 3000 in %s mode", app.settings.env
+app.listen config.port
+console.log "Express server listening on port #{config.port} in #{app.settings.env} mode"
 
 require "./subdomain"
