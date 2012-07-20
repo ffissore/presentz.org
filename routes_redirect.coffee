@@ -2,11 +2,12 @@ exports.redirect_to = (url) ->
   return (req, res, next) ->
     res.redirect 302, url
 
-exports.back_to_referer = (req, res, next) ->
-  if req.headers? and req.headers.referer?
-    res.redirect 302, req.headers.referer
-  else
-    res.redirect 302, "/"
+exports.back_to_referer = (config) ->
+  return (req, res, next) ->
+    if req.headers? and req.headers.referer?
+      res.redirect 302, req.headers.referer
+    else
+      res.redirect 302, config.hostname
 
 exports.redirect_to_catalog_if_subdomain = () ->
   third_level_domain_regex = /([\w]+)\.[\w]+\..+/
