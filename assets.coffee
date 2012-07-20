@@ -11,7 +11,7 @@ coffee_renderer = (file, path, index, isLast, callback) ->
 
 new_js_conf = (suffix, files) ->
   conf =
-    route: new RegExp("\/assets\/js\/[a-z0-9]+#{suffix}\.js")
+    route: new RegExp("\/managedassets\/js\/[a-z0-9]+#{suffix}\.js")
     path: "./public/assets/js/"
     dataType: "javascript"
     files: files
@@ -28,7 +28,7 @@ new_js_conf = (suffix, files) ->
 
 new_css_conf = (suffix, files) ->
   conf =
-    route: new RegExp("/assets\/css\/[a-z0-9]+#{suffix}\.css")
+    route: new RegExp("/managedassets\/css\/[a-z0-9]+#{suffix}\.css")
     path: "./public/assets/css/"
     dataType: "css"
     files: files

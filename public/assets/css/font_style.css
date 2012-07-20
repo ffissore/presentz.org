@@ -2,8 +2,8 @@
 
 @font-face {
     font-family: 'AharoniBold';
-    src: url('../fonts/aharoni/ahronbd-webfont.eot');
-    src: url('../fonts/aharoni/ahronbd-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/aharoni/ahronbd-webfont.woff') format('woff'), url('../fonts/aharoni/ahronbd-webfont.ttf') format('truetype'), url('../fonts/aharoni/ahronbd-webfont.svg#AharoniBold') format('svg');
+    src: url('../../assets/fonts/aharoni/ahronbd-webfont.eot');
+    src: url('../../assets/fonts/aharoni/ahronbd-webfont.eot?#iefix') format('embedded-opentype'), url('../../assets/fonts/aharoni/ahronbd-webfont.woff') format('woff'), url('../../assets/fonts/aharoni/ahronbd-webfont.ttf') format('truetype'), url('../../assets/fonts/aharoni/ahronbd-webfont.svg#AharoniBold') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -11,8 +11,8 @@
 
 @font-face {
     font-family: 'ChivoBlack';
-    src: url('../fonts/chivo/Chivo-Black-webfont.eot');
-    src: url('../fonts/chivo/Chivo-Black-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/chivo/Chivo-Black-webfont.woff') format('woff'), url('../fonts/chivo/Chivo-Black-webfont.ttf') format('truetype'), url('../fonts/chivo/Chivo-Black-webfont.svg#ChivoBlack') format('svg');
+    src: url('../../assets/fonts/chivo/Chivo-Black-webfont.eot');
+    src: url('../../assets/fonts/chivo/Chivo-Black-webfont.eot?#iefix') format('embedded-opentype'), url('../../assets/fonts/chivo/Chivo-Black-webfont.woff') format('woff'), url('../../assets/fonts/chivo/Chivo-Black-webfont.ttf') format('truetype'), url('../../assets/fonts/chivo/Chivo-Black-webfont.svg#ChivoBlack') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -20,8 +20,8 @@
 
 @font-face {
     font-family: 'ChivoBlackItalic';
-    src: url('../fonts/chivo/Chivo-BlackItalic-webfont.eot');
-    src: url('../fonts/chivo/Chivo-BlackItalic-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/chivo/Chivo-BlackItalic-webfont.woff') format('woff'), url('../fonts/chivo/Chivo-BlackItalic-webfont.ttf') format('truetype'), url('../fonts/chivo/Chivo-BlackItalic-webfont.svg#ChivoBlackItalic') format('svg');
+    src: url('../../assets/fonts/chivo/Chivo-BlackItalic-webfont.eot');
+    src: url('../../assets/fonts/chivo/Chivo-BlackItalic-webfont.eot?#iefix') format('embedded-opentype'), url('../../assets/fonts/chivo/Chivo-BlackItalic-webfont.woff') format('woff'), url('../../assets/fonts/chivo/Chivo-BlackItalic-webfont.ttf') format('truetype'), url('../../assets/fonts/chivo/Chivo-BlackItalic-webfont.svg#ChivoBlackItalic') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -29,8 +29,8 @@
 
 @font-face {
     font-family: 'ChivoItalic';
-    src: url('../fonts/chivo/Chivo-Italic-webfont.eot');
-    src: url('../fonts/chivo/Chivo-Italic-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/chivo/Chivo-Italic-webfont.woff') format('woff'), url('../fonts/chivo/Chivo-Italic-webfont.ttf') format('truetype'), url('../fonts/chivo/Chivo-Italic-webfont.svg#ChivoItalic') format('svg');
+    src: url('../../assets/fonts/chivo/Chivo-Italic-webfont.eot');
+    src: url('../../assets/fonts/chivo/Chivo-Italic-webfont.eot?#iefix') format('embedded-opentype'), url('../../assets/fonts/chivo/Chivo-Italic-webfont.woff') format('woff'), url('../../assets/fonts/chivo/Chivo-Italic-webfont.ttf') format('truetype'), url('../../assets/fonts/chivo/Chivo-Italic-webfont.svg#ChivoItalic') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -38,8 +38,8 @@
 
 @font-face {
     font-family: 'ChivoRegular';
-    src: url('../fonts/chivo/Chivo-Regular-webfont.eot');
-    src: url('../fonts/chivo/Chivo-Regular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/chivo/Chivo-Regular-webfont.woff') format('woff'), url('../fonts/chivo/Chivo-Regular-webfont.ttf') format('truetype'), url('../fonts/chivo/Chivo-Regular-webfont.svg#ChivoRegular') format('svg');
+    src: url('../../assets/fonts/chivo/Chivo-Regular-webfont.eot');
+    src: url('../../assets/fonts/chivo/Chivo-Regular-webfont.eot?#iefix') format('embedded-opentype'), url('../../assets/fonts/chivo/Chivo-Regular-webfont.woff') format('woff'), url('../../assets/fonts/chivo/Chivo-Regular-webfont.ttf') format('truetype'), url('../../assets/fonts/chivo/Chivo-Regular-webfont.svg#ChivoRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -47,8 +47,8 @@
 
 @font-face {
     font-family: 'PTSansBoldItalic';
-    src: url('../fonts/ptsans/PTS76F-webfont.eot');
-    src: url('../fonts/ptsans/PTS76F-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/ptsans/PTS76F-webfont.woff') format('woff'), url('../fonts/ptsans/PTS76F-webfont.ttf') format('truetype'), url('../fonts/ptsans/PTS76F-webfont.svg#PTSansBoldItalic') format('svg');
+    src: url('../../assets/fonts/ptsans/PTS76F-webfont.eot');
+    src: url('../../assets/fonts/ptsans/PTS76F-webfont.eot?#iefix') format('embedded-opentype'), url('../../assets/fonts/ptsans/PTS76F-webfont.woff') format('woff'), url('../../assets/fonts/ptsans/PTS76F-webfont.ttf') format('truetype'), url('../../assets/fonts/ptsans/PTS76F-webfont.svg#PTSansBoldItalic') format('svg');
     font-weight: normal;
     font-style: normal;
 

@@ -53,7 +53,7 @@ h3 {
     height: 240px;
     padding-top: 60px;
     background-color: #0071BC;
-    background-image: data-url(../img/fe/bg_footer.jpg);
+    background-image: data-url(../../assets/img/fe/bg_footer.jpg);
     background-position: top left;
     background-repeat: repeat-x;
     color: #FFFFFF;
@@ -75,7 +75,7 @@ h3 {
 #footer h2 {
     width: 220px;
     height: 48px;
-    background-image: data-url(../img/fe/logo_bianco.png);
+    background-image: data-url(../../assets/img/fe/logo_bianco.png);
     background-position: top left;
     background-repeat: no-repeat;
     text-indent: -999999px;
@@ -90,7 +90,7 @@ h3 {
 header {
     height: 67px;
     width: 100%;
-    background-image: data-url(../img/fe/bg_header.png);
+    background-image: data-url(../../assets/img/fe/bg_header.png);
     background-repeat: repeat-x;
     background-position: top left;
     position: fixed;
@@ -118,7 +118,7 @@ header h1 {
     height: 60px;
     float: left;
     margin-left: 10px;
-    background-image: data-url(../img/fe/logo.jpg);
+    background-image: data-url(../../assets/img/fe/logo.jpg);
     background-position: left center;
     background-repeat: no-repeat;
 }
@@ -175,7 +175,7 @@ header h1 a {
     top: 100px;
     left: 50%;
     margin-left: -115px;
-    background-image: data-url(../img/fe/bg_login.png);
+    background-image: data-url(../../assets/img/fe/bg_login.png);
     background-position: left top;
     background-repeat: repeat;
     -vendor-border-radius: 8px;
@@ -188,7 +188,7 @@ header h1 a {
     width: 100%;
     height: 100%;
     background-color: #242424;
-    background-image: data-url(../img/fe/bg_cont_login.jpg);
+    background-image: data-url(../../assets/img/fe/bg_cont_login.jpg);
     background-position: left top;
     background-repeat: repeat-x;
     -vendor-border-radius: 6px;
@@ -202,7 +202,7 @@ header h1 a {
     width: 7px;
     margin-right: 10px;
     margin-top: 10px;
-    background-image: data-url(../img/fe/close.png);
+    background-image: data-url(../../assets/img/fe/close.png);
     background-position: left top;
     background-repeat: no-repeat;
     text-indent: -999999px;
@@ -214,7 +214,7 @@ header h1 a {
     color: #FFFFFF;
     height: 50px;
     line-height: 48px;
-    background-image: data-url(../img/fe/bg_item_login.png);
+    background-image: data-url(../../assets/img/fe/bg_item_login.png);
     background-position: left bottom;
     background-repeat: repeat-x;
     padding: 0px 10px;
@@ -229,7 +229,7 @@ header h1 a {
 #content_login li {
     height: 35px;
     line-height: 35px;
-    background-image: data-url(../img/fe/bg_item_login.png);
+    background-image: data-url(../../assets/img/fe/bg_item_login.png);
     background-position: left top;
     background-repeat: repeat-x;
 }
@@ -271,7 +271,7 @@ header h1 a {
 #home {
     width: 100%;
     height: 700px;
-    background-image: data-url(../img/fe/bg_section_home.jpg);
+    background-image: data-url(../../assets/img/fe/bg_section_home.jpg);
     background-position: center top;
     background-repeat: no-repeat;
     color: #FFFFFF;
@@ -282,7 +282,7 @@ header h1 a {
 }
 
 #home h2 {
-    background-image: data-url(../img/fe/graffe_home.png);
+    background-image: data-url(../../assets/img/fe/graffe_home.png);
     background-position: left top;
     background-repeat: no-repeat;
     margin-bottom: 45px;
@@ -300,7 +300,7 @@ header h1 a {
 #wrapper_link_demos {
     margin: 0px auto;
     float: none;
-    background-image: data-url(../img/fe/border_demos.png);
+    background-image: data-url(../../assets/img/fe/border_demos.png);
     background-position: top left;
     background-repeat: repeat-x;
     padding-top: 30px;
@@ -312,7 +312,7 @@ header h1 a {
     width: 220px;
     height: 65px;
     margin: 0px auto;
-    background-image: data-url(../img/fe/btn_link_demos.png);
+    background-image: data-url(../../assets/img/fe/btn_link_demos.png);
     background-position: left top;
     background-repeat: no-repeat;
     text-indent: -999999px;
@@ -329,7 +329,7 @@ header h1 a {
 #wrapper_learn_more span {
     display: inline-block;
     padding: 0px 7px;
-    background-image: data-url(../img/fe/home_pattern.jpg);
+    background-image: data-url(../../assets/img/fe/home_pattern.jpg);
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -344,7 +344,7 @@ header h1 a {
     display: block;
     height: 286px;
     width: 286px;
-    background-image: data-url(../img/fe/play_home.png);
+    background-image: data-url(../../assets/img/fe/play_home.png);
     background-repeat: no-repeat;
     background-position: top left;
     margin-top: 102px;
@@ -359,7 +359,7 @@ header h1 a {
     -moz-box-shadow: 0px -4px 4px 0px #005E9C;
     padding-top: 495px;
     background-color: #F1F1F1;
-    background-image: data-url(../img/fe/bg_learn.jpg);
+    background-image: data-url(../../assets/img/fe/bg_learn.jpg);
     background-position: center 100px;
     background-repeat: no-repeat;
     padding-bottom: 13px;
@@ -383,7 +383,7 @@ header h1 a {
     padding-top: 65px;
     height: 505px;
 
-    background-image: data-url(../img/fe/pattern_demo.gif);
+    background-image: data-url(../../assets/img/fe/pattern_demo.gif);
     background-position: top left;
     background-repeat: repeat;
 }
@@ -442,7 +442,7 @@ header h1 a {
     outline: none;
     width: 34px;
     height: 34px;
-    background-image: data-url(../img/fe/bullet_slider_home.png);
+    background-image: data-url(../../assets/img/fe/bullet_slider_home.png);
     background-position: top left;
     background-repeat: no-repeat;
 }
@@ -465,7 +465,7 @@ header h1 a {
     position: relative;
     height: 250px;
     padding-top: 230px;
-    background-image: data-url(../img/fe/demo_thumb_bg.png);
+    background-image: data-url(../../assets/img/fe/demo_thumb_bg.png);
     background-repeat: no-repeat;
     background-position: top left;
 }
@@ -553,7 +553,7 @@ header h1 a {
     border: 1px solid #C0C0C0;
     -vendor-border-radius: 15px;
     /*border-radius: 15px;*/
-    background-image: data-url(../img/fe/bg_input.jpg);
+    background-image: data-url(../../assets/img/fe/bg_input.jpg);
     background-position: top left;
     background-repeat: repeat-x;
 }
@@ -566,7 +566,7 @@ header h1 a {
     height: 26px;
     cursor: pointer;
     border: none;
-    background-image: data-url(../img/fe/btn_search.jpg);
+    background-image: data-url(../../assets/img/fe/btn_search.jpg);
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -611,7 +611,7 @@ header h1 a {
 }
 
 .box_over {
-    background-image: data-url(../img/fe/over_img.png);
+    background-image: data-url(../../assets/img/fe/over_img.png);
     background-position: top left;
     background-repeat: no-repeat;
     width: 144px;
@@ -624,13 +624,13 @@ header h1 a {
 #ico_item_category .box_over {
     width: 64px;
     height: 64px;
-    background-image: data-url(../img/fe/over_ico_talk_detail.png);
+    background-image: data-url(../../assets/img/fe/over_ico_talk_detail.png);
 }
 
 .item_video .box_over {
     width: 224px;
     height: 164px;
-    background-image: data-url(../img/fe/over_item_video.png);
+    background-image: data-url(../../assets/img/fe/over_item_video.png);
 }
 
 .item_video .img_category {
@@ -693,7 +693,7 @@ header h1 a {
 .paging span a {
     padding: 0px;
     color: #666666;
-    background-image: data-url(../img/fe/bg_paging.png);
+    background-image: data-url(../../assets/img/fe/bg_paging.png);
     background-position: left top;
     background-repeat: no-repeat;
 }
@@ -785,19 +785,19 @@ header h1 a {
     box-sizing: border-box;
     *behavior: url(../js/boxsizing.htc);
     border-left: 1px solid #202020;
-    background-image: data-url(../img/fe/chapter_future.jpg);
+    background-image: data-url(../../assets/img/fe/chapter_future.jpg);
     background-position: left top;
     background-repeat: repeat-x;
     position: relative;
 }
 
 #controls .chapter.past {
-    background-image: data-url(../img/fe/chapter_past.jpg);
+    background-image: data-url(../../assets/img/fe/chapter_past.jpg);
 }
 
 #controls .chapter.selected {
     height: 33px;
-    background-image: data-url(../img/fe/chapter_selected.jpg);
+    background-image: data-url(../../assets/img/fe/chapter_selected.jpg);
 }
 
 #controls .chapter:first-child {
@@ -844,7 +844,7 @@ header h1 a {
     width: 16px;
     padding: 0px 8px;
     margin-right: 5px;
-    background-image: data-url(../img/fe/bg_chapter_comments.png);
+    background-image: data-url(../../assets/img/fe/bg_chapter_comments.png);
     background-position: top left;
     background-repeat: repeat-x;
     -vendor-border-radius: 8px;
@@ -872,7 +872,7 @@ header h1 a {
 
 #tools h5, #allcomments h5, #comments h5, #chapters h5, #embed h5, #share h5 {
     text-align: center;
-    background-image: data-url(../img/fe/bg_title.png);
+    background-image: data-url(../../assets/img/fe/bg_title.png);
     background-position: center;
     background-repeat: no-repeat;
     color: #666666;
@@ -902,7 +902,7 @@ header h1 a {
     padding: 0px 10px;
     margin: 0px 4px;
     text-shadow: 0px 1px 0px #ffffff;
-    background-image: data-url(../img/fe/bg_btn_tools.jpg);
+    background-image: data-url(../../assets/img/fe/bg_btn_tools.jpg);
     background-position: left top;
     background-repeat: repeat-x;
     -vendor-border-radius: 4px;
@@ -931,7 +931,7 @@ header h1 a {
 .content_comments {
     padding-bottom: 20px;
     margin-bottom: 20px;
-    background-image: data-url(../img/fe/bg_close_comment.png);
+    background-image: data-url(../../assets/img/fe/bg_close_comment.png);
     background-position: bottom left;
     background-repeat: no-repeat;
 }
@@ -1041,7 +1041,7 @@ header h1 a {
     font-family: 'ChivoItalic';
     padding: 0px 10px;
     text-shadow: 0px 1px 0px #ffffff;
-    background-image: data-url(../img/fe/bg_btn_tools.jpg);
+    background-image: data-url(../../assets/img/fe/bg_btn_tools.jpg);
     background-position: left top;
     background-repeat: repeat-x;
     -vendor-border-radius: 4px;
@@ -1147,17 +1147,17 @@ header h1 a {
 
 #share li.li_share_facebook a {
     width: 15px;
-    background-image: data-url(../img/fe/ico_share_facebook.png);
+    background-image: data-url(../../assets/img/fe/ico_share_facebook.png);
 }
 
 #share li.li_share_twitter a {
     width: 45px;
-    background-image: data-url(../img/fe/ico_share_twitter.png);
+    background-image: data-url(../../assets/img/fe/ico_share_twitter.png);
 }
 
 #share li.li_share_gplus a {
     width: 41px;
-    background-image: data-url(../img/fe/ico_share_gplus.png);
+    background-image: data-url(../../assets/img/fe/ico_share_gplus.png);
 }
 
 /*fine section  demo*/

@@ -63,7 +63,7 @@
 
 @media only screen and (min-width: 768px) and (max-width: 979px) {
     #griglia {
-        background-image: data-url(../img/fe/griglia_700.png);
+        background-image: data-url(../../assets/img/fe/griglia_700.png);
         margin-left: -360px;
         width: 720px;
     }
@@ -183,7 +183,7 @@
 
 @media only screen and (min-width: 1290px) {
     #griglia {
-        background-image: data-url(../img/fe/griglia_1200.png);
+        background-image: data-url(../../assets/img/fe/griglia_1200.png);
         margin-left: -600px;
         width: 1200px;
     }

@@ -72,7 +72,7 @@ textarea {
 
 /*grid system 960*/
 #griglia {
-    background-image: data-url(../img/fe/griglia.png);
+    background-image: data-url(../../assets/img/fe/griglia.png);
     background-position: center top;
     background-repeat: repeat-y;
     height: 100%;

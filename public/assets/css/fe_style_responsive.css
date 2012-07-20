@@ -123,7 +123,7 @@
 
     #home h2 {
         font-size: 50px;
-        background-image: data-url(../img/fe/graffa_open.png), data-url(../img/fe/graffa_close.png);
+        background-image: data-url(../../assets/img/fe/graffa_open.png), data-url(../../assets/img/fe/graffa_close.png);
         background-position: left top, right top;
         background-repeat: no-repeat;
         margin-bottom: 35px;
@@ -137,7 +137,7 @@
 
     #wrapper_link_demos {
         margin: 0px auto;
-        background-image: data-url(../img/fe/border_demos_repeat.png), data-url(../img/fe/border_demos_repeat.png);
+        background-image: data-url(../../assets/img/fe/border_demos_repeat.png), data-url(../../assets/img/fe/border_demos_repeat.png);
         background-position: top left, bottom left;
         background-repeat: repeat-x;
     }
@@ -188,7 +188,7 @@
     /*section demo*/
     #demo_home {
         height: 355px;
-        background-image: data-url(../img/fe/ombra_demo.png), data-url(../img/fe/pattern_demo.gif);
+        background-image: data-url(../../assets/img/fe/ombra_demo.png), data-url(../../assets/img/fe/pattern_demo.gif);
         background-position: top left, top left;
         background-repeat: repeat-x, repeat;
         padding-top: 45px;
@@ -359,14 +359,14 @@
     /*section home*/
     #home h2 {
         font-size: 75px;
-        background-image: data-url(../img/fe/graffa_open.png), data-url(../img/fe/graffa_close.png);
+        background-image: data-url(../../assets/img/fe/graffa_open.png), data-url(../../assets/img/fe/graffa_close.png);
         background-position: left top, right top;
         background-repeat: no-repeat;
     }
 
     #wrapper_link_demos {
         margin: 0px auto;
-        background-image: data-url(../img/fe/border_demos_repeat.png), data-url(../img/fe/border_demos_repeat.png);
+        background-image: data-url(../../assets/img/fe/border_demos_repeat.png), data-url(../../assets/img/fe/border_demos_repeat.png);
         background-position: top left, bottom left;
         background-repeat: repeat-x;
     }
@@ -379,7 +379,7 @@
     /*fine section home*/
     /*section demo*/
     #demo_home {
-        background-image: data-url(../img/fe/ombra_demo.png), data-url(../img/fe/pattern_demo.gif);
+        background-image: data-url(../../assets/img/fe/ombra_demo.png), data-url(../../assets/img/fe/pattern_demo.gif);
         background-position: top left, top left;
         background-repeat: repeat-x, repeat;
         height: 605px;
@@ -397,7 +397,7 @@
     .demo_thumb_item {
         height: 320px;
         padding-top: 300px;
-        background-image: data-url(../img/fe/demo_thumb_bg_1200.png);
+        background-image: data-url(../../assets/img/fe/demo_thumb_bg_1200.png);
     }
 
     .demo_thumb_item a {
@@ -452,7 +452,7 @@
     .box_over {
         width: 184px;
         height: 184px;
-        background-image: data-url(../img/fe/over_img_1200.png);
+        background-image: data-url(../../assets/img/fe/over_img_1200.png);
         background-position: left top;
         background-repeat: no-repeat;
     }
@@ -460,7 +460,7 @@
     #ico_item_category .box_over {
         width: 84px;
         height: 84px;
-        background-image: data-url(../img/fe/over_ico_talk_detail_1200.png);
+        background-image: data-url(../../assets/img/fe/over_ico_talk_detail_1200.png);
     }
 
     .item_video .img_category {
@@ -471,7 +471,7 @@
     .item_video .box_over {
         width: 284px;
         height: 207px;
-        background-image: data-url(../img/fe/over_item_video_1200.png);
+        background-image: data-url(../../assets/img/fe/over_item_video_1200.png);
     }
 
     .box_over a {
