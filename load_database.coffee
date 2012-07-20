@@ -10,7 +10,9 @@ db = new orient.GraphDb "presentz", server,
   user_name: "admin"
   user_password: "admin"
 
-db.open ->
+db.open (err) ->
+  throw new Error(err) if err?
+  
   db.createVertex { _type: "root" }, (err, root) ->
     user =
       _type: "user"
