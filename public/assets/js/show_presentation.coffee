@@ -143,7 +143,7 @@ init_presentz = (presentation) ->
     return
 
   prsntz.init presentation
-  prsntz.changeChapter 0, 0, false
+  prsntz.changeChapter 0, 0, true
 
 openPopupTo = (width, height, url) ->
   left = (screen.width - width) / 2
