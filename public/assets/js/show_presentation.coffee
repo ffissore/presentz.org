@@ -35,7 +35,10 @@ Controls =
           #this is NOT a typo
           $this = $(".info .title a", this)
         prsntz.changeChapter(parseInt($this.attr("chapter_index")), parseInt($this.attr("slide_index")), true)
-    
+
+    Controls.bind_link_to_slides_from_comments()
+
+  bind_link_to_slides_from_comments: () ->
     $slides_in_comments = $("a.slide_title")
     $slides_in_comments.unbind "click"
     $slides_in_comments.bind "click", (e) ->
@@ -211,7 +214,7 @@ insert_new_comment = ($container, chapter, slide, new_comment_html) ->
   if chapter is "" and slide is ""
     $("div.item_comment", $container).first().before(new_comment_html)
     return
-    
+
   if $("div.item_comment[chapter_index=#{chapter}][slide_index=#{slide}]", $container).length isnt 0
     $("div.item_comment[chapter_index=#{chapter}][slide_index=#{slide}]", $container).first().before(new_comment_html)
     return
@@ -225,11 +228,11 @@ insert_new_comment = ($container, chapter, slide, new_comment_html) ->
     current_slide = parseInt($comment.attr("slide_index"))
     if current_chapter > chapter or (current_chapter is chapter and current_slide > slide)
       $target_comment = $comment
-    
+
   if $target_comment?
     $target_comment.before(new_comment_html)
     return
-  
+
   $("div.content_comments", $container).append(new_comment_html)
 
 window.init_presentz = init_presentz
@@ -269,6 +272,7 @@ $().ready () ->
       success: (new_comment_html) ->
         $comments = $("#comments")
         insert_new_comment($comments, chapter_index_val, slide_index_val, new_comment_html)
+        Controls.bind_link_to_slides_from_comments()
         #$new_comment = $("div.item_comment[chapter_index=#{$chapter_index.val()}][slide_index=#{$slide_index.val()}]").first()
         #$("p", $new_comment).effect("highlight", {color: "#5d7908"}, 1500)
         prsntz.play()
