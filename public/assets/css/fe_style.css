@@ -1161,3 +1161,11 @@ header h1 a {
 }
 
 /*fine section  demo*/
+
+img.github {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    border: 0;
+    width: auto;
+}
