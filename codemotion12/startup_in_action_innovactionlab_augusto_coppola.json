@@ -1,0 +1,82 @@
+{
+  "title": "Startup in Action - InnovActionLab",
+  "speaker": "Augusto Coppola",
+  "chapters": [
+    {
+      "duration": 1481,
+      "media": {
+        "video": {
+          "url": "http://youtu.be/4f5GwaIqrH4",
+          "thumb": "http://presentz.org/assets/codemotion12/coppola.jpg"
+        },
+        "slides": [
+          {
+            "url": "http://www.slideshare.net/coppola-120718051816-phpapp01#1",
+            "title": "Lavorare in una startup: un'opportunità reale",
+            "time": 0
+          },
+          {
+            "url": "http://www.slideshare.net/coppola-120718051816-phpapp01#2",
+            "title": "Agenda",
+            "time": 145
+          },
+          {
+            "url": "http://www.slideshare.net/coppola-120718051816-phpapp01#3",
+            "title": "Grande azienda o startup?",
+            "time": 282
+          },
+          {
+            "url": "http://www.slideshare.net/coppola-120718051816-phpapp01#4",
+            "title": "Voi siete la vostra startup",
+            "time": 429
+          },
+          {
+            "url": "http://www.slideshare.net/coppola-120718051816-phpapp01#5",
+            "title": "Anticipare i trend",
+            "time": 582
+          },
+          {
+            "url": "http://www.slideshare.net/coppola-120718051816-phpapp01#6",
+            "title": "Alcuni dati statistici: USA",
+            "time": 614
+          },
+          {
+            "url": "http://www.slideshare.net/coppola-120718051816-phpapp01#7",
+            "title": "Alcuni dati statistici: Italia",
+            "time": 712
+          },
+          {
+            "url": "http://www.slideshare.net/coppola-120718051816-phpapp01#8",
+            "title": "I conti del pizzicagnolo",
+            "time": 800
+          },
+          {
+            "url": "http://www.slideshare.net/coppola-120718051816-phpapp01#9",
+            "title": "I confronti del pizzicagnolo",
+            "time": 907
+          },
+          {
+            "url": "http://www.slideshare.net/coppola-120718051816-phpapp01#10",
+            "title": "Le riflessioni del pizzicagnolo",
+            "time": 1049
+          },
+          {
+            "url": "http://www.slideshare.net/coppola-120718051816-phpapp01#11",
+            "title": "Le conclusioni del pizzicagnolo",
+            "time": 1231
+          },
+          {
+            "url": "http://www.slideshare.net/coppola-120718051816-phpapp01#12",
+            "title": "InnovAction Lab",
+            "time": 1253
+          },
+          {
+            "url": "http://www.slideshare.net/coppola-120718051816-phpapp01#13",
+            "title": "Grazie",
+            "time": 1460
+          }
+        ]
+      }
+    }
+  ]
+}
