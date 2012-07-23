@@ -57,6 +57,11 @@ $().ready () ->
         easing: "easeInOutQuart"
         offset:
           top: 0
+          
+    $play_home = $("#ico_play_home")
+    $play_home.unbind "click"
+    $play_home.click ->
+      document.location = "/r/talks.html"
 
   $link_demos_link_learn_more = $("#link_demos, .link_demos, #link_learn_more")
   $link_demos_link_learn_more.unbind "click"

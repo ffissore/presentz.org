@@ -351,6 +351,10 @@ header h1 a {
     margin-left: -10px;
 }
 
+#ico_play_home:hover {
+    cursor: pointer;
+}
+
 /*fine section home*/
 /* section learn */
 #learn {
