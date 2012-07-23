@@ -1,0 +1,67 @@
+{
+  "title": "Startup in Action - HyperTV",
+  "speaker": "Patrizio Munzi",
+  "chapters": [
+    {
+      "duration": 606,
+      "media": {
+        "video": {
+          "url": "http://youtu.be/8MdB7ay8NlU",
+          "thumb": "http://presentz.org/assets/codemotion12/munzi.jpg"
+        },
+        "slides": [
+          {
+            "url": "http://www.slideshare.net/hypertv-120723062124-phpapp02#1",
+            "title": "HyperTV",
+            "time": 0
+          },
+          {
+            "url": "http://www.slideshare.net/hypertv-120723062124-phpapp02#2",
+            "title": "TV Audience is Changing",
+            "time": 20
+          },
+          {
+            "url": "http://www.slideshare.net/hypertv-120723062124-phpapp02#3",
+            "title": "TV Audience is Changing",
+            "time": 45
+          },
+          {
+            "url": "http://www.slideshare.net/hypertv-120723062124-phpapp02#4",
+            "title": "HyperTV eXperience",
+            "time": 72
+          },
+          {
+            "url": "http://www.slideshare.net/hypertv-120723062124-phpapp02#7",
+            "title": "How it works",
+            "time": 194
+          },
+          {
+            "url": "http://www.slideshare.net/hypertv-120723062124-phpapp02#8",
+            "title": "How it works",
+            "time": 303
+          },
+          {
+            "url": "http://www.slideshare.net/hypertv-120723062124-phpapp02#9",
+            "title": "Benefits",
+            "time": 385
+          },
+          {
+            "url": "http://www.slideshare.net/hypertv-120723062124-phpapp02#10",
+            "title": "Competitor Analysis",
+            "time": 468
+          },
+          {
+            "url": "http://www.slideshare.net/hypertv-120723062124-phpapp02#12",
+            "title": "What we're looking for",
+            "time": 536
+          },
+          {
+            "url": "http://www.slideshare.net/hypertv-120723062124-phpapp02#13",
+            "title": "What we offer",
+            "time": 570
+          }
+        ]
+      }
+    }
+  ]
+}
