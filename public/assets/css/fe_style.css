@@ -361,10 +361,10 @@ header h1 a {
     box-shadow: 0px -4px 4px 0px #005E9C;
     -webkit-box-shadow: 0px -4px 4px 0px #005E9C;
     -moz-box-shadow: 0px -4px 4px 0px #005E9C;
-    padding-top: 495px;
+    padding-top: 350px;
     background-color: #F1F1F1;
     background-image: data-url(../../assets/img/fe/bg_learn.jpg);
-    background-position: center 100px;
+    background-position: center 20px;
     background-repeat: no-repeat;
     padding-bottom: 13px;
 }
@@ -1171,5 +1171,6 @@ img.github {
     top: 60px;
     right: 0;
     border: 0;
-    width: auto;
+    width: 149px;
+    height: 149px;
 }

@@ -170,8 +170,8 @@
     /*fine section home*/
     /*section lear*/
     #learn {
-        background-position: center 74px;
-        padding-top: 370px;
+        background-position: center 20px;
+        padding-top: 270px;
         background-size: 720px auto;
     }
 
@@ -334,6 +334,11 @@
     }
 
     /*fine section demo*/
+
+    img.github {
+        width: 125px;
+        height: 125px;
+    }
 }
 
 @media only screen and (min-width: 980px) and (max-width: 1289px) {
