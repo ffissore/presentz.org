@@ -1,0 +1,82 @@
+{
+  "title": "Startup in Action - Microsoft BizSpark",
+  "speaker": "Mario Fontana",
+  "chapters": [
+    {
+      "duration": 914,
+      "media": {
+        "video": {
+          "url": "http://youtu.be/j3H5Szcq_5k",
+          "thumb": "http://presentz.org/assets/codemotion12/fontana.jpg"
+        },
+        "slides": [
+          {
+            "url": "http://www.slideshare.net/fontana-120723060223-phpapp01#1",
+            "title": "#BizSpark",
+            "time": 0
+          },
+          {
+            "url": "http://www.slideshare.net/fontana-120723060223-phpapp01#2",
+            "title": "Innovation from our perspective",
+            "time": 39
+          },
+          {
+            "url": "http://www.slideshare.net/fontana-120723060223-phpapp01#3",
+            "title": "Microsoft BizSpark",
+            "time": 132
+          },
+          {
+            "url": "http://www.slideshare.net/fontana-120723060223-phpapp01#4",
+            "title": "Microsoft BizSpark",
+            "time": 252
+          },
+          {
+            "url": "http://www.slideshare.net/fontana-120723060223-phpapp01#5",
+            "title": "People & Services",
+            "time": 381
+          },
+          {
+            "url": "http://www.slideshare.net/fontana-120723060223-phpapp01#6",
+            "title": "IaaS experience",
+            "time": 485
+          },
+          {
+            "url": "http://www.slideshare.net/fontana-120723060223-phpapp01#7",
+            "title": "PaaS experience",
+            "time": 582
+          },
+          {
+            "url": "http://www.slideshare.net/fontana-120723060223-phpapp01#8",
+            "title": "Windows Azure",
+            "time": 612
+          },
+          {
+            "url": "http://www.slideshare.net/fontana-120723060223-phpapp01#9",
+            "title": "Head in the cloud, feet on the ground",
+            "time": 679
+          },
+          {
+            "url": "http://www.slideshare.net/fontana-120723060223-phpapp01#10",
+            "title": "BizSpark Plus Partners",
+            "time": 774
+          },
+          {
+            "url": "http://www.slideshare.net/fontana-120723060223-phpapp01#11",
+            "title": "BizSpark One Highlights",
+            "time": 815
+          },
+          {
+            "url": "http://www.slideshare.net/fontana-120723060223-phpapp01#12",
+            "title": "Some Italian Samples",
+            "time": 847
+          },
+          {
+            "url": "http://www.slideshare.net/fontana-120723060223-phpapp01#13",
+            "title": "www.bizspark.com",
+            "time": 892
+          }
+        ]
+      }
+    }
+  ]
+}
