@@ -29,6 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       this.pauseState = pauseState;
       this.finishState = finishState;
       this.presentz = presentz;
+      this.isInPauseState = false;
     }
 
     Video.prototype.handleEvent = function(event) {
@@ -40,6 +41,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       if (event === this.finishState && this.presentz.currentChapterIndex < (this.presentz.howManyChapters - 1)) {
         this.presentz.changeChapter(this.presentz.currentChapterIndex + 1, 0, true);
       }
+      this.isInPauseState = event === this.pauseState;
+    };
+
+    Video.prototype.isPaused = function() {
+      return this.isInPauseState;
     };
 
     return Video;
@@ -116,6 +122,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     Html5Video.prototype.pause = function() {
       return this.player.pause();
+    };
+
+    Html5Video.prototype.isPaused = function() {
+      return this.video.isPaused();
     };
 
     return Html5Video;
@@ -231,6 +241,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return this.player.api("pause");
     };
 
+    Vimeo.prototype.isPaused = function() {
+      return this.video.isPaused();
+    };
+
     return Vimeo;
 
   })();
@@ -318,6 +332,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     YoutubeIFrame.prototype.pause = function() {
       return this.player.pauseVideo();
+    };
+
+    YoutubeIFrame.prototype.isPaused = function() {
+      return this.video.isPaused();
     };
 
     return YoutubeIFrame;
@@ -753,6 +771,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     Presentz.prototype.pause = function() {
       return this.videoPlugin.pause();
+    };
+
+    Presentz.prototype.isPaused = function() {
+      return this.videoPlugin.isPaused();
     };
 
     Presentz.prototype.play = function() {
