@@ -22,6 +22,7 @@ merge_linkedin_user_data = (user, ext_user) ->
   user.linkedin_id ?= ext_user.id
 
 merge_github_user_data = (user, ext_user) ->
+  user.name ?= ext_user.name or ext_user.login
   user.link ?= ext_user.html_url
   user.email ?= ext_user.email
   user.github_id ?= ext_user.login
