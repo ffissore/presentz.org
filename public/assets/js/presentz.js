@@ -759,6 +759,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       return this.videoPlugin.play();
     };
 
+    Presentz.prototype.next = function() {
+      if (this.presentation.chapters[this.currentChapterIndex].slides.length > this.currentSlideIndex + 1) {
+        this.changeChapter(this.currentChapterIndex, this.currentSlideIndex + 1);
+        return true;
+      }
+      if (this.presentation.chapters.length > this.currentChapterIndex + 1) {
+        this.changeChapter(this.currentChapterIndex + 1, 0);
+        return true;
+      }
+      return false;
+    };
+
+    Presentz.prototype.previous = function() {
+      if (this.currentSlideIndex - 1 >= 0) {
+        this.changeChapter(this.currentChapterIndex, this.currentSlideIndex - 1);
+        return true;
+      }
+      if (this.currentChapterIndex - 1 >= 0) {
+        this.changeChapter(this.currentChapterIndex - 1, this.presentation.chapters[this.currentChapterIndex - 1].slides.length - 1);
+        return true;
+      }
+      return false;
+    };
+
     return Presentz;
 
   })();

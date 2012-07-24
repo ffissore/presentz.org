@@ -14,6 +14,10 @@
         </div>
       </div>
       <div class="clear"></div>
+      <div id="controls_slide">
+        <a href="javascript:void(0);" id="prev_slide">Prev</a>
+        <a href="javascript:void(0);" id="next_slide">Next</a>
+      </div>
       <div id="controls">
         {!
           class="chapter past"

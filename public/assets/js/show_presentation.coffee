@@ -40,6 +40,16 @@ Controls =
 
     Controls.bind_link_to_slides_from_comments()
 
+    $previous_slide = $("#prev_slide")
+    $previous_slide.unbind "click"
+    $previous_slide.bind "click", ->
+      prsntz.previous()
+
+    $next_slide = $("#next_slide")
+    $next_slide.unbind "click"
+    $next_slide.bind "click", ->
+      prsntz.next()
+
   bind_link_to_slides_from_comments: () ->
     $slides_in_comments = $("a.slide_title")
     $slides_in_comments.unbind "click"
