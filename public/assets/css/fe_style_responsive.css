@@ -1,8 +1,16 @@
 /*stili custom progetto*/
 
 @media only screen and (min-width: 320px) and (max-width: 479px) {
+    body {
+        background-image: data-url(../../assets/img/fe/logo.jpg);
+        background-color: #FFFFFF;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
     #wrapper {
-        padding-top: 155px;
+        padding-top: 0px;
+        display: none;
     }
 
     /*header e menu*/
@@ -13,7 +21,7 @@
     }
 
     #content_header {
-        width: 300px;
+        width: 100%;
         background-color: #FFFFFF;
     }
 
@@ -43,8 +51,16 @@
 }
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
+    body {
+        background-image: data-url(../../assets/img/fe/logo.jpg);
+        background-color: #FFFFFF;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
     #wrapper {
-        padding-top: 155px;
+        display: none;
+        padding-top: 0px;
     }
 
     /*header e menu*/
@@ -55,7 +71,7 @@
     }
 
     #content_header {
-        width: 460px;
+        width: 100%;
         background-color: #FFFFFF;
     }
 
@@ -235,6 +251,14 @@
         margin-top: 60px;
     }
 
+    #tools ul {
+        height: 90px;
+    }
+
+    #tools li a {
+        margin-bottom: 10px;
+    }
+
     /*fine section demo*/
     /*section talks*/
     #talks h3 {
@@ -271,7 +295,7 @@
 
     .item_video .img_category {
         width: 154px;
-        height: 105px;
+        height: 109px;
     }
 
     .item_video .box_over {

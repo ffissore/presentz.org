@@ -37,7 +37,6 @@
     .main {
         width: 460px;
         background: none;
-        background-color: #fce6e7;
     }
 
     [class*="box"] {

@@ -32,7 +32,7 @@ h2 {
 
 h3 {
     font-family: 'AharoniBold';
-    font-size: 50px;
+    font-size: 56px;
     line-height: 60px;
     color: #666666;
     letter-spacing: -3px;
@@ -99,11 +99,11 @@ header {
     z-index: 999999;
 }
 
-.seciton_player header {
+.section_player header {
     position: relative;
 }
 
-.seciton_player #site_wrapper {
+.section_player #site_wrapper {
     padding-top: 0px;
     margin-top: -7px;
 }
@@ -547,8 +547,8 @@ header h1 a {
 }
 
 .search input[type=text] {
-    width: 220px;
-    height: 30px;
+    width: 178px;
+    height: 28px;
     padding-left: 40px;
     line-height: 28px;
     font-family: 'ChivoRegular';
@@ -639,7 +639,7 @@ header h1 a {
 
 .item_video .img_category {
     width: 214px;
-    height: 149px;
+    height: 153px;
     overflow: hidden;
 }
 
@@ -738,7 +738,7 @@ header h1 a {
     color: #FFFFFF;
     margin-left: 10px;
     text-shadow: 0px 1px 0px #000000;
-    margin-bottom: 10px;
+    margin-bottom: 3px;
 }
 
 #presentation h3 span {
@@ -761,13 +761,43 @@ header h1 a {
     height: 420px;
     float: left;
     background-color: #0C0C0C;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     border-bottom: 1px solid #404040;
 }
 
 #player_video object {
     position: static;
     z-index: 0;
+}
+
+#controls_slide {
+    height: 40px;
+    width: 100px;
+    margin: 0px auto;
+    margin-bottom: 20px;
+}
+
+#controls_slide a {
+    display: block;
+    width: 40px;
+    height: 40px;
+    float: left;
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    text-indent: -999999px;
+}
+
+#controls_slide a:hover {
+    background-position: top left;
+}
+
+#controls_slide a#prev_slide {
+    background-image: data-url(../../assets/img/fe/prev_slide.png);
+    margin-right: 20px;
+}
+
+#controls_slide a#next_slide {
+    background-image: data-url(../../assets/img/fe/next_slide.png);
 }
 
 #controls {
@@ -1080,20 +1110,65 @@ header h1 a {
     background-color: #1A1A1A;
     margin-bottom: 1px;
     padding: 6px 15px;
+    padding-right: 100px;
     text-shadow: 0px 1px 0px #000000;
     text-decoration: none;
+    position: relative;
 }
 
-#chapters ol li a:hover {
+#chapters ol li a:hover, #chapters ol li a.selected {
     background-color: #99CC00;
     color: #333333;
     text-shadow: 0px 1px 0px #D3FF4F;
 }
 
-#chapters ol li a.selected {
-    background-color: #99CC00;
+#chapters li .comments {
+    display: inline-block;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    margin-top: -8px;
+    color: #999999;
+    text-shadow: 0 1px 0 #000000;
+    line-height: 16px;
+}
+
+#chapters li a.selected .comments, #chapters li a:hover .comments {
     color: #333333;
-    text-shadow: 0px 1px 0px #D3FF4F;
+    text-shadow: 0 1px 0 #D3FF4F;
+}
+
+#chapters li .comments span {
+    display: block;
+    text-align: center;
+    float: left;
+    font-size: 10px;
+    height: 16px;
+    width: 16px;
+    padding: 0px 8px;
+    margin-right: 5px;
+    background-image: data-url(../../assets/img/fe/bg_chapter_comments.png);
+    background-position: top left;
+    background-repeat: repeat-x;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    /*border-bottom:1px solid #666666;
+  border-top:1px solid #666666;*/
+}
+
+#chapters li a.selected .comments span, #chapters li a:hover .comments span {
+    /*border-bottom:1px solid #839C40;
+  border-top:1px solid #648423;*/
+    color: #FFFFFF;
+    text-shadow: 0 1px 0 #000000;
+}
+
+#chapters li .comments a {
+    color: #FFFFFF;
+    margin-top: 7px;
+    line-height: 16px;
+    text-shadow: 0px 1px 0px #000000;
+    padding: 0px 10px;
 }
 
 #embed {

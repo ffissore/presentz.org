@@ -270,6 +270,7 @@ exports.show_presentation = (req, res, next) ->
       comments: comments
       to_json_url: "/#{path}.json"
       thumb: presentation.chapters[0].video.thumb
+      wrapper_css: "class=\"section_player\""
 
 exports.comment_presentation = (req, res, next) ->
   params = req.body

@@ -24,7 +24,7 @@
         <div class="chapter" percentage="{percentage}" style="width:2px">
           <div class="info">
             <p class="title"><a chapter_index="{chapter_index}" slide_index="{slide_index}" href="javascript:void(0);">{title}</a> &mdash; {duration}</p>
-            <div class="comments"><span>{comments_length}</span><a href="javascript:void(0);">{@if cond="'{comments_length}' == 1"}comment{:else}comments{/if}</a></div>
+            <div class="comments" chapter_index="{chapter_index}" slide_index="{slide_index}"><span>{comments_length}</span><a href="javascript:void(0);">{@if cond="'{comments_length}' == 1"}comment{:else}comments{/if}</a></div>
           </div>
         </div>
         {/slides}
@@ -46,7 +46,7 @@
       {! box tutti i commenti !}
       <div id="allcomments" class="box8" style="display:none;">
         <div class="content_comments">
-          <h5>Comments</h5>
+          <h5>All comments</h5>
           {#comments}
             {>_comment/}
           {/comments}
@@ -94,7 +94,12 @@
         <h5>Chapters</h5>
         <ol>
           {#slides}
-            <li {css|s}><a chapter_index="{chapter_index}" slide_index="{slide_index}" href="javascript:void(0)">{index}. {title} &mdash; {duration}</a></li>
+            <li>
+              <a {css|s} chapter_index="{chapter_index}" slide_index="{slide_index}" href="javascript:void(0)">
+                {index}. {title} &mdash; {duration}
+                <span class="comments"><span>{comments_length}</span>{@if cond="'{comments_length}' == 1"}comment&nbsp;{:else}comments{/if}</span>
+              </a>
+            </li>
           {/slides}
         </ol>
       </div>

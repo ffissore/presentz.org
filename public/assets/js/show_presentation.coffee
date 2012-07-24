@@ -28,7 +28,9 @@ Controls =
     $chapters.bind "click", (e) ->
       $this = $(e.target)
       if $this.hasClass("comments") or $this.parent(".comments").length > 0
-        show('#comments')
+        $this = $this.parent()
+        show_comments_for_slide $this.attr("chapter_index"), $this.attr("slide_index")
+        show "#comments"
       else
         $("html:not(:animated),body:not(:animated)").animate({ scrollTop: $("div.main h3").position().top }, 400)
         if !$this.is("a")
@@ -129,12 +131,12 @@ init_presentz = (presentation) ->
 
   prsntz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
     fromSlide = oneBasedAbsoluteSlideIndex presentation, previous_chapter_index, previous_slide_index
-    $from = $("#controls .chapter:nth-child(#{fromSlide}), #chapters ol li:nth-child(#{fromSlide}) a")
+    $from = $("#controls .chapter:nth-child(#{fromSlide}), #chapters ol li:nth-child(#{fromSlide}) a:nth-child(1)")
     $from.removeClass "selected"
     $from.addClass "past"
 
     toSlide = oneBasedAbsoluteSlideIndex presentation, new_chapter_index, new_slide_index
-    $to = $("#controls .chapter:nth-child(#{toSlide}), #chapters ol li:nth-child(#{toSlide}) a")
+    $to = $("#controls .chapter:nth-child(#{toSlide}), #chapters ol li:nth-child(#{toSlide}) a:nth-child(1)")
     $to.removeClass "past"
     $to.addClass "selected"
 
