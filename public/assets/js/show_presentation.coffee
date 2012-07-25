@@ -50,28 +50,6 @@ Controls =
     $next_slide.bind "click", ->
       prsntz.next()
 
-    $(document).keydown (event) ->
-      keyCode = event.keyCode
-      return if keyCode isnt 32 and keyCode isnt 37 and keyCode isnt 39
-
-      tagName = (event.target or event.srcElement).tagName.toUpperCase()
-
-      return if tagName is "INPUT" or tagName is "SELECT" or tagName is "TEXTAREA"
-
-      switch keyCode
-        when 32
-          event.preventDefault()
-          if prsntz.isPaused()
-            prsntz.play()
-          else
-            prsntz.pause()
-        when 37
-          event.preventDefault()
-          prsntz.previous()
-        when 39
-          event.preventDefault()
-          prsntz.next()
-
   bind_link_to_slides_from_comments: () ->
     $slides_in_comments = $("a.slide_title")
     $slides_in_comments.unbind "click"
@@ -296,6 +274,31 @@ $().ready () ->
   $window.unbind "resize"
   $window.bind "resize", () ->
     Controls.resize() if $("#controls").length > 0
+
+  $document = $(document)
+  $document.unbind "keyup"
+  $document.unbind "keydown"
+  $document.unbind "keypress"
+  $document.bind "keydown", (event) ->
+    keyCode = event.keyCode
+    return if keyCode isnt 32 and keyCode isnt 37 and keyCode isnt 39
+
+    tagName = (event.target or event.srcElement).tagName.toUpperCase()
+
+    return if tagName is "INPUT" or tagName is "SELECT" or tagName is "TEXTAREA"
+
+    event.preventDefault()
+    switch keyCode
+      when 32
+        if prsntz.isPaused()
+          prsntz.play()
+        else
+          prsntz.pause()
+      when 37
+        prsntz.previous()
+      when 39
+        prsntz.next()
+        
 
   $("#comment_form form").submit (e) ->
     $textarea = $(e.currentTarget.comment)

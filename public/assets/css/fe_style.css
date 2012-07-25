@@ -965,9 +965,6 @@ header h1 a {
 .content_comments {
     padding-bottom: 20px;
     margin-bottom: 20px;
-    background-image: data-url(../../assets/img/fe/bg_close_comment.png);
-    background-position: bottom left;
-    background-repeat: no-repeat;
 }
 
 .item_comment {
