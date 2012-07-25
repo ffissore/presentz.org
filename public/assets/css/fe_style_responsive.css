@@ -1,6 +1,6 @@
 /*stili custom progetto*/
 
-@media only screen and (min-width: 320px) and (max-width: 479px) {
+@media only screen and (min-width: 0px) and (max-width: 479px) {
     body {
         background-image: data-url(../../assets/img/fe/logo.jpg);
         background-color: #FFFFFF;
@@ -11,6 +11,10 @@
     #wrapper {
         padding-top: 0px;
         display: none;
+    }
+
+    #resolution_notice {
+        display: block;
     }
 
     /*header e menu*/
@@ -61,6 +65,10 @@
     #wrapper {
         display: none;
         padding-top: 0px;
+    }
+
+    #resolution_notice {
+        display: block;
     }
 
     /*header e menu*/
