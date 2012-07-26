@@ -268,7 +268,8 @@ exports.show_presentation = (req, res, next) ->
       speaker: presentation.speaker
       slides: slides
       comments: comments
-      to_json_url: "/#{path}.json"
+      domain: "http://#{req.headers.host}"
+      path: path
       thumb: presentation.chapters[0].video.thumb
       wrapper_css: "class=\"section_player\""
 

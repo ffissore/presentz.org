@@ -41,9 +41,7 @@
           <li><a href="javascript:void(0)" onclick="comment_this_slide('#comments, #comment_form', '#comment_form span');">Comment this slide</a></li>
           <li><a href="javascript:void(0)" onclick="comment_this_presentation('#comments, #comment_form', '#comment_form span');">Comment this presentation</a></li>
           <li><a href="javascript:void(0)" onclick="show('#chapters');">Show chapters list</a></li>
-          {!
           <li><a href="javascript:void(0)" onclick="show('#embed');">Embed</a></li>
-          !}
           <li><a href="javascript:void(0)" onclick="show('#share');">Share</a></li>
         </ul>
       </div>
@@ -112,7 +110,10 @@
       {! box embed !}
       <div id="embed" class="box8" style="display:none">
         <h5>Embed</h5>
-        <textarea><iframe width="960" height="800" src="http://www.presentz.org/embed/21X1Q_mhVWE" frameborder="0"></iframe></textarea>
+        Copy the following HTML snippet on your website
+        <textarea rows="3">
+          <script src="{domain}/managedassets/js/embed.js" type="text/javascript" data-presentation-url="{domain}/{path}" data-presentation-title="{title}"></script>
+        </textarea>
       </div>
       {! fine box embed !}
       
@@ -142,7 +143,7 @@
 <script type="text/javascript">
 $().ready(function() {
   $.ajax({
-    url: "{to_json_url}",
+    url: "/{path}.json",
     dataType: "jsonp",
     jsonp: "jsoncallback",
     jsonpCallback: "init_presentz"

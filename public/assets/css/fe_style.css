@@ -1189,7 +1189,7 @@ header h1 a {
     box-sizing: border-box;
     *behavior: url(../js/boxsizing.htc);
     width: 100%;
-    height: 52px;
+    height: 80px;
     padding: 10px;
     background-color: #303030;
     border: none;
