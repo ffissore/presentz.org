@@ -187,8 +187,8 @@ header h1 a {
     background-image: data-url(../../assets/img/fe/bg_login.png);
     background-position: left top;
     background-repeat: repeat;
-    -vendor-border-radius: 8px;
-    /*border-radius: 8px;*/
+    -moz-border-radius: 8px;
+    border-radius: 8px;
     padding: 18px;
     z-index: 500;
 }
@@ -200,8 +200,8 @@ header h1 a {
     background-image: data-url(../../assets/img/fe/bg_cont_login.jpg);
     background-position: left top;
     background-repeat: repeat-x;
-    -vendor-border-radius: 6px;
-    /*border-radius: 6px;*/
+    -moz-border-radius: 6px;
+    border-radius: 6px;
 }
 
 #content_login .close {
@@ -564,8 +564,8 @@ header h1 a {
     font-size: 12px;
     color: #CCCCCC;
     border: 1px solid #C0C0C0;
-    -vendor-border-radius: 15px;
-    /*border-radius: 15px;*/
+    -moz-border-radius: 15px;
+    border-radius: 15px;
     background-image: data-url(../../assets/img/fe/bg_input.jpg);
     background-position: top left;
     background-repeat: repeat-x;
@@ -890,8 +890,8 @@ header h1 a {
     background-image: data-url(../../assets/img/fe/bg_chapter_comments.png);
     background-position: top left;
     background-repeat: repeat-x;
-    -vendor-border-radius: 8px;
-    /*border-radius: 8px;*/
+    -moz-border-radius: 8px;
+    border-radius: 8px;
     border-bottom: 1px solid #cccccc;
     border-top: 1px solid #666666;
 }
@@ -948,11 +948,11 @@ header h1 a {
     background-image: data-url(../../assets/img/fe/bg_btn_tools.jpg);
     background-position: left top;
     background-repeat: repeat-x;
-    -vendor-border-radius: 4px;
-    /*border-radius: 4px;*/
-    -vendor-box-shadow: 0px 4px 3px #0C0C0C;
-    /*-webkit-box-shadow: 0px 4px 3px #0C0C0C;
-    box-shadow: 0px 4px 3px #0C0C0C;*/
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -moz-box-shadow: 0px 4px 3px #0C0C0C;
+    -webkit-box-shadow: 0px 4px 3px #0C0C0C;
+    box-shadow: 0px 4px 3px #0C0C0C;
 }
 
 #comments {
@@ -1084,8 +1084,8 @@ header h1 a {
     background-image: data-url(../../assets/img/fe/bg_btn_tools.jpg);
     background-position: left top;
     background-repeat: repeat-x;
-    -vendor-border-radius: 4px;
-    /*border-radius: 4px;*/
+    -moz-border-radius: 4px;
+    border-radius: 4px;
     margin-top: 20px;
     cursor: pointer;
 }
@@ -1111,8 +1111,8 @@ header h1 a {
 #chapters ol li a {
     display: block;
     color: #999999;
-    -vendor-border-radius: 4px;
-    /*border-radius: 4px;*/
+    -moz-border-radius: 4px;
+    border-radius: 4px;
     background-color: #1A1A1A;
     margin-bottom: 1px;
     padding: 6px 15px;
