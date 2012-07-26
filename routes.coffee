@@ -268,7 +268,7 @@ exports.show_presentation = (req, res, next) ->
       speaker: presentation.speaker
       slides: slides
       comments: comments
-      domain: "http://#{req.headers.host}"
+      domain: "http://#{req.headers["x-forwarded-host"] or req.headers.host}"
       path: path
       thumb: presentation.chapters[0].video.thumb
       wrapper_css: "class=\"section_player\""
