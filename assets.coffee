@@ -11,7 +11,7 @@ coffee_renderer = (file, path, index, isLast, callback) ->
 
 new_js_conf = (suffix, files) ->
   conf =
-    route: new RegExp("\/managedassets\/js\/[a-z0-9]+#{suffix}\.js")
+    route: new RegExp("\/managedassets\/js\/[a-z0-9]*#{suffix}\.js")
     path: "./public/assets/js/"
     dataType: "javascript"
     files: files
@@ -65,6 +65,7 @@ exports.assetsMiddleware = assetManager
     "presentz.js",
     "show_presentation.coffee"
   ])
+  js_embed: new_js_conf("embed", ["embed.coffee"])
   css: new_css_conf("main", [
     "mediaelementplayer.css",
     "reset.css",
