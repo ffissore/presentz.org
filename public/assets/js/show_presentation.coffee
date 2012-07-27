@@ -37,6 +37,7 @@ Controls =
           #this is NOT a typo
           $this = $(".info .title a", this)
         prsntz.changeChapter(parseInt($this.attr("chapter_index")), parseInt($this.attr("slide_index")), true)
+      false
 
     Controls.bind_link_to_slides_from_comments()
 
@@ -44,11 +45,13 @@ Controls =
     $previous_slide.unbind "click"
     $previous_slide.bind "click", ->
       prsntz.previous()
+      false
 
     $next_slide = $("#next_slide")
     $next_slide.unbind "click"
     $next_slide.bind "click", ->
       prsntz.next()
+      false
 
   bind_link_to_slides_from_comments: () ->
     $slides_in_comments = $("a.slide_title")
@@ -57,6 +60,7 @@ Controls =
       $("html:not(:animated),body:not(:animated)").animate({ scrollTop: $("div.main h3").position().top }, 400)
       $this = $(e.target).parent().parent()
       prsntz.changeChapter(parseInt($this.attr("chapter_index")), parseInt($this.attr("slide_index")), true)
+      false
 
   restoreOriginalWidth: () ->
     $("#controls .chapter").each () ->
@@ -198,7 +202,7 @@ show = (to_show_selector) ->
   if $(window).scrollTop() < scroll_destination
     $("html:not(:animated),body:not(:animated)").animate({ scrollTop: scroll_destination }, 400)
 
-  true
+  false
 
 show_comments_for_slide = (chapter, slide) ->
   $("#comments div.item_comment").each (idx, elem) ->
@@ -216,11 +220,13 @@ comment_this_slide = (to_show_selector, notify_label_selector) ->
   else
     $(notify_label_selector).text "slide #{window.current_slide + 1}"
   show_comments_for_slide(window.current_chapter, window.current_slide)
+  false
 
 comment_this_presentation = (to_show_selector, notify_label_selector) ->
   comment to_show_selector, "", ""
   $(notify_label_selector).text "the presentation"
   show_comments_for_slide("", "")
+  false
 
 comment = (to_show_selector, chapter_index_val, slide_index_val) ->
   show to_show_selector
@@ -298,7 +304,7 @@ $().ready () ->
         prsntz.previous()
       when 39
         prsntz.next()
-        
+
 
   $("#comment_form form").submit (e) ->
     $textarea = $(e.currentTarget.comment)
@@ -330,5 +336,21 @@ $().ready () ->
         $slide_index.val ""
       error: () ->
         alert("An error occured while saving your comment")
+    false
+
+  $li_share_facebook = $("#share li.li_share_facebook")
+  $li_share_facebook.unbind "click"
+  $li_share_facebook.bind "click", () ->
+    fbShare()
+    false
+  $li_share_twitter = $("#share li.li_share_twitter")
+  $li_share_twitter.unbind "click"
+  $li_share_twitter.bind "click", () ->
+    twitterShare()
+    false
+  $li_share_gplus = $("#share li.li_share_gplus")
+  $li_share_gplus.unbind "click"
+  $li_share_gplus.bind "click", () ->
+    plusShare()
     false
   return

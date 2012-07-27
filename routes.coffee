@@ -272,6 +272,7 @@ exports.show_presentation = (req, res, next) ->
       path: path
       thumb: presentation.chapters[0].video.thumb
       wrapper_css: "class=\"section_player\""
+      embed: req.query.embed?
 
 exports.comment_presentation = (req, res, next) ->
   params = req.body

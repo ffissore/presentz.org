@@ -7,6 +7,9 @@
   <meta property="og:title" content="{title}"/>
   <meta property="og:description" content="{title}"/>
   <meta property="og:site_name" content="Presentz"/>
+  {?embed}
+    <base target="_blank">
+  {/embed}
   {?thumb}
     <meta property="og:image" content="{thumb}"/>
   {/thumb}

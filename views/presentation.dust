@@ -36,13 +36,13 @@
       <div id="tools">
         <h5>Tools</h5>
         <ul>
-          <li><a href="javascript:void(0)" onclick="show('#allcomments');">Show all comments</a></li>
-          <li><a href="javascript:void(0)" onclick="show('#comments');">Show chapters comments</a></li>
-          <li><a href="javascript:void(0)" onclick="comment_this_slide('#comments, #comment_form', '#comment_form span');">Comment this slide</a></li>
-          <li><a href="javascript:void(0)" onclick="comment_this_presentation('#comments, #comment_form', '#comment_form span');">Comment this presentation</a></li>
-          <li><a href="javascript:void(0)" onclick="show('#chapters');">Show chapters list</a></li>
-          <li><a href="javascript:void(0)" onclick="show('#embed');">Embed</a></li>
-          <li><a href="javascript:void(0)" onclick="show('#share');">Share</a></li>
+          <li><a href="javascript:void(0)" onclick="return show('#allcomments');">Show all comments</a></li>
+          <li><a href="javascript:void(0)" onclick="return show('#comments');">Show chapters comments</a></li>
+          <li><a href="javascript:void(0)" onclick="return comment_this_slide('#comments, #comment_form', '#comment_form span');">Comment this slide</a></li>
+          <li><a href="javascript:void(0)" onclick="return comment_this_presentation('#comments, #comment_form', '#comment_form span');">Comment this presentation</a></li>
+          <li><a href="javascript:void(0)" onclick="return show('#chapters');">Show chapters list</a></li>
+          <li><a href="javascript:void(0)" onclick="return show('#embed');">Embed</a></li>
+          <li><a href="javascript:void(0)" onclick="return show('#share');">Share</a></li>
         </ul>
       </div>
       {! box tutti i commenti !}
@@ -121,9 +121,9 @@
       <div id="share" class="box8" style="display:none">
         <h5>Share</h5>
         <ul>
-          <li class="li_share_facebook"><a href="javascript:fbShare();" title="Condividi su Facebook">Facebook</a></li>
-          <li class="li_share_twitter"><a href="javascript:twitterShare();" title="Condividi su Twitter">Twitter</a></li>
-          <li class="li_share_gplus"><a href="javascript:plusShare();" title="Condividi su Google Plus">Google Plus</a></li>
+          <li class="li_share_facebook"><a href="javascript:void(0);" title="Condividi su Facebook">Facebook</a></li>
+          <li class="li_share_twitter"><a href="javascript:void(0);" title="Condividi su Twitter">Twitter</a></li>
+          <li class="li_share_gplus"><a href="javascript:void(0);" title="Condividi su Google Plus">Google Plus</a></li>
         </ul>
       </div>
       {! fine box share !}
