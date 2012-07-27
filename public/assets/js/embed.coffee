@@ -6,6 +6,11 @@ find_presentation_data = () ->
     title = script.getAttribute("data-presentation-title")
     container_id = script.getAttribute("data-presentation-container-id")
     if url? and title?
+      if url.indexOf("?") isnt -1
+        url = "#{url}&"
+      else
+        url = "#{url}?"
+      url = "#{url}embed"
       result =
         origin: script.src.match(new RegExp("https?://[^/]*"))
         dom_element: script
