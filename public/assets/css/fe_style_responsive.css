@@ -4,7 +4,7 @@
     body {
         background-image: data-url(../../assets/img/fe/logo.jpg);
         background-color: #FFFFFF;
-        background-position: center;
+        background-position: 50% 30%;
         background-repeat: no-repeat;
     }
 

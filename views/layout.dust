@@ -16,7 +16,7 @@
   {/presentz_css}
 </head>
 <body>
-<div id="resolution_notice">Your resolution is too low. Please use a device with a screen width of at least 768 pixels</div>
+<div id="resolution_notice">Your resolution is too low. A screen width of at least 768 pixels is required</div>
 <div id="wrapper" {wrapper_css|s}>
   <header id="header">
     <div id="content_header">
