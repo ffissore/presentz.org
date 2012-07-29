@@ -1,0 +1,87 @@
+{
+  "title": "Startup in Action - circleme",
+  "speaker": "Giuseppe D'Antonio",
+  "chapters": [
+    {
+      "duration": 1633,
+      "media": {
+        "video": {
+          "url": "http://youtu.be/hiAQkx5AUGI",
+          "thumb": "http://presentz.org/assets/codemotion12/dantonio.jpg"
+        },
+        "slides": [
+          {
+            "url": "http://www.slideshare.net/circlemeallostartupinaction-120328041551-phpapp02#1",
+            "title": "Scegliere i (poi) Lavorare in uno Startup",
+            "time": 0
+          },
+          {
+            "url": "http://www.slideshare.net/circlemeallostartupinaction-120328041551-phpapp02#2",
+            "title": "Mi presento",
+            "time": 104
+          },
+          {
+            "url": "http://www.slideshare.net/circlemeallostartupinaction-120328041551-phpapp02#3",
+            "title": "Gli \"esperti\" di startup non esistono!",
+            "time": 216
+          },
+          {
+            "url": "http://www.slideshare.net/circlemeallostartupinaction-120328041551-phpapp02#4",
+            "title": "Prima di tutto",
+            "time": 245
+          },
+          {
+            "url": "http://www.slideshare.net/circlemeallostartupinaction-120328041551-phpapp02#5",
+            "title": "Come trovare lo startup giusto? (1/2)",
+            "time": 277
+          },
+          {
+            "url": "http://www.slideshare.net/circlemeallostartupinaction-120328041551-phpapp02#6",
+            "title": "Come trovare lo startup giusto? (2/2)",
+            "time": 396
+          },
+          {
+            "url": "http://www.slideshare.net/circlemeallostartupinaction-120328041551-phpapp02#7",
+            "title": "Com'è lavorare in uno startup? (I falsi miti)",
+            "time": 606
+          },
+          {
+            "url": "http://www.slideshare.net/circlemeallostartupinaction-120328041551-phpapp02#8",
+            "title": "Myth 1",
+            "time": 635
+          },
+          {
+            "url": "http://www.slideshare.net/circlemeallostartupinaction-120328041551-phpapp02#9",
+            "title": "Myth 2",
+            "time": 763
+          },
+          {
+            "url": "http://www.slideshare.net/circlemeallostartupinaction-120328041551-phpapp02#10",
+            "title": "Myth 3",
+            "time": 825
+          },
+          {
+            "url": "http://www.slideshare.net/circlemeallostartupinaction-120328041551-phpapp02#11",
+            "title": "Myth 4",
+            "time": 899
+          },
+          {
+            "url": "http://www.slideshare.net/circlemeallostartupinaction-120328041551-phpapp02#12",
+            "title": "Myth 5",
+            "time": 960
+          },
+          {
+            "url": "http://www.slideshare.net/circlemeallostartupinaction-120328041551-phpapp02#13",
+            "title": "Perchè lavorare in uno startup?",
+            "time": 1058
+          },
+          {
+            "url": "http://www.slideshare.net/circlemeallostartupinaction-120328041551-phpapp02#15",
+            "title": "Take care...",
+            "time": 1314
+          }
+        ]
+      }
+    }
+  ]
+}
