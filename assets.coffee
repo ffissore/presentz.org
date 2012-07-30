@@ -35,13 +35,11 @@ new_css_conf = (suffix, files) ->
     stale: true
     preManipulate:
       MSIE: [
-        assetHandler.yuiCssOptimize,
         assetHandler.fixVendorPrefixes,
         assetHandler.fixGradients,
         assetHandler.stripDataUrlsPrefix
       ]
       "^": [
-        assetHandler.yuiCssOptimize,
         assetHandler.fixVendorPrefixes,
         assetHandler.fixGradients,
         assetHandler.replaceImageRefToBase64("#{__dirname}/public/assets/img/")
@@ -58,14 +56,6 @@ exports.assetsMiddleware = assetManager
     "modernizr.js",
     "main.coffee"
   ])
-  js_pres: new_js_conf("pres", [
-    "froogaloop.js",
-    "swfobject.js",
-    "mediaelement-and-player.js",
-    "presentz.js",
-    "show_presentation.coffee"
-  ])
-  js_embed: new_js_conf("embed", ["embed.coffee"])
   css: new_css_conf("main", [
     "mediaelementplayer.css",
     "reset.css",
@@ -75,6 +65,26 @@ exports.assetsMiddleware = assetManager
     "default_responsive.css",
     "fe_style_responsive.css"
   ])
+  js_pres: new_js_conf("pres", [
+    "froogaloop.js",
+    "swfobject.js",
+    "mediaelement-and-player.js",
+    "presentz.js",
+    "show_presentation.coffee"
+  ])
   css_pres: new_css_conf("pres", [
     "fe_style_pres.css"
+  ])
+  js_embed: new_js_conf("embed", ["embed.coffee"])
+  js_manage: new_js_conf("manage", [
+    "jquery/jquery-1.7.2.min.js",
+    "modernizr.js",
+    "manage/bootstrap.js",
+    "manage/underscore.js",
+    "manage/backbone.js",
+    "manage/main.coffee"
+  ])
+  css_manage: new_css_conf("manage", [
+    "bootstrap.css",
+    "bootstrap-responsive.css"
   ])
