@@ -107,7 +107,7 @@ exports.list_catalogs = (req, res, next) ->
       return next(err) if err?
       res.render "catalogs",
         title: "Presentz talks"
-        section: "talks"
+        css_section_talks: "class=\"selected\""
         catalogs: catalogs
         list: dustjs.helpers.draw_boxes(6)
 
@@ -218,6 +218,10 @@ exports.show_presentation = (req, res, next) ->
       slide.comments_length = slide.comments.length
     else
       slide.comments_length = 0
+    if slide.comments_length is 1
+      slide.comments_label = "comment"
+    else
+      slide.comments_label = "comments"
     slide
 
   slides_duration_percentage_css = (slides, duration) ->
@@ -324,9 +328,10 @@ exports.comment_presentation = (req, res, next) ->
 
 exports.static = (view_name) ->
   return (req, res) ->
-    res.render view_name,
+    options =
       title: "Presentz"
-      section: view_name
+    options["css_section_#{view_name}"] = "class=\"selected\""
+    res.render view_name, options
 
 exports.ensure_is_logged = (req, res, next) ->
   return next() if req.user?

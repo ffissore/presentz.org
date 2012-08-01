@@ -30,8 +30,8 @@
         {/user}
         <nav>
           <ul>
-            <li{@if cond="'{section}' == 'index'"} class="selected"{/if}><a href="/">Home</a></li>
-            <li{@if cond="'{section}' == 'talks'"} class="selected"{/if}><a href="/r/talks.html">Talks</a></li>
+            <li {css_section_index}><a href="/">Home</a></li>
+            <li {css_section_talks}><a href="/r/talks.html">Talks</a></li>
             {!<li><a href="/#demos">Demo</a></li>!}
             <li><a href="javascript:void(0)" id="link_login">Login</a></li>
           </ul>

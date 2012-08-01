@@ -28,7 +28,7 @@
         <div class="chapter" percentage="{percentage}" style="width:2px">
           <div class="info">
             <p class="title"><a chapter_index="{chapter_index}" slide_index="{slide_index}" href="javascript:void(0);">{title}</a> &mdash; {duration}</p>
-            <div class="comments" chapter_index="{chapter_index}" slide_index="{slide_index}"><span>{comments_length}</span><a href="javascript:void(0);">{@if cond="'{comments_length}' == 1"}comment{:else}comments{/if}</a></div>
+            <div class="comments" chapter_index="{chapter_index}" slide_index="{slide_index}"><span>{comments_length}</span><a href="javascript:void(0);">{comments_label}</a></div>
           </div>
         </div>
         {/slides}
@@ -99,7 +99,7 @@
             <li>
               <a {css|s} chapter_index="{chapter_index}" slide_index="{slide_index}" href="javascript:void(0)">
                 {index}. {title} &mdash; {duration}
-                <span class="comments"><span>{comments_length}</span>{@if cond="'{comments_length}' == 1"}comment&nbsp;{:else}comments{/if}</span>
+                <span class="comments"><span>{comments_length}</span>{comments_label}</span>
               </a>
             </li>
           {/slides}
