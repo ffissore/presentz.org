@@ -65,6 +65,7 @@ app.locals
 
 app.get "/", routes.static "index"
 app.get "/favicon.ico", express.static "#{__dirname}/public/assets/img"
+app.get "/robots.txt", express.static "#{__dirname}/public/assets"
 app.get "/r/back_to_referer", redirect_routes.back_to_referer config
 app.get "/r/index.html", routes.static "index"
 app.get "/r/tos.html", routes.static "tos"
