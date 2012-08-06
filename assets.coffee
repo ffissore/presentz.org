@@ -12,7 +12,7 @@ coffee_renderer = (file, path, index, isLast, callback) ->
 new_js_conf = (suffix, files) ->
   conf =
     route: new RegExp("\/managedassets\/js\/[a-z0-9]*#{suffix}\.js")
-    path: "./public/assets/js/"
+    path: "./"
     dataType: "javascript"
     files: files
     stale: true
@@ -29,7 +29,7 @@ new_js_conf = (suffix, files) ->
 new_css_conf = (suffix, files) ->
   conf =
     route: new RegExp("/managedassets\/css\/[a-z0-9]+#{suffix}\.css")
-    path: "./public/assets/css/"
+    path: "./"
     dataType: "css"
     files: files
     stale: true
@@ -49,42 +49,42 @@ new_css_conf = (suffix, files) ->
 
 exports.assetsMiddleware = assetManager
   js_main: new_js_conf("main", [
-    "jquery/jquery-1.7.2.min.js",
-    "jquery/jquery.easing.1.3.js",
-    "jquery/jquery.scrollTo-1.4.2-min.js",
-    "jquery/jquery-ui-1.8.21.custom.min.js",
-    "modernizr.js",
-    "main.coffee"
+    "public/assets/js/jquery/jquery-1.7.2.min.js",
+    "public/assets/js/jquery/jquery.easing.1.3.js",
+    "public/assets/js/jquery/jquery.scrollTo-1.4.2-min.js",
+    "public/assets/js/jquery/jquery-ui-1.8.21.custom.min.js",
+    "public/assets/js/modernizr.js",
+    "src_client/main.coffee"
   ])
   css: new_css_conf("main", [
-    "mediaelementplayer.css",
-    "reset.css",
-    "default.css",
-    "font_style.css",
-    "fe_style.css",
-    "default_responsive.css",
-    "fe_style_responsive.css"
+    "public/assets/css/mediaelementplayer.css",
+    "public/assets/css/reset.css",
+    "public/assets/css/default.css",
+    "public/assets/css/font_style.css",
+    "public/assets/css/fe_style.css",
+    "public/assets/css/default_responsive.css",
+    "public/assets/css/fe_style_responsive.css"
   ])
   js_pres: new_js_conf("pres", [
-    "froogaloop.js",
-    "swfobject.js",
-    "mediaelement-and-player.js",
-    "presentz.js",
-    "show_presentation.coffee"
+    "public/assets/js/froogaloop.js",
+    "public/assets/js/swfobject.js",
+    "public/assets/js/mediaelement-and-player.js",
+    "public/assets/js/presentz.js",
+    "src_client/show_presentation.coffee"
   ])
   css_pres: new_css_conf("pres", [
-    "fe_style_pres.css"
+    "public/assets/css/fe_style_pres.css"
   ])
-  js_embed: new_js_conf("embed", ["embed.coffee"])
+  js_embed: new_js_conf("embed", ["src_client/embed.coffee"])
   js_manage: new_js_conf("manage", [
-    "jquery/jquery-1.7.2.min.js",
-    "modernizr.js",
-    "manage/bootstrap.js",
-    "manage/underscore.js",
-    "manage/backbone.js",
-    "manage/main.coffee"
+    "public/assets/js/jquery/jquery-1.7.2.min.js",
+    "public/assets/js/modernizr.js",
+    "public/assets/js/manage/bootstrap.js",
+    "public/assets/js/manage/underscore.js",
+    "public/assets/js/manage/backbone.js",
+    "src_client_manage/main.coffee"
   ])
   css_manage: new_css_conf("manage", [
-    "bootstrap.css",
-    "bootstrap-responsive.css"
+    "public/assets/css/bootstrap.css",
+    "public/assets/css/bootstrap-responsive.css"
   ])
