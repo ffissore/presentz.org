@@ -21,7 +21,7 @@ jQuery () ->
       @model.bind "remove", @unrender
       
     render: () ->
-      $(@el).html """
+      @$el.html """
         <div class="thumbnail">    
           <img src="http://placehold.it/260x180" alt="">
           <h5>#{@model.get "title"}</h5>
@@ -32,7 +32,7 @@ jQuery () ->
       @
       
     unrender: () ->
-      $(@el).remove()
+      @$el.remove()
       
     swap: () ->
       @model.set
@@ -62,7 +62,7 @@ jQuery () ->
       @render()
       
     render: () ->
-      $(@el).append """
+      @$el.append """
         <ul class="thumbnails">
           <li class="span3">
             <div class="thumbnail">    

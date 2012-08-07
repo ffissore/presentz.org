@@ -22,7 +22,7 @@ new_js_conf = (suffix, files) ->
       ]
     postManipulate:
       "^": [
-        assetHandler.uglifyJsOptimize
+        #assetHandler.uglifyJsOptimize
       ]
   return conf
 
@@ -78,7 +78,6 @@ exports.assetsMiddleware = assetManager
   js_embed: new_js_conf("embed", ["src_client/embed.coffee"])
   js_manage: new_js_conf("manage", [
     "public/assets/js/jquery/jquery-1.7.2.min.js",
-    "public/assets/js/modernizr.js",
     "public/assets/js/manage/bootstrap.js",
     "public/assets/js/manage/underscore.js",
     "public/assets/js/manage/backbone.js",
@@ -87,4 +86,5 @@ exports.assetsMiddleware = assetManager
   css_manage: new_css_conf("manage", [
     "public/assets/css/bootstrap.css",
     "public/assets/css/bootstrap-responsive.css"
+    "public/assets/css/manage.css"
   ])
