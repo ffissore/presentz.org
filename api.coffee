@@ -1,9 +1,14 @@
-api = {}
+db = null
 
-exports.init= (db) ->
-  api.db = db
+exports.init = (database) ->
+  db = database
   @
 
+exports.my_presentations = (req, res, next) ->
+  db.fromVertex(req.user).outVertexes "authored", (err, presentations) ->
+    res.send presentations
+
+###
 exports.mines_authored= (req, res) ->
   api.db.fromVertex(req.user).outVertexes "authored", (err, presentations) ->
     for p in presentations
@@ -13,3 +18,4 @@ exports.mines_authored= (req, res) ->
 
 exports.mines_held= ->
   throw new Error
+###

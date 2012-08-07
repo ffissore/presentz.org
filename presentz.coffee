@@ -70,7 +70,9 @@ app.get "/r/back_to_referer", redirect_routes.back_to_referer config
 app.get "/r/index.html", routes.static "index"
 app.get "/r/tos.html", routes.static "tos"
 app.get "/r/talks.html", routes.list_catalogs
+app.all "/m/*", routes.ensure_is_logged
 app.get "/m/index.html", routes.static "m/index"
+app.get "/m/api/my_presentations", api.my_presentations
 app.get "/:catalog_name/catalog.html", routes.show_catalog
 app.get "/:catalog_name/catalog", routes.show_catalog
 app.get "/:catalog_name/index.html", routes.show_catalog

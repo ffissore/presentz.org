@@ -32,22 +32,20 @@ merge_foursquare_user_data = (user, ext_user) ->
   user.email ?= ext_user.contact.email
   user.foursquare_id ?= ext_user.id
 
-create_or_update_user = (db, session, user_data, merge_function, promise) ->
-  save = (user) ->
-    db.createVertex user, (err, user) ->
-      db.loadRecord "#6:0", (err, root) ->
-        db.createEdge root, user, { label: "user" }, (err) ->
-          return promise.fail(err) if err?
-          promise.fulfill
-            id: user["@rid"]
-
+create_or_update_user = (db, results, session, user_data, merge_function, promise) ->
   save_callback = (err, user) ->
     return promise.fail(err) if err?
     promise.fulfill
       id: user["@rid"]
 
   if session.auth? and session.auth.userId?
-    db.loadRecord session.auth.userId, (err, user) ->
+    rid = session.auth.userId
+  else if results.length > 0
+    rid = results[0].rid
+
+  if rid?
+    db.loadRecord rid, (err, user) ->
+      console.log err
       return promise.fail(err) if err?
       merge_function user, user_data
       db.save user, save_callback
@@ -56,9 +54,8 @@ create_or_update_user = (db, session, user_data, merge_function, promise) ->
       _type: "user"
     merge_function user, user_data
     db.createVertex user, (err, user) ->
-      db.loadRecord "#6:0", (err, root) ->
-        db.createEdge root, user, { label: "user" }, (err) ->
-          save_callback(err, user)
+      db.createEdge "#6:0", user, { label: "user" }, (err) ->
+        save_callback(err, user)
 
 find_or_create_user = (db, query_tmpl, merge_function) ->
   return (session, accessToken, accessTokenExtra, user_data) ->
@@ -67,7 +64,7 @@ find_or_create_user = (db, query_tmpl, merge_function) ->
     db.command "#{query_tmpl}'#{user_data.id}'", (err, results) ->
       return promise.fail(err) if err?
 
-      create_or_update_user db, session, user_data, merge_function, promise
+      create_or_update_user db, results, session, user_data, merge_function, promise
     return promise
 
 facebook_init = (config, db) ->

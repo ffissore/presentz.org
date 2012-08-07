@@ -336,5 +336,5 @@ exports.static = (view_name) ->
 exports.ensure_is_logged = (req, res, next) ->
   return next() if req.user?
 
-  req.notify "error", "you need to be logged in"
+  #req.notify "error", "you need to be logged in"
   res.redirect 302, "/"
