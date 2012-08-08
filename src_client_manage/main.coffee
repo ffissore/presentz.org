@@ -1,10 +1,6 @@
 jQuery () ->
   class Presentation extends Backbone.Model
 
-    defaults:
-      title: "Title Missing"
-      thumb: "http://placehold.it/200x150"
-
   class PresentationList extends Backbone.Collection
 
     url: "/m/api/my_presentations"
@@ -22,9 +18,8 @@ jQuery () ->
         @$el.append """
         <li class="span3">
           <div class="thumbnail">    
-            <img src="#{model.get "thumb"}" alt="">
-            <h5>#{model.get "title"}</h5>
-            <p>Thumbnail caption right here...</p>        
+            <img src="#{model.get "chapters[0].video.thumb"}" alt="">
+            <h5>#{utils.cut_string_at(model.get("title"), 30)}</h5>
             <p><a href="#" class="btn btn-primary">Add</a> <a href="#" class="btn btn-warning">Swap</a> <a href="#" class="btn btn-danger">Remove</a></p>
           </div>
         </li> 
@@ -45,6 +40,7 @@ jQuery () ->
       @presentationList.fetch()
 
     reset: (model) ->
+      console.log model
       @$el.empty()
       view = new PresentationView model: model
       @$el.html(view.render().el)

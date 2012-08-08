@@ -81,7 +81,7 @@ exports.assetsMiddleware = assetManager
     "public/assets/js/manage/bootstrap.js",
     "public/assets/js/manage/underscore.js",
     "public/assets/js/manage/backbone.js",
-    #"src_client_manage/storage.coffee",
+    "utils.coffee",
     "src_client_manage/main.coffee"
   ])
   css_manage: new_css_conf("manage", [

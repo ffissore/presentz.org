@@ -1,11 +1,14 @@
 express = require "express"
-redirect_routes = require "./routes_redirect"
 orient = require "orientdb"
 cons = require "consolidate"
 OrientDBStore = require("connect-orientdb")(express)
 _ = require "underscore"
+
+redirect_routes = require "./routes_redirect"
 auth = require "./auth"
 assets = require "./assets"
+api = require("./api")
+routes = require("./routes")
 
 Number:: pad = (pad, pad_char = "0") ->
   s = @.toString()
@@ -29,8 +32,8 @@ session_store_options = _.clone(config.storage)
 session_store_options.database = "presentz"
 
 everyauth = auth.init(config, db)
-api = require("./api").init(db)
-routes = require("./routes").init(db)
+api.init(db)
+routes.init(db)
 
 app.engine("dust", cons.dust)
 
@@ -63,15 +66,15 @@ app.configure "production", ->
 app.locals
   assetsCacheHashes: assets.assetsMiddleware.cacheHashes
 
-app.get "/", routes.static "index"
+app.get "/", routes.static_view "index"
 app.get "/favicon.ico", express.static "#{__dirname}/public/assets/img"
 app.get "/robots.txt", express.static "#{__dirname}/public/assets"
 app.get "/r/back_to_referer", redirect_routes.back_to_referer config
-app.get "/r/index.html", routes.static "index"
-app.get "/r/tos.html", routes.static "tos"
+app.get "/r/index.html", routes.static_view "index"
+app.get "/r/tos.html", routes.static_view "tos"
 app.get "/r/talks.html", routes.list_catalogs
 app.all "/m/*", routes.ensure_is_logged
-app.get "/m/index.html", routes.static "m/index"
+app.get "/m/index.html", routes.static_view "m/index"
 app.get "/m/api/my_presentations", api.my_presentations
 app.get "/:catalog_name/catalog.html", routes.show_catalog
 app.get "/:catalog_name/catalog", routes.show_catalog

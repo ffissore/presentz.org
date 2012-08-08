@@ -6,6 +6,12 @@ exports.init = (database) ->
 
 exports.my_presentations = (req, res, next) ->
   db.fromVertex(req.user).outVertexes "authored", (err, presentations) ->
+    for presentation in presentations
+      delete presentation._type
+      delete presentation._index
+      delete presentation["@class"]
+      delete presentation["@type"]
+      delete presentation["@version"]
     res.send presentations
 
 ###

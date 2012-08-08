@@ -1,99 +1,20 @@
-fs = require "fs"
 _ = require "underscore"
-_s = require "underscore.string"
-http = require "http"
-url = require "url"
 dateutil = require "dateutil"
 moment = require "moment"
 
+utils = require "./utils"
+storage = require "./storage"
+dustjs_helpers = require "./dustjs_helpers"
+draw_4_boxes = dustjs_helpers.draw_boxes(4)
+draw_6_boxes = dustjs_helpers.draw_boxes(6)
+
 db = undefined
-dustjs = {}
-dustjs.helpers = {}
-dustjs.helpers.draw_boxes = (number_of_boxes) ->
-  return (chunk, context, bodies) ->
-    boxes = context.current()
-    index = 0
-    for box in boxes
-      index++
-      chunk = chunk.render(bodies.block, context.push(box))
-      if index is number_of_boxes
-        chunk = chunk.write("<div class=\"clear\"></div>")
-        index = 0
-    return chunk
 
-utils = {}
-utils.exec_for_each = (callable, elements, callback) ->
-  return callback(undefined, elements) if elements.length is 0
-  exec_times = 0
-  for element in elements
-    callable element, (err) ->
-      return callback(err) if err?
-      exec_times++
-      return callback(undefined, elements) if exec_times is elements.length
-
-utils.pretty_duration = (seconds, minutes_char = "'", seconds_char = "\"") ->
+pretty_duration = (seconds, minutes_char = "'", seconds_char = "\"") ->
   duration = moment.duration(Math.round(seconds), "seconds")
   "#{duration.minutes().pad(2)}#{minutes_char}#{duration.seconds().pad(2)}#{seconds_char}"
 
-storage = {}
-storage.load_presentation_from_path = (path, callback) ->
-  path_parts = path.split("/")
-  catalog_name = path_parts[0]
-  presentation_name = path_parts[1]
-
-  query = "select from V where _type = 'presentation' and id = '#{presentation_name}' and out.label CONTAINSALL 'part_of' and out.in.id CONTAINSALL '#{catalog_name}'"
-  db.command query, (err, results) ->
-    return callback(err) if err?
-    return callback("no record found") if results.length is 0
-    presentation = results[0]
-    storage.load_comments_of presentation, callback
-
-storage.load_user_of = (comment, callback) ->
-  db.fromVertex(comment).inVertexes "authored_comment", (err, users) ->
-    return callback(err) if err?
-    return callback("Too many users") if users.length > 1
-    comment.user = users[0]
-    callback()
-
-storage.load_comments_of = (node, callback) ->
-  db.fromVertex(node).inVertexes "comment_of", (err, comments) ->
-    return callback(err) if err?
-    node.comments = _.sortBy comments, (comment) -> -1 * comment.time
-    utils.exec_for_each storage.load_user_of, node.comments, (err) ->
-      return callback(err) if err?
-      callback(undefined, node)
-
-storage.load_chapters_of = (presentation, callback) ->
-  db.fromVertex(presentation).inVertexes "chapter_of", (err, chapters) ->
-    return callback(err) if err?
-    presentation.chapters = _.sortBy chapters, (chapter) -> chapter._index
-    return callback(undefined, presentation)
-
-storage.load_slides_of = (chapter, callback) ->
-  db.fromVertex(chapter).inVertexes "slide_of", (err, slides) ->
-    return callback(err) if err?
-    chapter.slides = _.sortBy slides, (slide) -> slide.time
-    slides_with_loaded_comments = 0
-    for slide in slides
-      storage.load_comments_of slide, (err) ->
-        return callback(err) if err?
-        slides_with_loaded_comments++
-        return callback(undefined, chapter) if slides_with_loaded_comments is slides.length
-
-storage.load_entire_presentation_from_path = (path, callback) ->
-  storage.load_presentation_from_path path, (err, presentation) ->
-    return callback(err) if err?
-    storage.load_chapters_of presentation, (err) ->
-      return callback(err) if err?
-      utils.exec_for_each storage.load_slides_of, presentation.chapters, (err) ->
-        return callback(err) if err?
-        return callback(undefined, presentation)
-
-exports.init = (database) ->
-  db = database
-  @
-
-exports.list_catalogs = (req, res, next) ->
+list_catalogs = (req, res, next) ->
   number_of_presentations = (catalog, callback) ->
     db.getInEdges catalog, "part_of", (err, edges) ->
       return next(err) if err?
@@ -109,9 +30,9 @@ exports.list_catalogs = (req, res, next) ->
         title: "Presentz talks"
         css_section_talks: "class=\"selected\""
         catalogs: catalogs
-        list: dustjs.helpers.draw_boxes(6)
+        list: draw_6_boxes
 
-exports.show_catalog = (req, res, next) ->
+show_catalog = (req, res, next) ->
   pres_to_thumb= (presentation, catalog_name) ->
     pres =
       id: presentation.id
@@ -145,9 +66,9 @@ exports.show_catalog = (req, res, next) ->
           title: "#{catalog.name} talks"
           catalog: catalog
           presentations: presentations
-          list: dustjs.helpers.draw_boxes(4)
+          list: draw_4_boxes
 
-exports.raw_presentation = (req, res, next) ->
+raw_presentation = (req, res, next) ->
   wipe_out_storage_fields = (presentation) ->
     wipe_out_from_comments_in = (element) ->
       for comment in element.comments
@@ -187,7 +108,7 @@ exports.raw_presentation = (req, res, next) ->
 
     res.send presentation
 
-exports.show_presentation = (req, res, next) ->
+show_presentation = (req, res, next) ->
   comments_of = (presentation) ->
     comments = []
     for comment in presentation.comments
@@ -240,7 +161,7 @@ exports.show_presentation = (req, res, next) ->
         slide.percentage = 100 - percent_used
       duration_used += slide.duration
       percent_per_second = (100 - percent_used) / (duration - duration_used)
-      slide.duration = utils.pretty_duration slide.duration
+      slide.duration = pretty_duration slide.duration
       slide.index = (slide_num + 1).pad(number_of_zeros_in_index)
       slide.css = "class=\"even\"" if slide.index % 2 is 0
 
@@ -278,7 +199,7 @@ exports.show_presentation = (req, res, next) ->
       wrapper_css: "class=\"section_player\""
       embed: req.query.embed?
 
-exports.comment_presentation = (req, res, next) ->
+comment_presentation = (req, res, next) ->
   params = req.body
 
   get_node_to_link_to = (callback) ->
@@ -326,15 +247,28 @@ exports.comment_presentation = (req, res, next) ->
         res.render "_comment_",
           comment: comment
 
-exports.static = (view_name) ->
+static_view = (view_name) ->
   return (req, res) ->
     options =
       title: "Presentz"
     options["css_section_#{view_name}"] = "class=\"selected\""
     res.render view_name, options
 
-exports.ensure_is_logged = (req, res, next) ->
+ensure_is_logged = (req, res, next) ->
   return next() if req.user?
 
   #req.notify "error", "you need to be logged in"
   res.redirect 302, "/"
+
+exports.raw_presentation = raw_presentation
+exports.show_catalog = show_catalog
+exports.list_catalogs = list_catalogs
+exports.show_presentation = show_presentation
+exports.comment_presentation = comment_presentation
+exports.static_view = static_view
+exports.ensure_is_logged = ensure_is_logged
+exports.init = (database) ->
+  db = database
+  storage.init database
+  @
+
