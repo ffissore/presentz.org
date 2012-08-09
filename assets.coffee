@@ -1,5 +1,5 @@
-assetManager = require("connect-assetmanager")
-assetHandler = require("connect-assetmanager-handlers")
+assetManager = require "connect-assetmanager"
+assetHandler = require "connect-assetmanager-handlers"
 coffee = require "coffee-script"
 
 coffee_renderer = (file, path, index, isLast, callback) ->

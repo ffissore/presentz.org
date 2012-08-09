@@ -7,8 +7,8 @@ _ = require "underscore"
 redirect_routes = require "./routes_redirect"
 auth = require "./auth"
 assets = require "./assets"
-api = require("./api")
-routes = require("./routes")
+api = require "./api"
+routes = require "./routes"
 
 Number:: pad = (pad, pad_char = "0") ->
   s = @.toString()
