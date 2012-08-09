@@ -118,7 +118,7 @@ foursquare_init = (config, db) ->
     findOrCreateUser: find_or_create_user(db, "SELECT @rid FROM V where _type = 'user' and foursquare_id = ", merge_foursquare_user_data)
     redirectPath: "/r/back_to_referer"
 
-exports.init = (config, db) ->
+init = (config, db) ->
   everyauth.everymodule.findUserById (userId, callback) ->
     db.loadRecord userId, callback
 
@@ -131,7 +131,10 @@ exports.init = (config, db) ->
 
   return everyauth
 
-exports.expose_user = (req, res, next) ->
+put_user_in_locals = (req, res, next) ->
   if req.user?
     res.locals.user = req.user
   next()
+
+exports.init = init
+exports.put_user_in_locals = put_user_in_locals

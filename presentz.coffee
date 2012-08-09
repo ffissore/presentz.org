@@ -49,7 +49,7 @@ app.configure ->
     store: new OrientDBStore(session_store_options)
   app.use express.methodOverride()
   app.use everyauth.middleware()
-  app.use auth.expose_user
+  app.use auth.put_user_in_locals
   app.use app.router
   app.use express.static "#{__dirname}/public"
   app.use redirect_routes.redirect_to "/"

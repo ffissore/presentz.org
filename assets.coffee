@@ -47,7 +47,7 @@ new_css_conf = (suffix, files) ->
   return conf
 
 
-exports.assetsMiddleware = assetManager
+assetsMiddleware = assetManager
   js_main: new_js_conf("main", [
     "public/assets/js/jquery/jquery-1.7.2.min.js",
     "public/assets/js/jquery/jquery.easing.1.3.js",
@@ -89,3 +89,5 @@ exports.assetsMiddleware = assetManager
     "public/assets/css/bootstrap-responsive.css"
     "public/assets/css/manage.css"
   ])
+
+exports.assetsMiddleware = assetsMiddleware

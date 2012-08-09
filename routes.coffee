@@ -260,6 +260,11 @@ ensure_is_logged = (req, res, next) ->
   #req.notify "error", "you need to be logged in"
   res.redirect 302, "/"
 
+init = (database) ->
+  db = database
+  storage.init database
+  @
+
 exports.raw_presentation = raw_presentation
 exports.show_catalog = show_catalog
 exports.list_catalogs = list_catalogs
@@ -267,8 +272,4 @@ exports.show_presentation = show_presentation
 exports.comment_presentation = comment_presentation
 exports.static_view = static_view
 exports.ensure_is_logged = ensure_is_logged
-exports.init = (database) ->
-  db = database
-  storage.init database
-  @
-
+exports.init = init
