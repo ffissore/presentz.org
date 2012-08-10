@@ -45,7 +45,6 @@ create_or_update_user = (db, results, session, user_data, merge_function, promis
 
   if rid?
     db.loadRecord rid, (err, user) ->
-      console.log err
       return promise.fail(err) if err?
       merge_function user, user_data
       db.save user, save_callback

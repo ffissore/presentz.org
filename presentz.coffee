@@ -5,6 +5,7 @@ OrientDBStore = require("connect-orientdb")(express)
 _ = require "underscore"
 
 redirect_routes = require "./routes_redirect"
+storage = require "./storage"
 auth = require "./auth"
 assets = require "./assets"
 api = require "./api"
@@ -31,9 +32,10 @@ db.open (err) ->
 session_store_options = _.clone(config.storage)
 session_store_options.database = "presentz"
 
+storage.init db
 everyauth = auth.init(config, db)
-api.init(db)
-routes.init(db)
+api.init(storage)
+routes.init(storage)
 
 app.engine("dust", cons.dust)
 

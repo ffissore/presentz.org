@@ -3,12 +3,11 @@ dateutil = require "dateutil"
 moment = require "moment"
 
 utils = require "./utils"
-storage = require "./storage"
 dustjs_helpers = require "./dustjs_helpers"
 draw_4_boxes = dustjs_helpers.draw_boxes(4)
 draw_6_boxes = dustjs_helpers.draw_boxes(6)
 
-db = undefined
+storage = undefined
 
 pretty_duration = (seconds, minutes_char = "'", seconds_char = "\"") ->
   duration = moment.duration(Math.round(seconds), "seconds")
@@ -41,7 +40,6 @@ show_catalog = (req, res, next) ->
 
     storage.from_catalog_to_presentations catalog, (err, presentations) ->
       return next(err) if err?
-      console.log presentations
       presentations = (pres_to_thumb(pres, req.params.catalog_name) for pres in presentations)
       presentations = _.sortBy presentations, (presentation) ->
         return presentation.time if presentation.time?
@@ -210,13 +208,7 @@ comment_presentation = (req, res, next) ->
       text: params.comment
       time: new Date()
 
-    db.createVertex comment, (err, comment) ->
-      return callback(err) if err?
-      db.createEdge comment, node_to_link_to, { label: "comment_of" }, (err) ->
-        return callback(err) if err?
-        db.createEdge req.user, comment, { label: "authored_comment" }, (err) ->
-          return callback(err) if err?
-          callback(undefined, comment)
+    storage.create_comment comment, node_to_link_to, req.user, callback
 
   get_node_to_link_to (err, node_to_link_to) ->
     return next(err) if err?
@@ -248,9 +240,8 @@ ensure_is_logged = (req, res, next) ->
   #req.notify "error", "you need to be logged in"
   res.redirect 302, "/"
 
-init = (database) ->
-  db = database
-  storage.init database
+init = (_storage) ->
+  storage = _storage
   @
 
 exports.raw_presentation = raw_presentation
