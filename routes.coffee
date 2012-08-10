@@ -190,6 +190,10 @@ comment_presentation = (req, res, next) ->
     return next(err) if err?
 
     save_and_link_comment node_to_link_to, (err, comment) ->
+      if err?
+        res.send 500
+        return
+
       comment.user = req.user
       comment.chapter_index = params.chapter
       comment.slide_index = params.slide
@@ -197,11 +201,8 @@ comment_presentation = (req, res, next) ->
       if node_to_link_to._type is "slide"
         comment.slide_title = node_to_link_to.title or "Slide #{parseInt(params.slide) + 1}"
 
-      if err?
-        res.send 500
-      else
-        res.render "_comment_",
-          comment: comment
+      res.render "_comment_",
+        comment: comment
 
 static_view = (view_name) ->
   return (req, res) ->
@@ -216,9 +217,8 @@ ensure_is_logged = (req, res, next) ->
   #req.notify "error", "you need to be logged in"
   res.redirect 302, "/"
 
-init = (_storage) ->
-  storage = _storage
-  @
+init = (s) ->
+  storage = s
 
 exports.raw_presentation = raw_presentation
 exports.show_catalog = show_catalog
