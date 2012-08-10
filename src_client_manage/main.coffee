@@ -6,6 +6,9 @@ jQuery () ->
     url: "/m/api/my_presentations"
 
     model: Presentation
+    
+    comparator: (presentation) ->
+      presentation.get("title")
 
   class PresentationView extends Backbone.View
 
@@ -20,7 +23,7 @@ jQuery () ->
           <div class="thumbnail">    
             <img src="#{model.get "chapters.0.video.thumb"}" alt="">
             <h5>#{utils.cut_string_at(model.get("title"), 30)}</h5>
-            <p><a href="#" class="btn btn-primary">Add</a> <a href="#" class="btn btn-warning">Swap</a> <a href="#" class="btn btn-danger">Remove</a></p>
+            <p><a href="#" class="btn">Public</a> <a href="#" class="btn btn-warning">Swap</a> <a href="#" class="btn btn-danger">Remove</a></p>
           </div>
         </li> 
         """
@@ -40,7 +43,6 @@ jQuery () ->
       @presentationList.fetch()
 
     reset: (model) ->
-      console.log model
       @$el.empty()
       view = new PresentationView model: model
       @$el.html(view.render().el)
