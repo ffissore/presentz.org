@@ -1,11 +1,12 @@
-db = null
+storage = null
 
-exports.init = (database) ->
-  db = database
-  @
+exports.init = (s) ->
+  storage = s
 
 exports.my_presentations = (req, res, next) ->
-  db.fromVertex(req.user).outVertexes "authored", (err, presentations) ->
+  storage.from_user_to_presentations req.user, (err, presentations) ->
+    return next(err) if err?
+    
     for presentation in presentations
       delete presentation._type
       delete presentation._index

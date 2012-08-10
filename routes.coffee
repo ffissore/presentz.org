@@ -15,22 +15,14 @@ pretty_duration = (seconds, minutes_char = "'", seconds_char = "\"") ->
   "#{duration.minutes().pad(2)}#{minutes_char}#{duration.seconds().pad(2)}#{seconds_char}"
 
 list_catalogs = (req, res, next) ->
-  number_of_presentations = (catalog, callback) ->
-    db.getInEdges catalog, "part_of", (err, edges) ->
-      return next(err) if err?
-      catalog.presentations_length = edges.length
-      callback(undefined, catalog)
-
-  db.command "SELECT FROM V WHERE _type = 'catalog' and (hidden is null or hidden = 'false') ORDER BY name", (err, catalogs) ->
+  storage.list_catalogs_with_presentation_count (err, catalogs) ->
     return next(err) if err?
 
-    utils.exec_for_each number_of_presentations, catalogs, (err) ->
-      return next(err) if err?
-      res.render "catalogs",
-        title: "Presentz talks"
-        css_section_talks: "class=\"selected\""
-        catalogs: catalogs
-        list: draw_6_boxes
+    res.render "catalogs",
+      title: "Presentz talks"
+      css_section_talks: "class=\"selected\""
+      catalogs: catalogs
+      list: draw_6_boxes
 
 show_catalog = (req, res, next) ->
   pres_to_thumb= (presentation, catalog_name) ->
@@ -44,29 +36,25 @@ show_catalog = (req, res, next) ->
     pres.time = dateutil.format(dateutil.parse(presentation.time, "YYYYMMDD"), "Y/m") if presentation.time
     pres
 
-  db.command "SELECT FROM V WHERE _type = 'catalog' and id = '#{req.params.catalog_name}'", (err, results) ->
+  storage.catalog_name_to_node req.params.catalog_name, (err, catalog) ->
     return next(err) if err?
-    return next("no record found") if results.length is 0
 
-    catalog = results[0]
-    db.fromVertex(catalog).inVertexes "part_of", (err, presentations) ->
+    storage.from_catalog_to_presentations catalog, (err, presentations) ->
       return next(err) if err?
+      console.log presentations
+      presentations = (pres_to_thumb(pres, req.params.catalog_name) for pres in presentations)
+      presentations = _.sortBy presentations, (presentation) ->
+        return presentation.time if presentation.time?
+        return presentation.title
 
-      utils.exec_for_each storage.load_chapters_of, presentations, (err) ->
-        return next(err) if err?
-        presentations = (pres_to_thumb(pres, req.params.catalog_name) for pres in presentations)
-        presentations = _.sortBy presentations, (presentation) ->
-          return presentation.time if presentation.time?
-          return presentation.title
+      if presentations[0].time?
+        presentations = presentations.reverse()
 
-        if presentations[0].time?
-          presentations = presentations.reverse()
-
-        res.render "talks",
-          title: "#{catalog.name} talks"
-          catalog: catalog
-          presentations: presentations
-          list: draw_4_boxes
+      res.render "talks",
+        title: "#{catalog.name} talks"
+        catalog: catalog
+        presentations: presentations
+        list: draw_4_boxes
 
 raw_presentation = (req, res, next) ->
   wipe_out_storage_fields = (presentation) ->

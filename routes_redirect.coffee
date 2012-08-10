@@ -5,9 +5,9 @@ redirect_to = (url) ->
 back_to_referer = (config) ->
   return (req, res, next) ->
     if req.headers? and req.headers.referer?
-      redirect_to req.headers.referer
+      res.redirect 302, req.headers.referer
     else
-      redirect_to config.hostname
+      res.redirect 302, config.hostname
 
 redirect_to_catalog_if_subdomain = () ->
   third_level_domain_regex = /([\w]+)\.[\w]+\..+/
@@ -16,7 +16,7 @@ redirect_to_catalog_if_subdomain = () ->
     if proxy?
       match = proxy.match third_level_domain_regex
       if match?
-        redirect_to "http://#{proxy.replace("#{match[1]}.", "")}/#{match[1]}#{req.url}"
+        res.redirect 302, "http://#{proxy.replace("#{match[1]}.", "")}/#{match[1]}#{req.url}"
 
 exports.redirect_to = redirect_to
 exports.back_to_referer = back_to_referer

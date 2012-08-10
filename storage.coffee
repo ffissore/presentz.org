@@ -3,6 +3,50 @@ _ = require "underscore"
 
 db = null
 
+init = (database) ->
+  db = database
+  @
+
+count_presentations_in_catalog = (catalog, callback) ->
+  db.getInEdges catalog, "part_of", (err, edges) ->
+    return next(err) if err?
+    catalog.presentations_length = edges.length
+    callback(undefined, catalog)
+
+list_catalogs_with_presentation_count = (callback) ->
+  db.command "SELECT FROM V WHERE _type = 'catalog' and (hidden is null or hidden = 'false') ORDER BY name", (err, catalogs) ->
+    return callback(err) if err?
+
+    utils.exec_for_each count_presentations_in_catalog, catalogs, (err) ->
+      return callback(err) if err?
+      callback(undefined, catalogs)
+      
+catalog_name_to_node = (name, callback) ->
+  db.command "SELECT FROM V WHERE _type = 'catalog' and id = '#{name}'", (err, catalogs) ->
+    return callback(err) if err?
+    return callback("no record found") if catalogs.length is 0
+  
+    callback(undefined, catalogs[0]);
+    
+from_catalog_to_presentations = (catalog, callback) ->
+  db.fromVertex(catalog).inVertexes "part_of", (err, presentations) ->
+    return callback(err) if err?
+  
+    utils.exec_for_each load_chapters_of, presentations, (err) ->
+      return callback(err) if err?
+      
+      callback(undefined, presentations)
+
+from_user_to_presentations = (user, callback) ->
+  db.fromVertex(req.user).outVertexes "authored", (err, presentations) ->
+    return callback(err) if err?
+  
+    utils.exec_for_each load_chapters_of, presentations, (err) ->
+      return callback(err) if err?
+      
+      callback(undefined, presentations)
+
+
 load_presentation_from_path = (path, callback) ->
   path_parts = path.split("/")
   catalog_name = path_parts[0]
@@ -55,6 +99,9 @@ load_entire_presentation_from_path = (path, callback) ->
 
 exports.load_chapters_of = load_chapters_of
 exports.load_entire_presentation_from_path = load_entire_presentation_from_path
-exports.init = (database) ->
-  db = database
-  @
+exports.init = init
+
+exports.list_catalogs_with_presentation_count = list_catalogs_with_presentation_count
+exports.catalog_name_to_node = catalog_name_to_node
+exports.from_user_to_presentations = from_user_to_presentations
+exports.from_catalog_to_presentations = from_catalog_to_presentations
