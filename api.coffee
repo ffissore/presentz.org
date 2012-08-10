@@ -6,13 +6,10 @@ exports.init = (s) ->
 exports.my_presentations = (req, res, next) ->
   storage.from_user_to_presentations req.user, (err, presentations) ->
     return next(err) if err?
-    
+
     for presentation in presentations
-      delete presentation._type
-      delete presentation._index
-      delete presentation["@class"]
-      delete presentation["@type"]
-      delete presentation["@version"]
+      storage.remove_storage_fields_from_presentation presentation
+      
     res.send presentations
 
 ###

@@ -49,13 +49,13 @@ from_user_to_presentations = (user, callback) ->
 create_comment = (comment, node_to_link_to, user, callback) ->
   db.createVertex comment, (err, comment) ->
     return callback(err) if err?
-    
+
     db.createEdge comment, node_to_link_to, { label: "comment_of" }, (err) ->
       return callback(err) if err?
-      
+
       db.createEdge user, comment, { label: "authored_comment" }, (err) ->
         return callback(err) if err?
-        
+
         callback(undefined, comment)
 
 load_presentation_from_path = (path, callback) ->
@@ -108,6 +108,33 @@ load_entire_presentation_from_path = (path, callback) ->
         return callback(err) if err?
         return callback(undefined, presentation)
 
+remove_storage_fields_from_presentation = (presentation) ->
+  clean_comments_in = (element) ->
+    if element.comments?
+      for comment in element.comments
+        clean comment
+        delete comment.user
+
+  clean = (element) ->
+    delete element.in
+    delete element.out
+    delete element._type
+    delete element._index
+    delete element["@class"]
+    delete element["@type"]
+    delete element["@version"]
+    delete element["@rid"]
+
+  clean presentation
+  clean_comments_in presentation
+  if presentation.chapters?
+    for chapter in presentation.chapters
+      clean chapter
+      if chapter.slides?
+        for slide in chapter.slides
+          clean slide
+          clean_comments_in slide
+
 exports.load_chapters_of = load_chapters_of
 exports.load_entire_presentation_from_path = load_entire_presentation_from_path
 exports.init = init
@@ -117,3 +144,4 @@ exports.catalog_name_to_node = catalog_name_to_node
 exports.from_user_to_presentations = from_user_to_presentations
 exports.from_catalog_to_presentations = from_catalog_to_presentations
 exports.create_comment = create_comment
+exports.remove_storage_fields_from_presentation = remove_storage_fields_from_presentation

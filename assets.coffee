@@ -81,6 +81,7 @@ assetsMiddleware = assetManager
     "public/assets/js/manage/bootstrap.js",
     "public/assets/js/manage/underscore.js",
     "public/assets/js/manage/backbone.js",
+    "public/assets/js/manage/deep-model.js",
     "utils.coffee",
     "src_client_manage/main.coffee"
   ])

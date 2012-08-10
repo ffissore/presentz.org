@@ -55,36 +55,12 @@ show_catalog = (req, res, next) ->
         list: draw_4_boxes
 
 raw_presentation = (req, res, next) ->
-  wipe_out_storage_fields = (presentation) ->
-    wipe_out_from_comments_in = (element) ->
-      for comment in element.comments
-        wipe_out_from comment
-        delete comment.user
-
-    wipe_out_from= (element) ->
-      delete element.in
-      delete element.out
-      delete element._type
-      delete element._index
-      delete element["@class"]
-      delete element["@type"]
-      delete element["@version"]
-      delete element["@rid"]
-
-    wipe_out_from presentation
-    wipe_out_from_comments_in presentation
-    for chapter in presentation.chapters
-      wipe_out_from chapter
-      for slide in chapter.slides
-        wipe_out_from slide
-        wipe_out_from_comments_in slide
-
   path = decodeURIComponent(req.path).substring(1)
   path = path.substring(0, path.length - ".json".length)
   storage.load_entire_presentation_from_path path, (err, presentation) ->
     return next(err) if err?
 
-    wipe_out_storage_fields presentation
+    storage.remove_storage_fields_from_presentation presentation
 
     if req.query.jsoncallback
       presentation = "#{req.query.jsoncallback}(#{JSON.stringify(presentation)});"
