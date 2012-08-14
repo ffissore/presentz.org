@@ -77,7 +77,8 @@ app.get "/r/tos.html", routes.static_view "tos"
 app.get "/r/talks.html", routes.list_catalogs
 app.all "/m/*", routes.ensure_is_logged
 app.get "/m/index.html", routes.static_view "m/index"
-app.get "/m/api/my_presentations", api.my_presentations
+app.put "/m/api/presentations/:presentation", api.presentation_update
+app.get "/m/api/presentations", api.presentations
 app.get "/:catalog_name/catalog.html", routes.show_catalog
 app.get "/:catalog_name/catalog", routes.show_catalog
 app.get "/:catalog_name/index.html", routes.show_catalog

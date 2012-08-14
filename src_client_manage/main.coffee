@@ -38,7 +38,7 @@ jQuery () ->
 
   class PresentationList extends Backbone.Collection
 
-    url: "/m/api/my_presentations"
+    url: "/m/api/presentations"
 
     model: Presentation
 

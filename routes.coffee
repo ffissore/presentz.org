@@ -40,6 +40,7 @@ show_catalog = (req, res, next) ->
 
     storage.from_catalog_to_presentations catalog, (err, presentations) ->
       return next(err) if err?
+      presentations = _.filter presentations, (pres) -> pres.published
       presentations = (pres_to_thumb(pres, req.params.catalog_name) for pres in presentations)
       presentations = _.sortBy presentations, (presentation) ->
         return presentation.time if presentation.time?
@@ -59,6 +60,8 @@ raw_presentation = (req, res, next) ->
   path = path.substring(0, path.length - ".json".length)
   storage.load_entire_presentation_from_path path, (err, presentation) ->
     return next(err) if err?
+
+    return res.send 404 unless presentation.published
 
     storage.remove_storage_fields_from_presentation presentation
 
@@ -131,6 +134,8 @@ show_presentation = (req, res, next) ->
   storage.load_entire_presentation_from_path path, (err, presentation) ->
     return next(err) if err?
 
+    return res.send 404 unless presentation.published
+
     slides = []
     duration = 0
     for chapter_index in [0...presentation.chapters.length]
@@ -171,6 +176,8 @@ comment_presentation = (req, res, next) ->
     storage.load_entire_presentation_from_path path, (err, presentation) ->
       return callback(err) if err?
 
+      return callback(undefined, undefined) unless presentation.published
+
       node_to_link_to = presentation
 
       if params.chapter? and params.chapter isnt "" and params.slide? and params.slide isnt ""
@@ -188,6 +195,8 @@ comment_presentation = (req, res, next) ->
 
   get_node_to_link_to (err, node_to_link_to) ->
     return next(err) if err?
+
+    return res.send 404 unless node_to_link_to
 
     save_and_link_comment node_to_link_to, (err, comment) ->
       if err?

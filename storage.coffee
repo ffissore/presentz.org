@@ -7,6 +7,9 @@ init = (database) ->
   db = database
   @
 
+save = (document, callback) ->
+  db.save document, callback
+
 count_presentations_in_catalog = (catalog, callback) ->
   db.getInEdges catalog, "part_of", (err, edges) ->
     return next(err) if err?
@@ -58,17 +61,28 @@ create_comment = (comment, node_to_link_to, user, callback) ->
 
         callback(undefined, comment)
 
-load_presentation_from_path = (path, callback) ->
-  path_parts = path.split("/")
-  catalog_name = path_parts[0]
-  presentation_name = path_parts[1]
+load_presentation_from_id = (id, callback) ->
+  db.command "select from V where _type = 'presentation' and id = '#{id}'", (err, results) ->
+    return callback(err) if err?
+    return callback("no record found") if results.length is 0
+    callback(undefined, results[0])
 
-  query = "select from V where _type = 'presentation' and id = '#{presentation_name}' and out.label CONTAINSALL 'part_of' and out.in.id CONTAINSALL '#{catalog_name}'"
+load_entire_presentation_with_query = (query, callback) ->
   db.command query, (err, results) ->
     return callback(err) if err?
     return callback("no record found") if results.length is 0
     presentation = results[0]
     load_comments_of presentation, callback
+
+load_entire_presentation_from_id = (id, callback) ->
+  load_entire_presentation_with_query "select from V where _type = 'presentation' and id = '#{id}'", callback
+
+load_presentation_from_path = (path, callback) ->
+  path_parts = path.split("/")
+  catalog_name = path_parts[0]
+  presentation_name = path_parts[1]
+
+  load_entire_presentation_with_query "select from V where _type = 'presentation' and id = '#{presentation_name}' and out.label CONTAINSALL 'part_of' and out.in.id CONTAINSALL '#{catalog_name}'", callback
 
 load_user_of = (comment, callback) ->
   db.fromVertex(comment).inVertexes "authored_comment", (err, users) ->
@@ -137,11 +151,13 @@ remove_storage_fields_from_presentation = (presentation) ->
 
 exports.load_chapters_of = load_chapters_of
 exports.load_entire_presentation_from_path = load_entire_presentation_from_path
+exports.load_entire_presentation_from_id = load_entire_presentation_from_id
+exports.load_presentation_from_id = load_presentation_from_id
 exports.init = init
-
 exports.list_catalogs_with_presentation_count = list_catalogs_with_presentation_count
 exports.catalog_name_to_node = catalog_name_to_node
 exports.from_user_to_presentations = from_user_to_presentations
 exports.from_catalog_to_presentations = from_catalog_to_presentations
 exports.create_comment = create_comment
 exports.remove_storage_fields_from_presentation = remove_storage_fields_from_presentation
+exports.save = save
