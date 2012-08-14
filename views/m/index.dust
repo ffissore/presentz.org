@@ -20,9 +20,8 @@
         <a class="brand" href="#">Presentz.org</a>
         <div class="nav-collapse">
           <ul class="nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#home">Home</a></li>
             <li><a href="#new">New</a></li>
-            {!<li><a href="#contact">Contact</a></li>!}
           </ul>
         </div>
       </div>
