@@ -199,9 +199,7 @@ comment_presentation = (req, res, next) ->
     return res.send 404 unless node_to_link_to
 
     save_and_link_comment node_to_link_to, (err, comment) ->
-      if err?
-        res.send 500
-        return
+      return res.send 500 if err?
 
       comment.user = req.user
       comment.chapter_index = params.chapter

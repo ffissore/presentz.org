@@ -27,16 +27,19 @@ new_js_conf = (suffix, files) ->
     dataType: "javascript"
     files: files
     stale: true
+    debug: true
     preManipulate:
       "^": [
         coffee_compiler,
         dust_compiler
       ]
+  return conf
+###
     postManipulate:
       "^": [
         assetHandler.uglifyJsOptimize
       ]
-  return conf
+###
 
 new_css_conf = (suffix, files) ->
   conf =
@@ -97,6 +100,7 @@ assetsMiddleware = assetManager
     "public/assets/js/manage/dust-core-1.0.0.js",
     "views/m/_presentation_thumb.dust",
     "views/m/_new_menu_entry.dust",
+    "views/m/_presentation.dust",
     "utils.coffee",
     "src_client_manage/main.coffee"
   ])

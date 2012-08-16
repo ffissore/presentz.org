@@ -23,10 +23,17 @@ presentation_update = (req, res, next) ->
       return next(err) if err?
 
       res.send 200
-
+      
+presentation_load = (req, res, next) ->
+  storage.load_entire_presentation_from_id req.params.presentation, (err, presentation) ->
+    console.log presentation
+    
+    res.send presentation
+  
 exports.init = init
 exports.presentations = presentations
 exports.presentation_update = presentation_update
+exports.presentation_load = presentation_load
 
 ###
 exports.mines_authored= (req, res) ->

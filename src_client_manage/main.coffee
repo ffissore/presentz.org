@@ -1,7 +1,24 @@
 jQuery () ->
   class Presentation extends Backbone.DeepModel
 
-  class PresentationView extends Backbone.View
+    urlRoot: "/m/api/presentations/"
+
+    initialize: () ->
+      _.bindAll @
+      @fetch()
+
+  class PresentationEditView extends Backbone.View
+
+    tagName: "div"
+
+    render: () ->
+      dust.render "_presentation", {}, (err, out) =>
+        @$el.append(out)
+      @
+
+  class PresentationThumb extends Backbone.DeepModel
+
+  class PresentationThumbView extends Backbone.View
 
     tagName: "li"
 
@@ -36,22 +53,23 @@ jQuery () ->
 
     edit: () ->
       dispatcher.trigger "new_menu_entry", title: utils.cut_string_at(@model.get("title"), 30)
+      dispatcher.trigger "edit", @model.get("id")
       false
 
     events:
       "click a.publish": "toogle_published"
       "click a.edit": "edit"
 
-  class PresentationList extends Backbone.Collection
+  class PresentationThumbList extends Backbone.Collection
 
     url: "/m/api/presentations"
 
-    model: Presentation
+    model: PresentationThumb
 
     comparator: (presentation) ->
       presentation.get("title")
 
-  class PresentationListView extends Backbone.View
+  class PresentationThumbListView extends Backbone.View
 
     tagName: "ul"
 
@@ -59,7 +77,7 @@ jQuery () ->
 
     render: () ->
       @model.each (model) =>
-        view = new PresentationView model: model
+        view = new PresentationThumbView model: model
         @$el.append view.render().el
       @
 
@@ -93,28 +111,40 @@ jQuery () ->
     initialize: () ->
       @navigationView = new NavigationView()
 
-      @presentationList = new PresentationList()
+      @presentationThumbList = new PresentationThumbList()
 
-      @presentationList.on "reset", @reset, @
+      @presentationThumbList.on "reset", @reset, @
 
     reset: (model) ->
       @$el.empty()
-      view = new PresentationListView model: model
+      view = new PresentationThumbListView model: model
       @$el.html view.render().el
 
     home: () ->
-      @presentationList.fetch()
+      @presentationThumbList.fetch()
       @navigationView.reset(true)
+
+    edit: (model) ->
+      @$el.empty()
+      view = new PresentationEditView model: model
+      @$el.html view.render().el
 
   app = new AppView()
 
   dispatcher = _.clone(Backbone.Events)
+  
   dispatcher.on "home", () ->
     app.home()
+  
   dispatcher.on "new", () ->
     throw new Error("unimplemented")
+  
   dispatcher.on "new_menu_entry", (ctx) ->
     app.navigationView.reset()
-    app.navigationView.new_menu_entry(ctx)
-
+    app.navigationView.new_menu_entry ctx
+  
+  dispatcher.on "edit", (id) ->
+    presentation = new Presentation({ id: id })
+    presentation.on "change", app.edit, app
+  
   dispatcher.trigger "home"

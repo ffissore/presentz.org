@@ -71,13 +71,23 @@ load_entire_presentation_with_query = (query, callback) ->
   db.command query, (err, results) ->
     return callback(err) if err?
     return callback("no record found") if results.length is 0
+    
     presentation = results[0]
-    load_comments_of presentation, callback
+    load_comments_of presentation, (err) ->
+      return callback(err) if err?
+      
+      load_chapters_of presentation, (err) ->
+        return callback(err) if err?
+
+        utils.exec_for_each load_slides_of, presentation.chapters, (err) ->
+          return callback(err) if err?
+          return callback(undefined, presentation)
+
 
 load_entire_presentation_from_id = (id, callback) ->
   load_entire_presentation_with_query "select from V where _type = 'presentation' and id = '#{id}'", callback
 
-load_presentation_from_path = (path, callback) ->
+load_entire_presentation_from_path = (path, callback) ->
   path_parts = path.split("/")
   catalog_name = path_parts[0]
   presentation_name = path_parts[1]
@@ -112,15 +122,6 @@ load_slides_of = (chapter, callback) ->
     utils.exec_for_each load_comments_of, slides, (err) ->
       return callback(err) if err?
       return callback(undefined, chapter)
-
-load_entire_presentation_from_path = (path, callback) ->
-  load_presentation_from_path path, (err, presentation) ->
-    return callback(err) if err?
-    load_chapters_of presentation, (err) ->
-      return callback(err) if err?
-      utils.exec_for_each load_slides_of, presentation.chapters, (err) ->
-        return callback(err) if err?
-        return callback(undefined, presentation)
 
 remove_storage_fields_from_presentation = (presentation) ->
   clean_comments_in = (element) ->
