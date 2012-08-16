@@ -35,8 +35,7 @@ jQuery () ->
       false
 
     edit: () ->
-      @options.navigationView.reset()
-      @options.navigationView.append "<li class=\"active\"><a href=\"#edit\">#{utils.cut_string_at(@model.get("title"), 30)}</a></li>"
+      dispatcher.trigger "new_menu_entry", "<li class=\"active\"><a href=\"#edit\">#{utils.cut_string_at(@model.get("title"), 30)}</a></li>"
       false
 
     events:
@@ -60,9 +59,7 @@ jQuery () ->
 
     render: () ->
       @model.each (model) =>
-        view = new PresentationView 
-          model: model
-          navigationView: @options.navigationView
+        view = new PresentationView model: model
         @$el.append view.render().el
       @
 
@@ -78,8 +75,15 @@ jQuery () ->
     append: (html) ->
       @$el.append(html)
 
+    home: (event) ->
+      dispatcher.trigger "home" unless $(event.currentTarget).parent().hasClass "active"
+
+    new: (event) ->
+      dispatcher.trigger "new" unless $(event.currentTarget).parent().hasClass "active"
+
     events:
-      "click a[href=#home]": "reset"
+      "click a[href=#home]": "home"
+      "click a[href=#new]": "new"
 
   class AppView extends Backbone.View
 
@@ -92,20 +96,24 @@ jQuery () ->
 
       @presentationList.on "reset", @reset, @
 
-      @render()
-
-      @presentationList.fetch()
-
-    events:
-      "click .navbar .container .nav li a[href=#home]": "reset"
-
     reset: (model) ->
-      @navigationView.reset(true)
-
       @$el.empty()
-      view = new PresentationListView
-        model: model
-        navigationView: @navigationView
+      view = new PresentationListView model: model
       @$el.html view.render().el
 
+    home: () ->
+      @presentationList.fetch()
+      @navigationView.reset(true)
+
   app = new AppView()
+
+  dispatcher = _.clone(Backbone.Events)
+  dispatcher.on "home", () ->
+    app.home()
+  dispatcher.on "new", () ->
+    throw new Error("unimplemented")
+  dispatcher.on "new_menu_entry", (html) ->
+    app.navigationView.reset()
+    app.navigationView.append(html)
+
+  dispatcher.trigger "home"
