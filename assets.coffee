@@ -1,13 +1,24 @@
 assetManager = require "connect-assetmanager"
 assetHandler = require "connect-assetmanager-handlers"
 coffee = require "coffee-script"
+dust = require "dustjs-linkedin"
 
-coffee_renderer = (file, path, index, isLast, callback) ->
+coffee_compiler = (contents, path, index, isLast, callback) ->
   if /\.coffee/.test path
     console.log "Compiling #{path}"
-    callback coffee.compile(file)
+    callback coffee.compile(contents)
   else
-    callback file
+    callback contents
+
+dust_compiler = (contents, path, index, isLast, callback) ->
+  if /\.dust/.test path
+    filename_parts = path.split("/")
+    filename = filename_parts[filename_parts.length - 1]
+    filename = filename.substring(0, filename.lastIndexOf("."))
+    console.log "Compiling #{path} (#{filename})"
+    callback dust.compile(contents, filename)
+  else
+    callback contents
 
 new_js_conf = (suffix, files) ->
   conf =
@@ -18,11 +29,12 @@ new_js_conf = (suffix, files) ->
     stale: true
     preManipulate:
       "^": [
-        coffee_renderer
+        coffee_compiler,
+        dust_compiler
       ]
     postManipulate:
       "^": [
-        #assetHandler.uglifyJsOptimize
+        assetHandler.uglifyJsOptimize
       ]
   return conf
 
@@ -82,6 +94,9 @@ assetsMiddleware = assetManager
     "public/assets/js/manage/underscore.js",
     "public/assets/js/manage/backbone.js",
     "public/assets/js/manage/deep-model.js",
+    "public/assets/js/manage/dust-core-1.0.0.js",
+    "views/m/_presentation_thumb.dust",
+    "views/m/_new_menu_entry.dust",
     "utils.coffee",
     "src_client_manage/main.coffee"
   ])

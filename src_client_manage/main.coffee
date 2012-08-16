@@ -20,13 +20,13 @@ jQuery () ->
         published_css_class = " btn-danger"
         published_label = "Hidden"
 
-      @$el.html """
-        <div class="thumbnail">    
-          <img src="#{@model.get "chapters.0.video.thumb"}" alt="">
-          <h5>#{utils.cut_string_at(@model.get("title"), 30)}</h5>
-          <p><a href="#" class="publish btn#{published_css_class}">#{published_label}</a> <a href="#" class="edit btn">Edit</a></p>
-        </div>
-      """
+      ctx =
+        thumb: @model.get "chapters.0.video.thumb"
+        title: utils.cut_string_at(@model.get("title"), 30)
+        published_css_class: published_css_class
+        published_label: published_label
+      dust.render "_presentation_thumb", ctx, (err, out) =>
+        @$el.html out
       @
 
     toogle_published: () ->
@@ -35,7 +35,7 @@ jQuery () ->
       false
 
     edit: () ->
-      dispatcher.trigger "new_menu_entry", "<li class=\"active\"><a href=\"#edit\">#{utils.cut_string_at(@model.get("title"), 30)}</a></li>"
+      dispatcher.trigger "new_menu_entry", title: utils.cut_string_at(@model.get("title"), 30)
       false
 
     events:
@@ -72,8 +72,9 @@ jQuery () ->
       $("li", @$el).removeClass "active"
       $("li:first", @$el).addClass "active" if home?
 
-    append: (html) ->
-      @$el.append(html)
+    new_menu_entry: (ctx) ->
+      dust.render "_new_menu_entry", ctx, (err, out) =>
+        @$el.append(out)
 
     home: (event) ->
       dispatcher.trigger "home" unless $(event.currentTarget).parent().hasClass "active"
@@ -112,8 +113,8 @@ jQuery () ->
     app.home()
   dispatcher.on "new", () ->
     throw new Error("unimplemented")
-  dispatcher.on "new_menu_entry", (html) ->
+  dispatcher.on "new_menu_entry", (ctx) ->
     app.navigationView.reset()
-    app.navigationView.append(html)
+    app.navigationView.new_menu_entry(ctx)
 
   dispatcher.trigger "home"
