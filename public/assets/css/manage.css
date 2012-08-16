@@ -1,3 +1,19 @@
 body {
     padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
 }
+
+.show-grid {
+    background-color: #EEE;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+#video, #slide {
+    text-align: center;
+}
+
+input.title-input {
+    font-size: 30px;
+    height: 30px;
+    width: 100%
+}

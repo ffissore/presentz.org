@@ -270,8 +270,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       if ($(this.videoContainer).children().length === 0) {
         $(this.videoContainer).append("<div id=\"" + this.elementId + "\"></div>");
         this.player = new YT.Player(this.elementId, {
-          height: 200,
-          width: 300,
+          height: this.height,
+          width: this.width,
           videoId: videoId(videoData),
           playerVars: {
             rel: 0,

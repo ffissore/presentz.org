@@ -1,2 +1,33 @@
-<div id="video"></div>
-<div id="slide"></div>
+<input class="title-input" type="text" value="{title}" />
+<div class="row-fluid">
+  <div class="span6 show-grid">
+    <h3>Video</h3>
+    <div id="video"></div>
+  </div>
+  <div class="span6 show-grid">
+    <h3>Slides</h3>
+    <div id="slide"></div>
+  </div>
+</div>
+{#chapters}
+  {#slides}
+    <div class="row-fluid">
+      <form class="form-horizontal">
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label">URL</label>
+            <div class="controls">
+              <input type="text" class="input-xxlarge" value="{url}">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Title</label>
+            <div class="controls">
+              <input type="text" class="input-xxlarge" value="{title}">
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  {/slides}
+{/chapters}

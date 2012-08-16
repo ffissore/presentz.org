@@ -12,7 +12,7 @@ jQuery () ->
     tagName: "div"
 
     render: () ->
-      dust.render "_presentation", {}, (err, out) =>
+      dust.render "_presentation", @model.attributes, (err, out) =>
         @$el.append(out)
       @
 
@@ -128,6 +128,9 @@ jQuery () ->
       @$el.empty()
       view = new PresentationEditView model: model
       @$el.html view.render().el
+      presentz = new Presentz("#video", "460x420", "#slide", "460x420")
+      presentz.init model.attributes
+      presentz.changeChapter 0, 0, false
 
   app = new AppView()
 
