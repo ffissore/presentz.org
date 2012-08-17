@@ -3,7 +3,7 @@
 {<body}
 <section id="talks">
   <div class="main">
-    <h3>{title}</h3>
+    <h3>{.title}</h3>
     <div class="search">
     {!
       <form action="#">
@@ -20,11 +20,11 @@
     </div>
     {#list:catalogs}
       <div class="box2 item_category">
-        <div class="box_over"><a href="/{id}"></a></div>
+        <div class="box_over"><a href="/{.id}"></a></div>
         <div class="img_category">
-          <img src="{logo}" alt="{name}" />
+          <img src="{.logo}" alt="{.name}" />
         </div>
-        <h4><a href="/{id}">{name} ({presentations_length})</a></h4>
+        <h4><a href="/{.id}">{.name} ({.presentations_length})</a></h4>
       </div>
     {/list}
     <div class="clear"></div>

@@ -5,7 +5,7 @@
   <title>Presentz Backend</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="/managedassets/css/{assetsCacheHashes.css}manage.css" rel="stylesheet" type="text/css"/>
+  <link href="/managedassets/css/{.assetsCacheHashes.css}manage.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body>
@@ -34,7 +34,7 @@
   <div class="container">
   </div>
 
-  <script src="/managedassets/js/{assetsCacheHashes.js_main}manage.js" type="text/javascript"></script>
+  <script src="/managedassets/js/{.assetsCacheHashes.js_main}manage.js" type="text/javascript"></script>
   <script src="https://www.youtube.com/player_api" type="text/javascript"></script>
 </body>
 </html>

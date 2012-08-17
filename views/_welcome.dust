@@ -1,1 +1,1 @@
-<span>Hello, {name}</span>
+<span>Hello, {.name}</span>

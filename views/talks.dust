@@ -10,12 +10,12 @@
             <a href="javascript:void(0)"></a>
           </div>
           <div class="img_category">
-            <img src="{logo}" alt="{name}" /></a>
+            <img src="{.logo}" alt="{.name}" /></a>
           </div>
         </div>
       {/logo}
     {/catalog}
-    <h3>{title}</h3>
+    <h3>{.title}</h3>
     <div class="search">
     {!
       <form action="#">

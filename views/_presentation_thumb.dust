@@ -1,13 +1,13 @@
 <div class="box3 item_video">
-  <div class="box_over"><a href="/{catalog}/{id}"></a></div>
+  <div class="box_over"><a href="/{.catalog}/{.id}"></a></div>
   <div class="img_category">
-    <img class="thumb" src="{thumb}" alt="{?speaker}{speaker} - {/speaker}{title}" />
+    <img class="thumb" src="{.thumb}" alt="{?speaker}{.speaker} - {/speaker}{.title}" />
   </div>
   <div class="info_item">
-    <p class="date">{time}</p>
+    <p class="date">{.time}</p>
     {?speaker}
-      <h4>{speaker}</h4>
+      <h4>{.speaker}</h4>
     {/speaker}
-    <p>{title}</p>
+    <p>{.title}</p>
   </div>
 </div>

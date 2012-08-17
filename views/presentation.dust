@@ -3,8 +3,8 @@
 {<body}
 <section id="presentation">
   <div class="main">
-    <h3>{talk_title|s}</h3>
-    <h4>{speaker}</h4>
+    <h3>{.talk_title|s}</h3>
+    <h4>{.speaker}</h4>
 
     <div id="player">
       <div id="container_player">
@@ -25,10 +25,10 @@
           class="chapter"
         !}
         {#slides}
-        <div class="chapter" percentage="{percentage}" style="width:2px">
+        <div class="chapter" percentage="{.percentage}" style="width:2px">
           <div class="info">
-            <p class="title"><a chapter_index="{chapter_index}" slide_index="{slide_index}" href="javascript:void(0);">{title}</a> &mdash; {duration}</p>
-            <div class="comments" chapter_index="{chapter_index}" slide_index="{slide_index}"><span>{comments_length}</span><a href="javascript:void(0);">{comments_label}</a></div>
+            <p class="title"><a chapter_index="{.chapter_index}" slide_index="{.slide_index}" href="javascript:void(0);">{.title}</a> &mdash; {.duration}</p>
+            <div class="comments" chapter_index="{.chapter_index}" slide_index="{.slide_index}"><span>{.comments_length}</span><a href="javascript:void(0);">{.comments_label|s}</a></div>
           </div>
         </div>
         {/slides}
@@ -97,9 +97,9 @@
         <ol>
           {#slides}
             <li>
-              <a {css|s} chapter_index="{chapter_index}" slide_index="{slide_index}" href="javascript:void(0)">
-                {index}. {title} &mdash; {duration}
-                <span class="comments"><span>{comments_length}</span>{comments_label}</span>
+              <a {.css|s} chapter_index="{.chapter_index}" slide_index="{.slide_index}" href="javascript:void(0)">
+                {.index}. {.title} &mdash; {.duration}
+                <span class="comments"><span>{.comments_length}</span>{.comments_label|s}</span>
               </a>
             </li>
           {/slides}
@@ -112,7 +112,7 @@
         <h5>Embed</h5>
         Copy the following HTML snippet on your website
         <textarea rows="3">
-          <script src="{domain}/managedassets/js/embed.js" type="text/javascript" data-presentation-url="{domain}/{path}" data-presentation-title="{title}"></script>
+          <script src="{.domain}/managedassets/js/embed.js" type="text/javascript" data-presentation-url="{.domain}/{.path}" data-presentation-title="{.title}"></script>
         </textarea>
       </div>
       {! fine box embed !}
@@ -134,11 +134,11 @@
 {/body}
 
 {<presentz_css}
-<link href="/managedassets/css/{assetsCacheHashes.css}pres.css" rel="stylesheet" type="text/css"/>
+<link href="/managedassets/css/{.assetsCacheHashes.css}pres.css" rel="stylesheet" type="text/css"/>
 {/presentz_css}
 
 {<presentz_script}
-<script src="/managedassets/js/{assetsCacheHashes.js_main}pres.js" type="text/javascript"></script>
+<script src="/managedassets/js/{.assetsCacheHashes.js_main}pres.js" type="text/javascript"></script>
 <script src="https://www.youtube.com/player_api" type="text/javascript"></script>
 <script type="text/javascript">
 $().ready(function() {
