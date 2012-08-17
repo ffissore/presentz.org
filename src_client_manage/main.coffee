@@ -5,6 +5,9 @@ jQuery () ->
 
     initialize: () ->
       _.bindAll @
+
+      @bind "change", app.edit, app
+
       @fetch()
 
   class PresentationEditView extends Backbone.View
@@ -13,6 +16,7 @@ jQuery () ->
 
     render: () ->
       dust.render "_presentation", @model.attributes, (err, out) =>
+        dispatcher.trigger "hide_loader"
         @$el.append(out)
       @
 
@@ -43,6 +47,7 @@ jQuery () ->
         published_css_class: published_css_class
         published_label: published_label
       dust.render "_presentation_thumb", ctx, (err, out) =>
+        dispatcher.trigger "hide_loader"
         @$el.html out
       @
 
@@ -116,7 +121,6 @@ jQuery () ->
       @presentationThumbList.on "reset", @reset, @
 
     reset: (model) ->
-      @$el.empty()
       view = new PresentationThumbListView model: model
       @$el.html view.render().el
 
@@ -125,7 +129,6 @@ jQuery () ->
       @navigationView.reset(true)
 
     edit: (model) ->
-      @$el.empty()
       view = new PresentationEditView model: model
       @$el.html view.render().el
       presentz = new Presentz("#video", "460x420", "#slide", "460x420")
@@ -134,20 +137,35 @@ jQuery () ->
 
   app = new AppView()
 
+  loader_shown = true
+
   dispatcher = _.clone(Backbone.Events)
-  
+
   dispatcher.on "home", () ->
+    dispatcher.trigger "show_loader"
     app.home()
-  
+
   dispatcher.on "new", () ->
+    dispatcher.trigger "show_loader"
     throw new Error("unimplemented")
-  
+
   dispatcher.on "new_menu_entry", (ctx) ->
     app.navigationView.reset()
     app.navigationView.new_menu_entry ctx
-  
+
   dispatcher.on "edit", (id) ->
+    dispatcher.trigger "show_loader"
     presentation = new Presentation({ id: id })
-    presentation.on "change", app.edit, app
-  
+
+  dispatcher.on "hide_loader", () ->
+    if loader_shown
+      $("div.loader").hide()
+      loader_shown = false
+
+  dispatcher.on "show_loader", () ->
+    if !loader_shown
+      $("body > .container").empty()
+      $("div.loader").show()
+      loader_shown = true
+
   dispatcher.trigger "home"

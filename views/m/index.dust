@@ -28,6 +28,9 @@
     </div>
   </div>
   
+  <div class="loader">
+    <img src="/assets/img/ajax-loader.gif"/>
+  </div>
   <div class="container">
   </div>
 

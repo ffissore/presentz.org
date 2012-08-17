@@ -15,5 +15,11 @@ body {
 input.title-input {
     font-size: 30px;
     height: 30px;
-    width: 100%
+    width: 99%
+}
+
+.loader {
+    width: 50%;
+    margin: 40px auto;
+    text-align: center;
 }
