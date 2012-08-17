@@ -13,202 +13,242 @@
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#1",
             "title": "NFC: tecnologia e applicazioni",
-            "time": 0
+            "time": 0,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#3",
             "title": "Agenda",
-            "time": 99
+            "time": 99,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#4",
             "title": "Speaker ('Lei non sa chi sono io!')",
-            "time": 106
+            "time": 106,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#6",
             "title": "Near Field Communication",
-            "time": 131
+            "time": 131,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#7",
             "title": "Principio di funzionamento",
-            "time": 211
+            "time": 211,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#8",
             "title": "NFC in numeri",
-            "time": 311
+            "time": 311,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#9",
             "title": "Scenari applicativi",
-            "time": 348
+            "time": 348,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#10",
             "title": "Modalità operative",
-            "time": 439
+            "time": 439,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#11",
             "title": "Modalità operative per piattaforma",
-            "time": 502
+            "time": 502,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#12",
             "title": "Alcuni tipi di tag",
-            "time": 579
+            "time": 579,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#13",
             "title": "Si fa presto a dire tag...",
-            "time": 604
+            "time": 604,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#14",
             "title": "NDEF: NFC Data Exchange Format",
-            "time": 703
+            "time": 703,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#15",
             "title": "API Android",
-            "time": 806
+            "time": 806,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#16",
             "title": "NFC su Android",
-            "time": 1094
+            "time": 1094,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#17",
             "title": "Android NFC API",
-            "time": 1129
+            "time": 1129,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#18",
             "title": "android.nfc (reader/writer)",
-            "time": 1157
+            "time": 1157,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#19",
             "title": "android.nfc (P2P)",
-            "time": 1229
+            "time": 1229,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#20",
             "title": "Permission",
-            "time": 1241
+            "time": 1241,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#21",
             "title": "android.nfc.tech",
-            "time": 1263
+            "time": 1263,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#22",
             "title": "Note sul dispatching degli eventi NFC",
-            "time": 1296
+            "time": 1296,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#23",
             "title": "Tipo di eventi (ACTION) di lettura di tag",
-            "time": 1382
+            "time": 1382,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#24",
             "title": "Logica di dispatching dell'intent",
-            "time": 1446
+            "time": 1446,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#25",
             "title": "IntenFilter sul manifest",
-            "time": 1548
+            "time": 1548,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#26",
             "title": "IntentFilter per NDEF_DISCOVERED",
-            "time": 1565
+            "time": 1565,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#27",
             "title": "IntentFilter per TECH_DISCOVERED",
-            "time": 1580
+            "time": 1580,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#28",
             "title": "Elenco tecnologie per TECH_DISCOVERED",
-            "time": 1582
+            "time": 1582,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#29",
             "title": "IntentFilter per TAG_DISCOVERED",
-            "time": 1591
+            "time": 1591,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#31",
             "title": "E' ora di leggere un tag!",
-            "time": 1628
+            "time": 1628,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#32",
             "title": "Lettura di un NDEF Message",
-            "time": 1717
+            "time": 1717,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#33",
             "title": "Decodifica del payload RTD_TEXT",
-            "time": 1718
+            "time": 1718,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#34",
             "title": "Application Record e Android Beam",
-            "time": 1724
+            "time": 1724,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#35",
             "title": "Dagli smartphone agli oggetti (extra)",
-            "time": 1920
+            "time": 1920,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#36",
             "title": "Dagli smartphone agli oggetti (Arduino)",
-            "time": 1922
+            "time": 1922,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#37",
             "title": "Arduino MEGA + MFRC522",
-            "time": 1951
+            "time": 1951,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#38",
             "title": "Lettura dell'ID di un tag MIFARE",
-            "time": 1962
+            "time": 1962,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#39",
             "title": "Risorse",
-            "time": 2012
+            "time": 2012,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#40",
             "title": "Alcuni dei terminali NFC venduti in Italia",
-            "time": 2014
+            "time": 2014,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#41",
             "title": "Dove acquistare tag e lettori",
-            "time": 2036
+            "time": 2036,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#42",
             "title": "Bibliografia",
-            "time": 2064
+            "time": 2064,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           },
           {
             "url": "http://www.slideshare.net/nfcdisaverio-sannacodemotion2012-120613122010-phpapp02#43",
             "title": "Contatti",
-            "time": 2091
+            "time": 2091,
+            "public_url": "http://www.slideshare.net/Codemotion/nfc-tecnologia-e-applicazioni-by-emanuele-di-saverio-stefano-sanna"
           }
         ]
       }

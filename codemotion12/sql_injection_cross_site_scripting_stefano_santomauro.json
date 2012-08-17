@@ -13,92 +13,110 @@
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#1",
             "title": "SQL Injection & Cross Site Scripting",
-            "time": 0
+            "time": 0,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#2",
             "title": "Chi sono",
-            "time": 52
+            "time": 52,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#3",
             "title": "Perchè questo talk",
-            "time": 69
+            "time": 69,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#4",
             "title": "Le vulnerabilità più diffuse sul web",
-            "time": 125
+            "time": 125,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#5",
             "title": "SQL Injection: cos'è",
-            "time": 181
+            "time": 181,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#6",
             "title": "SQL Injection: come (1/2)",
-            "time": 204
+            "time": 204,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#7",
             "title": "SQL Injection: come (2/2)",
-            "time": 239
+            "time": 239,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#8",
             "title": "SQL Injection: potenzialità",
-            "time": 310
+            "time": 310,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#9",
             "title": "Cross Site Scripting: cos'è",
-            "time": 320
+            "time": 320,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#10",
             "title": "Cross Site Scripting: come",
-            "time": 339
+            "time": 339,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#11",
             "title": "Cross Site Scripting: potenzialità",
-            "time": 373
+            "time": 373,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#12",
             "title": "Dimostrazione",
-            "time": 399
+            "time": 399,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#13",
             "title": "La dimostrazione continua... a casa",
-            "time": 1639
+            "time": 1639,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#14",
             "title": "Conclusioni (1/4)",
-            "time": 1762
+            "time": 1762,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#15",
             "title": "Conclusioni (2/4)",
-            "time": 1771
+            "time": 1771,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#16",
             "title": "Conclusioni (3/4)",
-            "time": 1778
+            "time": 1778,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#17",
             "title": "Conclusioni (4/4)",
-            "time": 1787
+            "time": 1787,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           },
           {
             "url": "http://www.slideshare.net/presentationcodemotion-120602143024-phpapp01#18",
             "title": "Riferimenti",
-            "time": 1821
+            "time": 1821,
+            "public_url": "http://www.slideshare.net/Codemotion/sql-injection-cross-site-scripting-by-stefano-santomauro"
           }
         ]
       }

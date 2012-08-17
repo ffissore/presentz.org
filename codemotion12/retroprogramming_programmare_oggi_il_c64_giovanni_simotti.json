@@ -13,157 +13,188 @@
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#1",
             "title": "Retroprogramming - Programmare oggi il C64",
-            "time": 0
+            "time": 0,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#2",
             "title": "Programmare un computer 8-bit",
-            "time": 18
+            "time": 18,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#3",
             "title": "Struttura basilare di un computer",
-            "time": 81
+            "time": 81,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#4",
             "title": "Il linguaggio assembler (ASM)",
-            "time": 125
+            "time": 125,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#5",
             "title": "Esempio \"Hello World\"",
-            "time": 202
+            "time": 202,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#6",
             "title": "Esempio \"Hello World\" (continua)",
-            "time": 407
+            "time": 407,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#7",
             "title": "CPU",
-            "time": 426
+            "time": 426,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#8",
             "title": "Istruzioni ASM - Tipi",
-            "time": 515
+            "time": 515,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#9",
             "title": "Istruzioni ASM - Indirizzamento",
-            "time": 591
+            "time": 591,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#10",
             "title": "Istruzioni ASM - Indirizzamento (continua)",
-            "time": 710
+            "time": 710,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#11",
             "title": "Istruzioni ASM",
-            "time": 772
+            "time": 772,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#12",
             "title": "Software",
-            "time": 854
+            "time": 854,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#13",
             "title": "C64",
-            "time": 926
+            "time": 926,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#14",
             "title": "C64 - Chip Dedicati",
-            "time": 1033
+            "time": 1033,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#15",
             "title": "VIC-II",
-            "time": 1112
+            "time": 1112,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#16",
             "title": "Modalità Carattere",
-            "time": 1191
+            "time": 1191,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#17",
             "title": "Modalità Carattere (continua)",
-            "time": 1244
+            "time": 1244,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#18",
             "title": "Modalità Carattere (continua)",
-            "time": 1288
+            "time": 1288,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#19",
             "title": "Sprite",
-            "time": 1357
+            "time": 1357,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#20",
             "title": "Sprite (continua)",
-            "time": 1437
+            "time": 1437,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#21",
             "title": "Sprite (continua)",
-            "time": 1482
+            "time": 1482,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#22",
             "title": "Effetti Raster",
-            "time": 1572
+            "time": 1572,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#23",
             "title": "Effetti Raster (continua)",
-            "time": 1663
+            "time": 1663,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#24",
             "title": "Effetti Raster (continua)",
-            "time": 1736
+            "time": 1736,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#25",
             "title": "Effetti Raster (continua)",
-            "time": 1851
+            "time": 1851,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#26",
             "title": "SID 6581",
-            "time": 1889
+            "time": 1889,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#27",
             "title": "SID 6581 (continua)",
-            "time": 1946
+            "time": 1946,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#28",
             "title": "Altre piattaforme",
-            "time": 1982
+            "time": 1982,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#29",
             "title": "Differenze tra Z80 e 6502",
-            "time": 2054
+            "time": 2054,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#30",
             "title": "Link utili",
-            "time": 2136
+            "time": 2136,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           },
           {
             "url": "http://www.slideshare.net/retroprogramming-programmareoggiilc64-120630053122-phpapp02#31",
             "title": "Q&A",
-            "time": 2155
+            "time": 2155,
+            "public_url": "http://www.slideshare.net/Codemotion/retro"
           }
         ]
       }
