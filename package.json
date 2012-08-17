@@ -16,7 +16,9 @@
     "orientdb": "git://github.com/ffissore/node-orientdb.git#master",
     "connect-orientdb": "git://github.com/ffissore/connect-orientdb.git",
     "connect-assetmanager": ">= 0.0.1",
-    "connect-assetmanager-handlers": "git://github.com/ffissore/connect-assetmanager-handlers.git"
+    "connect-assetmanager-handlers": "git://github.com/ffissore/connect-assetmanager-handlers.git",
+    "slideshare": ">= 0.1.1",
+    "xml2json": ">= 0.2.4"
   },
   "licenses": [
     {
