@@ -1,29 +1,37 @@
 {
-  "title" : "Vimeo player, images as slides",
-  "chapters" : [ {
-    "title" : "Vimeo player, slides as images",
-    "duration" : 28,
-    "media" : {
-      "video" : {
-        "url" : "http://vimeo.com/27902834",
-        "thumb" : "/assets/demo/vimeo-img.png"
-      },
-      "slides" : [ {
-        "url" : "/assets/demo/slide1.png",
-        "time" : 0
-      }, {
-        "url" : "/assets/demo/slide2.png",
-        "time" : 7
-      }, {
-        "url" : "/assets/demo/slide3.png",
-        "time" : 9.5
-      }, {
-        "url" : "/assets/demo/slide4.png",
-        "time" : 14
-      }, {
-        "url" : "/assets/demo/slide5.png",
-        "time" : 21
-      } ]
+  "title": "Vimeo player, images as slides",
+  "chapters": [
+    {
+      "title": "Vimeo player, slides as images",
+      "duration": 28,
+      "media": {
+        "video": {
+          "url": "http://vimeo.com/27902834",
+          "thumb": "/assets/demo/vimeo-img.png"
+        },
+        "slides": [
+          {
+            "url": "/assets/demo/slide1.png",
+            "time": 0
+          },
+          {
+            "url": "/assets/demo/slide2.png",
+            "time": 7
+          },
+          {
+            "url": "/assets/demo/slide3.png",
+            "time": 9.5
+          },
+          {
+            "url": "/assets/demo/slide4.png",
+            "time": 14
+          },
+          {
+            "url": "/assets/demo/slide5.png",
+            "time": 21
+          }
+        ]
+      }
     }
-  } ]
+  ]
 }

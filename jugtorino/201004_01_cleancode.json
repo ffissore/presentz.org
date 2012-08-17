@@ -1,35 +1,43 @@
 {
-  "title" : "Clean your code!",
-  "time" : "20100414",
-  "speaker" : "Roberto Franchini",
-  "chapters" : [ {
-    "duration" : 1539.44,
-    "media" : {
-      "video" : {
-        "url" : "http://youtu.be/sp0YgUJxXaI",
-        "thumb" : "http://presentz.org/assets/jugtorino/201004_cleancode/thumb.jpg"
-      },
-      "slides" : [ {
-        "url" : "http://presentz.org/assets/jugtorino/201004_cleancode/20100422132437765705.swf",
-        "title" : "Clean your code!",
-        "time" : 0
-      }, {
-        "url" : "http://presentz.org/assets/jugtorino/201004_cleancode/201004221324389731017.swf",
-        "title" : "whoami(1)",
-        "time" : 42
-      }, {
-        "url" : "http://presentz.org/assets/jugtorino/201004_cleancode/201004221324393545419.swf",
-        "title" : "With a little help...",
-        "time" : 71
-      }, {
-        "url" : "http://presentz.org/assets/jugtorino/201004_cleancode/201004221324381771391.swf",
-        "title" : "Lets go to code...",
-        "time" : 98
-      }, {
-        "url" : "http://presentz.org/assets/jugtorino/201004_cleancode/201004221324385852335.swf",
-        "title" : "References",
-        "time" : 1069
-      } ]
+  "title": "Clean your code!",
+  "time": "20100414",
+  "speaker": "Roberto Franchini",
+  "chapters": [
+    {
+      "duration": 1539.44,
+      "media": {
+        "video": {
+          "url": "http://youtu.be/sp0YgUJxXaI",
+          "thumb": "http://presentz.org/assets/jugtorino/201004_cleancode/thumb.jpg"
+        },
+        "slides": [
+          {
+            "url": "http://presentz.org/assets/jugtorino/201004_cleancode/20100422132437765705.swf",
+            "title": "Clean your code!",
+            "time": 0
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201004_cleancode/201004221324389731017.swf",
+            "title": "whoami(1)",
+            "time": 42
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201004_cleancode/201004221324393545419.swf",
+            "title": "With a little help...",
+            "time": 71
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201004_cleancode/201004221324381771391.swf",
+            "title": "Lets go to code...",
+            "time": 98
+          },
+          {
+            "url": "http://presentz.org/assets/jugtorino/201004_cleancode/201004221324385852335.swf",
+            "title": "References",
+            "time": 1069
+          }
+        ]
+      }
     }
-  } ]
+  ]
 }

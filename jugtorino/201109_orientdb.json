@@ -1,190 +1,193 @@
 {
-  "title" : "OrientDB",
-  "time" : "20110921",
-  "speaker" : "Roberto Franchini",
-  "chapters" : [ {
-    "duration" : 3290,
-    "media" : {
-      "video" : {
-        "url" : "http://youtu.be/yHhWUL1pNuQ",
-        "thumb" : "http://presentz.org/assets/jugtorino/201109_orient/thumb.jpg"
-      },
-      "slides" : [
+  "title": "OrientDB",
+  "time": "20110921",
+  "speaker": "Roberto Franchini",
+  "chapters": [
+    {
+      "duration": 3290,
+      "media": {
+        "video": {
+          "url": "http://youtu.be/yHhWUL1pNuQ",
+          "thumb": "http://presentz.org/assets/jugtorino/201109_orient/thumb.jpg"
+        },
+        "slides": [
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img0.png",
-            "title" : "OrientDB",
-            "time" : 0
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img0.png",
+            "title": "OrientDB",
+            "time": 0
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img1.png",
-            "title" : "whoami(1)",
-            "time" : 8
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img1.png",
+            "title": "whoami(1)",
+            "time": 8
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img2.png",
-            "title" : "Agenda",
-            "time" : 18
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img2.png",
+            "title": "Agenda",
+            "time": 18
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img3.png",
-            "title" : "NoSQL",
-            "time" : 54
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img3.png",
+            "title": "NoSQL",
+            "time": 54
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img4.png",
-            "title" : "Non exhaustive list of NoSQL products",
-            "time" : 83
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img4.png",
+            "title": "Non exhaustive list of NoSQL products",
+            "time": 83
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img5.png",
-            "title" : "OrientDB",
-            "time" : 161
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img5.png",
+            "title": "OrientDB",
+            "time": 161
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img6.png",
-            "title" : "Overview",
-            "time" : 181
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img6.png",
+            "title": "Overview",
+            "time": 181
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img7.png",
-            "title" : "Database",
-            "time" : 261
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img7.png",
+            "title": "Database",
+            "time": 261
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img8.png",
-            "title" : "Deploy",
-            "time" : 387
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img8.png",
+            "title": "Deploy",
+            "time": 387
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img9.png",
-            "title" : "Java Class Stack",
-            "time" : 490
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img9.png",
+            "title": "Java Class Stack",
+            "time": 490
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img10.png",
-            "title" : "Storage Structure",
-            "time" : 601
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img10.png",
+            "title": "Storage Structure",
+            "time": 601
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img11.png",
-            "title" : "API",
-            "time" : 704
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img11.png",
+            "title": "API",
+            "time": 704
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img12.png",
-            "title" : "Client API",
-            "time" : 783
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img12.png",
+            "title": "Client API",
+            "time": 783
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img13.png",
-            "title" : "Document API",
-            "time" : 822
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img13.png",
+            "title": "Document API",
+            "time": 822
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img14.png",
-            "title" : "Document Schema less",
-            "time" : 965
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img14.png",
+            "title": "Document Schema less",
+            "time": 965
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img15.png",
-            "title" : "Document Schema mixed",
-            "time" : 1042
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img15.png",
+            "title": "Document Schema mixed",
+            "time": 1042
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img16.png",
-            "title" : "Document relations",
-            "time" : 1048
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img16.png",
+            "title": "Document relations",
+            "time": 1048
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img14.png",
-            "title" : "Document Schema less",
-            "time" : 1054
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img14.png",
+            "title": "Document Schema less",
+            "time": 1054
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img15.png",
-            "title" : "Document Schema mixed",
-            "time" : 1064
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img15.png",
+            "title": "Document Schema mixed",
+            "time": 1064
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img16.png",
-            "title" : "Document relations",
-            "time" : 1133
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img16.png",
+            "title": "Document relations",
+            "time": 1133
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img17.png",
-            "title" : "Document native ops",
-            "time" : 1211
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img17.png",
+            "title": "Document native ops",
+            "time": 1211
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img18.png",
-            "title" : "SQL!!!",
-            "time" : 1271
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img18.png",
+            "title": "SQL!!!",
+            "time": 1271
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img19.png",
-            "title" : "ODocument",
-            "time" : 1437
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img19.png",
+            "title": "ODocument",
+            "time": 1437
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img20.png",
-            "title" : "Indici",
-            "time" : 1505
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img20.png",
+            "title": "Indici",
+            "time": 1505
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img21.png",
-            "title" : "Transazioni",
-            "time" : 1607
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img21.png",
+            "title": "Transazioni",
+            "time": 1607
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img22.png",
-            "title" : "BLOB",
-            "time" : 1636
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img22.png",
+            "title": "BLOB",
+            "time": 1636
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img23.png",
-            "title" : "BLOB 2",
-            "time" : 1665
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img23.png",
+            "title": "BLOB 2",
+            "time": 1665
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img24.png",
-            "title" : "Tools",
-            "time" : 1792
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img24.png",
+            "title": "Tools",
+            "time": 1792
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img25.png",
-            "title" : "Console",
-            "time" : 1820
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img25.png",
+            "title": "Console",
+            "time": 1820
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img26.png",
-            "title" : "DbStudio",
-            "time" : 1844
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img26.png",
+            "title": "DbStudio",
+            "time": 1844
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img27.png",
-            "title" : "Configurazione",
-            "time" : 1882
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img27.png",
+            "title": "Configurazione",
+            "time": 1882
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img28.png",
-            "title" : "Management",
-            "time" : 1943
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img28.png",
+            "title": "Management",
+            "time": 1943
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img29.png",
-            "title" : "Perchè OrientDB",
-            "time" : 2064
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img29.png",
+            "title": "Perchè OrientDB",
+            "time": 2064
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img30.png",
-            "title" : "Experience Report",
-            "time" : 2211
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img30.png",
+            "title": "Experience Report",
+            "time": 2211
           },
           {
-            "url" : "http://presentz.org/assets/jugtorino/201109_orient/img31.png",
-            "title" : "Demo",
-            "time" : 2276
-          } ]
+            "url": "http://presentz.org/assets/jugtorino/201109_orient/img31.png",
+            "title": "Demo",
+            "time": 2276
+          }
+        ]
+      }
     }
-  } ]
+  ]
 }
