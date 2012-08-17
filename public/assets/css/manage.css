@@ -23,3 +23,8 @@ input.title-input {
     margin: 40px auto;
     text-align: center;
 }
+
+.thumb {
+    width: 100px;
+    height: 75px;
+}

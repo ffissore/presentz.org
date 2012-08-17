@@ -1137,6 +1137,7 @@ header h1 a {
     color: #999999;
     text-shadow: 0 1px 0 #000000;
     line-height: 16px;
+    width: 95px;
 }
 
 #chapters li a.selected .comments, #chapters li a:hover .comments {
