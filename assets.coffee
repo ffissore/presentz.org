@@ -64,10 +64,10 @@ new_css_conf = (suffix, files) ->
 
 assetsMiddleware = assetManager
   js_main: new_js_conf("main", [
-    "public/assets/js/jquery/jquery-1.7.2.min.js",
+    "public/assets/js/jquery/jquery-1.8.0.js",
     "public/assets/js/jquery/jquery.easing.1.3.js",
     "public/assets/js/jquery/jquery.scrollTo-1.4.2-min.js",
-    "public/assets/js/jquery/jquery-ui-1.8.21.custom.min.js",
+    "public/assets/js/jquery/jquery-ui-1.8.23.custom.min.js",
     "public/assets/js/modernizr.js",
     "src_client/main.coffee"
   ])
@@ -92,7 +92,7 @@ assetsMiddleware = assetManager
   ])
   js_embed: new_js_conf("embed", ["src_client/embed.coffee"])
   js_manage: new_js_conf("manage", [
-    "public/assets/js/jquery/jquery-1.7.2.min.js",
+    "public/assets/js/jquery/jquery-1.8.0.js",
     "public/assets/js/manage/bootstrap.js",
     "public/assets/js/manage/underscore.js",
     "public/assets/js/manage/backbone.js",
