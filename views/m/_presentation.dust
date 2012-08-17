@@ -12,7 +12,7 @@
 {#chapters}
   <h3>Chapter {#onebased}{.}{/onebased}</h3>
   <h4>Video</h4>
-  <div class="row-fluid">
+  <div class="row-fluid" chapter_index="{@idx}{.}{/idx}">
     <form class="span8 form-horizontal">
       <fieldset>
         <div class="control-group">
@@ -35,7 +35,7 @@
   </div>
   <h4>Slides</h4>
   {#slides}
-    <div class="row-fluid">
+    <div class="row-fluid" slide_index="{@idx}{.}{/idx}">
       <form class="form-horizontal">
         <fieldset>
           <div class="control-group">

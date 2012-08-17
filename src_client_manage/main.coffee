@@ -136,6 +136,9 @@ jQuery () ->
       @$el.html view.render().el
       presentz = new Presentz("#video", "460x420", "#slide", "460x420")
       presentz.init model.attributes
+      presentz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
+        $("div[chapter_index=#{previous_chapter_index}] ~ div[slide_index=#{previous_slide_index}]").removeClass "alert alert-info"
+        $("div[chapter_index=#{new_chapter_index}] ~ div[slide_index=#{new_slide_index}]").addClass "alert alert-info"
       presentz.changeChapter 0, 0, false
 
   app = new AppView()
