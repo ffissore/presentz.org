@@ -15,7 +15,10 @@ jQuery () ->
     tagName: "div"
 
     render: () ->
-      dust.render "_presentation", @model.attributes, (err, out) =>
+      ctx = @model.attributes
+      ctx.onebased = dustjs_helpers.onebased
+
+      dust.render "_presentation", ctx, (err, out) =>
         dispatcher.trigger "hide_loader"
         @$el.append(out)
       @

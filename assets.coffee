@@ -106,6 +106,7 @@ assetsMiddleware = assetManager
     "views/m/_new_menu_entry.dust",
     "views/m/_presentation.dust",
     "utils.coffee",
+    "dustjs_helpers.coffee",
     "src_client_manage/main.coffee"
   ])
   css_manage: new_css_conf("manage", [

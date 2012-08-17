@@ -10,31 +10,29 @@
   </div>
 </div>
 {#chapters}
-  <h3>Chapter {@idx}{.}{/idx}</h3>
+  <h3>Chapter {#onebased}{.}{/onebased}</h3>
   <h4>Video</h4>
-  {#video}
-    <div class="row-fluid">
-      <form class="span8 form-horizontal">
-        <fieldset>
-          <div class="control-group">
-            <label class="control-label">Video URL</label>
-            <div class="controls">
-              <input type="text" class="input-xxlarge" value="{.url}">
-            </div>
+  <div class="row-fluid">
+    <form class="span8 form-horizontal">
+      <fieldset>
+        <div class="control-group">
+          <label class="control-label">Video URL</label>
+          <div class="controls">
+            <input type="text" class="input-xxlarge" value="{.video.url}">
           </div>
-          <div class="control-group">
-            <label class="control-label">Thumb URL</label>
-            <div class="controls">
-              <input type="text" class="input-xxlarge" value="{.thumb}">
-            </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Thumb URL</label>
+          <div class="controls">
+            <input type="text" class="input-xxlarge" value="{.video.thumb}">
           </div>
-        </fieldset>
-      </form>
-      <div class="span4">
-        <img class="thumb" src="{.thumb}"/>
-      </div>
+        </div>
+      </fieldset>
+    </form>
+    <div class="span4">
+      <img class="thumb" src="{.video.thumb}"/>
     </div>
-  {/video}
+  </div>
   <h4>Slides</h4>
   {#slides}
     <div class="row-fluid">
@@ -49,7 +47,7 @@
           <div class="control-group">
             <label class="control-label">Title</label>
             <div class="controls">
-              <input type="text" class="input-xxlarge" value="{.title}">
+              <input type="text" class="input-xxlarge" value="{.title}" placeholder="Slide {#onebased}{.}{/onebased}">
             </div>
           </div>
         </fieldset>

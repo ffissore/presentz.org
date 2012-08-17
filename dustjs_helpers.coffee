@@ -8,6 +8,16 @@ draw_boxes = (number_of_boxes) ->
       if index is number_of_boxes
         chunk = chunk.write "<div class=\"clear\"></div>"
         index = 0
-    return chunk
+    chunk
 
-exports.draw_boxes = draw_boxes
+onebased = (chunk, context, bodies) ->
+  chunk.write context.stack.index + 1
+  chunk
+
+if exports?
+  root = exports
+else
+  root = (@dustjs_helpers = {})
+
+root.draw_boxes = draw_boxes
+root.onebased = onebased
