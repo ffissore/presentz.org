@@ -105,6 +105,8 @@ assetsMiddleware = assetManager
     "views/m/_presentation_thumb.dust",
     "views/m/_new_menu_entry.dust",
     "views/m/_presentation.dust",
+    "views/m/_help_inline.dust",
+    "views/m/_reset_thumb.dust",
     "utils.coffee",
     "dustjs_helpers.coffee",
     "src_client_manage/main.coffee"

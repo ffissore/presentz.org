@@ -13,23 +13,25 @@
   <h3>Chapter {#onebased}{.}{/onebased}</h3>
   <h4>Video</h4>
   <div class="row-fluid" chapter_index="{@idx}{.}{/idx}">
-    <form class="span8 form-horizontal">
+    <form class="span10 form-horizontal">
+      <input type="hidden" chapter_index="{@idx}{.}{/idx}"/>
       <fieldset>
         <div class="control-group">
           <label class="control-label">Video URL</label>
           <div class="controls">
-            <input type="text" class="input-xxlarge" value="{.video.url}">
+            <input name="video_url" type="text" class="input-xxlarge" value="{.video.url}">
+            <span></span>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label">Thumb URL</label>
           <div class="controls">
-            <input type="text" class="input-xxlarge" value="{.video.thumb}">
+            <input name="video_thumb" type="text" class="input-xxlarge" value="{.video.thumb}">
           </div>
         </div>
       </fieldset>
     </form>
-    <div class="span4">
+    <div class="span2">
       <img class="thumb" src="{.video.thumb}"/>
     </div>
   </div>

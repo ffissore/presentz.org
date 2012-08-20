@@ -1,4 +1,32 @@
 jQuery () ->
+  class YouTube
+
+    handle: (url) ->
+      url.toLowerCase().indexOf("http://youtu.be") != -1
+
+    id_from: (url) ->
+      url.substr url.lastIndexOf("/") + 1
+
+    query_yt: (url, callback) ->
+      $.ajax
+        url: "https://gdata.youtube.com/feeds/api/videos/#{@id_from(url)}?v=2&alt=json"
+        dataType: "json"
+        success: (yt_response) ->
+          callback(undefined, yt_response)
+        error: (jqXHR, textStatus, errorThrown) ->
+          callback(errorThrown)
+
+    is_valid: (url, callback) ->
+      @query_yt url, callback
+
+    fetch_thumb: (url, callback) ->
+      @query_yt url, (err, response) ->
+        return callback(err) if err?
+        thumb = _.find(response.entry.media$group.media$thumbnail, (elem) -> elem.yt$name is "mqdefault")
+        callback(undefined, thumb)
+
+  video_backends = [new YouTube()]
+
   class Presentation extends Backbone.DeepModel
 
     urlRoot: "/m/api/presentations/"
@@ -9,9 +37,6 @@ jQuery () ->
       @bind "change", app.edit, app
 
       @fetch()
-
-  class PresentationEditVideoView extends Backbone.View
-
 
   class PresentationEditView extends Backbone.View
 
@@ -26,6 +51,42 @@ jQuery () ->
         new_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
         @$el.append(out)
       @
+
+    video_url_change: (event) ->
+      $elem = $(event.target)
+      url = $elem.val()
+      for backend in video_backends when backend.handle(url)
+        backend.is_valid url, (err) ->
+          $container = $elem.parentsUntil("fieldset", "div.control-group")
+          # TODO give this thing an awesome name!
+          $next = $elem.next()
+          if err?
+            $container.addClass "error"
+            dust.render "_help_inline", { text: "Invalid or unsupported URL"}, (err, out) ->
+              $next.html out
+          else
+            $container.removeClass "error"
+            dust.render "_reset_thumb", {}, (err, out) ->
+              $next.html out
+      false
+
+    video_thumb_reset: (event) ->
+      $elem = $(event.target)
+      $button_container = $elem.parent()
+      url = $button_container.prev().val()
+      for backend in video_backends when backend.handle(url)
+        backend.fetch_thumb url, (err, thumb) ->
+          return alert(err) if err?
+          
+          $container = $elem.parents("div.row-fluid")
+          $("input[name=video_thumb]", $container).val thumb.url
+          $("img.thumb", $container).attr "src", thumb.url
+          $button_container.empty()
+      false
+
+    events:
+      "change input[name=video_url]": "video_url_change"
+      "click button.reset_thumb": "video_thumb_reset"
 
   class PresentationThumb extends Backbone.DeepModel
 
