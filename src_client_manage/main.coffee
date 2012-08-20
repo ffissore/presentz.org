@@ -10,6 +10,9 @@ jQuery () ->
 
       @fetch()
 
+  class PresentationEditVideoView extends Backbone.View
+
+
   class PresentationEditView extends Backbone.View
 
     tagName: "div"
@@ -19,7 +22,8 @@ jQuery () ->
       ctx.onebased = dustjs_helpers.onebased
 
       dust.render "_presentation", ctx, (err, out) =>
-        dispatcher.trigger "hide_loader"
+        loader_hide()
+        new_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
         @$el.append(out)
       @
 
@@ -50,7 +54,7 @@ jQuery () ->
         published_css_class: published_css_class
         published_label: published_label
       dust.render "_presentation_thumb", ctx, (err, out) =>
-        dispatcher.trigger "hide_loader"
+        loader_hide()
         @$el.html out
       @
 
@@ -60,8 +64,8 @@ jQuery () ->
       false
 
     edit: () ->
-      dispatcher.trigger "new_menu_entry", title: utils.cut_string_at(@model.get("title"), 30)
-      dispatcher.trigger "edit", @model.get("id")
+      #new_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
+      router.navigate @model.get("id"), trigger: true
       false
 
     events:
@@ -86,7 +90,8 @@ jQuery () ->
     render: () ->
       @model.each (model) =>
         view = new PresentationThumbView model: model
-        @$el.append view.render().el
+        @$el.append view.el
+        view.render()
       @
 
   class NavigationView extends Backbone.View
@@ -103,10 +108,10 @@ jQuery () ->
         @$el.append(out)
 
     home: (event) ->
-      dispatcher.trigger "home" unless $(event.currentTarget).parent().hasClass "active"
+      router.navigate "home", trigger: true unless $(event.currentTarget).parent().hasClass "active"
 
     new: (event) ->
-      dispatcher.trigger "new" unless $(event.currentTarget).parent().hasClass "active"
+      router.navigate "new", trigger: true unless $(event.currentTarget).parent().hasClass "active"
 
     events:
       "click a[href=#home]": "home"
@@ -125,7 +130,8 @@ jQuery () ->
 
     reset: (model) ->
       view = new PresentationThumbListView model: model
-      @$el.html view.render().el
+      @$el.html view.el
+      view.render()
 
     home: () ->
       @presentationThumbList.fetch()
@@ -133,7 +139,8 @@ jQuery () ->
 
     edit: (model) ->
       view = new PresentationEditView model: model
-      @$el.html view.render().el
+      @$el.html view.el
+      view.render()
       presentz = new Presentz("#video", "460x420", "#slide", "460x420")
       presentz.init model.attributes
       presentz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
@@ -143,35 +150,46 @@ jQuery () ->
 
   app = new AppView()
 
+  class AppRouter extends Backbone.Router
+
+    routes:
+      "": "go_home"
+      "home": "home"
+      "new": "new"
+      ":presentation": "edit"
+
+    go_home: () ->
+      @navigate "home", trigger: true
+
+    home: () ->
+      loader_show()
+      app.home()
+
+    new: () ->
+      loader_show()
+      throw new Error("unimplemented")
+
+    edit: (id) ->
+      loader_show()
+      presentation = new Presentation({ id: id })
+
+  router = new AppRouter()
+
   loader_shown = true
 
-  dispatcher = _.clone(Backbone.Events)
-
-  dispatcher.on "home", () ->
-    dispatcher.trigger "show_loader"
-    app.home()
-
-  dispatcher.on "new", () ->
-    dispatcher.trigger "show_loader"
-    throw new Error("unimplemented")
-
-  dispatcher.on "new_menu_entry", (ctx) ->
-    app.navigationView.reset()
-    app.navigationView.new_menu_entry ctx
-
-  dispatcher.on "edit", (id) ->
-    dispatcher.trigger "show_loader"
-    presentation = new Presentation({ id: id })
-
-  dispatcher.on "hide_loader", () ->
+  loader_hide = () ->
     if loader_shown
       $("div.loader").hide()
       loader_shown = false
 
-  dispatcher.on "show_loader", () ->
+  loader_show = () ->
     if !loader_shown
       $("body > .container").empty()
       $("div.loader").show()
       loader_shown = true
 
-  dispatcher.trigger "home"
+  new_menu_entry = (ctx) ->
+    app.navigationView.reset()
+    app.navigationView.new_menu_entry ctx
+
+  Backbone.history.start pushState: false, root: "/m/"

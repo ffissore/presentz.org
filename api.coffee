@@ -3,6 +3,11 @@ storage = null
 init = (s) ->
   storage = s
 
+beautify_slide_urls = (presentation, callback) ->
+  
+  
+  callback()
+  
 presentations = (req, res, next) ->
   storage.from_user_to_presentations req.user, (err, presentations) ->
     return next(err) if err?
@@ -26,9 +31,14 @@ presentation_update = (req, res, next) ->
       
 presentation_load = (req, res, next) ->
   storage.load_entire_presentation_from_id req.params.presentation, (err, presentation) ->
-    console.log presentation
+    return next(err) if err?
     
-    res.send presentation
+    beautify_slide_urls presentation, (err) ->
+      return next(err) if err?
+      
+      console.log presentation.chapters[0].slides
+      
+      res.send presentation
   
 exports.init = init
 exports.presentations = presentations
