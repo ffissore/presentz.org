@@ -75,6 +75,7 @@ assetsMiddleware = assetManager
     "public/assets/css/mediaelementplayer.css",
     "public/assets/css/reset.css",
     "public/assets/css/default.css",
+    "public/assets/css/fluid_container.css",
     "public/assets/css/font_style.css",
     "public/assets/css/fe_style.css",
     "public/assets/css/default_responsive.css",
@@ -114,8 +115,10 @@ assetsMiddleware = assetManager
     "src_client_manage/video_backends.coffee"
   ])
   css_manage: new_css_conf("manage", [
+    "public/assets/css/mediaelementplayer.css",
     "public/assets/css/bootstrap.css",
     "public/assets/css/bootstrap-responsive.css"
+    "public/assets/css/fluid_container.css",
     "public/assets/css/manage.css"
   ])
 

@@ -302,21 +302,4 @@ textarea {
     -webkit-appearance: none;
 }
 
-.fluid_container {
-    position: relative;
-    padding: 0;
-}
-
-.fluid_container .mejs-container,
-.fluid_container video,
-.fluid_container iframe,
-.fluid_container object,
-.fluid_container embed {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
 /*fine form*/

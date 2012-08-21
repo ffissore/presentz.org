@@ -2,6 +2,14 @@
 
 jQuery () ->
   presentz = new Presentz("#video", "460x420", "#slide", "460x420")
+  
+  init_presentz = (presentation) ->
+    presentz.init presentation
+    presentz.changeChapter 0, 0, false
+    $video = $("#video")
+    $video_parent = $video.parent()
+    $video.width $video_parent.width()
+    $video.height $video_parent.height()
 
   video_backends = [new window.presentzorg.video_backends.YouTube(), new window.presentzorg.video_backends.Vimeo()]
 
@@ -47,8 +55,7 @@ jQuery () ->
             dust.render "_reset_thumb", {}, (err, out) ->
               $next.html out
             @model.set "chapters.#{$elem.attr("chapter_index")}.video.url", url, silent: true
-            presentz.init @model.attributes
-            presentz.changeChapter 0, 0, false
+            init_presentz @model.attributes
       false
 
     video_thumb_reset: (event) ->
@@ -191,8 +198,7 @@ jQuery () ->
       presentz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
         $("div[chapter_index=#{previous_chapter_index}] ~ div[slide_index=#{previous_slide_index}]").removeClass "alert alert-info"
         $("div[chapter_index=#{new_chapter_index}] ~ div[slide_index=#{new_slide_index}]").addClass "alert alert-info"
-      presentz.init model.attributes
-      presentz.changeChapter 0, 0, false
+      init_presentz model.attributes
 
   app = new AppView()
 
