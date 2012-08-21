@@ -7,13 +7,12 @@ class YouTube
     url.substr url.lastIndexOf("/") + 1
 
   query = (url, callback) ->
+    return callback("invalid url") if id_from(url) is ""
     $.jsonp
       url: "https://gdata.youtube.com/feeds/api/videos/#{id_from(url)}?v=2&alt=json"
       success: (response) ->
-        console.log arguments
         callback(undefined, response)
       error: (options, status) ->
-        console.log arguments
         callback(status)
 
   is_valid: (url, callback) ->
@@ -34,6 +33,7 @@ class Vimeo
     url.substr url.lastIndexOf("/") + 1
 
   query = (url, callback) ->
+    return callback("invalid url") if id_from(url) is ""
     $.jsonp
       url: "http://vimeo.com/api/v2/video/#{id_from(url)}.json"
       success: (response, status) ->

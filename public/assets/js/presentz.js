@@ -316,7 +316,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       if (wouldPlay == null) {
         wouldPlay = false;
       }
-      if (this.player && this.player.seekTo) {
+      if (time > 0 && this.player && this.player.seekTo) {
         this.player.seekTo(time, true);
         if (wouldPlay) {
           this.player.playVideo();
@@ -643,6 +643,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     Presentz.prototype.init = function(presentation) {
       this.presentation = presentation;
+      this.currentChapterIndex = -1;
+      this.currentSlideIndex = -1;
       this.howManyChapters = this.presentation.chapters.length;
       this.videoPlugin = this.findVideoPlugin();
     };

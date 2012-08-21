@@ -4,8 +4,6 @@ init = (s) ->
   storage = s
 
 beautify_slide_urls = (presentation, callback) ->
-  
-  
   callback()
   
 presentations = (req, res, next) ->
@@ -35,8 +33,6 @@ presentation_load = (req, res, next) ->
     
     beautify_slide_urls presentation, (err) ->
       return next(err) if err?
-      
-      console.log presentation.chapters[0].slides
       
       res.send presentation
   

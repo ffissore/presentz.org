@@ -1,6 +1,8 @@
 @presentzorg = {}
 
 jQuery () ->
+  presentz = new Presentz("#video", "460x420", "#slide", "460x420")
+
   video_backends = [new window.presentzorg.video_backends.YouTube(), new window.presentzorg.video_backends.Vimeo()]
 
   class Presentation extends Backbone.DeepModel
@@ -32,7 +34,7 @@ jQuery () ->
       $elem = $(event.target)
       url = $elem.val()
       for backend in video_backends when backend.handle(url)
-        backend.is_valid url, (err) ->
+        backend.is_valid url, (err) =>
           $container = $elem.parentsUntil("fieldset", "div.control-group")
           # TODO give this thing an awesome name!
           $next = $elem.next()
@@ -44,6 +46,9 @@ jQuery () ->
             $container.removeClass "error"
             dust.render "_reset_thumb", {}, (err, out) ->
               $next.html out
+            @model.set "chapters.#{$elem.attr("chapter_index")}.video.url", url, silent: true
+            presentz.init @model.attributes
+            presentz.changeChapter 0, 0, false
       false
 
     video_thumb_reset: (event) ->
@@ -54,15 +59,20 @@ jQuery () ->
         backend.fetch_thumb url, (err, thumb_url) ->
           return alert(err) if err?
 
+
           $container = $elem.parents("div.row-fluid")
           $("input[name=video_thumb]", $container).val thumb_url
           $("img.thumb", $container).attr "src", thumb_url
           $button_container.empty()
       false
 
+    video_url_change_from_src: (event) ->
+      console.log arguments
+
     events:
       "change input[name=video_url]": "video_url_change"
       "click button.reset_thumb": "video_thumb_reset"
+      "change input[name=video_thumb]": "video_url_change_from_src"
 
   class PresentationThumb extends Backbone.DeepModel
 
@@ -101,7 +111,7 @@ jQuery () ->
       false
 
     edit: () ->
-      #new_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
+      console.log arguments
       router.navigate @model.get("id"), trigger: true
       false
 
@@ -178,11 +188,10 @@ jQuery () ->
       view = new PresentationEditView model: model
       @$el.html view.el
       view.render()
-      presentz = new Presentz("#video", "460x420", "#slide", "460x420")
-      presentz.init model.attributes
       presentz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
         $("div[chapter_index=#{previous_chapter_index}] ~ div[slide_index=#{previous_slide_index}]").removeClass "alert alert-info"
         $("div[chapter_index=#{new_chapter_index}] ~ div[slide_index=#{new_slide_index}]").addClass "alert alert-info"
+      presentz.init model.attributes
       presentz.changeChapter 0, 0, false
 
   app = new AppView()
