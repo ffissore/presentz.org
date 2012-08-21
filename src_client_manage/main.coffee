@@ -1,31 +1,7 @@
+@presentzorg = {}
+
 jQuery () ->
-  class YouTube
-
-    handle: (url) ->
-      url.toLowerCase().indexOf("http://youtu.be") != -1
-
-    id_from: (url) ->
-      url.substr url.lastIndexOf("/") + 1
-
-    query_yt: (url, callback) ->
-      $.ajax
-        url: "https://gdata.youtube.com/feeds/api/videos/#{@id_from(url)}?v=2&alt=json"
-        dataType: "json"
-        success: (yt_response) ->
-          callback(undefined, yt_response)
-        error: (jqXHR, textStatus, errorThrown) ->
-          callback(errorThrown)
-
-    is_valid: (url, callback) ->
-      @query_yt url, callback
-
-    fetch_thumb: (url, callback) ->
-      @query_yt url, (err, response) ->
-        return callback(err) if err?
-        thumb = _.find(response.entry.media$group.media$thumbnail, (elem) -> elem.yt$name is "mqdefault")
-        callback(undefined, thumb)
-
-  video_backends = [new YouTube()]
+  video_backends = [new window.presentzorg.video_backends.YouTube(), new window.presentzorg.video_backends.Vimeo()]
 
   class Presentation extends Backbone.DeepModel
 
@@ -75,12 +51,12 @@ jQuery () ->
       $button_container = $elem.parent()
       url = $button_container.prev().val()
       for backend in video_backends when backend.handle(url)
-        backend.fetch_thumb url, (err, thumb) ->
+        backend.fetch_thumb url, (err, thumb_url) ->
           return alert(err) if err?
-          
+
           $container = $elem.parents("div.row-fluid")
-          $("input[name=video_thumb]", $container).val thumb.url
-          $("img.thumb", $container).attr "src", thumb.url
+          $("input[name=video_thumb]", $container).val thumb_url
+          $("img.thumb", $container).attr "src", thumb_url
           $button_container.empty()
       false
 
@@ -254,3 +230,4 @@ jQuery () ->
     app.navigationView.new_menu_entry ctx
 
   Backbone.history.start pushState: false, root: "/m/"
+  $.jsonp.setup callbackParameter: "callback"

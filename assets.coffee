@@ -93,6 +93,7 @@ assetsMiddleware = assetManager
   js_embed: new_js_conf("embed", ["src_client/embed.coffee"])
   js_manage: new_js_conf("manage", [
     "public/assets/js/jquery/jquery-1.8.0.js",
+    "public/assets/js/manage/jquery.jsonp.js",
     "public/assets/js/manage/bootstrap.js",
     "public/assets/js/manage/underscore.js",
     "public/assets/js/manage/backbone.js",
@@ -110,6 +111,7 @@ assetsMiddleware = assetManager
     "utils.coffee",
     "dustjs_helpers.coffee",
     "src_client_manage/main.coffee"
+    "src_client_manage/video_backends.coffee"
   ])
   css_manage: new_css_conf("manage", [
     "public/assets/css/bootstrap.css",
