@@ -309,7 +309,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     };
 
     YoutubeIFrame.prototype.currentTime = function() {
-      return this.player.getCurrentTime();
+      if (this.player.getCurrentTime != null) {
+        return this.player.getCurrentTime();
+      }
+      return 0;
     };
 
     YoutubeIFrame.prototype.skipTo = function(time, wouldPlay) {
