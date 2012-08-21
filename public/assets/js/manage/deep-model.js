@@ -7,7 +7,7 @@
     /**
      * Takes a nested object and returns a shallow object keyed with the path names
      * e.g. { "level1.level2": "value" }
-     * 
+     *
      * @param  {Object}      Nested object e.g. { level1: { level2: 'value' } }
      * @return {Object}      Shallow object with path names e.g. { 'level1.level2': 'value' }
      */
@@ -53,6 +53,10 @@
                 return false
             }
             result = result[fields[i]];
+
+            if (result == null && i < n - 1) {
+                result = {};
+            }
             
             if (typeof result === 'undefined') {
                 if (return_exists)
@@ -68,7 +72,7 @@
         }
         return result;
     }
-    
+
     /**
      * @param {Object} obj                Object to fetch attribute from
      * @param {String} path               Object path e.g. 'user.name'
@@ -85,7 +89,7 @@
         var result = obj;
         for (var i = 0, n = fields.length; i < n; i++) {
             var field = fields[i];
-            
+
             //If the last in the path, set the value
             if (i === n - 1) {
                 options.unset ? delete result[field] : result[field] = val;
@@ -94,7 +98,7 @@
                 if (typeof result[field] === 'undefined' || ! _.isObject(result[field])) {
                     result[field] = {};
                 }
-                
+
                 //Move onto the next part of the path
                 result = result[field];
             }
@@ -106,7 +110,7 @@
     }
 
     var DeepModel = Backbone.Model.extend({
-       
+
         // Override get
         // Supports nested attributes via the syntax 'obj.attr' e.g. 'author.user.name'
         get: function(attr) {
@@ -148,7 +152,7 @@
             var escaped = this._escapedAttributes;
             var prev = this._previousAttributes || {};
 
-            
+
             // <custom code>
             attrs = objToPaths(attrs);
 
@@ -174,7 +178,7 @@
               // If the new and previous value differ, record the change.  If not,
               // then remove changes for this attribute.
               if (!_.isEqual(previousValue, val) || (hasCurrentValue != hasPreviousValue)) {
-                setNested(this.changed, attr, val);
+                setNested(this.changed, attr, _.clone(val));
                 if (!options.silent) setNested(this._pending, attr, true);
               } else {
                 deleteNested(this.changed, attr);
@@ -187,12 +191,10 @@
             return this;
         },
 
-        // Override has
         has: function(attr) {
-            return getNested(this.attributes, attr) != null;
+          return getNested(this.attributes, attr) != null;
         },
 
-        // Override change
         change: function(options) {
           options || (options = {});
           var changing = this._changing;
@@ -216,7 +218,7 @@
             // Pending and silent changes still remain.
             for (var attr in objToPaths(this.changed)) {
               if (getNested(this._pending, attr) || getNested(this._silent, attr)) continue;
-              deleteNested(this.change, attr);
+              deleteNested(this.changed, attr);
             }
             this._previousAttributes = _.clone(this.attributes);
           }
@@ -225,27 +227,42 @@
           return this;
         },
 
+        hasChanged: function(attr) {
+          var self = this;
+
+          //Empty objects indicate no changes, so remove these first
+          _.each(this.changed, function(val, key) {
+            if (_.isObject(val) && _.isEmpty(val)) {
+              delete self.changed[key];
+            }
+          });
+
+          if (!arguments.length) return !_.isEmpty(this.changed);
+          return getNested(this.changed, attr) != null;
+        },
+
         changedAttributes: function(diff) {
           if (!diff) return this.hasChanged() ? _.clone(objToPaths(this.changed)) : false;
-          var val, changed = false, old = this._previousAttributes;
-          for (var attr in diff) {
+          var val, changed = false, old = objToPaths(this._previousAttributes);
+          for (var attr in objToPaths(diff)) {
             if (_.isEqual(old[attr], (val = diff[attr]))) continue;
             (changed || (changed = {}))[attr] = val;
           }
+
           return changed;
-        },
+        }
 
     });
 
 
     //Config; override in your app to customise
     DeepModel.keyPathSeparator = '.';
-    
-    
+
+
     //Exports
     Backbone.DeepModel = DeepModel;
 
     //For use in NodeJS
     if (typeof module != 'undefined') module.exports = DeepModel;
-    
+
 })(Backbone);
