@@ -31,7 +31,7 @@
       </fieldset>
     </form>
     <div class="span2">
-      <img class="thumb" src="{.video.thumb}"/>
+      <img class="thumb" src="{.video.thumb}" chapter_index="{@idx}{.}{/idx}"/>
     </div>
   </div>
   <h4>Slides</h4>
@@ -48,7 +48,7 @@
           <div class="control-group">
             <label class="control-label">Title</label>
             <div class="controls">
-              <input type="text" class="input-xxlarge" value="{.title}" placeholder="Slide {#onebased}{.}{/onebased}">
+              <input type="text" class="input-xxlarge" value="{.title}" placeholder="Slide {#onebased}{.}{/onebased}" slide_index="{@idx}{.}{/idx}">
             </div>
           </div>
         </fieldset>

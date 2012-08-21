@@ -22,6 +22,14 @@ jQuery () ->
       _.bindAll @
 
       @bind "change", app.edit, app
+      @bind "all", () ->
+        console.log arguments
+      @bind "all", (event, model) ->
+        return if event.indexOf(":") is -1
+        field_name = event.substring event.indexOf(":") + 1
+        field_value = model.get field_name
+        if _.str.endsWith(event, "thumb")
+          $("img.thumb[chapter_index=#{field_name.split(".")[1]}]").attr "src", field_value
 
       @fetch()
 
@@ -66,19 +74,23 @@ jQuery () ->
     video_thumb_reset: (event) ->
       $elem = $(event.target)
       $button_container = $elem.parent()
-      url = $button_container.prev().val()
-      for backend in video_backends when backend.handle(url)
-        backend.fetch_thumb url, (err, thumb_url) ->
-          return alert(err) if err?
+      video_url = $button_container.prev().val()
+      backend = _.find video_backends, (backend) -> backend.handle(video_url)
+      return unless backend?
+      backend.fetch_thumb video_url, (err, thumb_url) =>
+        return alert(err) if err?
 
-          $container = $elem.parents("div.row-fluid")
-          $("input[name=video_thumb]", $container).val thumb_url
-          $("img.thumb", $container).attr "src", thumb_url
-          $button_container.empty()
+        $container = $elem.parents("div.row-fluid")
+        $thumb_input = $("input[name=video_thumb]", $container)
+        $thumb_input.val thumb_url
+        @model.set "chapters.#{$thumb_input.attr("chapter_index")}.video.thumb", thumb_url
+
+        $button_container.empty()
       false
 
     video_url_change_from_src: (event) ->
       console.log arguments
+      false
 
     events:
       "change input[name=video_url]": "video_url_change"
@@ -122,7 +134,6 @@ jQuery () ->
       false
 
     edit: () ->
-      console.log arguments
       router.navigate @model.get("id"), trigger: true
       false
 
@@ -203,6 +214,7 @@ jQuery () ->
         $("div[chapter_index=#{previous_chapter_index}] ~ div[slide_index=#{previous_slide_index}]").removeClass "alert alert-info"
         $("div[chapter_index=#{new_chapter_index}] ~ div[slide_index=#{new_slide_index}]").addClass "alert alert-info"
       init_presentz model.attributes, true
+      model.unbind "change", @edit
 
   app = new AppView()
 

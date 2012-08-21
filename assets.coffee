@@ -97,6 +97,7 @@ assetsMiddleware = assetManager
     "public/assets/js/manage/jquery.jsonp.js",
     "public/assets/js/manage/bootstrap.js",
     "public/assets/js/manage/underscore.js",
+    "public/assets/js/manage/underscore.string.js",
     "public/assets/js/manage/backbone.js",
     "public/assets/js/manage/deep-model.js",
     "public/assets/js/manage/dust-core-1.0.0.js",
