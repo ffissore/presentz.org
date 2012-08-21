@@ -3,15 +3,16 @@
 jQuery () ->
   presentz = new Presentz("#video", "460x420", "#slide", "460x420")
   
-  init_presentz = (presentation) ->
+  init_presentz = (presentation, first) ->
     presentz.init presentation
     presentz.changeChapter 0, 0, false
+    return unless first?
     $video = $("#video")
     $video_parent = $video.parent()
     $video.width $video_parent.width()
     $video.height $video_parent.height()
 
-  video_backends = [new window.presentzorg.video_backends.YouTube(), new window.presentzorg.video_backends.Vimeo()]
+  video_backends = [new window.presentzorg.video_backends.YouTube(), new window.presentzorg.video_backends.Vimeo(), new window.presentzorg.video_backends.GenericURLCheck()]
 
   class Presentation extends Backbone.DeepModel
 
@@ -41,21 +42,25 @@ jQuery () ->
     video_url_change: (event) ->
       $elem = $(event.target)
       url = $elem.val()
-      for backend in video_backends when backend.handle(url)
-        backend.is_valid url, (err) =>
-          $container = $elem.parentsUntil("fieldset", "div.control-group")
-          # TODO give this thing an awesome name!
-          $next = $elem.next()
-          if err?
-            $container.addClass "error"
-            dust.render "_help_inline", { text: "Invalid or unsupported URL"}, (err, out) ->
-              $next.html out
-          else
-            $container.removeClass "error"
+      backend = _.find video_backends, (backend) -> backend.handle(url)
+      return unless backend?
+      backend.is_valid url, (err) =>
+        $container = $elem.parentsUntil("fieldset", "div.control-group")
+        # TODO give this thing an awesome name!
+        $next = $elem.next()
+        if err?
+          $container.addClass "error"
+          dust.render "_help_inline", { text: "Invalid or unsupported URL"}, (err, out) ->
+            $next.html out
+        else
+          $container.removeClass "error"
+          @model.set "chapters.#{$elem.attr("chapter_index")}.video.url", url, silent: true
+          init_presentz @model.attributes
+          if backend.fetch_thumb?
             dust.render "_reset_thumb", {}, (err, out) ->
               $next.html out
-            @model.set "chapters.#{$elem.attr("chapter_index")}.video.url", url, silent: true
-            init_presentz @model.attributes
+          else
+            $next.empty()
       false
 
     video_thumb_reset: (event) ->
@@ -65,7 +70,6 @@ jQuery () ->
       for backend in video_backends when backend.handle(url)
         backend.fetch_thumb url, (err, thumb_url) ->
           return alert(err) if err?
-
 
           $container = $elem.parents("div.row-fluid")
           $("input[name=video_thumb]", $container).val thumb_url
@@ -198,7 +202,7 @@ jQuery () ->
       presentz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
         $("div[chapter_index=#{previous_chapter_index}] ~ div[slide_index=#{previous_slide_index}]").removeClass "alert alert-info"
         $("div[chapter_index=#{new_chapter_index}] ~ div[slide_index=#{new_slide_index}]").addClass "alert alert-info"
-      init_presentz model.attributes
+      init_presentz model.attributes, true
 
   app = new AppView()
 

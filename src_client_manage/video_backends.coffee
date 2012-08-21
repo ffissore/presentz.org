@@ -49,6 +49,19 @@ class Vimeo
       return callback(err) if err?
       callback(undefined, videos[0].thumbnail_medium)
 
+class GenericURLCheck
+
+  url_regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+  
+  handle: (url) -> true
+
+  is_valid: (url, callback) ->
+    if url_regexp.test(url)
+      callback()
+    else
+      callback("invalid")
+
 @presentzorg.video_backends = {}
 @presentzorg.video_backends.YouTube = YouTube
 @presentzorg.video_backends.Vimeo = Vimeo
+@presentzorg.video_backends.GenericURLCheck = GenericURLCheck
