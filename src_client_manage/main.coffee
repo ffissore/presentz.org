@@ -28,13 +28,15 @@ jQuery () ->
         return if event.indexOf(":") is -1
         
         field_name = event.substring event.indexOf(":") + 1
+        field_name_parts = field_name.split(".")
         field_value = model.get field_name
         
-        if _.str.endsWith(event, "thumb")
-          $("img.thumb[chapter_index=#{field_name.split(".")[1]}]").attr "src", field_value
-        else if _.str.endsWith(event, "duration")
-          $("input[name=video_duration][chapter_index=#{field_name.split(".")[1]}]").val field_value
-
+        if _.str.endsWith(field_name, "thumb")
+          $("img.thumb[chapter_index=#{field_name_parts[1]}]").attr "src", field_value
+        else if _.str.endsWith(field_name, "duration")
+          $("input[name=video_duration][chapter_index=#{field_name_parts[1]}]").val field_value
+        else if field_name_parts.length is 1 and field_name_parts[0] is "title"
+          $("ul.nav li.active a").text field_value
       @fetch()
 
   class PresentationEditView extends Backbone.View
@@ -53,7 +55,7 @@ jQuery () ->
         @$el.append(out)
       @
 
-    video_url_change: (event) ->
+    onchange_video_url: (event) ->
       $elem = $(event.target)
       url = $elem.val()
       backend = _.find video_backends, (backend) -> backend.handle(url)
@@ -83,7 +85,7 @@ jQuery () ->
             $next.empty()
       false
 
-    video_thumb_reset: (event) ->
+    reset_video_thumb: (event) ->
       $elem = $(event.target)
       $button_container = $elem.parent()
       video_url = $button_container.prev().val()
@@ -102,11 +104,15 @@ jQuery () ->
 
     video_url_change_from_src: (event) ->
       false
+      
+    onchange_title: (event) ->
+      @model.set "title", $(event.target).val()
 
     events:
-      "change input[name=video_url]": "video_url_change"
-      "click button.reset_thumb": "video_thumb_reset"
+      "change input[name=video_url]": "onchange_video_url"
+      "click button.reset_thumb": "reset_video_thumb"
       "change input[name=video_thumb]": "video_url_change_from_src"
+      "change input.title-input": "onchange_title"
 
   class PresentationThumb extends Backbone.DeepModel
 
