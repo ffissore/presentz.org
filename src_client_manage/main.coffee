@@ -24,19 +24,7 @@ jQuery () ->
       @bind "change", app.edit, app
       @bind "all", () ->
         console.log arguments
-      @bind "all", (event, model) ->
-        return if event.indexOf(":") is -1
-        
-        field_name = event.substring event.indexOf(":") + 1
-        field_name_parts = field_name.split(".")
-        field_value = model.get field_name
-        
-        if _.str.endsWith(field_name, "thumb")
-          $("img.thumb[chapter_index=#{field_name_parts[1]}]").attr "src", field_value
-        else if _.str.endsWith(field_name, "duration")
-          $("input[name=video_duration][chapter_index=#{field_name_parts[1]}]").val field_value
-        else if field_name_parts.length is 1 and field_name_parts[0] is "title"
-          $("ul.nav li.active a").text field_value
+
       @fetch()
 
   class PresentationEditView extends Backbone.View
@@ -75,6 +63,7 @@ jQuery () ->
           chapter_index = $elem.attr("chapter_index")
           @model.set "chapters.#{chapter_index}.video.url", info.url
           @model.set "chapters.#{chapter_index}.duration", info.duration
+          $("input[name=video_duration][chapter_index=#{chapter_index}]").val info.duration
           init_presentz @model.attributes
           if info.thumb?
             dust.render "_reset_thumb", {}, (err, out) ->
@@ -98,6 +87,7 @@ jQuery () ->
         $thumb_input = $("input[name=video_thumb]", $container)
         $thumb_input.val info.thumb
         @model.set "chapters.#{$thumb_input.attr("chapter_index")}.video.thumb", info.thumb
+        $("img.thumb[chapter_index=#{$thumb_input.attr("chapter_index")}]").attr "src", info.thumb
 
         $button_container.empty()
       false
@@ -106,7 +96,9 @@ jQuery () ->
       false
       
     onchange_title: (event) ->
-      @model.set "title", $(event.target).val()
+      title = $(event.target).val()
+      @model.set "title", title
+      $("ul.nav li.active a").text title
 
     events:
       "change input[name=video_url]": "onchange_video_url"
