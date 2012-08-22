@@ -12,7 +12,7 @@ jQuery () ->
     $video.width $video_parent.width()
     $video.height $video_parent.height()
 
-  video_backends = [new window.presentzorg.video_backends.YouTube(), new window.presentzorg.video_backends.Vimeo(), new window.presentzorg.video_backends.GenericURLCheck()]
+  video_backends = [new window.presentzorg.video_backends.Youtube(), new window.presentzorg.video_backends.Vimeo(), new window.presentzorg.video_backends.GenericURLCheck()]
 
   class Presentation extends Backbone.DeepModel
 

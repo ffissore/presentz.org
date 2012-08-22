@@ -1,4 +1,4 @@
-class YouTube
+class Youtube
 
   handle: (url) ->
     url.toLowerCase().indexOf("youtu.be") != -1
@@ -57,6 +57,6 @@ class GenericURLCheck
       callback("invalid")
 
 @presentzorg.video_backends = {}
-@presentzorg.video_backends.YouTube = YouTube
+@presentzorg.video_backends.Youtube = Youtube
 @presentzorg.video_backends.Vimeo = Vimeo
 @presentzorg.video_backends.GenericURLCheck = GenericURLCheck
