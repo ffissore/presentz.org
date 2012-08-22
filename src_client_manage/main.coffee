@@ -117,7 +117,7 @@ jQuery () ->
     onchange_title: (event) ->
       title = $(event.target).val()
       @model.set "title", title
-      $("ul.nav li.active a").text title
+      $("ul.nav li.active a").text utils.cut_string_at title, 30
 
     events:
       "change input[name=video_url]": "onchange_video_url"

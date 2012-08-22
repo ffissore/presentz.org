@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label">Video duration</label>
+          <label class="control-label">Video duration (s)</label>
           <div class="controls">
             <input name="video_duration" type="text" class="input-xxlarge" value="{.duration}" chapter_index="{@idx}{.}{/idx}">
           </div>
