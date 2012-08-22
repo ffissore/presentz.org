@@ -2,7 +2,7 @@
 
 jQuery () ->
   presentz = new Presentz("#video", "460x420", "#slide", "460x420")
-  
+
   init_presentz = (presentation, first) ->
     presentz.init presentation
     presentz.changeChapter 0, 0, false
@@ -12,7 +12,8 @@ jQuery () ->
     $video.width $video_parent.width()
     $video.height $video_parent.height()
 
-  video_backends = [new window.presentzorg.video_backends.Youtube(), new window.presentzorg.video_backends.Vimeo(), new window.presentzorg.video_backends.GenericURLCheck()]
+  presentzorg = window.presentzorg
+  video_backends = [new presentzorg.video_backends.Youtube(), new presentzorg.video_backends.Vimeo(), new presentzorg.video_backends.DummyVideoBackend()]
 
   class Presentation extends Backbone.DeepModel
 
@@ -37,7 +38,7 @@ jQuery () ->
 
       dust.render "_presentation", ctx, (err, out) =>
         return alert(err) if err?
-        
+
         loader_hide()
         new_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
         @$el.append(out)
@@ -56,7 +57,7 @@ jQuery () ->
           $container.addClass "error"
           dust.render "_help_inline", { text: "Invalid URL"}, (err, out) ->
             return alert(err) if err?
-            
+
             $next.html out
         else
           $container.removeClass "error"
@@ -68,7 +69,7 @@ jQuery () ->
           if info.thumb?
             dust.render "_reset_thumb", {}, (err, out) ->
               return alert(err) if err?
-              
+
               $next.html out
           else
             $next.empty()
@@ -86,15 +87,33 @@ jQuery () ->
         $container = $elem.parents("div.row-fluid")
         $thumb_input = $("input[name=video_thumb]", $container)
         $thumb_input.val info.thumb
-        @model.set "chapters.#{$thumb_input.attr("chapter_index")}.video.thumb", info.thumb
-        $("img.thumb[chapter_index=#{$thumb_input.attr("chapter_index")}]").attr "src", info.thumb
+        $thumb_input.change()
+
+        chapter_index = $thumb_input.attr("chapter_index")
+        @model.set "chapters.#{chapter_index}.video.thumb", info.thumb
+        $("img.thumb[chapter_index=#{chapter_index}]").attr "src", info.thumb
 
         $button_container.empty()
       false
 
-    video_url_change_from_src: (event) ->
+    onchange_video_thumb_url: (event) ->
+      $elem = $(event.target)
+      $next = $elem.next()
+      $container = $elem.parentsUntil("fieldset", "div.control-group")
+      if presentzorg.is_url_valid $elem.val()
+        $container.removeClass "error"
+        $next.empty()
+        chapter_index = $elem.attr("chapter_index")
+        @model.set "chapters.#{chapter_index}.video.thumb", $elem.val()
+        $("img.thumb[chapter_index=#{chapter_index}]").attr "src", $elem.val()
+      else
+        $container.addClass "error"
+        dust.render "_help_inline", { text: "Invalid URL"}, (err, out) ->
+          return alert(err) if err?
+
+          $next.html out
       false
-      
+
     onchange_title: (event) ->
       title = $(event.target).val()
       @model.set "title", title
@@ -103,7 +122,7 @@ jQuery () ->
     events:
       "change input[name=video_url]": "onchange_video_url"
       "click button.reset_thumb": "reset_video_thumb"
-      "change input[name=video_thumb]": "video_url_change_from_src"
+      "change input[name=video_thumb]": "onchange_video_thumb_url"
       "change input.title-input": "onchange_title"
 
   class PresentationThumb extends Backbone.DeepModel
@@ -134,7 +153,7 @@ jQuery () ->
         published_label: published_label
       dust.render "_presentation_thumb", ctx, (err, out) =>
         return alert(err) if err?
-        
+
         loader_hide()
         @$el.html out
       @
@@ -186,7 +205,7 @@ jQuery () ->
     new_menu_entry: (ctx) ->
       dust.render "_new_menu_entry", ctx, (err, out) =>
         return alert(err) if err?
-        
+
         @$el.append(out)
 
     home: (event) ->

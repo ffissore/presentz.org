@@ -32,6 +32,7 @@
           <label class="control-label">Thumb URL</label>
           <div class="controls">
             <input name="video_thumb" type="text" class="input-xxlarge" value="{.video.thumb}" chapter_index="{@idx}{.}{/idx}">
+            <span></span>
           </div>
         </div>
       </fieldset>

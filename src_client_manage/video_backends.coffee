@@ -1,3 +1,8 @@
+url_regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+
+is_url_valid = (url) ->
+  url_regexp.test(url)
+
 class Youtube
 
   handle: (url) ->
@@ -44,14 +49,13 @@ class Vimeo
       return callback(err) if err?
       callback undefined, url: videos[0].url, thumb: videos[0].thumbnail_medium, duration: videos[0].duration
 
-class GenericURLCheck
-
-  url_regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+      
+class DummyVideoBackend
 
   handle: (url) -> true
 
   fetch_info: (url, callback) ->
-    if url_regexp.test(url)
+    if is_url_valid url
       callback undefined, url: url, duration: -1
     else
       callback("invalid")
@@ -59,4 +63,5 @@ class GenericURLCheck
 @presentzorg.video_backends = {}
 @presentzorg.video_backends.Youtube = Youtube
 @presentzorg.video_backends.Vimeo = Vimeo
-@presentzorg.video_backends.GenericURLCheck = GenericURLCheck
+@presentzorg.video_backends.DummyVideoBackend = DummyVideoBackend
+@presentzorg.is_url_valid = is_url_valid
