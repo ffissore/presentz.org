@@ -15,14 +15,12 @@ class YouTube
       error: (options, status) ->
         callback(status)
 
-  is_valid: (url, callback) ->
-    query url, callback
-
-  fetch_thumb: (url, callback) ->
+  fetch_info: (url, callback) ->
     query url, (err, response) ->
       return callback(err) if err?
       thumb = _.find(response.entry.media$group.media$thumbnail, (elem) -> elem.yt$name is "mqdefault")
-      callback(undefined, thumb.url)
+      duration = parseInt(response.entry.media$group.yt$duration.seconds)
+      callback undefined, url: url, thumb: thumb.url, duration: duration
 
 class Vimeo
 
@@ -41,23 +39,20 @@ class Vimeo
       error: (options, status) ->
         callback(status)
 
-  is_valid: (url, callback) ->
-    query url, callback
-
-  fetch_thumb: (url, callback) ->
+  fetch_info: (url, callback) ->
     query url, (err, videos) ->
       return callback(err) if err?
-      callback(undefined, videos[0].thumbnail_medium)
+      callback undefined, url: videos[0].url, thumb: videos[0].thumbnail_medium, duration: videos[0].duration
 
 class GenericURLCheck
 
   url_regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-  
+
   handle: (url) -> true
 
-  is_valid: (url, callback) ->
+  fetch_info: (url, callback) ->
     if url_regexp.test(url)
-      callback()
+      callback undefined, url: url, duration: -1
     else
       callback("invalid")
 

@@ -23,6 +23,12 @@
           </div>
         </div>
         <div class="control-group">
+          <label class="control-label">Video duration</label>
+          <div class="controls">
+            <input name="video_duration" type="text" class="input-xxlarge" value="{.duration}" chapter_index="{@idx}{.}{/idx}">
+          </div>
+        </div>
+        <div class="control-group">
           <label class="control-label">Thumb URL</label>
           <div class="controls">
             <input name="video_thumb" type="text" class="input-xxlarge" value="{.video.thumb}" chapter_index="{@idx}{.}{/idx}">

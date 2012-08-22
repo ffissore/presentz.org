@@ -26,10 +26,14 @@ jQuery () ->
         console.log arguments
       @bind "all", (event, model) ->
         return if event.indexOf(":") is -1
+        
         field_name = event.substring event.indexOf(":") + 1
         field_value = model.get field_name
+        
         if _.str.endsWith(event, "thumb")
           $("img.thumb[chapter_index=#{field_name.split(".")[1]}]").attr "src", field_value
+        else if _.str.endsWith(event, "duration")
+          $("input[name=video_duration][chapter_index=#{field_name.split(".")[1]}]").val field_value
 
       @fetch()
 
@@ -42,6 +46,8 @@ jQuery () ->
       ctx.onebased = dustjs_helpers.onebased
 
       dust.render "_presentation", ctx, (err, out) =>
+        return alert(err) if err?
+        
         loader_hide()
         new_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
         @$el.append(out)
@@ -52,20 +58,26 @@ jQuery () ->
       url = $elem.val()
       backend = _.find video_backends, (backend) -> backend.handle(url)
       return unless backend?
-      backend.is_valid url, (err) =>
+      backend.fetch_info url, (err, info) =>
         $container = $elem.parentsUntil("fieldset", "div.control-group")
         # TODO give this thing an awesome name!
         $next = $elem.next()
         if err?
           $container.addClass "error"
-          dust.render "_help_inline", { text: "Invalid or unsupported URL"}, (err, out) ->
+          dust.render "_help_inline", { text: "Invalid URL"}, (err, out) ->
+            return alert(err) if err?
+            
             $next.html out
         else
           $container.removeClass "error"
-          @model.set "chapters.#{$elem.attr("chapter_index")}.video.url", url
+          chapter_index = $elem.attr("chapter_index")
+          @model.set "chapters.#{chapter_index}.video.url", info.url
+          @model.set "chapters.#{chapter_index}.duration", info.duration
           init_presentz @model.attributes
-          if backend.fetch_thumb?
+          if info.thumb?
             dust.render "_reset_thumb", {}, (err, out) ->
+              return alert(err) if err?
+              
               $next.html out
           else
             $next.empty()
@@ -77,19 +89,18 @@ jQuery () ->
       video_url = $button_container.prev().val()
       backend = _.find video_backends, (backend) -> backend.handle(video_url)
       return unless backend?
-      backend.fetch_thumb video_url, (err, thumb_url) =>
+      backend.fetch_info video_url, (err, info) =>
         return alert(err) if err?
 
         $container = $elem.parents("div.row-fluid")
         $thumb_input = $("input[name=video_thumb]", $container)
-        $thumb_input.val thumb_url
-        @model.set "chapters.#{$thumb_input.attr("chapter_index")}.video.thumb", thumb_url
+        $thumb_input.val info.thumb
+        @model.set "chapters.#{$thumb_input.attr("chapter_index")}.video.thumb", info.thumb
 
         $button_container.empty()
       false
 
     video_url_change_from_src: (event) ->
-      console.log arguments
       false
 
     events:
@@ -124,6 +135,8 @@ jQuery () ->
         published_css_class: published_css_class
         published_label: published_label
       dust.render "_presentation_thumb", ctx, (err, out) =>
+        return alert(err) if err?
+        
         loader_hide()
         @$el.html out
       @
@@ -174,6 +187,8 @@ jQuery () ->
 
     new_menu_entry: (ctx) ->
       dust.render "_new_menu_entry", ctx, (err, out) =>
+        return alert(err) if err?
+        
         @$el.append(out)
 
     home: (event) ->
@@ -235,7 +250,7 @@ jQuery () ->
 
     new: () ->
       loader_show()
-      throw new Error("unimplemented")
+      alert("unimplemented")
 
     edit: (id) ->
       loader_show()
