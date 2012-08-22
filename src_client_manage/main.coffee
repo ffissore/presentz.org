@@ -62,7 +62,7 @@ jQuery () ->
             $next.html out
         else
           $container.removeClass "error"
-          @model.set "chapters.#{$elem.attr("chapter_index")}.video.url", url, silent: true
+          @model.set "chapters.#{$elem.attr("chapter_index")}.video.url", url
           init_presentz @model.attributes
           if backend.fetch_thumb?
             dust.render "_reset_thumb", {}, (err, out) ->
