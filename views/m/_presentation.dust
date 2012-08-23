@@ -74,9 +74,7 @@
           </div>
         </fieldset>
       </form>
-      <div class="span2">
-        {>"_{_thumb_type}_slide_thumb" /}
-      </div>
+      <div class="slide_thumb span2" src="{.thumb}" thumb_type="{._thumb_type}"></div>
     </div>
   {/slides}
 {/chapters}

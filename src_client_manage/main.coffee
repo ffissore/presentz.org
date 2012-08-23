@@ -62,6 +62,14 @@ jQuery () ->
                 new_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
                 @$el.append(out)
                 init_presentz @model.attributes, true
+                $("div.row-fluid[slide_index]").scrollspy
+                  buffer: 40
+                  onEnter: ($elem) ->
+                    $slide_thum = $("div.slide_thumb", $elem)
+                    dust.render "_#{$slide_thum.attr "thumb_type"}_slide_thumb", { thumb: $slide_thum.attr "src" }, (err, out) ->
+                      $slide_thum.html out
+                  onLeave: ($elem) ->
+                    $("div.slide_thumb", $elem).empty()
 
       load_slides_info slides
       @

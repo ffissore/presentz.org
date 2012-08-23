@@ -1,5 +1,7 @@
 <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" class="thumb">
   <param name="movie" value="{.thumb}" />
   <param name="wmode" value="direct" />
-  <object type="application/x-shockwave-flash" data="{.thumb}" class="thumb"></object>
+  <object type="application/x-shockwave-flash" data="{.thumb}" class="thumb">
+    <param name="wmode" value="direct" />
+  </object>
 </object>

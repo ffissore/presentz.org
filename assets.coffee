@@ -95,6 +95,7 @@ assetsMiddleware = assetManager
   js_manage: new_js_conf("manage", [
     "public/assets/js/jquery/jquery-1.8.0.js",
     "public/assets/js/manage/jquery.jsonp.js",
+    "public/assets/js/manage/jquery-scrollspy.js",
     "public/assets/js/manage/bootstrap.js",
     "public/assets/js/manage/underscore.js",
     "public/assets/js/manage/underscore.string.js",
