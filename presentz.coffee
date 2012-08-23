@@ -80,6 +80,7 @@ app.get "/m/", routes.static_view "m/index"
 app.get "/m/api/presentations/:presentation", api.presentation_load
 app.put "/m/api/presentations/:presentation", api.presentation_update
 app.get "/m/api/presentations", api.presentations
+app.get "/m/api/slideshare/:doc_id", api.slideshare_info
 app.get "/:catalog_name/catalog.html", routes.show_catalog
 app.get "/:catalog_name/catalog", routes.show_catalog
 app.get "/:catalog_name/index.html", routes.show_catalog

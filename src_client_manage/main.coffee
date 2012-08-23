@@ -14,6 +14,7 @@ jQuery () ->
 
   presentzorg = window.presentzorg
   video_backends = [new presentzorg.video_backends.Youtube(), new presentzorg.video_backends.Vimeo(), new presentzorg.video_backends.DummyVideoBackend()]
+  slide_backends = [new presentzorg.slide_backends.SlideShare(), new presentzorg.slide_backends.DummySlideBackend()]
 
   class Presentation extends Backbone.DeepModel
 
@@ -36,12 +37,32 @@ jQuery () ->
       ctx = @model.attributes
       ctx.onebased = dustjs_helpers.onebased
 
-      dust.render "_presentation", ctx, (err, out) =>
-        return alert(err) if err?
+      slides = []
+      for chapter in @model.attributes.chapters
+        for slide in chapter.slides
+          slides.push slide
 
-        loader_hide()
-        new_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
-        @$el.append(out)
+      load_slides_info = (slides) =>
+        slide = slides.pop()
+        backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
+        backend.preload slide, (err, slide) =>
+          backend.slide_info slide, (err, slide, slide_info) =>
+            slide.public_url ||= slide_info.public_url
+            slide.number ||= slide_info.number if slide_info.number?
+            slide.thumb ||= slide_info.thumb if slide_info.thumb?
+
+            if slides.length > 0
+              load_slides_info slides
+            else
+              dust.render "_presentation", ctx, (err, out) =>
+                return alert(err) if err?
+
+                loader_hide()
+                new_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
+                @$el.append(out)
+                init_presentz @model.attributes, true
+
+      load_slides_info slides
       @
 
     onchange_video_url: (event) ->
@@ -245,7 +266,6 @@ jQuery () ->
       presentz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
         $("div[chapter_index=#{previous_chapter_index}] ~ div[slide_index=#{previous_slide_index}]").removeClass "alert alert-info"
         $("div[chapter_index=#{new_chapter_index}] ~ div[slide_index=#{new_slide_index}]").addClass "alert alert-info"
-      init_presentz model.attributes, true
       model.unbind "change", @edit
 
   app = new AppView()

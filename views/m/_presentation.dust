@@ -44,12 +44,26 @@
   <h4>Slides</h4>
   {#slides}
     <div class="row-fluid" slide_index="{@idx}{.}{/idx}">
-      <form class="form-horizontal">
+      <form class="span10 form-horizontal">
         <fieldset>
           <div class="control-group">
             <label class="control-label">URL</label>
             <div class="controls">
-              <input type="text" class="input-xxlarge" value="{.url}">
+              <input type="text" class="input-xxlarge" value="{.public_url}">
+            </div>
+          </div>
+          {#number}
+            <div class="control-group">
+              <label class="control-label">Slide #</label>
+              <div class="controls">
+                <input type="text" class="input-xxlarge" value="{.}">
+              </div>
+            </div>
+          {/number}
+          <div class="control-group">
+            <label class="control-label">Displayed at (s)</label>
+            <div class="controls">
+              <input type="text" class="input-xxlarge" value="{.time}">
             </div>
           </div>
           <div class="control-group">
@@ -60,6 +74,9 @@
           </div>
         </fieldset>
       </form>
+      <div class="span2">
+        {!<img class="thumb" src="{.thumb}" slide_index="{@idx}{.}{/idx}"/>!}
+      </div>
     </div>
   {/slides}
 {/chapters}
