@@ -29,7 +29,11 @@
   </div>
   
   <div class="loader">
+    <p>Fetching data and redering page...</p>
     <img src="/assets/img/ajax-loader.gif"/>
+    <p/>
+    <p>The above progress bar should keep on moving.</p>
+    <p>If it's not, it's probably because of too many Flash elements...</p>
   </div>
   <div class="container">
   </div>

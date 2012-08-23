@@ -1,5 +1,5 @@
 <div class="thumbnail">    
-  <img src="{.thumb}" alt="">
+  <img class="thumb" src="{.thumb}" alt="">
   <h5>{.title}</h5>
   <p><a href="#" class="publish btn{.published_css_class}">{.published_label}</a> <a href="#" class="edit btn">Edit</a></p>
 </div>

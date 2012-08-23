@@ -2,9 +2,12 @@ class SlideShare
 
   constructor: () ->
     @slideshare_infos = {}
-
+    
   handle: (url) ->
-    url.toLowerCase().indexOf("slideshare.net") != -1
+    url.toLowerCase().indexOf("slideshare.net") isnt -1
+    
+  thumb_type_of: (url) ->
+    "swf"
 
   to_doc_id = (url) ->
     url.substring url.lastIndexOf("/") + 1, url.indexOf("#")
@@ -29,9 +32,13 @@ class SlideShare
       thumb: thumb
       
 class DummySlideBackend
-  
+
   handle: (url) -> true
-  
+
+  thumb_type_of: (url) ->
+    return "swf" if url.indexOf(".swf") isnt -1
+    "img"
+
   preload: (slide, callback) ->
     callback undefined, slide
     

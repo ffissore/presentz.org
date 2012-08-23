@@ -45,6 +45,7 @@ jQuery () ->
       load_slides_info = (slides) =>
         slide = slides.pop()
         backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
+        slide._thumb_type = backend.thumb_type_of slide.url
         backend.preload slide, (err, slide) =>
           backend.slide_info slide, (err, slide, slide_info) =>
             slide.public_url ||= slide_info.public_url

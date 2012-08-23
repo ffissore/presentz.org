@@ -61,21 +61,21 @@
             </div>
           {/number}
           <div class="control-group">
-            <label class="control-label">Displayed at (s)</label>
-            <div class="controls">
-              <input type="text" class="input-xxlarge" value="{.time}">
-            </div>
-          </div>
-          <div class="control-group">
             <label class="control-label">Title</label>
             <div class="controls">
               <input type="text" class="input-xxlarge" value="{.title}" placeholder="Slide {#onebased}{.}{/onebased}" slide_index="{@idx}{.}{/idx}">
             </div>
           </div>
+          <div class="control-group">
+            <label class="control-label">Displayed since second</label>
+            <div class="controls">
+              <input type="text" class="input-xxlarge" value="{.time}">
+            </div>
+          </div>
         </fieldset>
       </form>
       <div class="span2">
-        {!<img class="thumb" src="{.thumb}" slide_index="{@idx}{.}{/idx}"/>!}
+        {>"_{_thumb_type}_slide_thumb" /}
       </div>
     </div>
   {/slides}

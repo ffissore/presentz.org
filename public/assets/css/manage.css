@@ -24,7 +24,16 @@ input.title-input {
     text-align: center;
 }
 
+.loader img {
+    width: 220px;
+}
+
 .thumb {
-    width: 100px;
-    height: 75px;
+    width: 200px;
+    height: 150px;
+    max-width: 200px;
+}
+
+img {
+    width: 100%;
 }
