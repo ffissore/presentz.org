@@ -121,6 +121,8 @@ init = (config, db) ->
   everyauth.everymodule.findUserById (userId, callback) ->
     db.loadRecord userId, callback
 
+  everyauth.everymodule.logoutPath "/byebye"
+
   facebook_init config, db
   twitter_init config, db
   google_init config, db
