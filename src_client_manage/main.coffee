@@ -33,6 +33,12 @@ jQuery () ->
 
     tagName: "div"
 
+    slide_chapter_indexes = ($slide_elem) ->
+      slide_index = $slide_elem.attr "slide_index"
+      chapter_index = $("div[slide_index=#{slide_index}]").prevUntil("div[chapter_index]").last().prev().attr "chapter_index"
+      slide_model_selector = "chapters.#{chapter_index}.slides.#{slide_index}"
+      return { slide_index: slide_index, chapter_index: chapter_index, slide_model_selector: slide_model_selector }
+
     render: () ->
       ctx = @model.attributes
       ctx.onebased = dustjs_helpers.onebased
@@ -154,26 +160,43 @@ jQuery () ->
 
     onchange_slide_number: (event) ->
       $elem = $(event.target)
-      slide_index = $elem.attr "slide_index"
-      chapter_index = $("div[slide_index=#{slide_index}]").prevUntil("div[chapter_index]").last().prev().attr "chapter_index"
-      slide_model_selector = "chapters.#{chapter_index}.slides.#{slide_index}"
+      indexes = slide_chapter_indexes $elem
 
-      slide = @model.get slide_model_selector
+      slide = @model.get indexes.slide_model_selector
       backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
       return unless backend?
 
-      backend.change_slide_number @model, slide_model_selector, $elem.val()
+      backend.change_slide_number @model, indexes.slide_model_selector, $elem.val()
 
       backend.preload slide, (err, slide) =>
         return alert(err) if err?
         backend.slide_info slide, (err, slide, slide_info) =>
           return alert(err) if err?
           slide.thumb = slide_info.thumb if slide_info.thumb?
-          $slide_thumb =  $("div.slide_thumb", $("div[slide_index=#{slide_index}]"))
+          $slide_thumb =  $("div.slide_thumb", $("div[slide_index=#{indexes.slide_index}]"))
           $slide_thumb.attr "src", slide.thumb
           dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
             return alert(err) if err?
             $slide_thumb.html out
+
+    onchange_slide_title: (event) ->
+      $elem = $(event.target)
+      indexes = slide_chapter_indexes $elem
+
+      @model.set "#{indexes.slide_model_selector}.title", $elem.val()
+
+    onchange_slide_time: (event) ->
+      $elem = $(event.target)
+      indexes = slide_chapter_indexes $elem
+
+      slide = @model.get indexes.slide_model_selector
+      @model.set "#{indexes.slide_model_selector}.time", Math.round($elem.val())
+
+      slides = @model.get "chapters.#{indexes.chapter_index}.slides"
+      console.log slides.indexOf slide
+      slides = _.sortBy slides, (slide) -> slide.time
+      console.log slides.indexOf slide
+      @model.set "chapters.#{indexes.chapter_index}.slides", slides
 
     events:
       "change input[name=video_url]": "onchange_video_url"
@@ -181,6 +204,8 @@ jQuery () ->
       "change input[name=video_thumb]": "onchange_video_thumb_url"
       "change input.title-input": "onchange_title"
       "change input.slide_number": "onchange_slide_number"
+      "change input.slide_title": "onchange_slide_title"
+      "change input.slide_time": "onchange_slide_time"
 
   class PresentationThumb extends Backbone.DeepModel
 

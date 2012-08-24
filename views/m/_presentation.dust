@@ -63,13 +63,13 @@
           <div class="control-group">
             <label class="control-label">Title</label>
             <div class="controls">
-              <input type="text" class="input-xxlarge" value="{.title}" placeholder="Slide {#onebased}{.}{/onebased}" slide_index="{@idx}{.}{/idx}">
+              <input type="text" class="slide_title input-xxlarge" value="{.title}" placeholder="Slide {#onebased}{.}{/onebased}" slide_index="{@idx}{.}{/idx}">
             </div>
           </div>
           <div class="control-group">
             <label class="control-label">Displayed since second</label>
             <div class="controls">
-              <input type="text" class="input-xxlarge" value="{.time}">
+              <input type="text" class="slide_time input-xxlarge" value="{.time}" slide_index="{@idx}{.}{/idx}">
             </div>
           </div>
         </fieldset>
