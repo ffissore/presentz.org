@@ -47,7 +47,9 @@ jQuery () ->
         backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
         slide._thumb_type = backend.thumb_type_of slide.url
         backend.preload slide, (err, slide) =>
+          return alert(err) if err?
           backend.slide_info slide, (err, slide, slide_info) =>
+            return alert(err) if err?
             slide.public_url ||= slide_info.public_url
             slide.number ||= slide_info.number if slide_info.number?
             slide.thumb ||= slide_info.thumb if slide_info.thumb?
@@ -62,11 +64,12 @@ jQuery () ->
                 new_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
                 @$el.append(out)
                 init_presentz @model.attributes, true
-                $("div.row-fluid[slide_index]").scrollspy
+                $("div[slide_index]").scrollspy
                   buffer: 40
                   onEnter: ($elem) ->
                     $slide_thum = $("div.slide_thumb", $elem)
                     dust.render "_#{$slide_thum.attr "thumb_type"}_slide_thumb", { thumb: $slide_thum.attr "src" }, (err, out) ->
+                      return alert(err) if err?
                       $slide_thum.html out
                   onLeave: ($elem) ->
                     $("div.slide_thumb", $elem).empty()
@@ -160,6 +163,17 @@ jQuery () ->
       return unless backend?
 
       backend.change_slide_number @model, slide_model_selector, $elem.val()
+
+      backend.preload slide, (err, slide) =>
+        return alert(err) if err?
+        backend.slide_info slide, (err, slide, slide_info) =>
+          return alert(err) if err?
+          slide.thumb = slide_info.thumb if slide_info.thumb?
+          $slide_thumb =  $("div.slide_thumb", $("div[slide_index=#{slide_index}]"))
+          $slide_thumb.attr "src", slide.thumb
+          dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
+            return alert(err) if err?
+            $slide_thumb.html out
 
     events:
       "change input[name=video_url]": "onchange_video_url"
