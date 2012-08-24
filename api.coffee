@@ -39,7 +39,7 @@ presentation_load = (req, res, next) ->
 
       res.send presentation
 
-slideshare_info = (req, res, next) ->
+slideshare_slides_of = (req, res, next) ->
   request_params =
     host: "cdn.slidesharecdn.com"
     port: 80
@@ -71,7 +71,7 @@ exports.init = init
 exports.presentations = presentations
 exports.presentation_update = presentation_update
 exports.presentation_load = presentation_load
-exports.slideshare_info = slideshare_info
+exports.slideshare_slides_of = slideshare_slides_of
 
 ###
 exports.mines_authored= (req, res) ->
