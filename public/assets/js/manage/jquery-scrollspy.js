@@ -30,12 +30,12 @@
                 var $element = $(element);
                 var buffer = options.buffer;
                 var inside = false;
-                var min = $element.position().top;
-                var max = min + $element.height();
 
                 /* add listener to container */
                 $window.bind('scroll', function(e) {
                     var xy = $window.scrollTop() + buffer;
+                    var min = $element.position().top;
+                    var max = min + $element.height();
 
                     /* if we have reached the minimum bound but are below the max ... */
                     if ((xy + $window.height()) >= min && xy <= max) {
