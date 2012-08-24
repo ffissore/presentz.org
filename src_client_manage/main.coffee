@@ -193,10 +193,12 @@ jQuery () ->
       @model.set "#{indexes.slide_model_selector}.time", Math.round($elem.val())
 
       slides = @model.get "chapters.#{indexes.chapter_index}.slides"
-      console.log slides.indexOf slide
+      source_index = slides.indexOf slide
       slides = _.sortBy slides, (slide) -> slide.time
-      console.log slides.indexOf slide
+      dest_index = slides.indexOf slide
       @model.set "chapters.#{indexes.chapter_index}.slides", slides
+      if source_index isnt dest_index
+        $("div[slide_index=#{source_index}]").insertAfter($("div[slide_index=#{dest_index}]"))
 
     events:
       "change input[name=video_url]": "onchange_video_url"
