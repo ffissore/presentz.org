@@ -31,6 +31,11 @@ class SlideShare
       number: number
       thumb: thumb
       
+  change_slide_number: (model, model_selector, slide_number) ->
+    slide = model.get model_selector
+    url = slide.url.substring(0, slide.url.lastIndexOf("#") + 1).concat(slide_number)
+    model.set "#{model_selector}.url", url
+      
 class DummySlideBackend
 
   handle: (url) -> true

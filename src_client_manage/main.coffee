@@ -114,14 +114,14 @@ jQuery () ->
       backend.fetch_info video_url, (err, info) =>
         return alert(err) if err?
 
-        $container = $elem.parents("div.row-fluid")
+        $container = $elem.parentsUntil("div[chapter_index]").last().parent()
         $thumb_input = $("input[name=video_thumb]", $container)
         $thumb_input.val info.thumb
         $thumb_input.change()
 
         chapter_index = $thumb_input.attr("chapter_index")
         @model.set "chapters.#{chapter_index}.video.thumb", info.thumb
-        $("img.thumb[chapter_index=#{chapter_index}]").attr "src", info.thumb
+        $("img[chapter_index=#{chapter_index}]").attr "src", info.thumb
 
         $button_container.empty()
       false
@@ -135,7 +135,7 @@ jQuery () ->
         $next.empty()
         chapter_index = $elem.attr("chapter_index")
         @model.set "chapters.#{chapter_index}.video.thumb", $elem.val()
-        $("img.thumb[chapter_index=#{chapter_index}]").attr "src", $elem.val()
+        $("img[chapter_index=#{chapter_index}]").attr "src", $elem.val()
       else
         $container.addClass "error"
         dust.render "_help_inline", { text: "Invalid URL"}, (err, out) ->
@@ -149,11 +149,24 @@ jQuery () ->
       @model.set "title", title
       $("ul.nav li.active a").text utils.cut_string_at title, 30
 
+    onchange_slide_number: (event) ->
+      $elem = $(event.target)
+      slide_index = $elem.attr "slide_index"
+      chapter_index = $("div[slide_index=#{slide_index}]").prevUntil("div[chapter_index]").last().prev().attr "chapter_index"
+      slide_model_selector = "chapters.#{chapter_index}.slides.#{slide_index}"
+
+      slide = @model.get slide_model_selector
+      backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
+      return unless backend?
+
+      backend.change_slide_number @model, slide_model_selector, $elem.val()
+
     events:
       "change input[name=video_url]": "onchange_video_url"
       "click button.reset_thumb": "reset_video_thumb"
       "change input[name=video_thumb]": "onchange_video_thumb_url"
       "change input.title-input": "onchange_title"
+      "change input.slide_number": "onchange_slide_number"
 
   class PresentationThumb extends Backbone.DeepModel
 

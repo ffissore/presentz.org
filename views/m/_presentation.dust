@@ -52,11 +52,11 @@
               <input type="text" class="input-xxlarge" value="{.public_url}">
             </div>
           </div>
-          {#number}
+          {?number}
             <div class="control-group">
               <label class="control-label">Slide #</label>
               <div class="controls">
-                <input type="text" class="input-xxlarge" value="{.}">
+                <input type="text" class="slide_number input-xxlarge" value="{number}" slide_index="{@idx}{.}{/idx}">
               </div>
             </div>
           {/number}
