@@ -198,7 +198,13 @@ jQuery () ->
       dest_index = slides.indexOf slide
       @model.set "chapters.#{indexes.chapter_index}.slides", slides
       if source_index isnt dest_index
-        $("div[slide_index=#{source_index}]").insertAfter($("div[slide_index=#{dest_index}]"))
+        $element = $("div[slide_index=#{source_index}]")
+        console.log "div[chapter_index=#{indexes.chapter_index}] ~ div[slide_index=#{source_index}]"
+        $("div[chapter_index=#{indexes.chapter_index}] ~ div[slide_index=#{source_index}]").insertAfter($("div[chapter_index=#{indexes.chapter_index}] ~ div[slide_index=#{dest_index}]"))
+        $("div[chapter_index=#{indexes.chapter_index}] ~ div[slide_index]").each (current_index, element) ->
+          $(element).attr "slide_index", current_index
+          $("[slide_index]", element).each (idx, element) ->
+            $(element).attr "slide_index", current_index
 
     events:
       "change input[name=video_url]": "onchange_video_url"

@@ -10,71 +10,73 @@
   </div>
 </div>
 {#chapters}
-  <h3>Chapter {#onebased}{.}{/onebased}</h3>
-  <h4>Video</h4>
-  <div class="row-fluid" chapter_index="{@idx}{.}{/idx}">
-    <form class="span10 form-horizontal">
-      <fieldset>
-        <div class="control-group">
-          <label class="control-label">Video URL</label>
-          <div class="controls">
-            <input name="video_url" type="text" class="input-xxlarge" value="{.video.url}" chapter_index="{@idx}{.}{/idx}">
-            <span></span>
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label">Video duration (s)</label>
-          <div class="controls">
-            <input name="video_duration" type="text" class="input-xxlarge" value="{.duration}" chapter_index="{@idx}{.}{/idx}">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label">Thumb URL</label>
-          <div class="controls">
-            <input name="video_thumb" type="text" class="input-xxlarge" value="{.video.thumb}" chapter_index="{@idx}{.}{/idx}">
-            <span></span>
-          </div>
-        </div>
-      </fieldset>
-    </form>
-    <div class="span2">
-      <img class="thumb" src="{.video.thumb}" chapter_index="{@idx}{.}{/idx}"/>
-    </div>
-  </div>
-  <h4>Slides</h4>
-  {#slides}
-    <div class="row-fluid" slide_index="{@idx}{.}{/idx}">
+  <span chapter_index="{@idx}{.}{/idx}">
+    <h3>Chapter {#onebased}{.}{/onebased}</h3>
+    <h4>Video</h4>
+    <div class="row-fluid" chapter_index="{@idx}{.}{/idx}">
       <form class="span10 form-horizontal">
         <fieldset>
           <div class="control-group">
-            <label class="control-label">URL</label>
+            <label class="control-label">Video URL</label>
             <div class="controls">
-              <input type="text" class="input-xxlarge" value="{.public_url}">
-            </div>
-          </div>
-          {?number}
-            <div class="control-group">
-              <label class="control-label">Slide #</label>
-              <div class="controls">
-                <input type="text" class="slide_number input-xxlarge" value="{number}" slide_index="{@idx}{.}{/idx}">
-              </div>
-            </div>
-          {/number}
-          <div class="control-group">
-            <label class="control-label">Title</label>
-            <div class="controls">
-              <input type="text" class="slide_title input-xxlarge" value="{.title}" placeholder="Slide {#onebased}{.}{/onebased}" slide_index="{@idx}{.}{/idx}">
+              <input name="video_url" type="text" class="input-xxlarge" value="{.video.url}" chapter_index="{@idx}{.}{/idx}">
+              <span></span>
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label">Displayed since second</label>
+            <label class="control-label">Video duration (s)</label>
             <div class="controls">
-              <input type="text" class="slide_time input-xxlarge" value="{.time}" slide_index="{@idx}{.}{/idx}">
+              <input name="video_duration" type="text" class="input-xxlarge" value="{.duration}" chapter_index="{@idx}{.}{/idx}">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Thumb URL</label>
+            <div class="controls">
+              <input name="video_thumb" type="text" class="input-xxlarge" value="{.video.thumb}" chapter_index="{@idx}{.}{/idx}">
+              <span></span>
             </div>
           </div>
         </fieldset>
       </form>
-      <div class="slide_thumb span2" src="{.thumb}" thumb_type="{._thumb_type}"></div>
+      <div class="span2">
+        <img class="thumb" src="{.video.thumb}" chapter_index="{@idx}{.}{/idx}"/>
+      </div>
     </div>
-  {/slides}
+    <h4>Slides</h4>
+    {#slides}
+      <div class="row-fluid" slide_index="{@idx}{.}{/idx}">
+        <form class="span10 form-horizontal">
+          <fieldset>
+            <div class="control-group">
+              <label class="control-label">URL</label>
+              <div class="controls">
+                <input type="text" class="input-xxlarge" value="{.public_url}">
+              </div>
+            </div>
+            {?number}
+              <div class="control-group">
+                <label class="control-label">Slide #</label>
+                <div class="controls">
+                  <input type="text" class="slide_number input-xxlarge" value="{number}" slide_index="{@idx}{.}{/idx}">
+                </div>
+              </div>
+            {/number}
+            <div class="control-group">
+              <label class="control-label">Title</label>
+              <div class="controls">
+                <input type="text" class="slide_title input-xxlarge" value="{.title}" placeholder="Slide {#onebased}{.}{/onebased}" slide_index="{@idx}{.}{/idx}">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">Displayed since second</label>
+              <div class="controls">
+                <input type="text" class="slide_time input-xxlarge" value="{.time}" slide_index="{@idx}{.}{/idx}">
+              </div>
+            </div>
+          </fieldset>
+        </form>
+        <div class="slide_thumb span2" src="{.thumb}" thumb_type="{._thumb_type}"></div>
+      </div>
+    {/slides}
+  </span>
 {/chapters}
