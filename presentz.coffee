@@ -34,7 +34,7 @@ session_store_options.database = "presentz"
 
 storage.init db
 everyauth = auth.init(config, db)
-api.init(storage)
+api.init(storage, config.slideshare)
 routes.init(storage)
 
 app.engine("dust", cons.dust)
@@ -80,6 +80,7 @@ app.get "/m/", routes.static_view "m/index"
 app.get "/m/api/presentations/:presentation", api.presentation_load
 app.put "/m/api/presentations/:presentation", api.presentation_update
 app.get "/m/api/presentations", api.presentations
+app.get "/m/api/slideshare/url_to_doc_id", api.slideshare_url_to_doc_id
 app.get "/m/api/slideshare/:doc_id", api.slideshare_slides_of
 app.get "/:catalog_name/catalog.html", routes.show_catalog
 app.get "/:catalog_name/catalog", routes.show_catalog

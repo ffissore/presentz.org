@@ -87,7 +87,6 @@ jQuery () ->
       $elem = $(event.target)
       url = $elem.val()
       backend = _.find video_backends, (backend) -> backend.handle(url)
-      return unless backend?
       backend.fetch_info url, (err, info) =>
         $container = $elem.parentsUntil("fieldset", "div.control-group")
         # TODO give this thing an awesome name!
@@ -119,7 +118,6 @@ jQuery () ->
       $button_container = $elem.parent()
       video_url = $button_container.prev().val()
       backend = _.find video_backends, (backend) -> backend.handle(video_url)
-      return unless backend?
       backend.fetch_info video_url, (err, info) =>
         return alert(err) if err?
 
@@ -164,8 +162,6 @@ jQuery () ->
 
       slide = @model.get indexes.slide_model_selector
       backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
-      return unless backend?
-
       backend.change_slide_number @model, indexes.slide_model_selector, $elem.val()
 
       backend.preload slide, (err, slide) =>
@@ -197,7 +193,7 @@ jQuery () ->
       slides = _.sortBy slides, (slide) -> slide.time
       dest_index = slides.indexOf slide
       @model.set "chapters.#{indexes.chapter_index}.slides", slides
-      
+
       return if source_index is dest_index
 
       $source_element = $("div[chapter_index=#{indexes.chapter_index}] ~ div[slide_index=#{source_index}]")
@@ -212,14 +208,40 @@ jQuery () ->
         $("[slide_index]", element).each (idx, element) ->
           $(element).attr "slide_index", current_index
 
+    onchange_slide_public_url: (event) ->
+      $elem = $(event.target)
+      indexes = slide_chapter_indexes $elem
+      public_url = $elem.val()
+
+      if presentzorg.is_url_valid public_url
+        slide = @model.get indexes.slide_model_selector
+        @model.set "#{indexes.slide_model_selector}.public_url", public_url
+        backend = _.find slide_backends, (backend) -> backend.handle(public_url)
+        backend.url_from_public_url slide, (new_url) =>
+          @model.set "#{indexes.slide_model_selector}.url", new_url
+
+          backend.preload slide, (err, slide) =>
+            return alert(err) if err?
+            backend.slide_info slide, (err, slide, slide_info) =>
+              return alert(err) if err?
+              slide.thumb = slide_info.thumb if slide_info.thumb?
+              $slide_thumb =  $("div.slide_thumb", $("div[chapter_index=#{indexes.chapter_index}] ~ div[slide_index=#{indexes.slide_index}]"))
+              $slide_thumb.attr "src", slide.thumb
+              $slide_thumb.attr "thumb_type", backend.thumb_type_of slide.url
+              dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
+                return alert(err) if err?
+                $slide_thumb.html out
+
     events:
       "change input[name=video_url]": "onchange_video_url"
       "click button.reset_thumb": "reset_video_thumb"
       "change input[name=video_thumb]": "onchange_video_thumb_url"
       "change input.title-input": "onchange_title"
+
       "change input.slide_number": "onchange_slide_number"
       "change input.slide_title": "onchange_slide_title"
       "change input.slide_time": "onchange_slide_time"
+      "change input.slide_public_url": "onchange_slide_public_url"
 
   class PresentationThumb extends Backbone.DeepModel
 

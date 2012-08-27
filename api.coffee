@@ -1,10 +1,13 @@
 http = require "http"
 xml2json = require "xml2json"
+node_slideshare = require "slideshare"
 
 storage = null
+slideshare = null
 
-init = (s) ->
+init = (s, slideshare_conf) ->
   storage = s
+  slideshare = new node_slideshare slideshare_conf.api_key, slideshare_conf.shared_secret
 
 beautify_slide_urls = (presentation, callback) ->
   callback()
@@ -44,13 +47,6 @@ slideshare_slides_of = (req, res, next) ->
     host: "cdn.slidesharecdn.com"
     port: 80
     path: "/#{req.params.doc_id}.xml"
-    agent: false
-    headers:
-      "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:14.0) Gecko/20100101 Firefox/14.0.1"
-      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
-      "Accept-Language": "it-it,it;q=0.8,en-us;q=0.5,en;q=0.3"
-      "Accept-Encoding": "gzip, deflate"
-      "Referer": "http://static.slidesharecdn.com/swf/ssplayer2.swf"
 
   request = http.request request_params, (response) ->
     response.setEncoding "utf8"
@@ -64,14 +60,20 @@ slideshare_slides_of = (req, res, next) ->
   request.on "error", (e) ->
     console.warn arguments
     res.render {}
-    
+
   request.end()
+
+slideshare_url_to_doc_id = (req, res, next) ->
+  slideshare.getSlideshowByURL req.query.url, { detailed: 1 }, (xml) ->
+    res.contentType "application/json"
+    res.send xml2json.toJson(xml)
 
 exports.init = init
 exports.presentations = presentations
 exports.presentation_update = presentation_update
 exports.presentation_load = presentation_load
 exports.slideshare_slides_of = slideshare_slides_of
+exports.slideshare_url_to_doc_id = slideshare_url_to_doc_id
 
 ###
 exports.mines_authored= (req, res) ->
