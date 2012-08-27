@@ -197,16 +197,20 @@ jQuery () ->
       slides = _.sortBy slides, (slide) -> slide.time
       dest_index = slides.indexOf slide
       @model.set "chapters.#{indexes.chapter_index}.slides", slides
-      if source_index isnt dest_index
-        $element = $("div[slide_index=#{source_index}]")
-        if dest_index < source_index
-          $("div[chapter_index=#{indexes.chapter_index}] ~ div[slide_index=#{source_index}]").insertBefore($("div[chapter_index=#{indexes.chapter_index}] ~ div[slide_index=#{dest_index}]"))
-        else
-          $("div[chapter_index=#{indexes.chapter_index}] ~ div[slide_index=#{source_index}]").insertAfter($("div[chapter_index=#{indexes.chapter_index}] ~ div[slide_index=#{dest_index}]"))
-        $("div[chapter_index=#{indexes.chapter_index}] ~ div[slide_index]").each (current_index, element) ->
+      
+      return if source_index is dest_index
+
+      $source_element = $("div[chapter_index=#{indexes.chapter_index}] ~ div[slide_index=#{source_index}]")
+      $dest_element = $("div[chapter_index=#{indexes.chapter_index}] ~ div[slide_index=#{dest_index}]")
+      if dest_index < source_index
+        $source_element.insertBefore $dest_element
+      else
+        $source_element.insertAfter $dest_element
+
+      $("div[chapter_index=#{indexes.chapter_index}] ~ div[slide_index]").each (current_index, element) ->
+        $(element).attr "slide_index", current_index
+        $("[slide_index]", element).each (idx, element) ->
           $(element).attr "slide_index", current_index
-          $("[slide_index]", element).each (idx, element) ->
-            $(element).attr "slide_index", current_index
 
     events:
       "change input[name=video_url]": "onchange_video_url"
