@@ -16,10 +16,18 @@ jQuery () ->
   video_backends = [new presentzorg.video_backends.Youtube(), new presentzorg.video_backends.Vimeo(), new presentzorg.video_backends.DummyVideoBackend()]
   slide_backends = [new presentzorg.slide_backends.SlideShare(), new presentzorg.slide_backends.DummySlideBackend()]
 
-  $helper = 
+  $helper =
+    nav_menu_slide_title: () -> $("ul.nav li.active a")
     slide_containers: () -> $("div[slide_index]")
     slide_thumb_container_in: ($elem) -> $("div.slide_thumb", $elem)
-  
+    parent_control_group_of: ($elem) -> $elem.parentsUntil("div.control-group").parent()
+    video_duration_input_of: (chapter_index) -> $("input[name=video_duration][chapter_index=#{chapter_index}]")
+
+    chapter: (chapter_index) -> $("#chapter#{chapter_index}")
+    video_url_input_of: (chapter_index) -> $("#chapter#{chapter_index} input[name=video_url]")
+    video_thumb_input_of: (chapter_index) -> $("#chapter#{chapter_index} input[name=video_thumb]")
+    video_thumb_of: (chapter_index) -> $("img[chapter_index=#{chapter_index}]")
+
   class Presentation extends Backbone.DeepModel
 
     urlRoot: "/m/api/presentations/"
@@ -77,13 +85,13 @@ jQuery () ->
                 $helper.slide_containers().scrollspy
                   buffer: 40
                   onEnter: ($elem) ->
-                    $slide_thum = $helper.slide_thumb_container_in $elem
-                    dust.render "_#{$slide_thum.attr "thumb_type"}_slide_thumb", { thumb: $slide_thum.attr "src" }, (err, out) ->
+                    $slide_thumb = $helper.slide_thumb_container_in $elem
+                    dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
                       return alert(err) if err?
-                      $slide_thum.html out
+                      $slide_thumb.html out
                   onLeave: ($elem) ->
-                    $slide_thum = $helper.slide_thumb_container_in $elem
-                    $slide_thum.empty()
+                    $slide_thumb = $helper.slide_thumb_container_in $elem
+                    $slide_thumb.empty()
 
       load_slides_info slides
       @
@@ -93,74 +101,74 @@ jQuery () ->
       url = $elem.val()
       backend = _.find video_backends, (backend) -> backend.handle(url)
       backend.fetch_info url, (err, info) =>
-        $container = $elem.parentsUntil("fieldset", "div.control-group")
-        # TODO give this thing an awesome name!
-        $next = $elem.next()
+        $parent_control_group = $helper.parent_control_group_of $elem
+        $video_url_error_msg_container = $elem.next()
         if err?
-          $container.addClass "error"
+          $parent_control_group.addClass "error"
           dust.render "_help_inline", { text: "Invalid URL"}, (err, out) ->
             return alert(err) if err?
 
-            $next.html out
+            $video_url_error_msg_container.html out
         else
-          $container.removeClass "error"
+          $parent_control_group.removeClass "error"
           chapter_index = $elem.attr("chapter_index")
           @model.set "chapters.#{chapter_index}.video.url", info.url
           @model.set "chapters.#{chapter_index}.duration", info.duration
-          $("input[name=video_duration][chapter_index=#{chapter_index}]").val info.duration
+          $helper.video_duration_input_of(chapter_index).val info.duration
           init_presentz @model.attributes
           if info.thumb?
-            dust.render "_reset_thumb", {}, (err, out) ->
+            dust.render "_reset_thumb", { chapter_index: chapter_index }, (err, out) ->
               return alert(err) if err?
 
-              $next.html out
+              $video_url_error_msg_container.html out
           else
-            $next.empty()
+            $video_url_error_msg_container.empty()
       false
 
     reset_video_thumb: (event) ->
       $elem = $(event.target)
-      $button_container = $elem.parent()
-      video_url = $button_container.prev().val()
+      chapter_index = parseInt $elem.attr("chapter_index")
+      video_url = $helper.video_url_input_of(chapter_index).val()
+
       backend = _.find video_backends, (backend) -> backend.handle(video_url)
       backend.fetch_info video_url, (err, info) =>
         return alert(err) if err?
 
-        $container = $elem.parentsUntil("div[chapter_index]").last().parent()
-        $thumb_input = $("input[name=video_thumb]", $container)
+        $thumb_input = $helper.video_thumb_input_of(chapter_index)
         $thumb_input.val info.thumb
         $thumb_input.change()
 
-        chapter_index = $thumb_input.attr("chapter_index")
         @model.set "chapters.#{chapter_index}.video.thumb", info.thumb
-        $("img[chapter_index=#{chapter_index}]").attr "src", info.thumb
+        $helper.video_thumb_of(chapter_index).attr "src", info.thumb
 
-        $button_container.empty()
+        $elem.parent().empty()
       false
 
     onchange_video_thumb_url: (event) ->
       $elem = $(event.target)
-      $next = $elem.next()
-      $container = $elem.parentsUntil("fieldset", "div.control-group")
-      if presentzorg.is_url_valid $elem.val()
+      thumb_url = $elem.val()
+      $video_thumb_error_msg_container = $elem.next()
+      $container = $helper.parent_control_group_of($elem)
+
+      if presentzorg.is_url_valid thumb_url
         $container.removeClass "error"
-        $next.empty()
+        $video_thumb_error_msg_container.empty()
         chapter_index = $elem.attr("chapter_index")
-        @model.set "chapters.#{chapter_index}.video.thumb", $elem.val()
-        $("img[chapter_index=#{chapter_index}]").attr "src", $elem.val()
+        @model.set "chapters.#{chapter_index}.video.thumb", thumb_url
+        $helper.video_thumb_of(chapter_index).attr "src", thumb_url
       else
         $container.addClass "error"
         dust.render "_help_inline", { text: "Invalid URL"}, (err, out) ->
           return alert(err) if err?
 
-          $next.html out
+          $video_thumb_error_msg_container.html out
       false
 
     onchange_title: (event) ->
       title = $(event.target).val()
       @model.set "title", title
-      $("ul.nav li.active a").text utils.cut_string_at title, 30
-
+      $helper.nav_menu_slide_title().text utils.cut_string_at title, 30
+      
     onchange_slide_number: (event) ->
       $elem = $(event.target)
       indexes = slide_chapter_indexes $elem

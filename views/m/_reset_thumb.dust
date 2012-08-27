@@ -1,1 +1,1 @@
-<button class="btn btn-warning reset_thumb">Reset thumbnail</button>
+<button class="btn btn-warning reset_thumb" chapter_index="{chapter_index}">Reset thumbnail</button>
