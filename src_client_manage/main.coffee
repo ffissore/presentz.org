@@ -16,6 +16,10 @@ jQuery () ->
   video_backends = [new presentzorg.video_backends.Youtube(), new presentzorg.video_backends.Vimeo(), new presentzorg.video_backends.DummyVideoBackend()]
   slide_backends = [new presentzorg.slide_backends.SlideShare(), new presentzorg.slide_backends.DummySlideBackend()]
 
+  $helper = 
+    slide_containers: () -> $("div[slide_index]")
+    slide_thumb_container_in: ($elem) -> $("div.slide_thumb", $elem)
+  
   class Presentation extends Backbone.DeepModel
 
     urlRoot: "/m/api/presentations/"
@@ -70,15 +74,16 @@ jQuery () ->
                 new_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
                 @$el.append(out)
                 init_presentz @model.attributes, true
-                $("div[slide_index]").scrollspy
+                $helper.slide_containers().scrollspy
                   buffer: 40
                   onEnter: ($elem) ->
-                    $slide_thum = $("div.slide_thumb", $elem)
+                    $slide_thum = $helper.slide_thumb_container_in $elem
                     dust.render "_#{$slide_thum.attr "thumb_type"}_slide_thumb", { thumb: $slide_thum.attr "src" }, (err, out) ->
                       return alert(err) if err?
                       $slide_thum.html out
                   onLeave: ($elem) ->
-                    $("div.slide_thumb", $elem).empty()
+                    $slide_thum = $helper.slide_thumb_container_in $elem
+                    $slide_thum.empty()
 
       load_slides_info slides
       @

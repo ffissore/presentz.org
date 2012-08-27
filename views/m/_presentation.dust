@@ -10,7 +10,7 @@
   </div>
 </div>
 {#chapters}
-  <span chapter_index="{@idx}{.}{/idx}">
+  <span id="chapter{@idx}{.}{/idx}">
     <h3>Chapter {#onebased}{.}{/onebased}</h3>
     <h4>Video</h4>
     <div class="row-fluid" chapter_index="{@idx}{.}{/idx}">
