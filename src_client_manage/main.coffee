@@ -37,6 +37,21 @@ jQuery () ->
     slides_of: ($chapter) -> $("div[slide_index]", $chapter)
     elements_with_slide_index_in: ($elem) -> $("[slide_index]", $elem)
 
+    slide_helper: ($elem) ->
+      $chapter = $helper.chapter_of $elem
+      slide_index = $helper.slide_index_from $elem
+      chapter_index = $helper.chapter_index_from $chapter
+
+      result =
+        $chapter: $chapter
+        slide_index: slide_index
+        chapter_index: chapter_index
+        model_selector: "chapters.#{chapter_index}.slides.#{slide_index}"
+        thumb: () ->
+          $helper.slide_thumb_of slide_index, $chapter
+      return result
+
+
   class Presentation extends Backbone.DeepModel
 
     urlRoot: "/m/api/presentations/"
@@ -172,27 +187,24 @@ jQuery () ->
 
     onchange_slide_title: (event) ->
       $elem = $(event.target)
-      $chapter = $helper.chapter_of $elem
-      slide_index = $helper.slide_index_from $elem
-      chapter_index = $helper.chapter_index_from $chapter
+      slide_helper = $helper.slide_helper $elem
 
-      @model.set "chapters.#{chapter_index}.slides.#{slide_index}.title", $elem.val()
+      @model.set "#{slide_helper.model_selector}.title", $elem.val()
 
     onchange_slide_number: (event) ->
       $elem = $(event.target)
-      $chapter = $helper.chapter_of $elem
-      slide_index = $helper.slide_index_from $elem
-      chapter_index = $helper.chapter_index_from $chapter
-      slide = @model.get "chapters.#{chapter_index}.slides.#{slide_index}"
+      slide_helper = $helper.slide_helper $elem
+
+      slide = @model.get slide_helper.model_selector
       backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
 
       new_url = backend.change_slide_number slide.url, $elem.val()
-      @model.set "chapters.#{chapter_index}.slides.#{slide_index}.url", new_url
+      @model.set "#{slide_helper.model_selector}.url", new_url
 
       backend.slide_info slide, (err, slide, slide_info) =>
         return alert(err) if err?
         slide.thumb = slide_info.thumb if slide_info.thumb?
-        $slide_thumb = $helper.slide_thumb_of slide_index, $chapter
+        $slide_thumb = slide_helper.thumb()
         $slide_thumb.attr "src", slide.thumb
         dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
           return alert(err) if err?
@@ -200,30 +212,29 @@ jQuery () ->
 
     onchange_slide_time: (event) ->
       $elem = $(event.target)
-      $chapter = $helper.chapter_of $elem
-      slide_index = $helper.slide_index_from $elem
-      chapter_index = $helper.chapter_index_from $chapter
-      slide = @model.get "chapters.#{chapter_index}.slides.#{slide_index}"
+      slide_helper = $helper.slide_helper $elem
+
+      slide = @model.get slide_helper.model_selector
       backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
 
-      @model.set "chapters.#{chapter_index}.slides.#{slide_index}.time", Math.round($elem.val())
+      @model.set "#{slide_helper.model_selector}.time", Math.round($elem.val())
 
-      slides = @model.get "chapters.#{chapter_index}.slides"
+      slides = @model.get "chapters.#{slide_helper.chapter_index}.slides"
       source_index = slides.indexOf slide
       slides = _.sortBy slides, (slide) -> slide.time
       dest_index = slides.indexOf slide
       return if source_index is dest_index
 
-      @model.set "chapters.#{chapter_index}.slides", slides
+      @model.set "chapters.#{slide_helper.chapter_index}.slides", slides
 
-      $source_element = $helper.slide_of source_index, $chapter
-      $dest_element = $helper.slide_of dest_index, $chapter
+      $source_element = $helper.slide_of source_index, slide_helper.$chapter
+      $dest_element = $helper.slide_of dest_index, slide_helper.$chapter
       if dest_index < source_index
         $source_element.insertBefore $dest_element
       else
         $source_element.insertAfter $dest_element
 
-      $helper.slides_of($chapter).each (current_index, element) ->
+      $helper.slides_of(slide_helper.$chapter).each (current_index, element) ->
         $elem = $(element)
         $elem.attr "slide_index", current_index
         $helper.elements_with_slide_index_in($elem).each (idx, element) ->
@@ -234,21 +245,20 @@ jQuery () ->
       public_url = $elem.val()
       return if !presentzorg.is_url_valid public_url
 
-      $chapter = $helper.chapter_of $elem
-      slide_index = $helper.slide_index_from $elem
-      chapter_index = $helper.chapter_index_from $chapter
-
-      @model.set "chapters.#{chapter_index}.slides.#{slide_index}.public_url", public_url
+      slide_helper = $helper.slide_helper $elem
+      
+      @model.set "#{slide_helper.model_selector}.public_url", public_url
 
       backend = _.find slide_backends, (backend) -> backend.handle(public_url)
-      slide = @model.get "chapters.#{chapter_index}.slides.#{slide_index}"
+      slide = @model.get slide_helper.model_selector
+      
       backend.url_from_public_url slide, (new_url) =>
-        @model.set "chapters.#{chapter_index}.slides.#{slide_index}.url", new_url
+        @model.set "#{slide_helper.model_selector}.url", new_url
 
         backend.slide_info slide, (err, slide, slide_info) =>
           return alert(err) if err?
           slide.thumb = slide_info.thumb if slide_info.thumb?
-          $slide_thumb = $helper.slide_thumb_of slide_index, $chapter
+          $slide_thumb = slide_helper.thumb()
           $slide_thumb.attr "src", slide.thumb
           $slide_thumb.attr "thumb_type", backend.thumb_type_of slide.url
           dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
