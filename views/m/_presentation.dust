@@ -53,14 +53,6 @@
                 <input type="text" class="slide_public_url input-xxlarge" value="{.public_url}" slide_index="{@idx}{.}{/idx}">
               </div>
             </div>
-            {?number}
-              <div class="control-group">
-                <label class="control-label">Slide #</label>
-                <div class="controls">
-                  <input type="text" class="slide_number input-xxlarge" value="{number}" slide_index="{@idx}{.}{/idx}">
-                </div>
-              </div>
-            {/number}
             <div class="control-group">
               <label class="control-label">Title</label>
               <div class="controls">
@@ -73,6 +65,14 @@
                 <input type="text" class="slide_time input-xxlarge" value="{.time}" slide_index="{@idx}{.}{/idx}">
               </div>
             </div>
+            {?number}
+              <div class="control-group">
+                <label class="control-label">Slide #</label>
+                <div class="controls">
+                  <input type="text" class="slide_number input-xxlarge" value="{number}" slide_index="{@idx}{.}{/idx}">
+                </div>
+              </div>
+            {/number}
           </fieldset>
         </form>
         <div class="slide_thumb span2" src="{.thumb}" thumb_type="{._thumb_type}"></div>
