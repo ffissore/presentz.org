@@ -17,8 +17,6 @@ jQuery () ->
   slide_backends = [new presentzorg.slide_backends.SlideShare(), new presentzorg.slide_backends.DummySlideBackend()]
 
   $helper =
-    nav_bar: () -> $("html body div.navbar")
-    nav_menu_slide_title: () -> $("ul.nav li.active a")
     slide_containers: () -> $("div[slide_index]")
     slide_thumb_container_in: ($elem) -> $("div.slide_thumb", $elem)
     parent_control_group_of: ($elem) -> $elem.parentsUntil("div.control-group").parent()
@@ -60,7 +58,9 @@ jQuery () ->
       _.bindAll @
 
       @bind "change", app.edit, app
-      @bind "all", () ->
+      @bind "all", (event) ->
+        if _.str.startsWith(event, "change")
+          app.navigationView.enable_save_button()
         console.log arguments
 
       @fetch()
@@ -95,11 +95,11 @@ jQuery () ->
               return alert(err) if err?
 
               loader_hide()
-              new_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
+              app.navigationView.presentation_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
               @$el.append(out)
               init_presentz @model.attributes, true
               $helper.slide_containers().scrollspy
-                buffer: $helper.nav_bar().height()
+                buffer: app.navigationView.$el.height()
                 onEnter: ($elem) ->
                   $slide_thumb = $helper.slide_thumb_container_in $elem
                   dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
@@ -183,7 +183,7 @@ jQuery () ->
     onchange_title: (event) ->
       title = $(event.target).val()
       @model.set "title", title
-      $helper.nav_menu_slide_title().text utils.cut_string_at title, 30
+      app.navigationView.presentation_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
 
     onchange_slide_title: (event) ->
       $elem = $(event.target)
@@ -353,17 +353,27 @@ jQuery () ->
       $("li", @$el).removeClass "active"
       $("li:first", @$el).addClass "active" if home?
 
-    new_menu_entry: (ctx) ->
-      dust.render "_new_menu_entry", ctx, (err, out) =>
-        return alert(err) if err?
-
-        @$el.append(out)
+    presentation_menu_entry: (ctx) ->
+      $li = $("li", @$el)
+      if $li.length < 3
+        dust.render "_new_menu_entry", ctx, (err, out) =>
+          return alert(err) if err?
+  
+          @$el.append(out)
+      else
+        $("a", $li.eq(2)).text ctx.title
 
     home: (event) ->
       router.navigate "home", trigger: true unless $(event.currentTarget).parent().hasClass "active"
 
     new: (event) ->
       router.navigate "new", trigger: true unless $(event.currentTarget).parent().hasClass "active"
+      
+    enable_save_button: () ->
+      $button = $("button", @$el)
+      $button.attr "disabled", false
+      $button.removeClass "disabled"
+      $button.addClass "btn-warning"
 
     events:
       "click a[href=#home]": "home"
@@ -437,10 +447,6 @@ jQuery () ->
       $("body > .container").empty()
       $("div.loader").show()
       loader_shown = true
-
-  new_menu_entry = (ctx) ->
-    app.navigationView.reset()
-    app.navigationView.new_menu_entry ctx
 
   Backbone.history.start pushState: false, root: "/m/"
   $.jsonp.setup callbackParameter: "callback"

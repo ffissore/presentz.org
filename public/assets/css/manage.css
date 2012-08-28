@@ -37,3 +37,8 @@ input.title-input {
 img {
     width: 100%;
 }
+
+button.navbar-btn {
+    margin-top: 4px;
+    margin-left: 6px;
+}
