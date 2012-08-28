@@ -53,13 +53,17 @@ jQuery () ->
   class Presentation extends Backbone.DeepModel
 
     urlRoot: "/m/api/presentations/"
+    
+    loaded = false
 
     initialize: () ->
       _.bindAll @
 
       @bind "change", app.edit, app
       @bind "all", (event) ->
-        if _.str.startsWith(event, "change")
+        if event is "change"
+          loaded = true
+        if loaded and _.str.startsWith(event, "change")
           app.navigationView.enable_save_button()
         console.log arguments
 
