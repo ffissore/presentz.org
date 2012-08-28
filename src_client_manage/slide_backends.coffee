@@ -19,24 +19,26 @@ class SlideShare
   make_url = (doc_id, slide_number) ->
     "http://www.slideshare.net/#{doc_id}##{slide_number}"
 
-  preload: (slide, callback) ->
-    doc_id = to_doc_id(slide.url)
-    return callback(undefined, slide) if @slideshare_infos[doc_id]?
-    $.get "/m/api/slideshare/#{doc_id}", (ss) =>
-      @slideshare_infos[doc_id] = ss
-      callback(undefined, slide)
-
   slide_info: (slide, callback) ->
     doc_id = to_doc_id slide.url
-    number = to_slide_number slide.url
-    slides = @slideshare_infos[doc_id].Show.Slide
-    return callback("Invalid slide number #{number}") if number > slides.length
 
-    thumb = slides[number - 1].Src
-    callback undefined, slide,
-      public_url: slide.public_url
-      number: number
-      thumb: thumb
+    pack_response = (doc_id, slide, callback) =>
+      number = to_slide_number slide.url
+      slides = @slideshare_infos[doc_id].Show.Slide
+      return callback("Invalid slide number #{number}") if number > slides.length
+
+      thumb = slides[number - 1].Src
+      callback undefined, slide,
+        public_url: slide.public_url
+        number: number
+        thumb: thumb
+
+    if @slideshare_infos[doc_id]?
+      pack_response doc_id, slide, callback
+    else
+      $.get "/m/api/slideshare/#{doc_id}", (ss) =>
+        @slideshare_infos[doc_id] = ss
+        pack_response doc_id, slide, callback
 
   url_from_public_url: (slide, callback) ->
     slide_number = to_slide_number slide.url
@@ -63,9 +65,6 @@ class DummySlideBackend
   thumb_type_of: (url) ->
     return "swf" if url.indexOf(".swf") isnt -1
     "img"
-
-  preload: (slide, callback) ->
-    callback undefined, slide
 
   slide_info: (slide, callback) ->
     callback undefined, slide,

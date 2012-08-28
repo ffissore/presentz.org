@@ -45,12 +45,6 @@ jQuery () ->
 
     tagName: "div"
 
-    slide_chapter_indexes = ($slide_elem) ->
-      slide_index = $slide_elem.attr "slide_index"
-      chapter_index = $("div[slide_index=#{slide_index}]").prevUntil("div[chapter_index]").last().prev().attr "chapter_index"
-      slide_model_selector = "chapters.#{chapter_index}.slides.#{slide_index}"
-      return { slide_index: slide_index, chapter_index: chapter_index, slide_model_selector: slide_model_selector }
-
     render: () ->
       ctx = @model.attributes
       ctx.onebased = dustjs_helpers.onebased
@@ -64,34 +58,32 @@ jQuery () ->
         slide = slides.pop()
         backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
         slide._thumb_type = backend.thumb_type_of slide.url
-        backend.preload slide, (err, slide) =>
+        backend.slide_info slide, (err, slide, slide_info) =>
           return alert(err) if err?
-          backend.slide_info slide, (err, slide, slide_info) =>
-            return alert(err) if err?
-            slide.public_url ||= slide_info.public_url
-            slide.number ||= slide_info.number if slide_info.number?
-            slide.thumb ||= slide_info.thumb if slide_info.thumb?
+          slide.public_url ||= slide_info.public_url
+          slide.number ||= slide_info.number if slide_info.number?
+          slide.thumb ||= slide_info.thumb if slide_info.thumb?
 
-            if slides.length > 0
-              load_slides_info slides
-            else
-              dust.render "_presentation", ctx, (err, out) =>
-                return alert(err) if err?
+          if slides.length > 0
+            load_slides_info slides
+          else
+            dust.render "_presentation", ctx, (err, out) =>
+              return alert(err) if err?
 
-                loader_hide()
-                new_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
-                @$el.append(out)
-                init_presentz @model.attributes, true
-                $helper.slide_containers().scrollspy
-                  buffer: 40
-                  onEnter: ($elem) ->
-                    $slide_thumb = $helper.slide_thumb_container_in $elem
-                    dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
-                      return alert(err) if err?
-                      $slide_thumb.html out
-                  onLeave: ($elem) ->
-                    $slide_thumb = $helper.slide_thumb_container_in $elem
-                    $slide_thumb.empty()
+              loader_hide()
+              new_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
+              @$el.append(out)
+              init_presentz @model.attributes, true
+              $helper.slide_containers().scrollspy
+                buffer: 40
+                onEnter: ($elem) ->
+                  $slide_thumb = $helper.slide_thumb_container_in $elem
+                  dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
+                    return alert(err) if err?
+                    $slide_thumb.html out
+                onLeave: ($elem) ->
+                  $slide_thumb = $helper.slide_thumb_container_in $elem
+                  $slide_thumb.empty()
 
       load_slides_info slides
       @
@@ -168,7 +160,13 @@ jQuery () ->
       title = $(event.target).val()
       @model.set "title", title
       $helper.nav_menu_slide_title().text utils.cut_string_at title, 30
-      
+
+    slide_chapter_indexes = ($slide_elem) ->
+      slide_index = $slide_elem.attr "slide_index"
+      chapter_index = $("div[slide_index=#{slide_index}]").prevUntil("div[chapter_index]").last().prev().attr "chapter_index"
+      slide_model_selector = "chapters.#{chapter_index}.slides.#{slide_index}"
+      return { slide_index: slide_index, chapter_index: chapter_index, slide_model_selector: slide_model_selector }
+
     onchange_slide_number: (event) ->
       $elem = $(event.target)
       indexes = slide_chapter_indexes $elem
@@ -177,16 +175,14 @@ jQuery () ->
       backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
       backend.change_slide_number @model, indexes.slide_model_selector, $elem.val()
 
-      backend.preload slide, (err, slide) =>
+      backend.slide_info slide, (err, slide, slide_info) =>
         return alert(err) if err?
-        backend.slide_info slide, (err, slide, slide_info) =>
+        slide.thumb = slide_info.thumb if slide_info.thumb?
+        $slide_thumb =  $("div.slide_thumb", $("div[slide_index=#{indexes.slide_index}]"))
+        $slide_thumb.attr "src", slide.thumb
+        dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
           return alert(err) if err?
-          slide.thumb = slide_info.thumb if slide_info.thumb?
-          $slide_thumb =  $("div.slide_thumb", $("div[slide_index=#{indexes.slide_index}]"))
-          $slide_thumb.attr "src", slide.thumb
-          dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
-            return alert(err) if err?
-            $slide_thumb.html out
+          $slide_thumb.html out
 
     onchange_slide_title: (event) ->
       $elem = $(event.target)
@@ -233,17 +229,15 @@ jQuery () ->
         backend.url_from_public_url slide, (new_url) =>
           @model.set "#{indexes.slide_model_selector}.url", new_url
 
-          backend.preload slide, (err, slide) =>
+          backend.slide_info slide, (err, slide, slide_info) =>
             return alert(err) if err?
-            backend.slide_info slide, (err, slide, slide_info) =>
+            slide.thumb = slide_info.thumb if slide_info.thumb?
+            $slide_thumb =  $("div.slide_thumb", $("div[chapter_index=#{indexes.chapter_index}] ~ div[slide_index=#{indexes.slide_index}]"))
+            $slide_thumb.attr "src", slide.thumb
+            $slide_thumb.attr "thumb_type", backend.thumb_type_of slide.url
+            dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
               return alert(err) if err?
-              slide.thumb = slide_info.thumb if slide_info.thumb?
-              $slide_thumb =  $("div.slide_thumb", $("div[chapter_index=#{indexes.chapter_index}] ~ div[slide_index=#{indexes.slide_index}]"))
-              $slide_thumb.attr "src", slide.thumb
-              $slide_thumb.attr "thumb_type", backend.thumb_type_of slide.url
-              dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
-                return alert(err) if err?
-                $slide_thumb.html out
+              $slide_thumb.html out
 
     events:
       "change input[name=video_url]": "onchange_video_url"
