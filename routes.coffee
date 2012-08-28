@@ -80,18 +80,14 @@ show_presentation = (req, res, next) ->
       comment.nice_time = moment(comment.time).fromNow()
       comments.push comment
 
-    chapter_index = 0
-    for chapter in presentation.chapters
-      slide_index = 0
-      for slide in chapter.slides
+    for chapter, chapter_index in presentation.chapters
+      for slide, slide_index in chapter.slides
         for comment in slide.comments
           comment.slide_title = slide.title or "Slide #{slide_index + 1}"
           comment.nice_time = moment(comment.time).fromNow()
           comment.slide_index = slide_index
           comment.chapter_index = chapter_index
           comments.push comment
-        slide_index++
-      chapter_index++
 
     comments
 
@@ -115,8 +111,7 @@ show_presentation = (req, res, next) ->
     percent_used = 0
     duration_used = 0
     number_of_zeros_in_index = slides.length.toString().length
-    for slide_num in [0...slides.length]
-      slide = slides[slide_num]
+    for slide, slide_num in slides
       if slide_num + 1 < slides.length
         slide.duration = slides[slide_num + 1].time - slide.time
         slide.percentage = slide.duration * percent_per_second
@@ -138,10 +133,9 @@ show_presentation = (req, res, next) ->
 
     slides = []
     duration = 0
-    for chapter_index in [0...presentation.chapters.length]
-      chapter = presentation.chapters[chapter_index]
-      for slide_index in [0...chapter.slides.length]
-        slides.push slide_to_slide(chapter.slides[slide_index], chapter_index, slide_index, duration)
+    for chapter, chapter_index in presentation.chapters
+      for slide, slide_index in chapter.slides
+        slides.push slide_to_slide(slide, chapter_index, slide_index, duration)
       duration += chapter.duration
 
     slides_duration_percentage_css(slides, duration)

@@ -106,8 +106,7 @@ Controls =
 
     #now percentages should be correct, lets rewrite the original ones
     percentage_to_remove_from_long_chapters = 100 * stolen_percentage / long_chapters_percentage
-    for idx in [0...percentages.length]
-      percentage = percentages[idx]
+    for percentage, idx in percentages
       if percentage > min_pixel_width_as_percentage
         percentage -= (percentage / 100 * percentage_to_remove_from_long_chapters)
         percentages[idx] = percentage

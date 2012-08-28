@@ -1,13 +1,10 @@
 draw_boxes = (number_of_boxes) ->
   return (chunk, context, bodies) ->
     boxes = context.current()
-    index = 0
-    for box in boxes
-      index++
+    for box, index in boxes
       chunk = chunk.render bodies.block, context.push(box)
-      if index is number_of_boxes
+      if (index + 1) % number_of_boxes is 0
         chunk = chunk.write "<div class=\"clear\"></div>"
-        index = 0
     chunk
 
 onebased = (chunk, context, bodies) ->
