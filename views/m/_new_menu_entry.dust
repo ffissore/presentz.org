@@ -1,2 +1,0 @@
-<li class="active"><a>{.title}</a></li>
-<li class="active"><button class="navbar-btn btn disabled" type="button" disabled="disabled">Save</button></li>

@@ -107,7 +107,7 @@ assetsMiddleware = assetManager
     "public/assets/js/mediaelement-and-player.js",
     "public/assets/js/presentz.js",
     "views/m/_presentation_thumb.dust",
-    "views/m/_new_menu_entry.dust",
+    "views/m/_presentation_menu_entry.dust",
     "views/m/_presentation.dust",
     "views/m/_help_inline.dust",
     "views/m/_reset_thumb.dust",
@@ -119,6 +119,7 @@ assetsMiddleware = assetManager
     "src_client_manage/utils.coffee"
     "src_client_manage/video_backends.coffee"
     "src_client_manage/slide_backends.coffee"
+    "src_client_manage/validation.coffee"
   ])
   css_manage: new_css_conf("manage", [
     "public/assets/css/mediaelementplayer.css",

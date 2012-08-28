@@ -54,17 +54,27 @@ jQuery () ->
 
     urlRoot: "/m/api/presentations/"
     
+    validate: presentzorg.validation
+    
     loaded = false
+    
+    toJSON: () ->
+      presentation = _.clone(this.attributes)
+      console.log presentation
+      for key in presentation
+        console.log key
+        
+      return {}
 
     initialize: () ->
       _.bindAll @
 
       @bind "change", app.edit, app
-      @bind "all", (event) ->
-        if event is "change"
-          loaded = true
+      @bind "all", (event) =>
         if loaded and _.str.startsWith(event, "change")
           app.navigationView.enable_save_button()
+        if event is "change"
+          loaded = true
         console.log arguments
 
       @fetch()
@@ -268,6 +278,9 @@ jQuery () ->
           dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
             return alert(err) if err?
             $slide_thumb.html out
+    
+    save: () ->
+      @model.save()
 
     events:
       "change input[name=video_url]": "onchange_video_url"
@@ -358,9 +371,10 @@ jQuery () ->
       $("li:first", @$el).addClass "active" if home?
 
     presentation_menu_entry: (title) ->
+      $("li", @$el).removeClass "active"
       $li = $("li", @$el)
       if $li.length < 3
-        dust.render "_new_menu_entry", { title: title }, (err, out) =>
+        dust.render "_presentation_menu_entry", { title: title }, (err, out) =>
           return alert(err) if err?
   
           @$el.append(out)
@@ -378,10 +392,14 @@ jQuery () ->
       $button.attr "disabled", false
       $button.removeClass "disabled"
       $button.addClass "btn-warning"
+      
+    save: () ->
+      app.save()
 
     events:
       "click a[href=#home]": "home"
       "click a[href=#new]": "new"
+      "click button.save": "save"
 
   class AppView extends Backbone.View
 
@@ -404,13 +422,16 @@ jQuery () ->
       @navigationView.reset(true)
 
     edit: (model) ->
-      view = new PresentationEditView model: model
-      @$el.html view.el
-      view.render()
+      @view = new PresentationEditView model: model
+      @$el.html @view.el
+      @view.render()
       presentz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
         $("div[chapter_index=#{previous_chapter_index}] ~ div[slide_index=#{previous_slide_index}]").removeClass "alert alert-info"
         $("div[chapter_index=#{new_chapter_index}] ~ div[slide_index=#{new_slide_index}]").addClass "alert alert-info"
       model.unbind "change", @edit
+      
+    save: () ->
+      @view.save()
 
   app = new AppView()
 
@@ -420,7 +441,7 @@ jQuery () ->
       "": "go_home"
       "home": "home"
       "new": "new"
-      ":presentation": "edit"
+      ":presentation": "presentation"
 
     go_home: () ->
       @navigate "home", trigger: true
@@ -433,7 +454,7 @@ jQuery () ->
       loader_show()
       alert("unimplemented")
 
-    edit: (id) ->
+    presentation: (id) ->
       loader_show()
       presentation = new Presentation({ id: id })
 
