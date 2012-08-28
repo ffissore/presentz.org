@@ -95,7 +95,7 @@ jQuery () ->
               return alert(err) if err?
 
               loader_hide()
-              app.navigationView.presentation_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
+              app.navigationView.presentation_menu_entry utils.cut_string_at(@model.get("title"), 30)
               @$el.append(out)
               init_presentz @model.attributes, true
               $helper.slide_containers().scrollspy
@@ -183,7 +183,7 @@ jQuery () ->
     onchange_title: (event) ->
       title = $(event.target).val()
       @model.set "title", title
-      app.navigationView.presentation_menu_entry title: utils.cut_string_at(@model.get("title"), 30)
+      app.navigationView.presentation_menu_entry utils.cut_string_at(@model.get("title"), 30)
 
     onchange_slide_title: (event) ->
       $elem = $(event.target)
@@ -353,15 +353,15 @@ jQuery () ->
       $("li", @$el).removeClass "active"
       $("li:first", @$el).addClass "active" if home?
 
-    presentation_menu_entry: (ctx) ->
+    presentation_menu_entry: (title) ->
       $li = $("li", @$el)
       if $li.length < 3
-        dust.render "_new_menu_entry", ctx, (err, out) =>
+        dust.render "_new_menu_entry", { title: title }, (err, out) =>
           return alert(err) if err?
   
           @$el.append(out)
       else
-        $("a", $li.eq(2)).text ctx.title
+        $("a", $li.eq(2)).text title
 
     home: (event) ->
       router.navigate "home", trigger: true unless $(event.currentTarget).parent().hasClass "active"
