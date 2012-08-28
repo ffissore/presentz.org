@@ -53,10 +53,8 @@ class SlideShare
       @slideshare_url_to_doc_ids[slide.public_url] = doc_id
       callback make_url(doc_id, slide_number)
 
-  change_slide_number: (model, model_selector, slide_number) ->
-    slide = model.get model_selector
-    url = slide.url.substring(0, slide.url.lastIndexOf("#") + 1).concat(slide_number)
-    model.set "#{model_selector}.url", url
+  change_slide_number: (old_url, slide_number) ->
+    old_url.substring(0, old_url.lastIndexOf("#") + 1).concat(slide_number)
 
 class DummySlideBackend
 
