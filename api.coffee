@@ -22,6 +22,8 @@ presentations = (req, res, next) ->
     res.send presentations
 
 presentation_update = (req, res, next) ->
+  res.send 200
+  return
   new_presentation = req.body
   storage.load_presentation_from_id req.params.presentation, (err, presentation) ->
     return next(err) if err?
