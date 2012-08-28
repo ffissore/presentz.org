@@ -53,18 +53,29 @@ jQuery () ->
   class Presentation extends Backbone.DeepModel
 
     urlRoot: "/m/api/presentations/"
-    
+
     validate: presentzorg.validation
-    
+
     loaded = false
-    
+    keys_to_remove_on_save = ["onebased", "$idx", "$len", "_plugin", "_thumb_type"]
+
     toJSON: () ->
-      presentation = _.clone(this.attributes)
-      console.log presentation
-      for key in presentation
-        console.log key
-        
-      return {}
+      presentation = $.extend true, {}, @attributes
+
+      delete_keys_from = (obj) ->
+        for key, value of obj
+          delete obj[key] if key in keys_to_remove_on_save
+
+      delete_keys_from presentation
+      for comment in presentation
+        delete_keys_from comment
+      for chapter in presentation.chapters
+        delete_keys_from chapter
+        delete_keys_from chapter.video
+        for slide in chapter.slides
+          delete_keys_from slide
+
+      return presentation
 
     initialize: () ->
       _.bindAll @
@@ -260,12 +271,12 @@ jQuery () ->
       return if !presentzorg.is_url_valid public_url
 
       slide_helper = $helper.slide_helper $elem
-      
+
       @model.set "#{slide_helper.model_selector}.public_url", public_url
 
       backend = _.find slide_backends, (backend) -> backend.handle(public_url)
       slide = @model.get slide_helper.model_selector
-      
+
       backend.url_from_public_url slide, (new_url) =>
         @model.set "#{slide_helper.model_selector}.url", new_url
 
@@ -278,7 +289,7 @@ jQuery () ->
           dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
             return alert(err) if err?
             $slide_thumb.html out
-    
+
     save: () ->
       @model.save()
 
@@ -376,7 +387,7 @@ jQuery () ->
       if $li.length < 3
         dust.render "_presentation_menu_entry", { title: title }, (err, out) =>
           return alert(err) if err?
-  
+
           @$el.append(out)
       else
         $("a", $li.eq(2)).text title
@@ -386,13 +397,13 @@ jQuery () ->
 
     new: (event) ->
       router.navigate "new", trigger: true unless $(event.currentTarget).parent().hasClass "active"
-      
+
     enable_save_button: () ->
       $button = $("button", @$el)
       $button.attr "disabled", false
       $button.removeClass "disabled"
       $button.addClass "btn-warning"
-      
+
     save: () ->
       app.save()
 
@@ -429,7 +440,7 @@ jQuery () ->
         $("div[chapter_index=#{previous_chapter_index}] ~ div[slide_index=#{previous_slide_index}]").removeClass "alert alert-info"
         $("div[chapter_index=#{new_chapter_index}] ~ div[slide_index=#{new_slide_index}]").addClass "alert alert-info"
       model.unbind "change", @edit
-      
+
     save: () ->
       @view.save()
 
