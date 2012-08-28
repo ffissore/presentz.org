@@ -169,12 +169,6 @@ jQuery () ->
       @model.set "title", title
       $helper.nav_menu_slide_title().text utils.cut_string_at title, 30
 
-    slide_chapter_indexes = ($slide_elem) ->
-      slide_index = $slide_elem.attr "slide_index"
-      chapter_index = $slide_elem.parentsUntil("span.chapter").last().parent().attr "chapter_index"
-      slide_model_selector = "chapters.#{chapter_index}.slides.#{slide_index}"
-      return { slide_index: slide_index, chapter_index: chapter_index, slide_model_selector: slide_model_selector }
-
     onchange_slide_title: (event) ->
       $elem = $(event.target)
       $chapter = $helper.chapter_of $elem
