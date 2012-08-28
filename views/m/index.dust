@@ -33,7 +33,7 @@
     <img src="/assets/img/ajax-loader.gif"/>
     <p/>
     <p>The above progress bar should keep on moving.</p>
-    <p>If it's not, it's probably because of too many Flash elements...</p>
+    <p>If it's not, it's probably because the browser is busy rendering the page. Just wait a second...</p>
   </div>
   <div class="container">
   </div>
