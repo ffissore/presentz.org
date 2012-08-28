@@ -17,6 +17,7 @@ jQuery () ->
   slide_backends = [new presentzorg.slide_backends.SlideShare(), new presentzorg.slide_backends.DummySlideBackend()]
 
   $helper =
+    nav_bar: () -> $("html body div.navbar")
     nav_menu_slide_title: () -> $("ul.nav li.active a")
     slide_containers: () -> $("div[slide_index]")
     slide_thumb_container_in: ($elem) -> $("div.slide_thumb", $elem)
@@ -83,7 +84,7 @@ jQuery () ->
               @$el.append(out)
               init_presentz @model.attributes, true
               $helper.slide_containers().scrollspy
-                buffer: 40
+                buffer: $helper.nav_bar().height()
                 onEnter: ($elem) ->
                   $slide_thumb = $helper.slide_thumb_container_in $elem
                   dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
