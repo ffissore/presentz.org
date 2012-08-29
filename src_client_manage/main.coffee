@@ -57,7 +57,7 @@ jQuery () ->
     validate: presentzorg.validation
 
     loaded = false
-    keys_to_remove_on_save = ["onebased", "$idx", "$len", "_plugin", "_thumb_type", "slide_thumb", "comments"]
+    keys_to_remove_on_save = [ "onebased", "$idx", "$len", "_plugin" ]
 
     toJSON: () ->
       presentation = $.extend true, {}, @attributes
@@ -294,10 +294,10 @@ jQuery () ->
       "change input.slide_public_url": "onchange_slide_public_url"
 
   class PresentationThumb extends Backbone.DeepModel
-    
+
     initialize: () ->
       _.bindAll @
-      
+
       @bind "all", () ->
         console.log arguments
 

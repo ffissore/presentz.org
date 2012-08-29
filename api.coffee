@@ -32,13 +32,14 @@ presentation_update_published = (presentation, callback) ->
   storage.save presentation, callback
 
 presentation_update_everything = (presentation, callback) ->
-  not_allowed_fields = [ "comments", "slide_thumb" ]
-  
-  utils.visit_presentation presentation, utils.remove_unwanted_fields_from, not_allowed_fields
-  
-  console.log presentation
-  console.log presentation.chapters[0]
-  
+  allowed_map_of_fields =
+    presentation: [ "@class", "@type", "@version", "@rid", "in", "out", "id", "title", "time", "speaker", "_type", "published", "chapters" ]
+    chapter: [ "@class", "@type", "@version", "@rid", "in", "out", "duration", "_type", "_index", "video", "slides" ]
+    video: [ "url", "thumb" ]
+    slide: [ "@class", "@type", "@version", "@rid", "in", "out", "url", "title", "time", "_type", "public_url" ]
+
+  utils.visit_presentation presentation, utils.ensure_only_wanted_map_of_fields_in, allowed_map_of_fields
+
   callback(new Error("unsupported"))
 
 presentation_update = (req, res, next) ->
