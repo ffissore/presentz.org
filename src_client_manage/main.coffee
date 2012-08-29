@@ -305,6 +305,12 @@ jQuery () ->
       "change input.slide_public_url": "onchange_slide_public_url"
 
   class PresentationThumb extends Backbone.DeepModel
+    
+    initialize: () ->
+      _.bindAll @
+      
+      @bind "all", () ->
+        console.log arguments
 
   class PresentationThumbView extends Backbone.View
 

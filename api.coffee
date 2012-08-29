@@ -9,9 +9,6 @@ init = (s, slideshare_conf) ->
   storage = s
   slideshare = new node_slideshare slideshare_conf.api_key, slideshare_conf.shared_secret
 
-beautify_slide_urls = (presentation, callback) ->
-  callback()
-
 presentations = (req, res, next) ->
   storage.from_user_to_presentations req.user, (err, presentations) ->
     return next(err) if err?
@@ -37,10 +34,10 @@ has_slides = (presentation) ->
 presentation_update = (req, res, next) ->
   presentation = req.body
 
-  callback = (err) ->
+  callback = (err, new_presentation) ->
     return next(err) if err?
 
-    res.send 200
+    res.send new_presentation
 
   if has_slides(presentation)
     presentation_update_everything(presentation, callback)
@@ -51,10 +48,7 @@ presentation_load = (req, res, next) ->
   storage.load_entire_presentation_from_id req.params.presentation, (err, presentation) ->
     return next(err) if err?
 
-    beautify_slide_urls presentation, (err) ->
-      return next(err) if err?
-
-      res.send presentation
+    res.send presentation
 
 slideshare_slides_of = (req, res, next) ->
   request_params =
