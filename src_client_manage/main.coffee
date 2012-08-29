@@ -62,14 +62,7 @@ jQuery () ->
     toJSON: () ->
       presentation = $.extend true, {}, @attributes
 
-      utils.remove_unwanted_fields_from presentation, keys_to_remove_on_save
-      for comment in presentation
-        utils.remove_unwanted_fields_from comment, keys_to_remove_on_save
-      for chapter in presentation.chapters
-        utils.remove_unwanted_fields_from chapter, keys_to_remove_on_save
-        utils.remove_unwanted_fields_from chapter.video, keys_to_remove_on_save
-        for slide in chapter.slides
-          utils.remove_unwanted_fields_from slide, keys_to_remove_on_save
+      utils.visit_presentation presentation, utils.remove_unwanted_fields_from, keys_to_remove_on_save
 
       return presentation
 

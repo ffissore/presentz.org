@@ -32,6 +32,8 @@ presentation_update_published = (presentation, callback) ->
   storage.save presentation, callback
 
 presentation_update_everything = (presentation, callback) ->
+  
+  console.log presentation
   callback(new Error("unsupported"))
 
 presentation_update = (req, res, next) ->

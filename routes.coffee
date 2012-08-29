@@ -63,7 +63,7 @@ raw_presentation = (req, res, next) ->
 
     return res.send 404 unless presentation.published
 
-    storage.remove_storage_fields_from_presentation presentation
+    utils.visit_presentation presentation, utils.remove_unwanted_fields_from, [ "id", "out", "_type", "_index", "@class", "@type", "@version", "@rid", "user" ]
 
     if req.query.jsoncallback
       presentation = "#{req.query.jsoncallback}(#{JSON.stringify(presentation)});"
