@@ -16,24 +16,36 @@ presentations = (req, res, next) ->
   storage.from_user_to_presentations req.user, (err, presentations) ->
     return next(err) if err?
 
-    for presentation in presentations
-      storage.remove_storage_fields_from_presentation presentation
-
     res.send presentations
 
+presentation_update_published = (presentation, callback) ->
+  delete presentation.chapters
+
+  storage.save presentation, callback
+
+presentation_update_everything = (presentation, callback) ->
+  callback("unsupported")
+
+has_slides = (presentation) ->
+  return false if !presentation.chapters?
+  
+  for chapter in presentation.chapters
+    return true if chapter.slides?
+    
+  false
+  
 presentation_update = (req, res, next) ->
-  res.send 200
-  return
-  new_presentation = req.body
-  storage.load_presentation_from_id req.params.presentation, (err, presentation) ->
+  presentation = req.body
+
+  callback = (err) ->
     return next(err) if err?
 
-    presentation.published = new_presentation.published
+    res.send 200
 
-    storage.save presentation, (err, presentation) ->
-      return next(err) if err?
-
-      res.send 200
+  if has_slides(presentation)
+    presentation_update_everything(presentation, callback)
+  else
+    presentation_update_published(presentation, callback)
 
 presentation_load = (req, res, next) ->
   storage.load_entire_presentation_from_id req.params.presentation, (err, presentation) ->
