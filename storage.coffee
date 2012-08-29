@@ -10,6 +10,9 @@ init = (database) ->
 save = (document, callback) ->
   db.save document, callback
 
+cascading_save = (document, callback) ->
+  db.cascadingSave document, callback
+
 count_presentations_in_catalog = (catalog, callback) ->
   db.getInEdges catalog, "part_of", (err, edges) ->
     return callback(err) if err?
@@ -134,3 +137,4 @@ exports.from_user_to_presentations = from_user_to_presentations
 exports.from_catalog_to_presentations = from_catalog_to_presentations
 exports.create_comment = create_comment
 exports.save = save
+exports.cascading_save = cascading_save

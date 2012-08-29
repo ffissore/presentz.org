@@ -39,8 +39,8 @@ presentation_update_everything = (presentation, callback) ->
     slide: [ "@class", "@type", "@version", "@rid", "in", "out", "url", "title", "time", "_type", "public_url" ]
 
   utils.visit_presentation presentation, utils.ensure_only_wanted_map_of_fields_in, allowed_map_of_fields
-
-  callback(new Error("unsupported"))
+  
+  storage.cascading_save presentation, callback
 
 presentation_update = (req, res, next) ->
   presentation = req.body
