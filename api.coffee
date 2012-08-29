@@ -1,6 +1,7 @@
 http = require "http"
 xml2json = require "xml2json"
 node_slideshare = require "slideshare"
+utils = require "./utils"
 
 storage = null
 slideshare = null
@@ -15,22 +16,24 @@ presentations = (req, res, next) ->
 
     res.send presentations
 
+has_slides = (presentation) ->
+  return false if !presentation.chapters?
+
+  for chapter in presentation.chapters
+    return true if chapter.slides?
+
+  false
+
 presentation_update_published = (presentation, callback) ->
-  delete presentation.chapters
+  allowed_fields = [ "@class", "@type", "title", "speaker", "_type", "published", "id", "in", "out", "@version", "@rid" ]
+
+  utils.ensure_only_wanted_fields_in presentation, allowed_fields
 
   storage.save presentation, callback
 
 presentation_update_everything = (presentation, callback) ->
   callback(new Error("unsupported"))
 
-has_slides = (presentation) ->
-  return false if !presentation.chapters?
-  
-  for chapter in presentation.chapters
-    return true if chapter.slides?
-    
-  false
-  
 presentation_update = (req, res, next) ->
   presentation = req.body
 

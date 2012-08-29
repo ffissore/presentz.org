@@ -62,18 +62,14 @@ jQuery () ->
     toJSON: () ->
       presentation = $.extend true, {}, @attributes
 
-      delete_keys_from = (obj) ->
-        for key, value of obj
-          delete obj[key] if key in keys_to_remove_on_save
-
-      delete_keys_from presentation
+      utils.remove_unwanted_fields_from presentation, keys_to_remove_on_save
       for comment in presentation
-        delete_keys_from comment
+        utils.remove_unwanted_fields_from comment, keys_to_remove_on_save
       for chapter in presentation.chapters
-        delete_keys_from chapter
-        delete_keys_from chapter.video
+        utils.remove_unwanted_fields_from chapter, keys_to_remove_on_save
+        utils.remove_unwanted_fields_from chapter.video, keys_to_remove_on_save
         for slide in chapter.slides
-          delete_keys_from slide
+          utils.remove_unwanted_fields_from slide, keys_to_remove_on_save
 
       return presentation
 

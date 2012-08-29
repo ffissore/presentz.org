@@ -124,31 +124,24 @@ load_slides_of = (chapter, callback) ->
       return callback(undefined, chapter)
 
 remove_storage_fields_from_presentation = (presentation) ->
+  unwanted_fields = [ "id", "out", "_type", "_index", "@class", "@type", "@version", "@rid", "user" ]
+  
   clean_comments_in = (element) ->
     if element.comments?
       for comment in element.comments
-        clean comment
-        delete comment.user
+        utils.remove_unwanted_fields_from comment, unwanted_fields
 
-  clean = (element) ->
-    delete element.in
-    delete element.out
-    delete element._type
-    delete element._index
-    delete element["@class"]
-    delete element["@type"]
-    delete element["@version"]
-    delete element["@rid"]
-
-  clean presentation
+  utils.remove_unwanted_fields_from presentation, unwanted_fields
   clean_comments_in presentation
-  if presentation.chapters?
-    for chapter in presentation.chapters
-      clean chapter
-      if chapter.slides?
-        for slide in chapter.slides
-          clean slide
-          clean_comments_in slide
+
+  return unless presentation.chapters?
+
+  for chapter in presentation.chapters
+    utils.remove_unwanted_fields_from chapter, unwanted_fields
+    if chapter.slides?
+      for slide in chapter.slides
+        utils.remove_unwanted_fields_from slide, unwanted_fields
+        clean_comments_in slide
 
 exports.load_chapters_of = load_chapters_of
 exports.load_entire_presentation_from_path = load_entire_presentation_from_path
