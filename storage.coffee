@@ -12,7 +12,7 @@ save = (document, callback) ->
 
 count_presentations_in_catalog = (catalog, callback) ->
   db.getInEdges catalog, "part_of", (err, edges) ->
-    return next(err) if err?
+    return callback(err) if err?
     catalog.presentations_length = edges.length
     callback(undefined, catalog)
 

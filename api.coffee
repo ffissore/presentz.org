@@ -24,7 +24,7 @@ presentation_update_published = (presentation, callback) ->
   storage.save presentation, callback
 
 presentation_update_everything = (presentation, callback) ->
-  callback("unsupported")
+  callback(new Error("unsupported"))
 
 has_slides = (presentation) ->
   return false if !presentation.chapters?
