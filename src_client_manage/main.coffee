@@ -45,7 +45,7 @@ jQuery () ->
         slide_index: slide_index
         chapter_index: chapter_index
         model_selector: "chapters.#{chapter_index}.slides.#{slide_index}"
-        thumb: () ->
+        slide_thumb: () ->
           $helper.slide_thumb_of slide_index, $chapter
       return result
 
@@ -57,7 +57,7 @@ jQuery () ->
     validate: presentzorg.validation
 
     loaded = false
-    keys_to_remove_on_save = ["onebased", "$idx", "$len", "_plugin", "_thumb_type"]
+    keys_to_remove_on_save = ["onebased", "$idx", "$len", "_plugin", "_thumb_type", "slide_thumb", "comments"]
 
     toJSON: () ->
       presentation = $.extend true, {}, @attributes
@@ -100,7 +100,7 @@ jQuery () ->
           return alert(err) if err?
           slide.public_url ||= slide_info.public_url
           slide.number ||= slide_info.number if slide_info.number?
-          slide.thumb ||= slide_info.thumb if slide_info.thumb?
+          slide.slide_thumb ||= slide_info.slide_thumb if slide_info.slide_thumb?
 
           if slides.length > 0
             load_slides_info slides
@@ -116,7 +116,7 @@ jQuery () ->
                 buffer: app.navigationView.$el.height()
                 onEnter: ($elem) ->
                   $slide_thumb = $helper.slide_thumb_container_in $elem
-                  dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
+                  dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { slide_thumb: $slide_thumb.attr "src" }, (err, out) ->
                     return alert(err) if err?
                     $slide_thumb.html out
                 onLeave: ($elem) ->
@@ -217,10 +217,10 @@ jQuery () ->
 
       backend.slide_info slide, (err, slide, slide_info) =>
         return alert(err) if err?
-        slide.thumb = slide_info.thumb if slide_info.thumb?
-        $slide_thumb = slide_helper.thumb()
-        $slide_thumb.attr "src", slide.thumb
-        dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
+        slide.slide_thumb = slide_info.slide_thumb if slide_info.slide_thumb?
+        $slide_thumb = slide_helper.slide_thumb()
+        $slide_thumb.attr "src", slide.slide_thumb
+        dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { slide_thumb: $slide_thumb.attr "src" }, (err, out) ->
           return alert(err) if err?
           $slide_thumb.html out
 
@@ -271,9 +271,9 @@ jQuery () ->
 
         backend.slide_info slide, (err, slide, slide_info) =>
           return alert(err) if err?
-          slide.thumb = slide_info.thumb if slide_info.thumb?
-          $slide_thumb = slide_helper.thumb()
-          $slide_thumb.attr "src", slide.thumb
+          slide.slide_thumb = slide_info.slide_thumb if slide_info.slide_thumb?
+          $slide_thumb = slide_helper.slide_thumb()
+          $slide_thumb.attr "src", slide.slide_thumb
           $slide_thumb.attr "thumb_type", backend.thumb_type_of slide.url
           dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
             return alert(err) if err?

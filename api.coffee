@@ -32,8 +32,13 @@ presentation_update_published = (presentation, callback) ->
   storage.save presentation, callback
 
 presentation_update_everything = (presentation, callback) ->
+  not_allowed_fields = [ "comments", "slide_thumb" ]
+  
+  utils.visit_presentation presentation, utils.remove_unwanted_fields_from, not_allowed_fields
   
   console.log presentation
+  console.log presentation.chapters[0]
+  
   callback(new Error("unsupported"))
 
 presentation_update = (req, res, next) ->

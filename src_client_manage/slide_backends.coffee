@@ -27,11 +27,11 @@ class SlideShare
       slides = @slideshare_infos[doc_id].Show.Slide
       return callback("Invalid slide number #{number}") if number > slides.length
 
-      thumb = slides[number - 1].Src
+      slide_thumb = slides[number - 1].Src
       callback undefined, slide,
         public_url: slide.public_url
         number: number
-        thumb: thumb
+        slide_thumb: slide_thumb
 
     if @slideshare_infos[doc_id]?
       pack_response doc_id, slide, callback
@@ -67,7 +67,7 @@ class DummySlideBackend
   slide_info: (slide, callback) ->
     callback undefined, slide,
       public_url: slide.url
-      thumb: slide.url
+      slide_thumb: slide.url
 
   url_from_public_url: (slide, callback) ->
     callback slide.public_url
