@@ -1,0 +1,119 @@
+{
+  "title": "Internet delle Cose: come realizzare un'applicazione",
+  "speaker": "Marco Sgroi, Remo Pomposini, Antonio Iannopollo",
+  "chapters": [
+    {
+      "duration": 2245,
+      "media": {
+        "video": {
+          "url": "http://youtu.be/Z-aSjZnBO2k",
+          "thumb": "http://presentz.org/assets/codemotion12/sgroipomposiniiannopollo.jpg"
+        },
+        "slides": [
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#1",
+            "title": "Internet delle Cose: come realizzare un'applicazione",
+            "time": 0,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          },
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#2",
+            "title": "Chi siamo",
+            "time": 21,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          },
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#3",
+            "title": "Tecnologia: Reti Wireless di Sensori",
+            "time": 111,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          },
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#4",
+            "title": "Architettura",
+            "time": 255,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          },
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#5",
+            "title": "Standard ZigBee",
+            "time": 393,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          },
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#6",
+            "title": "Realizzazione Applicazioni",
+            "time": 585,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          },
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#7",
+            "title": "Dispositivi con Sensori",
+            "time": 629,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          },
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#5",
+            "title": "Standard ZigBee",
+            "time": 794,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          },
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#7",
+            "title": "Dispositivi con Sensori",
+            "time": 801,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          },
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#8",
+            "title": "Gateway",
+            "time": 807,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          },
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#9",
+            "title": "Applicazioni Software",
+            "time": 839,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          },
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#10",
+            "title": "Installazione",
+            "time": 921,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          },
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#11",
+            "title": "Piattaforma So.Tel",
+            "time": 958,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          },
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#12",
+            "title": "Demo",
+            "time": 1259,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          },
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#13",
+            "title": "Gateway APIs",
+            "time": 1600,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          },
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#14",
+            "title": "Class Diagram Gateway",
+            "time": 1653,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          },
+          {
+            "url": "http://www.slideshare.net/soteliotcodemotion2012-120830062102-phpapp02#15",
+            "title": "Call to Action",
+            "time": 2120,
+            "public_url": "http://www.slideshare.net/Codemotion/internet-delle-cose-come-realizzare-un-applicazione-by-marco-sgroi-remo-pomposini-antonio-iannopollo"
+          }
+        ]
+      }
+    }
+  ]
+}
