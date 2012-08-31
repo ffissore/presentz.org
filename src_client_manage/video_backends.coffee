@@ -3,7 +3,7 @@ class Youtube
   constructor: (@presentzYoutube) ->
 
   handle: (url) ->
-    @presentzYoutube.handle url
+    @presentzYoutube.handle url: url
 
   id_from: (url) ->
     @presentzYoutube.videoId url: url
@@ -29,7 +29,7 @@ class Vimeo
   constructor: (@presentzVimeo) ->
 
   handle: (url) ->
-    @presentzVimeo.handle url
+    @presentzVimeo.handle url: url
 
   id_from: (url) ->
     @presentzVimeo.videoId url: url
@@ -53,7 +53,7 @@ class DummyVideoBackend
   handle: (url) -> true
 
   fetch_info: (url, callback) ->
-    if @presentzorg.is_url_valid url
+    if presentzorg.is_url_valid url
       callback undefined, url: url, duration: -1
     else
       callback("invalid")

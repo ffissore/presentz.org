@@ -5,16 +5,15 @@ class SlideShare
     @slideshare_url_to_doc_ids = {}
 
   handle: (url) ->
-    @presentzSlideShare.handle({ url: url })
+    @presentzSlideShare.handle url: url
 
-  thumb_type_of: (url) ->
-    "swf"
+  thumb_type_of: (url) -> "swf"
 
   to_doc_id: (url) ->
-    @presentzSlideShare.slideId({url: url})
+    @presentzSlideShare.slideId url: url
 
   to_slide_number: (url) ->
-    parseInt(@presentzSlideShare.slideNumber({url: url}))
+    parseInt(@presentzSlideShare.slideNumber(url: url))
 
   make_url = (doc_id, slide_number) ->
     "http://www.slideshare.net/#{doc_id}##{slide_number}"

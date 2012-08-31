@@ -404,6 +404,24 @@ jQuery () ->
         return alert(err) if err?
         loader_hide()
         @$el.html(out)
+        
+    onchange_video: (event) ->
+      $elem = $(event.target)
+      url = $elem.val()
+      backend = _.find video_backends, (backend) -> backend.handle(url)
+      backend.fetch_info url, (err, info) =>
+        return alert(err) if err?
+        console.log info
+
+    onchange_slide: (event) ->
+      $elem = $(event.target)
+      url = $elem.val()
+      backend = _.find slide_backends, (backend) -> backend.handle(url)
+      console.log backend
+
+    events:
+      "change input[name=video_url]": "onchange_video"
+      "change input[name=slide_url]": "onchange_slide"
 
   class NavigationView extends Backbone.View
 
