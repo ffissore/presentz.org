@@ -1,3 +1,12 @@
 #login {
     background-image: data-url(../../assets/img/fe/bg_login_grey.png);
 }
+
+#slideshow_player img {
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+}
