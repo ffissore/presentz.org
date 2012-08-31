@@ -6,7 +6,7 @@
 </form>
 <p>Now time for the slides. Where can I find them?</p>
 <div class="alert">
-  If you have a separate file for each slide (images maybe? or single swf?) type a url for one of them. We'll use it as a template for the others.
+  If you have a separate file for each slide (images maybe? or swf files?) type a url for one of them. We'll use it as a template for the others.
 </div>
 <form>
   <input name="slide_url" type="text" class="input-xxlarge" placeholder="Slide URL">

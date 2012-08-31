@@ -1,20 +1,19 @@
 @presentzorg = {}
 
 jQuery () ->
-  presentz = new Presentz("#video", "460x420", "#slide", "460x420")
+  prsntz = new Presentz("#video", "460x420", "#slide", "460x420")
 
   init_presentz = (presentation, first) ->
-    presentz.init presentation
-    presentz.changeChapter 0, 0, false
+    prsntz.init presentation
+    prsntz.changeChapter 0, 0, false
     return unless first?
     $video = $("#video")
     $video_parent = $video.parent()
     $video.width $video_parent.width()
     $video.height $video_parent.height()
 
-  presentzorg = window.presentzorg
-  video_backends = [new presentzorg.video_backends.Youtube(), new presentzorg.video_backends.Vimeo(), new presentzorg.video_backends.DummyVideoBackend()]
-  slide_backends = [new presentzorg.slide_backends.SlideShare(), new presentzorg.slide_backends.DummySlideBackend()]
+  video_backends = [new presentzorg.video_backends.Youtube(prsntz.availableVideoPlugins.youtube), new presentzorg.video_backends.Vimeo(prsntz.availableVideoPlugins.vimeo), new presentzorg.video_backends.DummyVideoBackend(prsntz.availableVideoPlugins.html5)]
+  slide_backends = [new presentzorg.slide_backends.SlideShare(prsntz.availableSlidePlugins.slideshare), new presentzorg.slide_backends.DummySlideBackend(prsntz.availableSlidePlugins.image)]
 
   $helper =
     slide_containers: () -> $("div[slide_index]")
@@ -405,7 +404,7 @@ jQuery () ->
         return alert(err) if err?
         loader_hide()
         @$el.html(out)
-    
+
   class NavigationView extends Backbone.View
 
     el: $(".navbar > .navbar-inner > .container > .nav-collapse > .nav")
@@ -475,7 +474,7 @@ jQuery () ->
     home: () ->
       @presentationThumbList.fetch()
       @navigationView.reset(0)
-      
+
     new: () ->
       @navigationView.reset(1)
       view = new PresentationNewView()
@@ -486,7 +485,7 @@ jQuery () ->
       @view = new PresentationEditView model: model
       @$el.html @view.el
       @view.render()
-      presentz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
+      prsntz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
         $("div[chapter_index=#{previous_chapter_index}] ~ div[slide_index=#{previous_slide_index}]").removeClass "alert alert-info"
         $("div[chapter_index=#{new_chapter_index}] ~ div[slide_index=#{new_slide_index}]").addClass "alert alert-info"
       model.unbind "change", @edit

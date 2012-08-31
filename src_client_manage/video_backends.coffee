@@ -1,15 +1,17 @@
 class Youtube
 
-  handle: (url) ->
-    url.toLowerCase().indexOf("youtu.be") != -1
+  constructor: (@presentzYoutube)
 
-  id_from = (url) ->
-    url.substr url.lastIndexOf("/") + 1
+  handle: (url) ->
+    @presentzYoutube.handle url
+
+  id_from: (url) ->
+    @presentzYoutube.videoId url: url
 
   query = (url, callback) ->
-    return callback("invalid url") if id_from(url) is ""
+    return callback("invalid url") if @id_from(url) is ""
     $.jsonp
-      url: "https://gdata.youtube.com/feeds/api/videos/#{id_from(url)}?v=2&alt=json"
+      url: "https://gdata.youtube.com/feeds/api/videos/#{@id_from(url)}?v=2&alt=json"
       success: (response) ->
         callback(undefined, response)
       error: (options, status) ->
@@ -24,16 +26,18 @@ class Youtube
 
 class Vimeo
 
-  handle: (url) ->
-    url.toLowerCase().indexOf("vimeo.com") != -1
+  constructor: (@presentzVimeo)
 
-  id_from = (url) ->
-    url.substr url.lastIndexOf("/") + 1
+  handle: (url) ->
+    @presentzVimeo.handle url
+
+  id_from: (url) ->
+    @presentzVimeo.videoId url: url
 
   query = (url, callback) ->
-    return callback("invalid url") if id_from(url) is ""
+    return callback("invalid url") if @id_from(url) is ""
     $.jsonp
-      url: "http://vimeo.com/api/v2/video/#{id_from(url)}.json"
+      url: "http://vimeo.com/api/v2/video/#{@id_from(url)}.json"
       success: (response, status) ->
         callback(undefined, response)
       error: (options, status) ->
@@ -44,7 +48,6 @@ class Vimeo
       return callback(err) if err?
       callback undefined, url: videos[0].url, thumb: videos[0].thumbnail_medium, duration: videos[0].duration
 
-      
 class DummyVideoBackend
 
   handle: (url) -> true
