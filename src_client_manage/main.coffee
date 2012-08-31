@@ -36,6 +36,21 @@ jQuery () ->
     elements_with_slide_index_in: ($elem) -> $("[slide_index]", $elem)
 
     notify_save_text: ($parent) -> $("li.notify_save", $parent)
+    whoops: (err, callback) ->
+      $whoops = $("#whoops")
+      return $whoops if !err?
+
+      if typeof err is "string"
+        $(".modal-body p:first", $whoops).text err
+      else
+        $(".modal-body p:first", $whoops).text err.message
+        $(".modal-body p:last", $whoops).text err.stack
+
+      if callback?
+        $whoops.on "hidden", () ->
+          $whoops.off "hidden"
+          callback()
+      $whoops.modal "show"
 
     slide_helper: ($elem) ->
       $chapter = $helper.chapter_of $elem
@@ -51,6 +66,10 @@ jQuery () ->
           $helper.slide_thumb_of slide_index, $chapter
       return result
 
+  $helper.whoops().modal(show: false)
+
+  alert = (err, callback) ->
+    $helper.whoops(err, callback)
 
   class Presentation extends Backbone.DeepModel
 
@@ -73,6 +92,8 @@ jQuery () ->
       _.bindAll @
 
       @bind "change", app.edit, app
+      @bind "error", (model, err) ->
+        alert "Error #{err.status}: #{err.responseText}"
       @bind "all", (event) =>
         if @loaded and _.str.startsWith(event, "change")
           app.navigationView.enable_save_button()
@@ -221,7 +242,10 @@ jQuery () ->
       @model.set "#{slide_helper.model_selector}.url", new_url
 
       backend.slide_info slide, (err, slide, slide_info) =>
-        return alert(err) if err?
+        if err?
+          alert err, () ->
+            $elem.focus()
+          return
         slide.slide_thumb = slide_info.slide_thumb if slide_info.slide_thumb?
         $slide_thumb = slide_helper.slide_thumb()
         $slide_thumb.attr "src", slide.slide_thumb
@@ -496,3 +520,4 @@ jQuery () ->
 
   Backbone.history.start pushState: false, root: "/m/"
   $.jsonp.setup callbackParameter: "callback"
+  
