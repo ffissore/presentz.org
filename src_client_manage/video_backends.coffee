@@ -1,6 +1,6 @@
 class Youtube
 
-  constructor: (@presentzYoutube)
+  constructor: (@presentzYoutube) ->
 
   handle: (url) ->
     @presentzYoutube.handle url
@@ -8,7 +8,7 @@ class Youtube
   id_from: (url) ->
     @presentzYoutube.videoId url: url
 
-  query = (url, callback) ->
+  query: (url, callback) ->
     return callback("invalid url") if @id_from(url) is ""
     $.jsonp
       url: "https://gdata.youtube.com/feeds/api/videos/#{@id_from(url)}?v=2&alt=json"
@@ -18,7 +18,7 @@ class Youtube
         callback(status)
 
   fetch_info: (url, callback) ->
-    query url, (err, response) ->
+    @query url, (err, response) ->
       return callback(err) if err?
       thumb = _.find(response.entry.media$group.media$thumbnail, (elem) -> elem.yt$name is "mqdefault")
       duration = parseInt(response.entry.media$group.yt$duration.seconds)
@@ -26,7 +26,7 @@ class Youtube
 
 class Vimeo
 
-  constructor: (@presentzVimeo)
+  constructor: (@presentzVimeo) ->
 
   handle: (url) ->
     @presentzVimeo.handle url
@@ -34,7 +34,7 @@ class Vimeo
   id_from: (url) ->
     @presentzVimeo.videoId url: url
 
-  query = (url, callback) ->
+  query: (url, callback) ->
     return callback("invalid url") if @id_from(url) is ""
     $.jsonp
       url: "http://vimeo.com/api/v2/video/#{@id_from(url)}.json"
@@ -44,7 +44,7 @@ class Vimeo
         callback(status)
 
   fetch_info: (url, callback) ->
-    query url, (err, videos) ->
+    @query url, (err, videos) ->
       return callback(err) if err?
       callback undefined, url: videos[0].url, thumb: videos[0].thumbnail_medium, duration: videos[0].duration
 
