@@ -1,29 +1,29 @@
 class SlideShare
 
-  constructor: () ->
+  constructor: (@presentzSlideShare) ->
     @slideshare_infos = {}
     @slideshare_url_to_doc_ids = {}
 
   handle: (url) ->
-    url.toLowerCase().indexOf("slideshare.net") isnt -1
+    @presentzSlideShare.handle({ url: url })
 
   thumb_type_of: (url) ->
     "swf"
 
-  to_doc_id = (url) ->
-    url.substring url.lastIndexOf("/") + 1, url.indexOf("#")
+  to_doc_id: (url) ->
+    @presentzSlideShare.slideId({url: url})
 
-  to_slide_number = (url) ->
-    parseInt(url.substr(url.indexOf("#") + 1))
+  to_slide_number: (url) ->
+    parseInt(@presentzSlideShare.slideNumber({url: url}))
 
   make_url = (doc_id, slide_number) ->
     "http://www.slideshare.net/#{doc_id}##{slide_number}"
 
   slide_info: (slide, callback) ->
-    doc_id = to_doc_id slide.url
+    doc_id = @to_doc_id slide.url
 
     pack_response = (doc_id, slide, callback) =>
-      number = to_slide_number slide.url
+      number = @to_slide_number slide.url
       slides = @slideshare_infos[doc_id].Show.Slide
       return callback("Invalid slide number #{number}") if number > slides.length
 
@@ -41,7 +41,7 @@ class SlideShare
         pack_response doc_id, slide, callback
 
   url_from_public_url: (slide, callback) ->
-    slide_number = to_slide_number slide.url
+    slide_number = @to_slide_number slide.url
     public_url = slide.public_url
 
     if @slideshare_url_to_doc_ids[public_url]?
