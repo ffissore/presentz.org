@@ -396,14 +396,24 @@ jQuery () ->
         view.render()
       @
 
+  class PresentationNewView extends Backbone.View
+
+    tagName: "div"
+
+    render: () ->
+      dust.render "_new", {}, (err, out) =>
+        return alert(err) if err?
+        loader_hide()
+        @$el.html(out)
+    
   class NavigationView extends Backbone.View
 
     el: $(".navbar > .navbar-inner > .container > .nav-collapse > .nav")
 
-    reset: (home) ->
+    reset: (highlight_idx) ->
       $("li:gt(1)", @$el).remove()
       $("li", @$el).removeClass "active"
-      $("li:first", @$el).addClass "active" if home?
+      $("li", @$el).eq(highlight_idx).addClass "active" if highlight_idx?
 
     presentation_menu_entry: (title) ->
       $li = $("li", @$el)
@@ -464,7 +474,13 @@ jQuery () ->
 
     home: () ->
       @presentationThumbList.fetch()
-      @navigationView.reset(true)
+      @navigationView.reset(0)
+      
+    new: () ->
+      @navigationView.reset(1)
+      view = new PresentationNewView()
+      @$el.html view.el
+      view.render()
 
     edit: (model) ->
       @view = new PresentationEditView model: model
@@ -496,8 +512,7 @@ jQuery () ->
       app.home()
 
     new: () ->
-      loader_show()
-      alert("unimplemented")
+      app.new()
 
     presentation: (id) ->
       loader_show()
