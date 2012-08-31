@@ -35,6 +35,8 @@ jQuery () ->
     slides_of: ($chapter) -> $("div[slide_index]", $chapter)
     elements_with_slide_index_in: ($elem) -> $("[slide_index]", $elem)
 
+    notify_save_text: ($parent) -> $("li.notify_save", $parent)
+
     slide_helper: ($elem) ->
       $chapter = $helper.chapter_of $elem
       slide_index = $helper.slide_index_from $elem
@@ -52,12 +54,13 @@ jQuery () ->
 
   class Presentation extends Backbone.DeepModel
 
+    keys_to_remove_on_save = [ "onebased", "$idx", "$len", "_plugin" ]
+
     urlRoot: "/m/api/presentations/"
 
     validate: presentzorg.validation
 
-    loaded = false
-    keys_to_remove_on_save = [ "onebased", "$idx", "$len", "_plugin" ]
+    loaded: false
 
     toJSON: () ->
       presentation = $.extend true, {}, @attributes
@@ -71,10 +74,12 @@ jQuery () ->
 
       @bind "change", app.edit, app
       @bind "all", (event) =>
-        if loaded and _.str.startsWith(event, "change")
+        if @loaded and _.str.startsWith(event, "change")
           app.navigationView.enable_save_button()
+        if @loaded and event is "sync"
+          app.navigationView.disable_save_button()
         if event is "change"
-          loaded = true
+          @loaded = true
         console.log arguments
 
       @fetch()
@@ -377,13 +382,14 @@ jQuery () ->
       $("li:first", @$el).addClass "active" if home?
 
     presentation_menu_entry: (title) ->
-      $("li", @$el).removeClass "active"
       $li = $("li", @$el)
       if $li.length < 3
+        $li.removeClass "active"
         dust.render "_presentation_menu_entry", { title: title }, (err, out) =>
           return alert(err) if err?
 
           @$el.append(out)
+          $helper.notify_save_text().hide()
       else
         $("a", $li.eq(2)).text title
 
@@ -398,6 +404,15 @@ jQuery () ->
       $button.attr "disabled", false
       $button.removeClass "disabled"
       $button.addClass "btn-warning"
+
+    disable_save_button: () ->
+      $button = $("button", @$el)
+      $button.attr "disabled", true
+      $button.addClass "disabled"
+      $button.removeClass "btn-warning"
+      $notify_save = $helper.notify_save_text()
+      $notify_save.fadeIn "slow", () ->
+        $notify_save.fadeOut "slow"
 
     save: () ->
       app.save()
