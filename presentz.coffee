@@ -49,6 +49,8 @@ app.configure ->
   app.use assets.assetsMiddleware
   app.use express.session
     store: new OrientDBStore(session_store_options)
+    cookie:
+      maxAge: 604800000 #a week
   app.use express.methodOverride()
   app.use everyauth.middleware()
   app.use auth.put_user_in_locals

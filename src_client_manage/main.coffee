@@ -398,19 +398,19 @@ jQuery () ->
   class PresentationNewView extends Backbone.View
 
     tagName: "div"
-    video_ok: false
-    slides_ok: false
+    @video: null
+    @slides: null
 
     render: () ->
       dust.render "_new", {}, (err, out) =>
         return alert(err) if err?
         loader_hide()
         @$el.html(out)
-        
+
     check_if_time_to_start: () ->
       $button = $("button", @$el)
-      console.log @video_ok, @slides_ok, $button
-      if @video_ok and @slides_ok
+      console.log @video, @slides
+      if @video? and @slides?
         $button.removeClass("disabled")
         $button.attr("disabled", false)
       else
@@ -426,9 +426,9 @@ jQuery () ->
       backend = _.find video_backends, (backend) -> backend.handle(url)
       backend.fetch_info url, (err, info) =>
         $thumb_container.empty()
-        @video_ok = false
+        @video = null
         if err?
-          $thumb_container.append("<div class=\"alert alert-error\">This URL doesn't look good</div>")
+          $thumb_container.append("<div class=\"alert alert-error\">This URL does not look good</div>")
           return
         feedback = "<p>Looks good!"
         if info.thumb?
@@ -436,7 +436,7 @@ jQuery () ->
         else
           feedback = feedback.concat(" At least the URL is well made. Hope there is a real video there.</p>")
         $thumb_container.append(feedback)
-        @video_ok = true
+        @video = info
         @check_if_time_to_start()
 
     onchange_slide: (event) ->
@@ -449,20 +449,36 @@ jQuery () ->
       backend = _.find slide_backends, (backend) -> backend.handle(url)
       backend.slideshow_info url, (err, slide, slide_info) =>
         $thumb_container.empty()
-        @slides_ok = false
+        @slides = null
         if err?
-          $thumb_container.append("<div class=\"alert alert-error\">This URL doesn't look good</div>")
+          $thumb_container.append("<div class=\"alert alert-error\">This URL does not look good</div>")
           return
-        $thumb_container.append("<p>Looks good! Here is the thumb.</p>")
-        @slides_ok = true
+        $thumb_container.append("<p>Looks good! Here is the first slide.</p>")
+        @slides = slide_info
         @check_if_time_to_start()
         thumb_type = backend.thumb_type_of(slide_info.slide_thumb)
         dust.render "_#{thumb_type}_slide_thumb", slide_info, (err, out) ->
           return alert(err) if err?
           $thumb_container.append(out)
-    
+
     onclick_start: () ->
-      alert("let's go!")
+      backend = _.find slide_backends, (backend) => backend.handle(@slides.url)
+      slides = backend.all_slides_of(@slides.url, @slides.public_url, @video.duration)
+
+      chapter =
+        video:
+          url: @video.url
+          thumb: @video.thumb
+          duration: @video.duration
+          slides: slides
+
+      presentation =
+        title: ""
+        speaker: ""
+        chapters: [ chapter ]
+        
+      console.log presentation
+      alert presentation
 
     events:
       "change input[name=video_url]": "onchange_video"

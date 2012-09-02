@@ -14,14 +14,36 @@ class SlideShare
 
   to_slide_number: (url) ->
     parseInt(@presentzSlideShare.slideNumber(url: url))
-
+    
   make_url = (doc_id, slide_number) ->
     "http://www.slideshare.net/#{doc_id}##{slide_number}"
 
-  slideshow_info: (url, callback) ->
-    @url_from_public_url url: "#{url}#1", public_url: url, (url) =>
-      @slide_info url: url, public_url: url, callback
+  all_slides_of: (url, public_url, duration) ->
+    doc_id = @to_doc_id(url)
+    ss_slides = @slideshare_infos[doc_id].Show.Slide
+    mean_slide_duration = Math.floor(duration / ss_slides.length)
+    slides = []
+    time = 0
+    for ss_slide, idx in ss_slides
+      slide = 
+        title: ""
+        time: time
+        url: make_url(doc_id, idx + 1)
+        public_url: public_url
+      time += mean_slide_duration
+      slides.push slide
+    slides    
     
+  slideshow_info: (public_url, callback) ->
+    @url_from_public_url url: "#{public_url}#1", public_url: public_url, (url) =>
+      slide =
+        url: url
+        public_url: public_url
+      @slide_info slide, (err, slide, slide_info) ->
+        return callback(err) if err?
+        slide_info.url = slide.url
+        callback undefined, slide, slide_info
+
   slide_info: (slide, callback) ->
     doc_id = @to_doc_id slide.url
 
@@ -74,7 +96,7 @@ class DummySlideBackend
         slide_thumb: slide.url
     else
       callback("invalid")
-      
+
   slideshow_info: (url, callback) ->
     @slide_info url: url, callback
 
