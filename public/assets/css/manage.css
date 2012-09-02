@@ -28,6 +28,11 @@ input.title-input {
     width: 220px;
 }
 
+.smallthumb {
+    height: 100px;
+    width: auto;
+}
+
 .thumb {
     width: 200px;
     height: 150px;

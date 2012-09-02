@@ -18,6 +18,10 @@ class SlideShare
   make_url = (doc_id, slide_number) ->
     "http://www.slideshare.net/#{doc_id}##{slide_number}"
 
+  slideshow_info: (url, callback) ->
+    @url_from_public_url url: "#{url}#1", public_url: url, (url) =>
+      @slide_info url: url, public_url: url, callback
+    
   slide_info: (slide, callback) ->
     doc_id = @to_doc_id slide.url
 
@@ -67,6 +71,9 @@ class DummySlideBackend
     callback undefined, slide,
       public_url: slide.url
       slide_thumb: slide.url
+      
+  slideshow_info: (url, callback) ->
+    @slide_info url: url, callback
 
   url_from_public_url: (slide, callback) ->
     callback slide.public_url

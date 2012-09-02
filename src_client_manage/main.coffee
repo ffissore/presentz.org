@@ -303,7 +303,7 @@ jQuery () ->
           $slide_thumb = slide_helper.slide_thumb()
           $slide_thumb.attr "src", slide.slide_thumb
           $slide_thumb.attr "thumb_type", backend.thumb_type_of slide.url
-          dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { thumb: $slide_thumb.attr "src" }, (err, out) ->
+          dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { slide_thumb: $slide_thumb.attr "src" }, (err, out) ->
             return alert(err) if err?
             $slide_thumb.html out
 
@@ -404,20 +404,40 @@ jQuery () ->
         return alert(err) if err?
         loader_hide()
         @$el.html(out)
-        
+
     onchange_video: (event) ->
       $elem = $(event.target)
       url = $elem.val()
       backend = _.find video_backends, (backend) -> backend.handle(url)
       backend.fetch_info url, (err, info) =>
-        return alert(err) if err?
-        console.log info
+        $thumb_container = $(".video_thumb", @$el)
+        $thumb_container.empty()
+        if err?
+          $thumb_container.append("<div class=\"alert alert-error\">This URL doesn't look good</div>")
+          return
+        feedback = "<p>Looks good!"
+        if info.thumb?
+          feedback = feedback.concat(" Here is the thumb.</p><img class=\"smallthumb\" src=\"#{info.thumb}\"/>")
+        else
+          feedback = feedback.concat(" At least the URL is well made. Hope there is a real video there.</p>")
+        $thumb_container.append(feedback)
 
     onchange_slide: (event) ->
       $elem = $(event.target)
       url = $elem.val()
+      url = "http://#{url}" unless _.str.startsWith(url, "http://")
       backend = _.find slide_backends, (backend) -> backend.handle(url)
-      console.log backend
+      backend.slideshow_info url, (err, slide, slide_info) =>
+        $thumb_container = $(".slide_thumb", @$el)
+        $thumb_container.empty()
+        if err?
+          $thumb_container.append("<div class=\"alert alert-error\">This URL doesn't look good</div>")
+          return
+        $thumb_container.append("<p>Looks good! Here is the thumb.</p>")
+        thumb_type = backend.thumb_type_of(slide_info.slide_thumb)
+        dust.render "_#{thumb_type}_slide_thumb", slide_info, (err, out) ->
+          return alert(err) if err?
+          $thumb_container.append(out)
 
     events:
       "change input[name=video_url]": "onchange_video"
