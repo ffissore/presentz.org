@@ -398,20 +398,35 @@ jQuery () ->
   class PresentationNewView extends Backbone.View
 
     tagName: "div"
+    video_ok: false
+    slides_ok: false
 
     render: () ->
       dust.render "_new", {}, (err, out) =>
         return alert(err) if err?
         loader_hide()
         @$el.html(out)
+        
+    check_if_time_to_start: () ->
+      $button = $("button", @$el)
+      console.log @video_ok, @slides_ok, $button
+      if @video_ok and @slides_ok
+        $button.removeClass("disabled")
+        $button.attr("disabled", false)
+      else
+        $button.addClass("disabled")
+        $button.attr("disabled", true)
 
     onchange_video: (event) ->
       $elem = $(event.target)
       url = $elem.val()
+      $thumb_container = $(".video_thumb", @$el)
+      $thumb_container.empty()
+      $thumb_container.append("Fetching info...")
       backend = _.find video_backends, (backend) -> backend.handle(url)
       backend.fetch_info url, (err, info) =>
-        $thumb_container = $(".video_thumb", @$el)
         $thumb_container.empty()
+        @video_ok = false
         if err?
           $thumb_container.append("<div class=\"alert alert-error\">This URL doesn't look good</div>")
           return
@@ -421,27 +436,38 @@ jQuery () ->
         else
           feedback = feedback.concat(" At least the URL is well made. Hope there is a real video there.</p>")
         $thumb_container.append(feedback)
+        @video_ok = true
+        @check_if_time_to_start()
 
     onchange_slide: (event) ->
       $elem = $(event.target)
       url = $elem.val()
       url = "http://#{url}" unless _.str.startsWith(url, "http://")
+      $thumb_container = $(".slide_thumb", @$el)
+      $thumb_container.empty()
+      $thumb_container.append("Fetching info...")
       backend = _.find slide_backends, (backend) -> backend.handle(url)
       backend.slideshow_info url, (err, slide, slide_info) =>
-        $thumb_container = $(".slide_thumb", @$el)
         $thumb_container.empty()
+        @slides_ok = false
         if err?
           $thumb_container.append("<div class=\"alert alert-error\">This URL doesn't look good</div>")
           return
         $thumb_container.append("<p>Looks good! Here is the thumb.</p>")
+        @slides_ok = true
+        @check_if_time_to_start()
         thumb_type = backend.thumb_type_of(slide_info.slide_thumb)
         dust.render "_#{thumb_type}_slide_thumb", slide_info, (err, out) ->
           return alert(err) if err?
           $thumb_container.append(out)
+    
+    onclick_start: () ->
+      alert("let's go!")
 
     events:
       "change input[name=video_url]": "onchange_video"
       "change input[name=slide_url]": "onchange_slide"
+      "click button": "onclick_start"
 
   class NavigationView extends Backbone.View
 

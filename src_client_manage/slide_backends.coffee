@@ -68,15 +68,21 @@ class DummySlideBackend
     "img"
 
   slide_info: (slide, callback) ->
-    callback undefined, slide,
-      public_url: slide.url
-      slide_thumb: slide.url
+    if presentzorg.is_url_valid slide.url and presentzorg.is_url_valid slide.public_url
+      callback undefined, slide,
+        public_url: slide.url
+        slide_thumb: slide.url
+    else
+      callback("invalid")
       
   slideshow_info: (url, callback) ->
     @slide_info url: url, callback
 
   url_from_public_url: (slide, callback) ->
-    callback slide.public_url
+    if presentzorg.is_url_valid slide.public_url
+      callback slide.public_url
+    else
+      callback("invalid")
 
 @presentzorg.slide_backends = {}
 @presentzorg.slide_backends.SlideShare = SlideShare

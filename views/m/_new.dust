@@ -5,8 +5,7 @@
   <form class="span6">
     <input name="video_url" type="text" class="input-xxlarge" placeholder="Video URL">
   </form>
-  <div class="video_thumb span4">thumb
-  </div>
+  <div class="video_thumb span4"></div>
 </div>
 <p>Now time for the slides. Where can I find them?</p>
 <div class="alert alert-info">
@@ -16,6 +15,6 @@
   <form class="span6">
     <input name="slide_url" type="text" class="input-xxlarge" placeholder="Slide URL">
   </form>
-  <div class="slide_thumb span4">thumb
-  </div>
+  <div class="slide_thumb span4"></div>
 </div>
+<button class="btn btn-success btn-large disabled" type="button" disabled="true">Start!</button>
