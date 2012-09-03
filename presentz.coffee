@@ -80,7 +80,8 @@ app.get "/r/talks.html", routes.list_catalogs
 app.all "/m/*", routes.ensure_is_logged
 app.get "/m/", routes.static_view "m/index"
 app.get "/m/api/presentations/:presentation", api.presentation_load
-app.put "/m/api/presentations/:presentation", api.presentation_update
+app.put "/m/api/presentations/:presentation", api.presentation_save
+#app.post "/m/api/presentations", api.presentation_save
 app.get "/m/api/presentations", api.presentations
 app.get "/m/api/slideshare/url_to_doc_id", api.slideshare_url_to_doc_id
 app.get "/m/api/slideshare/:doc_id", api.slideshare_slides_of

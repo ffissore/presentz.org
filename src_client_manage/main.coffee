@@ -74,21 +74,16 @@ jQuery () ->
 
   class Presentation extends Backbone.DeepModel
 
-    keys_to_remove_on_save = [ "onebased", "$idx", "$len", "_plugin" ]
-
     urlRoot: "/m/api/presentations/"
 
     validate: presentzorg.validation
 
     loaded: false
     
-    isNew: () ->
-      !@has("@rid")
-
     toJSON: () ->
       presentation = $.extend true, {}, @attributes
 
-      utils.visit_presentation presentation, utils.remove_unwanted_fields_from, keys_to_remove_on_save
+      utils.visit_presentation presentation, utils.remove_unwanted_fields_from, [ "onebased", "$idx", "$len", "_plugin" ]
 
       return presentation
 
@@ -107,11 +102,12 @@ jQuery () ->
           @loaded = true
         console.log arguments
       
-      @fetch() if @has("id")
-      
-      @set "id", utils.generate_id(@get("title")) if !@has("id")
-      
-      if @isNew()
+      keys = (key for key, value of @attributes)
+
+      if keys.length is 1 and keys[0] is "id"
+        @fetch()
+      else
+        @set "id", utils.generate_id(@get("title"))
         @set "@class", "V"
         @set "@type", "d"
         @set "_type", "presentation"

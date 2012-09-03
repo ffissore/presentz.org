@@ -7,11 +7,23 @@ init = (database) ->
   db = database
   @
 
-save = (document, callback) ->
-  db.save document, callback
+save = (vertex, callback) ->
+  db.save vertex, callback
 
-cascading_save = (document, callback) ->
-  db.cascadingSave document, callback
+create = (vertex, callback) ->
+  db.createVertex vertex, callback
+
+link_slide_to_chapter = (slide, chapter, callback) ->
+  db.createEdge slide, chapter, { label: "slide_of" }, callback
+
+link_chapter_to_presentation = (chapter, presentation, callback) ->
+  db.createEdge chapter, presentation, { label: "chapter_of" }, callback
+
+link_user_to_presentation = (user, presentation, callback) ->
+  db.createEdge user, presentation, { label: "authored" }, callback
+
+cascading_save = (vertex, callback) ->
+  db.cascadingSave vertex, callback
 
 count_presentations_in_catalog = (catalog, callback) ->
   db.getInEdges catalog, "part_of", (err, edges) ->
@@ -74,11 +86,11 @@ load_entire_presentation_with_query = (query, callback) ->
   db.command query, (err, results) ->
     return callback(err) if err?
     return callback("no record found") if results.length is 0
-    
+
     presentation = results[0]
     load_comments_of presentation, (err) ->
       return callback(err) if err?
-      
+
       load_chapters_of presentation, (err) ->
         return callback(err) if err?
 
@@ -138,3 +150,7 @@ exports.from_catalog_to_presentations = from_catalog_to_presentations
 exports.create_comment = create_comment
 exports.save = save
 exports.cascading_save = cascading_save
+exports.create = create
+exports.link_slide_to_chapter = link_slide_to_chapter
+exports.link_chapter_to_presentation = link_chapter_to_presentation
+exports.link_user_to_presentation = link_user_to_presentation

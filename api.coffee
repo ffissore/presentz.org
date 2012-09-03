@@ -2,6 +2,7 @@ http = require "http"
 xml2json = require "xml2json"
 node_slideshare = require "slideshare"
 utils = require "./utils"
+_ = require "underscore"
 
 storage = null
 slideshare = null
@@ -28,14 +29,14 @@ has_slides = (presentation) ->
 
   false
 
-presentation_update_published = (presentation, callback) ->
+presentation_save_published = (presentation, callback) ->
   allowed_fields = [ "@class", "@type", "title", "speaker", "_type", "published", "id", "in", "out", "@version", "@rid" ]
 
   utils.ensure_only_wanted_fields_in presentation, allowed_fields
 
   storage.save presentation, callback
 
-presentation_update_everything = (presentation, callback) ->
+presentation_save_everything = (user, presentation, callback) ->
   allowed_map_of_fields =
     presentation: [ "@class", "@type", "@version", "@rid", "in", "out", "id", "title", "time", "speaker", "_type", "published", "chapters" ]
     chapter: [ "@class", "@type", "@version", "@rid", "in", "out", "duration", "_type", "_index", "video", "slides" ]
@@ -44,9 +45,66 @@ presentation_update_everything = (presentation, callback) ->
 
   utils.visit_presentation presentation, utils.ensure_only_wanted_map_of_fields_in, allowed_map_of_fields
   
-  storage.cascading_save presentation, callback
+  save_all = (objs, callback) ->
+    return callback(undefined, []) if objs.length is 0
+    
+    saved_objs = []
+    for obj in objs
+      save obj, (err, obj) ->
+        return callback(err) if err?
+        saved_objs.push(obj)
+        return callback(undefined, saved_objs) if saved_objs.length is objs.length
+  
+  save = (obj, callback) ->
+    is_new = !obj["@rid"]?
+    cb = (err, obj) ->
+      return callback(err) if err?
+      obj.is_new = is_new
+      callback(undefined, obj)
+      
+    if is_new
+      storage.create obj, cb
+    else
+      storage.save obj, cb
+      
+  link_all_new = (objs, node_to_link_to, storage_function, callback) ->
+    new_objs = _.filter objs, (obj) -> obj.is_new? and obj.is_new
+    
+    return callback(undefined) if new_objs.length is 0
+    
+    linked_objs = []
+    for obj in new_objs
+      storage_function obj, node_to_link_to, (err, link) ->
+        return callback(err) if err?
+        linked_objs.push(link)
+        return callback(undefined) if linked_objs.length is new_objs.length
 
-presentation_update = (req, res, next) ->
+  save_all_chapters = (chapters, callback) ->
+    return callback(undefined, []) if chapters.length is 0
+    saved_chapters = []
+    for chapter in chapters
+      save_all chapter.slides, (err, slides) ->
+        return callback(err) if err?
+        save chapter, (err, chapter) ->
+          return callback(err) if err?
+          link_all_new slides, chapter, storage.link_slide_to_chapter, (err) ->
+            return callback(err) if err?
+            saved_chapters.push(chapter)
+            return callback(undefined, saved_chapters) if saved_chapters.length is chapters.length
+        
+  save_all_chapters presentation.chapters, (err, chapters) ->
+    return callback(err) if err?
+    save presentation, (err, presentation) ->
+      return callback(err) if err?
+      link_all_new chapters, presentation, storage.link_chapter_to_presentation, (err) ->
+        return callback(err) if err?
+        
+        storage.link_user_to_presentation user, presentation, (err) ->
+          return callback(err) if err?
+
+          storage.load_entire_presentation_from_id presentation.id, callback
+
+presentation_save = (req, res, next) ->
   presentation = req.body
 
   callback = (err, new_presentation) ->
@@ -55,9 +113,9 @@ presentation_update = (req, res, next) ->
     res.send new_presentation
 
   if has_slides(presentation)
-    presentation_update_everything(presentation, callback)
+    presentation_save_everything(req.user, presentation, callback)
   else
-    presentation_update_published(presentation, callback)
+    presentation_save_published(presentation, callback)
 
 presentation_load = (req, res, next) ->
   storage.load_entire_presentation_from_id req.params.presentation, (err, presentation) ->
@@ -93,7 +151,7 @@ slideshare_url_to_doc_id = (req, res, next) ->
 
 exports.init = init
 exports.presentations = presentations
-exports.presentation_update = presentation_update
+exports.presentation_save = presentation_save
 exports.presentation_load = presentation_load
 exports.slideshare_slides_of = slideshare_slides_of
 exports.slideshare_url_to_doc_id = slideshare_url_to_doc_id
