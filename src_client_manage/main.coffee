@@ -397,7 +397,7 @@ jQuery () ->
     model: PresentationThumb
 
     comparator: (presentation) ->
-      presentation.get("title")
+      presentation.get("title").toLowerCase()
 
   class PresentationThumbListView extends Backbone.View
 
@@ -428,7 +428,6 @@ jQuery () ->
 
     check_if_time_to_start: () ->
       $button = $("button", @$el)
-      console.log @video, @slideshow
       if @video? and @slideshow?
         $button.removeClass("disabled")
         $button.attr("disabled", false)
