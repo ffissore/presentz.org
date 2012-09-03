@@ -91,12 +91,12 @@ class DummySlideBackend
     "img"
 
   slide_info: (slide, callback) ->
-    if utils.is_url_valid(slide.url) and utils.is_url_valid(slide.public_url)
+    if utils.is_url_valid(slide.url)
       callback undefined, slide,
         public_url: slide.url
         slide_thumb: slide.url
     else
-      callback("Invalid URLs: '#{slide.url}' or '#{slide.public_url}'")
+      callback("Invalid URL: '#{slide.url}'")
 
   slideshow_info: (url, callback) ->
     @slide_info url: url, callback
