@@ -103,10 +103,10 @@ jQuery () ->
         if event is "change"
           @loaded = true
         console.log arguments
-
-      @fetch()
       
-      @set "id", utils.generate_id(@title) if !@has("id")
+      @fetch() if @has("id")
+      
+      @set "id", utils.generate_id(@get("title")) if !@has("id")
 
   class PresentationEditView extends Backbone.View
 
@@ -491,8 +491,7 @@ jQuery () ->
         title: @title
         chapters: [ chapter ]
 
-      console.log new Presentation(presentation)
-      #app.edit new Presentation(presentation)
+      new Presentation(presentation)
 
     events:
       "change input[name=video_url]": "onchange_video"
