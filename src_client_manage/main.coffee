@@ -481,17 +481,14 @@ jQuery () ->
       slides = backend.all_slides_of(@slideshow.url, @slideshow.public_url, @video.duration)
 
       chapter =
+        duration: @video.duration
         video:
           url: @video.url
           thumb: @video.thumb
-          duration: @video.duration
-          slides: slides
+        slides: slides
 
-      presentation =
-        title: @title
-        chapters: [ chapter ]
-
-      new Presentation(presentation)
+      presentation = new Presentation title: @title, chapters: [ chapter ]
+      router.navigate presentation.get("id")
 
     events:
       "change input[name=video_url]": "onchange_video"
