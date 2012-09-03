@@ -2,7 +2,7 @@ class SlideShare
 
   constructor: (@presentzSlideShare) ->
     @slideshare_infos = {}
-    @slideshare_url_to_doc_ids = {}
+    @slideshare_url_to_slideshows = {}
 
   handle: (url) ->
     @presentzSlideShare.handle url: url
@@ -26,7 +26,6 @@ class SlideShare
     time = 0
     for ss_slide, idx in ss_slides
       slide = 
-        title: ""
         time: time
         url: make_url(doc_id, idx + 1)
         public_url: public_url
@@ -35,13 +34,14 @@ class SlideShare
     slides    
     
   slideshow_info: (public_url, callback) ->
-    @url_from_public_url url: "#{public_url}#1", public_url: public_url, (url) =>
+    @url_from_public_url url: "#{public_url}#1", public_url: public_url, (url, slideshow) =>
       slide =
         url: url
         public_url: public_url
       @slide_info slide, (err, slide, slide_info) ->
         return callback(err) if err?
         slide_info.url = slide.url
+        slide_info.title = slideshow.Title
         callback undefined, slide, slide_info
 
   slide_info: (slide, callback) ->
@@ -69,14 +69,15 @@ class SlideShare
     slide_number = @to_slide_number slide.url
     public_url = slide.public_url
 
-    if @slideshare_url_to_doc_ids[public_url]?
-      callback make_url(@slideshare_url_to_doc_ids[public_url], slide_number)
+    if @slideshare_url_to_slideshows[public_url]?
+      slideshow = @slideshare_url_to_slideshows[public_url]
+      callback make_url(slideshow.PPTLocation, slide_number), slideshow
       return
 
     $.get "/m/api/slideshare/url_to_doc_id", { url: public_url }, (ss) =>
-      doc_id = ss.Slideshow.PPTLocation
-      @slideshare_url_to_doc_ids[slide.public_url] = doc_id
-      callback make_url(doc_id, slide_number)
+      slideshow = ss.Slideshow
+      @slideshare_url_to_slideshows[slide.public_url] = slideshow
+      callback make_url(slideshow.PPTLocation, slide_number), slideshow
 
   change_slide_number: (old_url, slide_number) ->
     old_url.substring(0, old_url.lastIndexOf("#") + 1).concat(slide_number)
@@ -90,21 +91,21 @@ class DummySlideBackend
     "img"
 
   slide_info: (slide, callback) ->
-    if presentzorg.is_url_valid slide.url and presentzorg.is_url_valid slide.public_url
+    if utils.is_url_valid(slide.url) and utils.is_url_valid(slide.public_url)
       callback undefined, slide,
         public_url: slide.url
         slide_thumb: slide.url
     else
-      callback("invalid")
+      callback("Invalid URLs: '#{slide.url}' or '#{slide.public_url}'")
 
   slideshow_info: (url, callback) ->
     @slide_info url: url, callback
 
   url_from_public_url: (slide, callback) ->
-    if presentzorg.is_url_valid slide.public_url
+    if utils.is_url_valid slide.public_url
       callback slide.public_url
     else
-      callback("invalid")
+      callback("Invalid URL: #{slide.public_url}")
 
 @presentzorg.slide_backends = {}
 @presentzorg.slide_backends.SlideShare = SlideShare

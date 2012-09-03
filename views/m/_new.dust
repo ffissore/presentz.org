@@ -17,4 +17,10 @@
   </form>
   <div class="slide_thumb span4"></div>
 </div>
+<p>Have you already choosed a title? (If the slideshow has one, I'll use it)</p>
+<div class="row-fluid">
+  <form class="span8">
+    <input name="title" type="text" class="input-xxlarge" placeholder="Title">
+  </form>
+</div>
 <button class="btn btn-success btn-large disabled" type="button" disabled="true">Start!</button>

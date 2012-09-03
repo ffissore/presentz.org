@@ -58,6 +58,30 @@ visit_presentation = (presentation, func, fields_or_maps_of_fields) ->
             apply_on "user", comment.user if comment.user?
   return
 
+chars = "0123456789QWERTYUIOPASDFGHJKLZXCVBNM"
+non_word_chars = /[\W]/g
+short_words = /\b\w{2}\b/g
+
+generate_id = (title) ->
+  id = ""
+  for idx in [0...10]
+    c = parseInt(Math.random() * chars.length)
+    id = id.concat(chars[c])
+  
+  return id unless title? and title isnt ""
+
+  title = title.toLowerCase().replace(non_word_chars, " ").replace(short_words, "").replace(/\s/g, "_")
+  while title.indexOf("__") isnt -1
+    title = title.replace("__", "_")
+  title = title.replace(/[_]+$/, "")
+  
+  id.concat("_", title)
+
+url_regexp = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+
+is_url_valid = (url) ->
+  url_regexp.test(url)
+
 if exports?
   root = exports
 else
@@ -70,3 +94,5 @@ root.remove_unwanted_map_of_fields_from = remove_unwanted_map_of_fields_from
 root.ensure_only_wanted_fields_in = ensure_only_wanted_fields_in
 root.ensure_only_wanted_map_of_fields_in = ensure_only_wanted_map_of_fields_in
 root.visit_presentation = visit_presentation
+root.generate_id = generate_id
+root.is_url_valid = is_url_valid

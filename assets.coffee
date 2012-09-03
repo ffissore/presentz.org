@@ -117,7 +117,6 @@ assetsMiddleware = assetManager
     "utils.coffee",
     "dustjs_helpers.coffee",
     "src_client_manage/main.coffee"
-    "src_client_manage/utils.coffee"
     "src_client_manage/video_backends.coffee"
     "src_client_manage/slide_backends.coffee"
     "src_client_manage/validation.coffee"

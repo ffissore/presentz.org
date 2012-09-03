@@ -33,6 +33,8 @@ jQuery () ->
     slide_thumb_of: (slide_index, $chapter) -> $("div.slide_thumb", @slide_of(slide_index, $chapter))
     slides_of: ($chapter) -> $("div[slide_index]", $chapter)
     elements_with_slide_index_in: ($elem) -> $("[slide_index]", $elem)
+    
+    new_title: () -> $("input[name=title]")
 
     notify_save_text: ($parent) -> $("li.notify_save", $parent)
     whoops: (err, callback) ->
@@ -103,6 +105,8 @@ jQuery () ->
         console.log arguments
 
       @fetch()
+      
+      @set "id", utils.generate_id(@title) if !@has("id")
 
   class PresentationEditView extends Backbone.View
 
@@ -205,7 +209,7 @@ jQuery () ->
       $video_thumb_error_msg_container = $elem.next()
       $container = $helper.parent_control_group_of($elem)
 
-      if presentzorg.is_url_valid thumb_url
+      if utils.is_url_valid thumb_url
         $container.removeClass "error"
         $video_thumb_error_msg_container.empty()
         chapter_index = $elem.attr("chapter_index")
@@ -285,7 +289,7 @@ jQuery () ->
     onchange_slide_public_url: (event) ->
       $elem = $(event.target)
       public_url = $elem.val()
-      return if !presentzorg.is_url_valid public_url
+      return if !utils.is_url_valid public_url
 
       slide_helper = $helper.slide_helper $elem
 
@@ -398,8 +402,10 @@ jQuery () ->
   class PresentationNewView extends Backbone.View
 
     tagName: "div"
+
     @video: null
-    @slides: null
+    @slideshow: null
+    @title: null
 
     render: () ->
       dust.render "_new", {}, (err, out) =>
@@ -409,8 +415,8 @@ jQuery () ->
 
     check_if_time_to_start: () ->
       $button = $("button", @$el)
-      console.log @video, @slides
-      if @video? and @slides?
+      console.log @video, @slideshow
+      if @video? and @slideshow?
         $button.removeClass("disabled")
         $button.attr("disabled", false)
       else
@@ -447,23 +453,32 @@ jQuery () ->
       $thumb_container.empty()
       $thumb_container.append("Fetching info...")
       backend = _.find slide_backends, (backend) -> backend.handle(url)
-      backend.slideshow_info url, (err, slide, slide_info) =>
+      backend.slideshow_info url, (err, slide, slideshow_info) =>
         $thumb_container.empty()
-        @slides = null
+        @slideshow = null
         if err?
           $thumb_container.append("<div class=\"alert alert-error\">This URL does not look good</div>")
           return
         $thumb_container.append("<p>Looks good! Here is the first slide.</p>")
-        @slides = slide_info
+        @slideshow = slideshow_info
         @check_if_time_to_start()
-        thumb_type = backend.thumb_type_of(slide_info.slide_thumb)
-        dust.render "_#{thumb_type}_slide_thumb", slide_info, (err, out) ->
+        thumb_type = backend.thumb_type_of(slideshow_info.slide_thumb)
+        dust.render "_#{thumb_type}_slide_thumb", slideshow_info, (err, out) ->
           return alert(err) if err?
           $thumb_container.append(out)
 
+        $title = $helper.new_title()
+        if slideshow_info.title? and $title.val() is ""
+          $title.val(slideshow_info.title)
+          $title.change()
+
+    onchange_title: (event) ->
+      $elem = $(event.target)
+      @title = $elem.val()
+
     onclick_start: () ->
-      backend = _.find slide_backends, (backend) => backend.handle(@slides.url)
-      slides = backend.all_slides_of(@slides.url, @slides.public_url, @video.duration)
+      backend = _.find slide_backends, (backend) => backend.handle(@slideshow.url)
+      slides = backend.all_slides_of(@slideshow.url, @slideshow.public_url, @video.duration)
 
       chapter =
         video:
@@ -473,16 +488,16 @@ jQuery () ->
           slides: slides
 
       presentation =
-        title: ""
-        speaker: ""
+        title: @title
         chapters: [ chapter ]
-        
-      console.log presentation
-      alert presentation
+
+      console.log new Presentation(presentation)
+      #app.edit new Presentation(presentation)
 
     events:
       "change input[name=video_url]": "onchange_video"
       "change input[name=slide_url]": "onchange_slide"
+      "change input[name=title]": "onchange_title"
       "click button": "onclick_start"
 
   class NavigationView extends Backbone.View
