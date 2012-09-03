@@ -10,9 +10,13 @@ init = (s, slideshare_conf) ->
   storage = s
   slideshare = new node_slideshare slideshare_conf.api_key, slideshare_conf.shared_secret
 
+safe_next = (next, err) ->
+  err = new Error(err) if utils.type_of(err) isnt "error"
+  next(err)
+
 presentations = (req, res, next) ->
   storage.from_user_to_presentations req.user, (err, presentations) ->
-    return next(err) if err?
+    return safe_next(next, err) if err?
 
     res.send presentations
 
@@ -46,7 +50,7 @@ presentation_update = (req, res, next) ->
   presentation = req.body
 
   callback = (err, new_presentation) ->
-    return next(err) if err?
+    return safe_next(next, err) if err?
 
     res.send new_presentation
 
@@ -57,7 +61,7 @@ presentation_update = (req, res, next) ->
 
 presentation_load = (req, res, next) ->
   storage.load_entire_presentation_from_id req.params.presentation, (err, presentation) ->
-    return next(err) if err?
+    return safe_next(next, err) if err? 
 
     res.send presentation
 
@@ -93,15 +97,3 @@ exports.presentation_update = presentation_update
 exports.presentation_load = presentation_load
 exports.slideshare_slides_of = slideshare_slides_of
 exports.slideshare_url_to_doc_id = slideshare_url_to_doc_id
-
-###
-exports.mines_authored= (req, res) ->
-  api.db.fromVertex(req.user).outVertexes "authored", (err, presentations) ->
-    for p in presentations
-      delete p.chapters
-
-    res.send presentations
-
-exports.mines_held= ->
-  throw new Error
-###

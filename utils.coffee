@@ -82,6 +82,10 @@ url_regexp = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&
 is_url_valid = (url) ->
   url_regexp.test(url)
 
+type_of = (value) ->
+  type = toString.call(value).substr(8)
+  type.substr(0, type.length - 1).toLowerCase()
+
 if exports?
   root = exports
 else
@@ -96,3 +100,4 @@ root.ensure_only_wanted_map_of_fields_in = ensure_only_wanted_map_of_fields_in
 root.visit_presentation = visit_presentation
 root.generate_id = generate_id
 root.is_url_valid = is_url_valid
+root.type_of = type_of

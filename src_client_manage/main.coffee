@@ -81,6 +81,9 @@ jQuery () ->
     validate: presentzorg.validation
 
     loaded: false
+    
+    isNew: () ->
+      !@has("@rid")
 
     toJSON: () ->
       presentation = $.extend true, {}, @attributes
@@ -107,6 +110,20 @@ jQuery () ->
       @fetch() if @has("id")
       
       @set "id", utils.generate_id(@get("title")) if !@has("id")
+      
+      if @isNew()
+        @set "@class", "V"
+        @set "@type", "d"
+        @set "_type", "presentation"
+        for chapter, chapter_idx in @get("chapters")
+          @set "chapters.#{chapter_idx}.@class", "V"
+          @set "chapters.#{chapter_idx}.@type", "d"
+          @set "chapters.#{chapter_idx}._type", "chapter"
+          @set "chapters.#{chapter_idx}._index", chapter_idx
+          for slide, slide_idx in @get("chapters.#{chapter_idx}.slides")
+            @set "chapters.#{chapter_idx}.slides.#{slide_idx}.@class", "V"
+            @set "chapters.#{chapter_idx}.slides.#{slide_idx}.@type", "d"
+            @set "chapters.#{chapter_idx}.slides.#{slide_idx}._type", "chapter"
 
   class PresentationEditView extends Backbone.View
 
@@ -486,8 +503,13 @@ jQuery () ->
           url: @video.url
           thumb: @video.thumb
         slides: slides
+        
+      presentation =
+        title: @title, 
+        chapters: [ chapter ], 
+        published: false
 
-      presentation = new Presentation title: @title, chapters: [ chapter ]
+      presentation = new Presentation(presentation) 
       router.navigate presentation.get("id")
 
     events:
