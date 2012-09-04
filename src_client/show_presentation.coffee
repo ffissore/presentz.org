@@ -323,8 +323,8 @@ $().ready () ->
         chapter: chapter_index_val
         slide: slide_index_val
       success: (new_comment_html) ->
-        $comments = $("#comments")
-        insert_new_comment($comments, chapter_index_val, slide_index_val, new_comment_html)
+        insert_new_comment($("#comments"), chapter_index_val, slide_index_val, new_comment_html)
+        insert_new_comment($("#allcomments"), chapter_index_val, slide_index_val, new_comment_html)
         Controls.bind_link_to_slides_from_comments()
         #$new_comment = $("div.item_comment[chapter_index=#{$chapter_index.val()}][slide_index=#{$slide_index.val()}]").first()
         #$("p", $new_comment).effect("highlight", {color: "#5d7908"}, 1500)
