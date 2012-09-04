@@ -534,11 +534,11 @@ jQuery () ->
       else
         $("a", $li.eq(2)).text title
 
-    home: (event) ->
-      router.navigate "home", trigger: true unless $(event.currentTarget).parent().hasClass "active"
+    mypres: (event) ->
+      router.navigate "mypres", trigger: true unless $(event.currentTarget).parent().hasClass "active"
 
-    new: (event) ->
-      router.navigate "new", trigger: true unless $(event.currentTarget).parent().hasClass "active"
+    make: (event) ->
+      router.navigate "make", trigger: true unless $(event.currentTarget).parent().hasClass "active"
 
     enable_save_button: () ->
       $button = $("button", @$el)
@@ -559,8 +559,8 @@ jQuery () ->
       app.save()
 
     events:
-      "click a[href=#home]": "home"
-      "click a[href=#new]": "new"
+      "click a[href=#mypres]": "mypres"
+      "click a[href=#make]": "make"
       "click button.save": "save"
 
   class AppView extends Backbone.View
@@ -579,11 +579,11 @@ jQuery () ->
       @$el.html view.el
       view.render()
 
-    home: () ->
+    mypres: () ->
       @presentationThumbList.fetch()
       @navigationView.reset(0)
 
-    new: () ->
+    make: () ->
       @navigationView.reset(1)
       view = new PresentationNewView()
       @$el.html view.el
@@ -606,20 +606,20 @@ jQuery () ->
   class AppRouter extends Backbone.Router
 
     routes:
-      "": "go_home"
-      "home": "home"
-      "new": "new"
+      "": "go_mypres"
+      "mypres": "mypres"
+      "make": "make"
       ":presentation": "presentation"
 
-    go_home: () ->
-      @navigate "home", trigger: true
+    go_mypres: () ->
+      @navigate "mypres", trigger: true
 
-    home: () ->
+    mypres: () ->
       loader_show()
-      app.home()
+      app.mypres()
 
-    new: () ->
-      app.new()
+    make: () ->
+      app.make()
 
     presentation: (id) ->
       loader_show()

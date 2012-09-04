@@ -18,8 +18,8 @@
         <a class="brand" href="">Presentz.org</a>
         <div class="nav-collapse">
           <ul class="nav">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#new">New</a></li>
+            <li><a href="#mypres">My Presentations</a></li>
+            <li><a href="#make">Make One</a></li>
           </ul>
         </div>
       </div>
@@ -28,7 +28,7 @@
   
   <div class="loader">
     <p>Fetching data and rendering page...</p>
-    <img src="/assets/img/ajax-loader.gif"/>
+    <img src="/assets/img/progressbar.gif"/>
     <p/>
     <p>The above progress bar should keep on moving.</p>
     <p>If it's not, it's probably because the browser is busy rendering the page. Just wait a second...</p>
