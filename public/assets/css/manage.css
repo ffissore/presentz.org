@@ -65,9 +65,14 @@ button.navbar-btn {
     margin-left: 3px;
 }
 
+.slide_even, .slide_odd {
+    margin-bottom: 5px;
+}
+
 .slide_even.alert, .slide_odd.alert {
     padding: 5px;
     border-radius: 3px 3px 3px 3px;
+    margin-bottom: 5px;
 }
 
 .slide_even:not(.alert) {

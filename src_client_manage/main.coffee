@@ -602,7 +602,9 @@ jQuery () ->
       @view = new PresentationEditView model: model
       @$el.html @view.el
       @view.render()
+      $("div[chapter_index=0] ~ div[slide_index=0]").addClass "alert alert-info"
       prsntz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
+        $("div[chapter_index=0] ~ div[slide_index=0]").removeClass "alert alert-info"
         $("div[chapter_index=#{previous_chapter_index}] ~ div[slide_index=#{previous_slide_index}]").removeClass "alert alert-info"
         $("div[chapter_index=#{new_chapter_index}] ~ div[slide_index=#{new_slide_index}]").addClass "alert alert-info"
       model.unbind "change", @edit
