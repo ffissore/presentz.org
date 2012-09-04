@@ -39,6 +39,15 @@ input.title-input {
     max-width: 200px;
 }
 
+.thumbloading {
+    width: 200px;
+    height: 150px;
+    max-width: 200px;
+    background-image: data-url(../../assets/img/thumbloading.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 img {
     width: 100%;
 }
