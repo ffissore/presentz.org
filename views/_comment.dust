@@ -5,5 +5,5 @@
   {:else}
   on presentation
   {/slide_title}</p>
-  <div class="text_comment">{.text}</div>
+  <div class="text_comment">{.text|s|h|pn}</div>
 </div>
