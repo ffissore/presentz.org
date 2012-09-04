@@ -90,7 +90,13 @@ jQuery () ->
     initialize: () ->
       _.bindAll @
 
-      @bind "change", app.edit, app
+      @bind "change", () ->
+        utils.visit_presentation @attributes, (objtype, obj, fields) ->
+          return unless objtype is "chapter"
+          for slide, idx in obj.slides
+            slide.evenness = if (idx % 2) is 0 then "even" else "odd"
+        app.edit(@)
+        
       @bind "error", (model, err) ->
         alert "Error #{err.status}: #{err.responseText}"
       @bind "all", (event) =>
@@ -491,6 +497,9 @@ jQuery () ->
     onclick_start: () ->
       backend = _.find slide_backends, (backend) => backend.handle(@slideshow.url)
       slides = backend.all_slides_of(@slideshow.url, @slideshow.public_url, @video.duration)
+      
+      for slide, idx in slides
+        slide.evenness = if (idx % 2) is 0 then "even" else "odd"
 
       chapter =
         duration: @video.duration

@@ -56,3 +56,30 @@ button.navbar-btn {
     margin-top: 4px;
     margin-left: 6px;
 }
+
+.slide_thumb.span2 {
+    margin-left: 0;
+}
+
+.video_thumb.span2 {
+    margin-left: 3px;
+}
+
+.slide_even.alert, .slide_odd.alert {
+    padding: 5px;
+    border-radius: 3px 3px 3px 3px;
+}
+
+.slide_even:not(.alert) {
+    background-color: #e9e9e9;
+    padding: 5px;
+    border-radius: 3px 3px 3px 3px;
+}
+
+.form-horizontal .control-group {
+    margin-bottom: 5px;
+}
+
+.control-group {
+    margin-top: 5px;
+}

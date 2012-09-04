@@ -38,13 +38,13 @@
           </div>
         </fieldset>
       </form>
-      <div class="span2">
+      <div class="video_thumb span2">
         <img class="thumb" src="{.video.thumb}" chapter_index="{@idx}{.}{/idx}"/>
       </div>
     </div>
     <h4>Slides</h4>
     {#slides}
-      <div class="row-fluid" slide_index="{@idx}{.}{/idx}">
+      <div class="row-fluid slide_{evenness}" slide_index="{@idx}{.}{/idx}">
         <form class="span10 form-horizontal">
           <fieldset>
             <div class="control-group">
