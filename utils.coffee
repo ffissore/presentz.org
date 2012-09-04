@@ -58,7 +58,7 @@ visit_presentation = (presentation, func, fields_or_maps_of_fields) ->
             apply_on "user", comment.user if comment.user?
   return
 
-chars = "0123456789QWERTYUIOPASDFGHJKLZXCVBNM"
+chars = "0123456789qwertyuiopasdfghjklzxcvbnm"
 non_word_chars = /[\W]/g
 short_words = /\b\w{2}\b/g
 
