@@ -13,16 +13,16 @@
   <div class="span12">
     <ul class="play_pause">
       <li>
-        <a href="#" class="play">play</a>
+        <a href="#" class="play_pause_btn play">play</a>
       </li>
       <li class="play_pause_divider"></li>
       <li>
-        <span>Time:&nbsp;</span><input type="text" name="current_time" class="input-mini"/><span>&nbsp;seconds</span>
+        <span>Time:&nbsp;</span><input type="text" name="current_time" class="input-mini" value="0"/><span>&nbsp;seconds</span>
       </li>
       <li class="play_pause_divider"></li>
       <li>
         <a href="#" class="slide_left">left</a>
-        <span>Slide #:&nbsp;</span><input type="text" name="slide_number" class="input-mini"/>
+        <span>Slide #:&nbsp;</span><input type="text" name="slide_number" value="1" class="input-mini"/>
         <a href="#" class="slide_right">right</a>
       </li>
     </ul>

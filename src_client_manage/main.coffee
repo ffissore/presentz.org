@@ -33,7 +33,7 @@ jQuery () ->
     slide_thumb_of: (slide_index, $chapter) -> $("div.slide_thumb", @slide_of(slide_index, $chapter))
     slides_of: ($chapter) -> $("div[slide_index]", $chapter)
     elements_with_slide_index_in: ($elem) -> $("[slide_index]", $elem)
-    
+
     new_title: () -> $("input[name=title]")
 
     notify_save_text: ($parent) -> $("li.notify_save", $parent)
@@ -79,7 +79,7 @@ jQuery () ->
     validate: presentzorg.validation
 
     loaded: false
-    
+
     toJSON: () ->
       presentation = $.extend true, {}, @attributes
 
@@ -96,7 +96,7 @@ jQuery () ->
           for slide, idx in obj.slides
             slide.evenness = if (idx % 2) is 0 then "even" else "odd"
         app.edit(@)
-        
+
       @bind "error", (model, err) ->
         alert "Error #{err.status}: #{err.responseText}"
       @bind "all", (event) =>
@@ -107,7 +107,7 @@ jQuery () ->
         if event is "change"
           @loaded = true
         console.log arguments
-      
+
       keys = (key for key, value of @attributes)
 
       if keys.length is 1 and keys[0] is "id"
@@ -333,7 +333,18 @@ jQuery () ->
     save: () ->
       @model.save()
 
+    onclick_playpause: (event) ->
+      $btn = $(event.target)
+      if prsntz.isPaused()
+        prsntz.play()
+        $btn.removeClass("play").addClass("pause")
+      else
+        prsntz.pause()
+        $btn.removeClass("pause").addClass("play")
+      false
+
     events:
+      "click a.play_pause_btn": "onclick_playpause"
       "change input[name=video_url]": "onchange_video_url"
       "click button.reset_thumb": "reset_video_thumb"
       "change input[name=video_thumb]": "onchange_video_thumb_url"
@@ -497,7 +508,7 @@ jQuery () ->
     onclick_start: () ->
       backend = _.find slide_backends, (backend) => backend.handle(@slideshow.url)
       slides = backend.all_slides_of(@slideshow.url, @slideshow.public_url, @video.duration)
-      
+
       for slide, idx in slides
         slide.evenness = if (idx % 2) is 0 then "even" else "odd"
 
@@ -507,13 +518,13 @@ jQuery () ->
           url: @video.url
           thumb: @video.thumb
         slides: slides
-        
+
       presentation =
-        title: @title, 
-        chapters: [ chapter ], 
+        title: @title,
+        chapters: [ chapter ],
         published: false
 
-      presentation = new Presentation(presentation) 
+      presentation = new Presentation(presentation)
       router.navigate presentation.get("id")
 
     events:
@@ -603,10 +614,14 @@ jQuery () ->
       @$el.html @view.el
       @view.render()
       $("div[chapter_index=0] ~ div[slide_index=0]").addClass "alert alert-info"
+      
       prsntz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
         $("div[chapter_index=0] ~ div[slide_index=0]").removeClass "alert alert-info"
         $("div[chapter_index=#{previous_chapter_index}] ~ div[slide_index=#{previous_slide_index}]").removeClass "alert alert-info"
         $("div[chapter_index=#{new_chapter_index}] ~ div[slide_index=#{new_slide_index}]").addClass "alert alert-info"
+      
+      prsntz.on "timechange", (current_time) ->
+        $("input[name=current_time]").val(current_time)
       model.unbind "change", @edit
 
     save: () ->
