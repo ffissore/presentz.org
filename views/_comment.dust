@@ -1,5 +1,5 @@
 <div chapter_index="{.chapter_index}" slide_index="{.slide_index}" class="item_comment">
-  <p><span class="user">{.user.name},</span> <span class="time">{.nice_time}</span> 
+  <p><span class="user"><a href="{.user.link}" target="_blank">{.user.name}</a>,</span> <span class="time">{.nice_time}</span> 
   {?slide_title}
   on slide <a href="javascript:void(0)" class="slide_title">"{.slide_title}"</a>
   {:else}
