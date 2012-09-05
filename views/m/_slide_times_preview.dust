@@ -1,0 +1,16 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th>Display at (seconds)</th>
+    <th>{value_type}</th>
+  </tr>
+  </thead>
+  <tbody>
+  {#data}
+  <tr>
+    <td>{time}</td>
+    <td>{value}</td>
+  </tr>
+  {/data}
+  </tbody>
+</table>

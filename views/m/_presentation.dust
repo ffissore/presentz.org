@@ -35,6 +35,7 @@
           <a href="#" class="slide_right_btn slide_right">right</a>
         </li>
       </ul>
+      <small><a href="#" class="hei_advanced">Hei! I'm an advanced user and this thing is way too slow!</a></small>
     </div>
   </div>
 </div>
@@ -109,3 +110,40 @@
     {/slides}
   </span>
 {/chapters}
+<div class="modal hide fade" id="advanced_user" tabindex="-1" role="dialog" aria-labelledby="advanced_user_label" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3 id="advanced_user_label">Upload slide times</h3>
+  </div>
+  <div class="modal-body">
+    <p>If you like to be fast, synchronize this presentation on your computer, that is: play the video file with <a href="http://www.mplayerhq.hu/" target="_blank">MPlayer</a> or <a href="http://www.videolan.org/" target="_blank">VLC</a> and write down which slide is displayed when.</p>
+    <p>You should make a text file (.txt or .csv) with one of the following format:</p>
+    <ol>
+      <li>
+        <p>If your slides are images or swf</p>
+        <code>TIME_IN_SECONDS,URL_OF_THE_FILE</code>
+        <p></p>
+      </li>
+      <li>
+        <p>If your slides are on something like slideshare</p>
+        <code>TIME_IN_SECONDS,SLIDE_INDEX</code>
+        <p></p>
+      </li>
+    </ol>
+    <span class="help-inline">Get file</span> <input type="file" class="input-small">
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+<div class="modal hide fade" id="advanced_user_data_preview" tabindex="-1" role="dialog" aria-labelledby="advanced_user_data_preview_label" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3 id="modal hide fade_label">Data preview</h3>
+  </div>
+  <div class="modal-body">
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>

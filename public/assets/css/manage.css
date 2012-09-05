@@ -126,7 +126,7 @@ ul.play_pause {
     float: left;
 }
 
-.play_pause a {
+.play_pause a.play_pause_btn, .play_pause a.slide_left_btn, .play_pause a.slide_right_btn {
     background-repeat: no-repeat;
     background-position: center;
     text-indent: -9999px;

@@ -63,6 +63,9 @@ jQuery () ->
           callback()
       $whoops.modal "show"
 
+    advanced_user: () -> $("#advanced_user")
+    advanced_user_data_preview: () -> $("#advanced_user_data_preview")
+
     slide_helper: ($elem) ->
       $chapter = $helper.chapter_of $elem
       slide_index = $helper.slide_index_from $elem
@@ -78,6 +81,8 @@ jQuery () ->
       return result
 
   $helper.whoops().modal(show: false)
+  $helper.advanced_user().modal(show: false)
+  $helper.advanced_user_data_preview().modal(show: false)
 
   alert = (err, callback) ->
     $helper.whoops(err, callback)
@@ -380,11 +385,49 @@ jQuery () ->
     onclick_slide_right: () ->
       return @onclick_slide_left_right(1)
 
+    onclick_advanced_user: () ->
+      $helper.advanced_user().modal "show"
+      false
+
+    onchange_slide_times_file: (event) ->
+      return if !event.target.files or event.target.files.length is 0
+
+      file = event.target.files[0]
+      if file.type not in ["text/plain", "text/csv"]
+        alert("Only plain text or CSV files are supported")
+        return
+
+      reader = new FileReader()
+      reader.onload = (load) =>
+        text = load.target.result.replace(/\r/g, "\n")
+        while text.indexOf(/\n\n/) isnt -1
+          text = text.replace(/\n\n/g, "\n")
+
+        rows = text.split(/\n/)
+        data = []
+        for row in rows
+          match = /(.+),(.+)/.exec(row)
+          if match? and match.length >= 3
+            data.push time: parseInt(match[1]), value: match[2]
+            
+        $helper.advanced_user().modal("hide")
+        $helper.advanced_user_data_preview().modal("show")
+        first_slide_url = @model.get("chapters.0.slides.0.url")
+        backend = _.find slide_backends, (backend) -> backend.handle(first_slide_url)
+
+        dust.render "_slide_times_preview", { value_type: backend.import_file_value_column, data: data }, (err, out) ->
+          return alert(err) if err?
+          $(".modal-body", $helper.advanced_user_data_preview()).html(out)
+
+      reader.readAsText(file)
+
     events:
       "click a.play_pause_btn": "onclick_playpause"
       "click a.slide_left_btn": "onclick_slide_left"
       "click a.slide_right_btn": "onclick_slide_right"
       "click input.synchronized_status": "onclick_synchronized_status"
+      "click a.hei_advanced": "onclick_advanced_user"
+      "change input[type=file]": "onchange_slide_times_file"
 
       "change input[name=video_url]": "onchange_video_url"
       "click button.reset_thumb": "reset_video_thumb"

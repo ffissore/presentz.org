@@ -3,6 +3,7 @@ class SlideShare
   constructor: (@presentzSlideShare) ->
     @slideshare_infos = {}
     @slideshare_url_to_slideshows = {}
+    @import_file_value_column = "Slide Index"
 
   handle: (url) ->
     @presentzSlideShare.handle url: url
@@ -83,6 +84,9 @@ class SlideShare
     old_url.substring(0, old_url.lastIndexOf("#") + 1).concat(slide_number)
 
 class DummySlideBackend
+
+  constructor: () ->
+    @import_file_value_column = "Slide URL"
 
   handle: (url) -> true
 
