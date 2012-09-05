@@ -84,13 +84,7 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label">Title</label>
-              <div class="controls">
-                <input type="text" class="slide_title input-xxlarge" value="{.title}" placeholder="Slide {#onebased}{.}{/onebased}" slide_index="{@idx}{.}{/idx}">
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label">Displayed since second</label>
+              <label class="control-label">Show at (second)</label>
               <div class="controls">
                 <input type="text" class="slide_time input-xxlarge" value="{.time}" slide_index="{@idx}{.}{/idx}">
               </div>
@@ -103,6 +97,12 @@
                 </div>
               </div>
             {/number}
+            <div class="control-group">
+              <label class="control-label">Title</label>
+              <div class="controls">
+                <input type="text" class="slide_title input-xxlarge" value="{.title}" placeholder="Slide {#onebased}{.}{/onebased}" slide_index="{@idx}{.}{/idx}">
+              </div>
+            </div>
           </fieldset>
         </form>
         <div class="slide_thumb span2" src="{.slide_thumb}" thumb_type="{._thumb_type}"></div>
@@ -116,7 +116,7 @@
     <h3 id="advanced_user_label">Upload slide times</h3>
   </div>
   <div class="modal-body">
-    <p>If you like to be fast, synchronize this presentation on your computer, that is: play the video file with <a href="http://www.mplayerhq.hu/" target="_blank">MPlayer</a> or <a href="http://www.videolan.org/" target="_blank">VLC</a> and write down which slide is displayed when.</p>
+    <p>If you like to be fast, synchronize this presentation on your computer, that is: play the video file with <a href="http://www.mplayerhq.hu/" target="_blank">MPlayer</a> or <a href="http://www.videolan.org/" target="_blank">VLC</a> and write down which slide is shown when.</p>
     <p>You should make a text file (.txt or .csv) with one of the following format:</p>
     <ol>
       <li>

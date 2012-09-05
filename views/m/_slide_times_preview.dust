@@ -1,7 +1,7 @@
 <table class="table">
   <thead>
   <tr>
-    <th>Display at (seconds)</th>
+    <th>Show at (second)</th>
     <th>{value_type}</th>
   </tr>
   </thead>

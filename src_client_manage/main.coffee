@@ -110,7 +110,8 @@ jQuery () ->
           return unless objtype is "chapter"
           for slide, idx in obj.slides
             slide.evenness = if (idx % 2) is 0 then "even" else "odd"
-        app.edit(@)
+        app.edit(@) if !@loaded
+        @loaded = true
 
       @bind "error", (model, err) ->
         alert "Error #{err.status}: #{err.responseText}"
@@ -119,8 +120,6 @@ jQuery () ->
           app.navigationView.enable_save_button()
         if @loaded and event is "sync"
           app.navigationView.disable_save_button()
-        if event is "change"
-          @loaded = true
         console.log arguments
 
       keys = (key for key, value of @attributes)
