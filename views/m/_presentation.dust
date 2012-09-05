@@ -21,9 +21,9 @@
       </li>
       <li class="play_pause_divider"></li>
       <li>
-        <a href="#" class="slide_left">left</a>
-        <span>Slide #:&nbsp;</span><input type="text" name="slide_number" value="1" class="input-mini"/>
-        <a href="#" class="slide_right">right</a>
+        <a href="#" class="slide_left_btn slide_left">left</a>
+        <span>Slide #:&nbsp;</span><input type="text" name="slide_number_player" value="1" class="input-mini"/>
+        <a href="#" class="slide_right_btn slide_right">right</a>
       </li>
     </ul>
   </div>

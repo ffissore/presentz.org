@@ -20,6 +20,8 @@ jQuery () ->
     slide_thumb_container_in: ($elem) -> $("div.slide_thumb", $elem)
     parent_control_group_of: ($elem) -> $elem.parentsUntil("div.control-group").parent()
     video_duration_input_of: (chapter_index) -> $("input[name=video_duration][chapter_index=#{chapter_index}]")
+    
+    slide_number_player: () -> $("input[name=slide_number_player]")
 
     chapter: (chapter_index) -> $("#chapter#{chapter_index}")
     video_url_input_of: (chapter_index) -> $("#chapter#{chapter_index} input[name=video_url]")
@@ -342,9 +344,31 @@ jQuery () ->
         prsntz.pause()
         $btn.removeClass("pause").addClass("play")
       false
+      
+    onclick_slide_left_right: (modifier) ->
+      $slide_number_player = $helper.slide_number_player()
+      slide_number = parseInt($helper.slide_number_player().val()) - 1 + modifier
+      slides = @model.get("chapters.0.slides")
+      
+      return false if slide_number < 0
+      
+      $slide_number_player.val(slide_number + 1)
+
+      if slide_number >= slides.length - 1 or slide_number < slides.length - 1
+        prsntz.changeSlide(slides[slide_number], 0, slide_number)
+      false
+      
+    onclick_slide_left: () ->
+      return @onclick_slide_left_right(-1)
+      
+    onclick_slide_right: () ->
+      return @onclick_slide_left_right(1)
 
     events:
       "click a.play_pause_btn": "onclick_playpause"
+      "click a.slide_left_btn": "onclick_slide_left"
+      "click a.slide_right_btn": "onclick_slide_right"
+      
       "change input[name=video_url]": "onchange_video_url"
       "click button.reset_thumb": "reset_video_thumb"
       "change input[name=video_thumb]": "onchange_video_thumb_url"
