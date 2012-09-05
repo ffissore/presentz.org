@@ -20,8 +20,16 @@ jQuery () ->
     slide_thumb_container_in: ($elem) -> $("div.slide_thumb", $elem)
     parent_control_group_of: ($elem) -> $elem.parentsUntil("div.control-group").parent()
     video_duration_input_of: (chapter_index) -> $("input[name=video_duration][chapter_index=#{chapter_index}]")
-    
+
+    current_time: () -> $("input[name=current_time]")
     slide_number_player: () -> $("input[name=slide_number_player]")
+    synchronized_status: (synchronized) ->
+      $("label.synchronized_status input").attr("checked", synchronized)
+      if synchronized
+        $("label.synchronized_status span.label").addClass("hidden")
+      else
+        $("label.synchronized_status span.label").removeClass("hidden")
+    play_pause_btn: () -> $("a.play_pause_btn")
 
     chapter: (chapter_index) -> $("#chapter#{chapter_index}")
     video_url_input_of: (chapter_index) -> $("#chapter#{chapter_index} input[name=video_url]")
@@ -344,23 +352,31 @@ jQuery () ->
         prsntz.pause()
         $btn.removeClass("pause").addClass("play")
       false
-      
+
     onclick_slide_left_right: (modifier) ->
+      prsntz.synchronized(false)
+      $helper.synchronized_status(false)
+
       $slide_number_player = $helper.slide_number_player()
       slide_number = parseInt($helper.slide_number_player().val()) - 1 + modifier
       slides = @model.get("chapters.0.slides")
-      
+
       return false if slide_number < 0
-      
+
       $slide_number_player.val(slide_number + 1)
 
       if slide_number >= slides.length - 1 or slide_number < slides.length - 1
         prsntz.changeSlide(slides[slide_number], 0, slide_number)
       false
-      
+
+    onclick_synchronized_status: (event) ->
+      new_status = event.target.checked
+      prsntz.synchronized(new_status)
+      $helper.synchronized_status(new_status)
+
     onclick_slide_left: () ->
       return @onclick_slide_left_right(-1)
-      
+
     onclick_slide_right: () ->
       return @onclick_slide_left_right(1)
 
@@ -368,7 +384,8 @@ jQuery () ->
       "click a.play_pause_btn": "onclick_playpause"
       "click a.slide_left_btn": "onclick_slide_left"
       "click a.slide_right_btn": "onclick_slide_right"
-      
+      "click input.synchronized_status": "onclick_synchronized_status"
+
       "change input[name=video_url]": "onchange_video_url"
       "click button.reset_thumb": "reset_video_thumb"
       "change input[name=video_thumb]": "onchange_video_thumb_url"
@@ -638,14 +655,25 @@ jQuery () ->
       @$el.html @view.el
       @view.render()
       $("div[chapter_index=0] ~ div[slide_index=0]").addClass "alert alert-info"
-      
+
       prsntz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
         $("div[chapter_index=0] ~ div[slide_index=0]").removeClass "alert alert-info"
         $("div[chapter_index=#{previous_chapter_index}] ~ div[slide_index=#{previous_slide_index}]").removeClass "alert alert-info"
         $("div[chapter_index=#{new_chapter_index}] ~ div[slide_index=#{new_slide_index}]").addClass "alert alert-info"
-      
+        $helper.slide_number_player().val(new_slide_index + 1)
+
       prsntz.on "timechange", (current_time) ->
-        $("input[name=current_time]").val(current_time)
+        $helper.current_time().val(current_time)
+
+      prsntz.on "play", () ->
+        $helper.play_pause_btn().addClass("pause").removeClass("play")
+
+      prsntz.on "pause", () ->
+        $helper.play_pause_btn().removeClass("pause").addClass("play")
+
+      prsntz.on "finish", () ->
+        $helper.play_pause_btn().removeClass("pause").addClass("play")
+
       model.unbind "change", @edit
 
     save: () ->
