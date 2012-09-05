@@ -144,6 +144,7 @@
   <div class="modal-body">
   </div>
   <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-danger">No,no,no...</button>
+    <button class="btn btn-success">Awesome, go on</button>
   </div>
 </div>

@@ -83,6 +83,9 @@ class SlideShare
   change_slide_number: (old_url, slide_number) ->
     old_url.substring(0, old_url.lastIndexOf("#") + 1).concat(slide_number)
 
+  set_slide_value_from_import: (slide, slide_index) ->
+    slide.url = @change_slide_number(slide.url, slide_index)
+
 class DummySlideBackend
 
   constructor: () ->
@@ -110,6 +113,10 @@ class DummySlideBackend
       callback slide.public_url
     else
       callback("Invalid URL: #{slide.public_url}")
+
+  set_slide_value_from_import: (slide, slide_url) ->
+    slide.url = slide_url
+    slide.public_url = slide_url
 
 @presentzorg.slide_backends = {}
 @presentzorg.slide_backends.SlideShare = SlideShare

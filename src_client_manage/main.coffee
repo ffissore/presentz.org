@@ -94,6 +94,7 @@ jQuery () ->
     validate: presentzorg.validation
 
     loaded: false
+    loading: false
 
     toJSON: () ->
       presentation = $.extend true, {}, @attributes
@@ -110,8 +111,8 @@ jQuery () ->
           return unless objtype is "chapter"
           for slide, idx in obj.slides
             slide.evenness = if (idx % 2) is 0 then "even" else "odd"
-        app.edit(@) if !@loaded
-        @loaded = true
+        app.edit(@) if !@loading
+        @loading = true
 
       @bind "error", (model, err) ->
         alert "Error #{err.status}: #{err.responseText}"
@@ -120,6 +121,8 @@ jQuery () ->
           app.navigationView.enable_save_button()
         if @loaded and event is "sync"
           app.navigationView.disable_save_button()
+        if event is "change"
+          @loaded = true
         console.log arguments
 
       keys = (key for key, value of @attributes)
@@ -160,9 +163,9 @@ jQuery () ->
         slide._thumb_type = backend.thumb_type_of slide.url
         backend.slide_info slide, (err, slide, slide_info) =>
           return alert(err) if err?
-          slide.public_url ||= slide_info.public_url
-          slide.number ||= slide_info.number if slide_info.number?
-          slide.slide_thumb ||= slide_info.slide_thumb if slide_info.slide_thumb?
+          slide.public_url = slide_info.public_url
+          slide.number = slide_info.number if slide_info.number?
+          slide.slide_thumb = slide_info.slide_thumb if slide_info.slide_thumb?
 
           if slides.length > 0
             load_slides_info slides
@@ -172,7 +175,7 @@ jQuery () ->
 
               loader_hide()
               app.navigationView.presentation_menu_entry utils.cut_string_at(@model.get("title"), 30)
-              @$el.append(out)
+              @$el.html(out)
               init_presentz @model.attributes, true
               $helper.slide_containers().scrollspy
                 buffer: app.navigationView.$el.height()
@@ -385,6 +388,7 @@ jQuery () ->
       return @onclick_slide_left_right(1)
 
     onclick_advanced_user: () ->
+      $helper.advanced_user_data_preview().modal "hide"
       $helper.advanced_user().modal "show"
       false
 
@@ -403,22 +407,34 @@ jQuery () ->
           text = text.replace(/\n\n/g, "\n")
 
         rows = text.split(/\n/)
-        data = []
+        @data = []
         for row in rows
           match = /(.+),(.+)/.exec(row)
           if match? and match.length >= 3
-            data.push time: parseInt(match[1]), value: match[2]
-            
+            @data.push time: parseInt(match[1]), value: match[2]
+
         $helper.advanced_user().modal("hide")
         $helper.advanced_user_data_preview().modal("show")
         first_slide_url = @model.get("chapters.0.slides.0.url")
         backend = _.find slide_backends, (backend) -> backend.handle(first_slide_url)
 
-        dust.render "_slide_times_preview", { value_type: backend.import_file_value_column, data: data }, (err, out) ->
+        dust.render "_slide_times_preview", { value_type: backend.import_file_value_column, data: @data }, (err, out) ->
           return alert(err) if err?
           $(".modal-body", $helper.advanced_user_data_preview()).html(out)
 
       reader.readAsText(file)
+      
+    onclick_confirm_data_import: () ->
+      slides = @model.get("chapters.0.slides")
+      for slide, idx in slides when idx < @data.length
+        data_for_slide = @data[idx]
+        slide.time = data_for_slide.time
+        backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
+        backend.set_slide_value_from_import(slide, data_for_slide.value)
+        
+      @model.set("chapters.0.slides", slides)
+      $helper.advanced_user_data_preview().modal("hide")
+      @render()
 
     events:
       "click a.play_pause_btn": "onclick_playpause"
@@ -426,6 +442,8 @@ jQuery () ->
       "click a.slide_right_btn": "onclick_slide_right"
       "click input.synchronized_status": "onclick_synchronized_status"
       "click a.hei_advanced": "onclick_advanced_user"
+      "click #advanced_user_data_preview button.btn-danger": "onclick_advanced_user"
+      "click #advanced_user_data_preview button.btn-success": "onclick_confirm_data_import"
       "change input[type=file]": "onchange_slide_times_file"
 
       "change input[name=video_url]": "onchange_video_url"
