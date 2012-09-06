@@ -37,7 +37,7 @@ session_store_options.database = "presentz"
 storage.init db
 everyauth = auth.init(config, db)
 api.init(storage, config.slideshare)
-routes.init(storage)
+routes.init(storage, auth)
 
 app.engine("dust", cons.dust)
 
@@ -88,18 +88,21 @@ app.get "/m/api/presentations", api.presentations
 app.get "/m/api/slideshare/url_to_doc_id", api.slideshare_url_to_doc_id
 app.get "/m/api/slideshare/:doc_id", api.slideshare_slides_of
 
-app.get "/u/fb/:user_name", routes.show_user_catalog auth.socials_prefixes.facebook
-app.get "/u/tw/:user_name", routes.show_user_catalog auth.socials_prefixes.twitter
-app.get "/u/go/:user_name", routes.show_user_catalog auth.socials_prefixes.google
-app.get "/u/in/:user_name", routes.show_user_catalog auth.socials_prefixes.linkedin
-app.get "/u/gh/:user_name", routes.show_user_catalog auth.socials_prefixes.github
-app.get "/u/fs/:user_name", routes.show_user_catalog auth.socials_prefixes.foursquare
+app.get "/u/fb/:user_name", routes.show_catalog_of_user auth.socials_prefixes.facebook
+app.get "/u/tw/:user_name", routes.show_catalog_of_user auth.socials_prefixes.twitter
+app.get "/u/go/:user_name", routes.show_catalog_of_user auth.socials_prefixes.google
+app.get "/u/in/:user_name", routes.show_catalog_of_user auth.socials_prefixes.linkedin
+app.get "/u/gh/:user_name", routes.show_catalog_of_user auth.socials_prefixes.github
+app.get "/u/fs/:user_name", routes.show_catalog_of_user auth.socials_prefixes.foursquare
+app.get "/u/:social_prefix/:user_name/:presentation.json", routes.raw_presentation_from_user
+app.get "/u/:social_prefix/:user_name/:presentation", routes.show_presentation_from_user
+app.post "/u/:social_prefix/:user_name/:presentation/comment", routes.comment_presentation
 
 app.get "/:catalog_name/catalog.html", routes.show_catalog
 app.get "/:catalog_name/catalog", routes.show_catalog
 app.get "/:catalog_name/index.html", routes.show_catalog
-app.get "/:catalog_name/:presentation.json", routes.raw_presentation
-app.get "/:catalog_name/:presentation", routes.show_presentation
+app.get "/:catalog_name/:presentation.json", routes.raw_presentation_from_catalog
+app.get "/:catalog_name/:presentation", routes.show_presentation_from_catalog
 app.get "/:catalog_name", routes.show_catalog
 app.post "/:catalog_name/:presentation/comment", routes.comment_presentation
 

@@ -83,11 +83,12 @@ find_user_by_username_by_social = (social_column, user_name, callback) ->
     return callback("too many records found") if users.length > 1
     callback(undefined, users[0])
 
-load_presentation_from_id = (id, callback) ->
-  db.command "select from V where _type = 'presentation' and id = '#{id}'", (err, results) ->
+load_presentation_from_id = (presentation_id, callback) ->
+  db.command "select from V where _type = 'presentation' and presentation_id = '#{presentation_id}'", (err, presentations) ->
     return callback(err) if err?
-    return callback("no record found") if results.length is 0
-    callback(undefined, results[0])
+    return callback("no record found") if presentations.length is 0
+    return callback("too many records found") if presentations.length > 1
+    callback(undefined, presentations[0])
 
 load_entire_presentation_with_query = (query, callback) ->
   db.command query, (err, results) ->
@@ -106,16 +107,15 @@ load_entire_presentation_with_query = (query, callback) ->
           return callback(undefined, presentation)
 
 
-load_entire_presentation_from_id = (id, callback) ->
-  load_entire_presentation_with_query "select from V where _type = 'presentation' and id = '#{id}'", callback
+load_entire_presentation_from_id = (presentation_id, callback) ->
+  load_entire_presentation_with_query "select from V where _type = 'presentation' and id = '#{presentation_id}'", callback
 
-load_entire_presentation_from_path = (path, callback) ->
-  path_parts = path.split("/")
-  catalog_name = path_parts[0]
-  presentation_name = path_parts[1]
+load_entire_presentation_from_catalog = (catalog_name, presentation_id, callback) ->
+  load_entire_presentation_with_query "select from V where _type = 'presentation' and id = '#{presentation_id}' and out.label CONTAINSALL 'part_of' and out.in.id CONTAINSALL '#{catalog_name}'", callback
 
-  load_entire_presentation_with_query "select from V where _type = 'presentation' and id = '#{presentation_name}' and out.label CONTAINSALL 'part_of' and out.in.id CONTAINSALL '#{catalog_name}'", callback
-
+load_entire_presentation_from_users_catalog = (social_prefix, user_name, presentation_id, callback) ->
+  load_entire_presentation_with_query "select from V where _type = 'presentation' and id = '#{presentation_id}' and in.label CONTAINS 'authored' and in.out.#{social_prefix}.size() = 1 and in.out.user_name CONTAINSALL '#{user_name}'", callback
+  
 load_user_of = (comment, callback) ->
   db.fromVertex(comment).inVertexes "authored_comment", (err, users) ->
     return callback(err) if err?
@@ -146,8 +146,9 @@ load_slides_of = (chapter, callback) ->
       return callback(undefined, chapter)
 
 exports.load_chapters_of = load_chapters_of
-exports.load_entire_presentation_from_path = load_entire_presentation_from_path
+exports.load_entire_presentation_from_catalog = load_entire_presentation_from_catalog
 exports.load_entire_presentation_from_id = load_entire_presentation_from_id
+exports.load_entire_presentation_from_users_catalog = load_entire_presentation_from_users_catalog
 exports.load_presentation_from_id = load_presentation_from_id
 exports.init = init
 exports.list_catalogs_with_presentation_count = list_catalogs_with_presentation_count

@@ -159,6 +159,11 @@ socials_prefixes =
     col: "foursquare_id"
     prefix: "fs"
 
+social_column_from_prefix = (prefix, callback) ->
+  for key, value of socials_prefixes
+    return callback(undefined, value.col) if value.prefix is prefix
+  callback(new Error("Unknon social prefix: #{prefix}"))
+
 put_user_in_locals = (req, res, next) ->
   if req.user?
     user = req.user
@@ -172,3 +177,4 @@ put_user_in_locals = (req, res, next) ->
 exports.init = init
 exports.put_user_in_locals = put_user_in_locals
 exports.socials_prefixes = socials_prefixes
+exports.social_column_from_prefix = social_column_from_prefix

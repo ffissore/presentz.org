@@ -8,6 +8,7 @@ draw_4_boxes = dustjs_helpers.draw_boxes(4)
 draw_6_boxes = dustjs_helpers.draw_boxes(6)
 
 storage = undefined
+auth = undefined
 
 pretty_duration = (seconds, minutes_char = "'", seconds_char = "\"") ->
   duration = moment.duration(Math.round(seconds), "seconds")
@@ -55,11 +56,11 @@ show_catalog = (req, res, next) ->
         presentations: presentations
         list: draw_4_boxes
 
-show_user_catalog = (social) ->
+show_catalog_of_user = (social) ->
   return (req, res, next) ->
     storage.find_user_by_username_by_social social.col, req.params.user_name, (err, user) ->
       return next(err) if err?
-  
+
       storage.from_user_to_presentations user, (err, presentations) ->
         if presentations.length > 0
           presentations = _.filter presentations, (pres) -> pres.published
@@ -67,34 +68,63 @@ show_user_catalog = (social) ->
           presentations = _.sortBy presentations, (presentation) ->
             return presentation.time if presentation.time?
             return presentation.title
-    
+
           if presentations[0].time?
             presentations = presentations.reverse()
-    
+
         res.render "talks",
           title: "#{user.name}'s talks"
           presentations: presentations
           list: draw_4_boxes
 
-raw_presentation = (req, res, next) ->
-  path = decodeURIComponent(req.path).substring(1)
-  path = path.substring(0, path.length - ".json".length)
-  storage.load_entire_presentation_from_path path, (err, presentation) ->
+raw_presentation_from_catalog = (req, res, next) ->
+  storage.load_entire_presentation_from_catalog req.params.catalog_name, req.params.presentation, (err, presentation) ->
     return next(err) if err?
 
-    return res.send 404 unless presentation.published
+    raw_presentation presentation, req, res
+  
+raw_presentation_from_user = (req, res, next) ->
+  auth.social_column_from_prefix req.params.social_prefix, (err, social_column) ->
+    return next(err) if err?
 
-    utils.visit_presentation presentation, utils.remove_unwanted_fields_from, [ "id", "out", "_type", "_index", "@class", "@type", "@version", "@rid", "user" ]
+    storage.load_entire_presentation_from_users_catalog social_column, req.params.user_name, req.params.presentation, (err, presentation) ->
+      return next(err) if err?
+  
+      raw_presentation presentation, req, res
+  
+raw_presentation = (presentation, req, res) ->
+  return res.send 404 unless presentation.published
 
-    if req.query.jsoncallback
-      presentation = "#{req.query.jsoncallback}(#{JSON.stringify(presentation)});"
-      res.contentType("text/javascript")
-    else
-      res.contentType("application/json")
+  utils.visit_presentation presentation, utils.remove_unwanted_fields_from, [ "id", "out", "_type", "_index", "@class", "@type", "@version", "@rid", "user" ]
 
-    res.send presentation
+  if req.query.jsoncallback
+    presentation = "#{req.query.jsoncallback}(#{JSON.stringify(presentation)});"
+    res.contentType("text/javascript")
+  else
+    res.contentType("application/json")
 
-show_presentation = (req, res, next) ->
+  res.send presentation
+
+show_presentation_from_catalog = (req, res, next) ->
+  path = "#{req.params.catalog_name}/#{req.params.presentation}"
+  storage.load_entire_presentation_from_catalog req.params.catalog_name, req.params.presentation, (err, presentation) ->
+    return next(err) if err?
+
+    show_presentation presentation, path, req, res
+
+show_presentation_from_user = (req, res, next) ->
+  path = "u/#{req.params.social_prefix}/#{req.params.user_name}/#{req.params.presentation}"
+  auth.social_column_from_prefix req.params.social_prefix, (err, social_column) ->
+    return next(err) if err?
+
+    storage.load_entire_presentation_from_users_catalog social_column, req.params.user_name, req.params.presentation, (err, presentation) ->
+      return next(err) if err?
+
+      show_presentation presentation, path, req, res
+
+show_presentation = (presentation, path, req, res) ->
+  return res.send 404 unless presentation.published
+
   comments_of = (presentation) ->
     comments = []
     for comment in presentation.comments
@@ -146,51 +176,41 @@ show_presentation = (req, res, next) ->
       slide.index = (slide_num + 1).pad(number_of_zeros_in_index)
       slide.css = "class=\"even\"" if slide.index % 2 is 0
 
-  path = decodeURIComponent(req.path).substring(1)
-  storage.load_entire_presentation_from_path path, (err, presentation) ->
-    return next(err) if err?
+  slides = []
+  duration = 0
+  for chapter, chapter_index in presentation.chapters
+    for slide, slide_index in chapter.slides
+      slides.push slide_to_slide(slide, chapter_index, slide_index, duration)
+    duration += chapter.duration
 
-    return res.send 404 unless presentation.published
+  slides_duration_percentage_css(slides, duration)
 
-    slides = []
-    duration = 0
-    for chapter, chapter_index in presentation.chapters
-      for slide, slide_index in chapter.slides
-        slides.push slide_to_slide(slide, chapter_index, slide_index, duration)
-      duration += chapter.duration
+  title_parts = presentation.title.split(" ")
+  title_parts[title_parts.length - 1] = "<span>#{title_parts[title_parts.length - 1]}</span>"
+  talk_title = title_parts.join(" ")
+  pres_title = presentation.title
+  pres_title = "#{pres_title} - #{presentation.speaker}" if presentation.speaker?
 
-    slides_duration_percentage_css(slides, duration)
+  comments = comments_of presentation
 
-    title_parts = presentation.title.split(" ")
-    title_parts[title_parts.length - 1] = "<span>#{title_parts[title_parts.length - 1]}</span>"
-    talk_title = title_parts.join(" ")
-    pres_title = presentation.title
-    pres_title = "#{pres_title} - #{presentation.speaker}" if presentation.speaker?
-
-    comments = comments_of presentation
-
-    res.render "presentation",
-      title: pres_title
-      talk_title: talk_title
-      speaker: presentation.speaker
-      slides: slides
-      comments: comments
-      domain: "http://#{req.headers["x-forwarded-host"] or req.headers.host}"
-      path: path
-      thumb: presentation.chapters[0].video.thumb
-      wrapper_css: "class=\"section_player\""
-      embed: req.query.embed?
+  res.render "presentation",
+    title: pres_title
+    talk_title: talk_title
+    speaker: presentation.speaker
+    slides: slides
+    comments: comments
+    domain: "http://#{req.headers["x-forwarded-host"] or req.headers.host}"
+    path: path
+    thumb: presentation.chapters[0].video.thumb
+    wrapper_css: "class=\"section_player\""
+    embed: req.query.embed?
 
 comment_presentation = (req, res, next) ->
   params = req.body
 
   get_node_to_link_to = (callback) ->
-    path = decodeURIComponent(req.path).substring(1)
-    path = path.substring(0, path.lastIndexOf("/"))
-
-    storage.load_entire_presentation_from_path path, (err, presentation) ->
+    storage.load_entire_presentation_from_id req.params.presentation, (err, presentation) ->
       return callback(err) if err?
-
       return callback(undefined, undefined) unless presentation.published
 
       node_to_link_to = presentation
@@ -239,16 +259,20 @@ ensure_is_logged = (req, res, next) ->
   #req.notify "error", "you need to be logged in"
   res.redirect 302, "/"
 
-init = (s) ->
+init = (s, a) ->
   storage = s
+  auth = a
 
-exports.raw_presentation = raw_presentation
-exports.show_catalog = show_catalog
 exports.list_catalogs = list_catalogs
-exports.show_presentation = show_presentation
+exports.show_catalog = show_catalog
+exports.show_catalog_of_user = show_catalog_of_user
+exports.show_presentation_from_user = show_presentation_from_user
+exports.show_presentation_from_catalog = show_presentation_from_catalog
+exports.raw_presentation_from_catalog = raw_presentation_from_catalog
+exports.raw_presentation_from_user = raw_presentation_from_user
+
 exports.comment_presentation = comment_presentation
 exports.static_view = static_view
 exports.ensure_is_logged = ensure_is_logged
-exports.show_user_catalog = show_user_catalog
 
 exports.init = init
