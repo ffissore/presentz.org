@@ -1,1 +1,1 @@
-<span>Hello, {.name}</span>
+<span>Hello, <a href="{.catalog}">{.name}</a></span>

@@ -115,6 +115,10 @@
         font-size: 40px;
     }
 
+    .no_talks {
+        font-size: 20px;
+    }
+
     .testo p {
         margin-bottom: 10px;
     }
@@ -274,7 +278,7 @@
         margin-top: 8px;
     }
 
-    #talks_detail h3 {
+    #talks_detail h3, .no_talks {
         width: 400px;
         margin-top: 8px;
         margin-bottom: 15px;
@@ -459,7 +463,7 @@
 
     /*fine section demo*/
     /*section talks*/
-    #talks h3, #talks_detail h3 {
+    #talks h3, #talks_detail h3, .no_talks {
         margin-top: 25px;
     }
 

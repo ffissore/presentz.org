@@ -20,6 +20,7 @@ db.open (err) ->
       user =
         _type: "user"
         name: "Federico Fissore"
+        user_name: "fridrik"
         twitter_id: 1861911
         link: "https://twitter.com/fridrik"
         email: "federico@fsfe.org"

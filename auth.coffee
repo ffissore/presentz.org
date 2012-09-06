@@ -139,11 +139,36 @@ init = (config, db) ->
 
   return everyauth
 
+socials_prefixes =
+  facebook:
+    col: "facebook_id"
+    prefix: "fb"
+  twitter:
+    col: "twitter_id"
+    prefix: "tw"
+  google:
+    col: "google_id"
+    prefix: "go"
+  linkedin:
+    col: "linkedin_id"
+    prefix: "in"
+  github:
+    col: "github_id"
+    prefix: "gh"
+  foursquare:
+    col: "foursquare_id"
+    prefix: "fs"
+
 put_user_in_locals = (req, res, next) ->
   if req.user?
-    res.locals.user = req.user
-    req.user.admin = true if req.user.twitter_id is 1861911
+    user = req.user
+    for key, value of socials_prefixes
+      user.catalog = "/u/#{value.prefix}/#{user.user_name}" if user[value.col]?
+
+    res.locals.user = user
+    user.admin = true if user.twitter_id is 1861911
   next()
 
 exports.init = init
 exports.put_user_in_locals = put_user_in_locals
+exports.socials_prefixes = socials_prefixes

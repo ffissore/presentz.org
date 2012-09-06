@@ -30,13 +30,17 @@ h2 {
     line-height: 55px;
 }
 
-h3 {
+h3, .no_talks {
     font-family: 'AharoniBold';
     font-size: 56px;
     line-height: 60px;
     color: #666666;
     letter-spacing: -3px;
     text-shadow: 0px 1px 0px #ffffff;
+}
+
+.no_talks {
+    font-size: 40px;
 }
 
 .testo p {
@@ -536,7 +540,7 @@ header h1 a {
     background-color: #F1F1F1;
 }
 
-#talks h3, #talks_detail h3 {
+#talks h3, #talks_detail h3, .no_talks {
     margin-left: 10px;
     width: 700px;
     float: left;
@@ -544,7 +548,7 @@ header h1 a {
     margin-top: 15px;
 }
 
-#talks_detail h3 {
+#talks_detail h3, .no_talks {
     width: 620px;
 }
 

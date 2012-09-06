@@ -30,9 +30,13 @@
       Sort by: <a href="javascript:void(0)" class="selected">Alphabetical (A-Z)</a> | <a href="javascript:void(0)">Most viewed</a> | <a href="javascript:void(0)">Chronological</a>
       !}
     </div>
-    {#list:presentations}
-      {>_presentation_thumb/}
-    {/list}
+    {?presentations}
+      {#list:presentations}
+        {>_presentation_thumb/}
+      {/list}
+    {:else}
+      <span class="no_talks">There are no talks here!</span>
+    {/presentations}
     <div class="clear"></div>
     <div class="clear"></div>
   </div>
