@@ -126,13 +126,17 @@ ul.play_pause {
     float: left;
 }
 
-.play_pause a.play_pause_btn, .play_pause a.slide_left_btn, .play_pause a.slide_right_btn {
+.play_pause a.play_pause_btn, .play_pause a.slide_left_btn, .play_pause a.slide_right_btn, a.slide_burn {
     background-repeat: no-repeat;
     background-position: center;
     text-indent: -9999px;
     height: 45px;
     width: 40px;
     float: left;
+}
+
+.slide_even form.span9, .slide_odd form.span9, .chapter form.span9 {
+    margin-left: 0px;
 }
 
 a.play {
@@ -149,6 +153,10 @@ a.slide_left {
 
 a.slide_right {
     background-image: data-url(../../assets/img/Right.png);
+}
+
+a.slide_burn {
+    background-image: data-url(../../assets/img/Burn.png);
 }
 
 li.play_pause_divider {

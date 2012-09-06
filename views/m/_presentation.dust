@@ -44,7 +44,8 @@
     <h3>Chapter {#onebased}{.}{/onebased}</h3>
     <h4>Video</h4>
     <div class="row-fluid" chapter_index="{@idx}{.}{/idx}">
-      <form class="span10 form-horizontal">
+      <div class="span1"></div>
+      <form class="span9 form-horizontal">
         <fieldset>
           <div class="control-group">
             <label class="control-label">Video URL</label>
@@ -75,7 +76,10 @@
     <h4>Slides</h4>
     {#slides}
       <div class="row-fluid slide_{evenness}" slide_index="{@idx}{.}{/idx}">
-        <form class="span10 form-horizontal">
+        <div class="span1">
+          <a class="slide_burn" href="#">delete</a>
+        </div>
+        <form class="span9 form-horizontal">
           <fieldset>
             <div class="control-group">
               <label class="control-label">URL</label>
