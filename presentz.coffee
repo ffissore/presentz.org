@@ -85,6 +85,12 @@ app.put "/m/api/presentations/:presentation", api.presentation_save
 app.get "/m/api/presentations", api.presentations
 app.get "/m/api/slideshare/url_to_doc_id", api.slideshare_url_to_doc_id
 app.get "/m/api/slideshare/:doc_id", api.slideshare_slides_of
+#app.get "/u/fb/:user_name", routes.show_facebook_user_catalog
+app.get "/u/tw/:user_name", routes.show_twitter_user_catalog
+#app.get "/u/go/:user_name", routes.show_google_user_catalog
+#app.get "/u/in/:user_name", routes.show_linkedin_user_catalog
+#app.get "/u/gh/:user_name", routes.show_github_user_catalog
+#app.get "/u/fs/:user_name", routes.show_foursquare_user_catalog
 app.get "/:catalog_name/catalog.html", routes.show_catalog
 app.get "/:catalog_name/catalog", routes.show_catalog
 app.get "/:catalog_name/index.html", routes.show_catalog

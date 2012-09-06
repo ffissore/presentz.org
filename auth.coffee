@@ -2,33 +2,40 @@ everyauth = require "everyauth"
 
 merge_facebook_user_data = (user, ext_user) ->
   user.name ?= ext_user.name
+  user.user_name ?= ext_user.username || ext_user.id
   user.link ?= ext_user.link
   user.email ?= ext_user.email
   user.facebook_id ?= ext_user.id
 
 merge_twitter_user_data = (user, ext_user) ->
   user.name ?= ext_user.name || ext_user.screen_name
+  user.user_name ?= ext_user.screen_name
   user.link ?= "https://twitter.com/#{ext_user.screen_name}"
   user.twitter_id ?= ext_user.id
 
 merge_google_user_data = (user, ext_user) ->
   user.name ?= ext_user.name || ext_user.given_name
+  user.user_name ?= ext_user.id
   user.link ?= ext_user.link
   user.google_id ?= ext_user.id
 
 merge_linkedin_user_data = (user, ext_user) ->
   user.name ?= "#{ext_user.firstName} #{ext_user.lastName}"
-  user.link = ext_user.publicProfileUrl
+  user_name_parts = ext_user.publicProfileUrl.split("/")
+  user.user_name = user_name_parts[user_name_parts.length - 1]
+  user.link ?= ext_user.publicProfileUrl
   user.linkedin_id ?= ext_user.id
 
 merge_github_user_data = (user, ext_user) ->
   user.name ?= ext_user.name or ext_user.login
+  user.user_name ?= ext_user.login
   user.link ?= ext_user.html_url
   user.email ?= ext_user.email
   user.github_id ?= ext_user.login
 
 merge_foursquare_user_data = (user, ext_user) ->
   user.name ?= "#{ext_user.firstName} #{ext_user.lastName}"
+  user.user_name ?= ext_user.id
   user.email ?= ext_user.contact.email
   user.foursquare_id ?= ext_user.id
 

@@ -75,6 +75,16 @@ create_comment = (comment, node_to_link_to, user, callback) ->
         return callback(err) if err?
 
         callback(undefined, comment)
+        
+find_user_by_username = (social_column, user_name, callback) ->
+  db.command "select from V where _type = 'user' and #{social_column} is not null and user_name = '#{user_name}'", (err, users) ->
+    return callback(err) if err?
+    return callback("no record found") if users.length is 0
+    return callback("too many records found") if users.length > 1
+    callback(undefined, users[0])
+
+find_twitter_user = (user_name, callback) ->
+  find_user_by_username("twitter_id", user_name, callback)
 
 load_presentation_from_id = (id, callback) ->
   db.command "select from V where _type = 'presentation' and id = '#{id}'", (err, results) ->
@@ -154,3 +164,4 @@ exports.create = create
 exports.link_slide_to_chapter = link_slide_to_chapter
 exports.link_chapter_to_presentation = link_chapter_to_presentation
 exports.link_user_to_presentation = link_user_to_presentation
+exports.find_twitter_user = find_twitter_user

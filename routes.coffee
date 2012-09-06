@@ -23,18 +23,18 @@ list_catalogs = (req, res, next) ->
       catalogs: catalogs
       list: draw_6_boxes
 
+pres_to_thumb = (presentation, catalog_name) ->
+  pres =
+    id: presentation.id
+    catalog: catalog_name
+    thumb: presentation.chapters[0].video.thumb
+    speaker: presentation.speaker
+    title: presentation.title
+
+  pres.time = dateutil.format(dateutil.parse(presentation.time, "YYYYMMDD"), "Y/m") if presentation.time
+  pres
+
 show_catalog = (req, res, next) ->
-  pres_to_thumb= (presentation, catalog_name) ->
-    pres =
-      id: presentation.id
-      catalog: catalog_name
-      thumb: presentation.chapters[0].video.thumb
-      speaker: presentation.speaker
-      title: presentation.title
-
-    pres.time = dateutil.format(dateutil.parse(presentation.time, "YYYYMMDD"), "Y/m") if presentation.time
-    pres
-
   storage.catalog_name_to_node req.params.catalog_name, (err, catalog) ->
     return next(err) if err?
 
@@ -52,6 +52,25 @@ show_catalog = (req, res, next) ->
       res.render "talks",
         title: "#{catalog.name} talks"
         catalog: catalog
+        presentations: presentations
+        list: draw_4_boxes
+
+show_twitter_user_catalog = (req, res, next) ->
+  storage.find_twitter_user req.params.user_name, (err, user) ->
+    return next(err) if err?
+
+    storage.from_user_to_presentations user, (err, presentations) ->
+      presentations = _.filter presentations, (pres) -> pres.published
+      presentations = (pres_to_thumb(pres, "u/tw/#{user.user_name}") for pres in presentations)
+      presentations = _.sortBy presentations, (presentation) ->
+        return presentation.time if presentation.time?
+        return presentation.title
+
+      if presentations[0].time?
+        presentations = presentations.reverse()
+
+      res.render "talks",
+        title: "#{user.name}'s talks"
         presentations: presentations
         list: draw_4_boxes
 
@@ -228,4 +247,7 @@ exports.show_presentation = show_presentation
 exports.comment_presentation = comment_presentation
 exports.static_view = static_view
 exports.ensure_is_logged = ensure_is_logged
+
+exports.show_twitter_user_catalog = show_twitter_user_catalog
+
 exports.init = init
