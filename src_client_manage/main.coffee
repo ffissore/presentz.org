@@ -423,7 +423,7 @@ jQuery () ->
           $(".modal-body", $helper.advanced_user_data_preview()).html(out)
 
       reader.readAsText(file)
-      
+
     onclick_confirm_data_import: () ->
       slides = @model.get("chapters.0.slides")
       for slide, idx in slides when idx < @data.length
@@ -431,10 +431,32 @@ jQuery () ->
         slide.time = data_for_slide.time
         backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
         backend.set_slide_value_from_import(slide, data_for_slide.value)
-        
+
       @model.set("chapters.0.slides", slides)
       $helper.advanced_user_data_preview().modal("hide")
       @render()
+
+    onclick_slide_burn: (event) ->
+      $("div.slide_burn_confirm").remove()
+      
+      $elem = $(event.target)
+      $slide_container = $elem.parentsUntil("div.row-fluid[slide_index]").last().parent()
+      slide_index = $slide_container.attr("slide_index")
+      chapter_index = $helper.chapter_index_from($helper.chapter_of($elem))
+      dust.render "_confirm_slide_burn", { chapter_index: chapter_index, slide_index: slide_index }, (err, out) ->
+        return alert(err) if err?
+
+        $slide_container.before(out)
+      false
+
+    onclick_slide_burn_confirmed: (event) ->
+      $elem = $(event.target)
+      console.log $elem.attr("chapter_index"), $elem.attr("slide_index")
+      false
+
+    onclick_slide_burn_cancelled: (event) ->
+      $("div.slide_burn_confirm").remove()
+      false
 
     events:
       "click a.play_pause_btn": "onclick_playpause"
@@ -455,6 +477,10 @@ jQuery () ->
       "change input.slide_title": "onchange_slide_title"
       "change input.slide_time": "onchange_slide_time"
       "change input.slide_public_url": "onchange_slide_public_url"
+
+      "click a.slide_burn": "onclick_slide_burn"
+      "click div.slide_burn_confirm a[slide_index][chapter_index]": "onclick_slide_burn_confirmed"
+      "click div.slide_burn_confirm .btn-danger": "onclick_slide_burn_cancelled"
 
   class PresentationThumb extends Backbone.DeepModel
 
