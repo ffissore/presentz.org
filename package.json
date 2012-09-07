@@ -13,7 +13,7 @@
     "dateutil": ">= 0.1.0",
     "moment": ">= 0.1.0",
     "everyauth": "git://github.com/bnoguchi/everyauth.git",
-    "orientdb": ">= 0.9.4",
+    "orientdb": "git://github.com/ffissore/node-orientdb.git",
     "connect-orientdb": "git://github.com/ffissore/connect-orientdb.git",
     "connect-assetmanager": ">= 0.0.1",
     "connect-assetmanager-handlers": "git://github.com/ffissore/connect-assetmanager-handlers.git",

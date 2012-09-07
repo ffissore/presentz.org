@@ -96,6 +96,7 @@ jQuery () ->
 
     loaded: false
     loading: false
+    slides_to_delete: []
 
     toJSON: () ->
       presentation = $.extend true, {}, @attributes
@@ -103,6 +104,29 @@ jQuery () ->
       utils.visit_presentation presentation, utils.remove_unwanted_fields_from, [ "onebased", "$idx", "$len", "_plugin" ]
 
       return presentation
+
+    delete_slides = (slides) ->
+      return if !slides? or slides.length is 0
+      
+      slide = slides.pop()
+      
+      delete_slides(slides) unless slide["@rid"]?
+
+      rid = slide["@rid"].substr(1)
+      $.ajax
+        type: "DELETE"
+        url: "/m/api/delete_slide/#{rid}"
+        success: () ->
+          delete_slides(slides)
+        error: () ->
+          alert("An error occured while deleting the slides")
+
+    save: (attributes, options) ->
+      options ||= {}
+      options.success = (model, resp) =>
+        delete_slides(@slides_to_delete)
+        @model.trigger('sync', model, resp);
+      Backbone.DeepModel.prototype.save.call(this, attributes, options)
 
     initialize: () ->
       _.bindAll @
@@ -458,9 +482,12 @@ jQuery () ->
       chapter_index = $elem.attr("chapter_index")
       slide_index = $elem.attr("slide_index")
 
+      chapter = @model.get("chapters.#{chapter_index}")
       slides = @model.get("chapters.#{chapter_index}.slides")
-      slides.splice(slide_index, 1)
+      deleted_slide = slides.splice(slide_index, 1)[0]
+
       @model.set("chapters.#{chapter_index}.slides", slides)
+      @model.slides_to_delete.push deleted_slide
 
       @render()
 

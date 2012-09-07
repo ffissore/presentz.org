@@ -144,6 +144,54 @@ load_slides_of = (chapter, callback) ->
     utils.exec_for_each load_comments_of, slides, (err) ->
       return callback(err) if err?
       return callback(undefined, chapter)
+      
+delete_slide = (rid, callback) ->
+  delete_nodes = (nodes, callback) ->
+    return callback() if nodes.length is 0
+    
+    deleted = 0
+    for node in nodes
+      db.delete node, (err) ->
+        return callback(err) if err?
+        deleted++
+        callback() if nodes.length is deleted
+
+  db.loadRecord "##{rid}", (err, node) ->
+    return callback(err) if err?   
+    
+    db.command "select from (traverse V.in, E.out from ##{rid}) where label = 'authored_comment'", (err, authored_edges) ->
+      return callback(err) if err?
+      delete_nodes authored_edges, (err) ->
+        return callback(err) if err?
+  
+        db.command "select from (traverse V.in, E.out from ##{rid}) where label = 'comment_of'", (err, comment_edges) ->
+          return callback(err) if err?
+          delete_nodes comment_edges, (err) ->
+            return callback(err) if err?
+  
+            db.command "select from (traverse V.in, E.out from ##{rid}) where _type = 'comment'", (err, comments) ->
+              return callback(err) if err?
+              delete_nodes comments, (err) ->
+                return callback(err) if err?
+      
+                db.getOutEdges node, "slide_of", (err, edges) ->
+                  return callback(err) if edges.length isnt 1
+  
+                  edge_rid = edges[0]["@rid"]
+                  
+                  db.fromVertex(node).outVertexes "slide_of", (err, chapters) ->
+                    return callback(err) if chapters.length isnt 1
+
+                    chapter = chapters[0]
+                    chapter.in = _.without(chapter.in, edge_rid)
+                    
+                    db.save chapter, (err, chapter) ->
+                      return callback(err) if err?
+  
+                      delete_nodes edges, (err) ->
+                        return callback(err) if err?
+                        
+                        db.delete node, callback
 
 exports.load_chapters_of = load_chapters_of
 exports.load_entire_presentation_from_catalog = load_entire_presentation_from_catalog
@@ -163,3 +211,4 @@ exports.link_slide_to_chapter = link_slide_to_chapter
 exports.link_chapter_to_presentation = link_chapter_to_presentation
 exports.link_user_to_presentation = link_user_to_presentation
 exports.find_user_by_username_by_social = find_user_by_username_by_social
+exports.delete_slide = delete_slide

@@ -149,9 +149,16 @@ slideshare_url_to_doc_id = (req, res, next) ->
     res.contentType "application/json"
     res.send xml2json.toJson(xml)
 
+delete_slide = (req, res, next) ->
+  storage.delete_slide req.params.node_id, (err) ->
+    return next(err) if err?
+
+    res.send 200
+
 exports.init = init
 exports.presentations = presentations
 exports.presentation_save = presentation_save
 exports.presentation_load = presentation_load
 exports.slideshare_slides_of = slideshare_slides_of
 exports.slideshare_url_to_doc_id = slideshare_url_to_doc_id
+exports.delete_slide = delete_slide
