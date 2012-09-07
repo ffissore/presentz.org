@@ -105,27 +105,33 @@ jQuery () ->
 
       return presentation
 
-    delete_slides = (slides) ->
-      return if !slides? or slides.length is 0
-      
-      slide = slides.pop()
-      
-      delete_slides(slides) unless slide["@rid"]?
+    delete_slides = (slides, callback) ->
+      return callback() if !slides? or slides.length is 0
 
-      rid = slide["@rid"].substr(1)
+      slide = slides.pop()
+
+      delete_slides(slides, callback) unless slide["@rid"]?
+
       $.ajax
         type: "DELETE"
-        url: "/m/api/delete_slide/#{rid}"
-        success: () ->
-          delete_slides(slides)
+        url: "/m/api/delete_slide/#{slide["@rid"].substr(1)}"
+        success: (chapter_and_edge) ->
+          chapters_and_edges.push(chapter_and_edge)
+          delete_slides(slides, callback)
         error: () ->
           alert("An error occured while deleting the slides")
 
     save: (attributes, options) ->
       options ||= {}
       options.success = (model, resp) =>
-        delete_slides(@slides_to_delete)
-        @model.trigger('sync', model, resp);
+        if @slides_to_delete.length is 0
+          return @trigger("sync", model, resp)
+
+        delete_slides @slides_to_delete, () =>
+          @loading = false
+          @loaded = false
+          @fetch { success: () => @trigger("sync") }
+
       Backbone.DeepModel.prototype.save.call(this, attributes, options)
 
     initialize: () ->

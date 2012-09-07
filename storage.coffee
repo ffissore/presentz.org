@@ -75,7 +75,7 @@ create_comment = (comment, node_to_link_to, user, callback) ->
         return callback(err) if err?
 
         callback(undefined, comment)
-        
+
 find_user_by_username_by_social = (social_column, user_name, callback) ->
   db.command "select from V where _type = 'user' and #{social_column} is not null and user_name = '#{user_name}'", (err, users) ->
     return callback(err) if err?
@@ -115,7 +115,7 @@ load_entire_presentation_from_catalog = (catalog_name, presentation_id, callback
 
 load_entire_presentation_from_users_catalog = (social_prefix, user_name, presentation_id, callback) ->
   load_entire_presentation_with_query "select from V where _type = 'presentation' and id = '#{presentation_id}' and in.label CONTAINS 'authored' and in.out.#{social_prefix}.size() = 1 and in.out.user_name CONTAINSALL '#{user_name}'", callback
-  
+
 load_user_of = (comment, callback) ->
   db.fromVertex(comment).inVertexes "authored_comment", (err, users) ->
     return callback(err) if err?
@@ -144,11 +144,11 @@ load_slides_of = (chapter, callback) ->
     utils.exec_for_each load_comments_of, slides, (err) ->
       return callback(err) if err?
       return callback(undefined, chapter)
-      
+
 delete_slide = (rid, callback) ->
   delete_nodes = (nodes, callback) ->
     return callback() if nodes.length is 0
-    
+
     deleted = 0
     for node in nodes
       db.delete node, (err) ->
@@ -157,40 +157,40 @@ delete_slide = (rid, callback) ->
         callback() if nodes.length is deleted
 
   db.loadRecord "##{rid}", (err, node) ->
-    return callback(err) if err?   
-    
+    return callback(err) if err?
+
     db.command "select from (traverse V.in, E.out from ##{rid}) where label = 'authored_comment'", (err, authored_edges) ->
       return callback(err) if err?
       delete_nodes authored_edges, (err) ->
         return callback(err) if err?
-  
+
         db.command "select from (traverse V.in, E.out from ##{rid}) where label = 'comment_of'", (err, comment_edges) ->
           return callback(err) if err?
           delete_nodes comment_edges, (err) ->
             return callback(err) if err?
-  
+
             db.command "select from (traverse V.in, E.out from ##{rid}) where _type = 'comment'", (err, comments) ->
               return callback(err) if err?
               delete_nodes comments, (err) ->
                 return callback(err) if err?
-      
+
                 db.getOutEdges node, "slide_of", (err, edges) ->
                   return callback(err) if edges.length isnt 1
-  
+
                   edge_rid = edges[0]["@rid"]
-                  
+
                   db.fromVertex(node).outVertexes "slide_of", (err, chapters) ->
                     return callback(err) if chapters.length isnt 1
 
                     chapter = chapters[0]
                     chapter.in = _.without(chapter.in, edge_rid)
-                    
+
                     db.save chapter, (err, chapter) ->
                       return callback(err) if err?
-  
+
                       delete_nodes edges, (err) ->
                         return callback(err) if err?
-                        
+
                         db.delete node, callback
 
 exports.load_chapters_of = load_chapters_of
