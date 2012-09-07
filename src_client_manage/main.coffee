@@ -43,6 +43,7 @@ jQuery () ->
     slide_thumb_of: (slide_index, $chapter) -> $("div.slide_thumb", @slide_of(slide_index, $chapter))
     slides_of: ($chapter) -> $("div[slide_index]", $chapter)
     elements_with_slide_index_in: ($elem) -> $("[slide_index]", $elem)
+    slide_burn_confirm: () -> $("div.slide_burn_confirm")
 
     new_title: () -> $("input[name=title]")
 
@@ -107,10 +108,6 @@ jQuery () ->
       _.bindAll @
 
       @bind "change", () ->
-        utils.visit_presentation @attributes, (objtype, obj, fields) ->
-          return unless objtype is "chapter"
-          for slide, idx in obj.slides
-            slide.evenness = if (idx % 2) is 0 then "even" else "odd"
         app.edit(@) if !@loading
         @loading = true
 
@@ -156,6 +153,11 @@ jQuery () ->
       for chapter in @model.attributes.chapters
         for slide in chapter.slides
           slides.push slide
+
+      utils.visit_presentation @model.attributes, (objtype, obj, fields) ->
+        return unless objtype is "chapter"
+        for slide, idx in obj.slides
+          slide.evenness = if (idx % 2) is 0 then "even" else "odd"
 
       load_slides_info = (slides) =>
         slide = slides.pop()
@@ -437,8 +439,8 @@ jQuery () ->
       @render()
 
     onclick_slide_burn: (event) ->
-      $("div.slide_burn_confirm").remove()
-      
+      $helper.slide_burn_confirm().remove()
+
       $elem = $(event.target)
       $slide_container = $elem.parentsUntil("div.row-fluid[slide_index]").last().parent()
       slide_index = $slide_container.attr("slide_index")
@@ -451,11 +453,21 @@ jQuery () ->
 
     onclick_slide_burn_confirmed: (event) ->
       $elem = $(event.target)
-      console.log $elem.attr("chapter_index"), $elem.attr("slide_index")
+      $helper.slide_burn_confirm().remove()
+
+      chapter_index = $elem.attr("chapter_index")
+      slide_index = $elem.attr("slide_index")
+
+      slides = @model.get("chapters.#{chapter_index}.slides")
+      slides.splice(slide_index, 1)
+      @model.set("chapters.#{chapter_index}.slides", slides)
+
+      @render()
+
       false
 
     onclick_slide_burn_cancelled: (event) ->
-      $("div.slide_burn_confirm").remove()
+      $helper.slide_burn_confirm().remove()
       false
 
     events:

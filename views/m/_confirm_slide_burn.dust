@@ -1,5 +1,5 @@
 <div class="slide_burn_confirm alert alert-block alert-error fade in">
-  <h4 class="alert-heading">Burning this slide?</h4>
+  <h4 class="alert-heading">Delete it?</h4>
   <p>Are you sure you want to delete this slide?</p>
   <p><a href="#" class="btn btn-danger">No!</a> <a chapter_index="{chapter_index}" slide_index="{slide_index}" href="#" class="btn">Yes, delete it</a></p>
 </div>
