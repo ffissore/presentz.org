@@ -109,4 +109,8 @@ $().ready () ->
   $window.unbind "resize"
   $window.bind "resize", () ->
     DemoScroller.resize() if $("#content_slider").length > 0
+    
+  if document.location.search is "?access_denied"
+    $link_login_link_in_comment.click()
+    
   return
