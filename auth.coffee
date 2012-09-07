@@ -73,6 +73,9 @@ find_or_create_user = (db, query_tmpl, merge_function) ->
       create_or_update_user db, results, session, user_data, merge_function, promise
     return promise
 
+handleAuthCallbackError = (req, res) ->
+  res.redirect 302, "/?access_denied"
+    
 facebook_init = (config, db) ->
   everyauth.facebook.configure
     appId: config.auth.facebook.app_id
@@ -81,6 +84,7 @@ facebook_init = (config, db) ->
     myHostname: config.hostname
     findOrCreateUser: find_or_create_user(db, "SELECT @rid FROM V where _type = 'user' and facebook_id = ", merge_facebook_user_data)
     redirectPath: "/r/back_to_referer"
+    handleAuthCallbackError: handleAuthCallbackError
 
 twitter_init = (config, db) ->
   everyauth.twitter.configure
@@ -89,6 +93,7 @@ twitter_init = (config, db) ->
     myHostname: config.hostname
     findOrCreateUser: find_or_create_user(db, "SELECT @rid FROM V where _type = 'user' and twitter_id = ", merge_twitter_user_data)
     redirectPath: "/r/back_to_referer"
+    handleAuthCallbackError: handleAuthCallbackError
 
 google_init = (config, db) ->
   everyauth.google.configure
@@ -98,6 +103,7 @@ google_init = (config, db) ->
     myHostname: config.hostname
     findOrCreateUser: find_or_create_user(db, "SELECT @rid FROM V where _type = 'user' and google_id = ", merge_google_user_data)
     redirectPath: "/r/back_to_referer"
+    handleAuthCallbackError: handleAuthCallbackError
 
 linkedin_init = (config, db) ->
   everyauth.linkedin.configure
@@ -106,6 +112,7 @@ linkedin_init = (config, db) ->
     myHostname: config.hostname
     findOrCreateUser: find_or_create_user(db, "SELECT @rid FROM V where _type = 'user' and linkedin_id = ", merge_linkedin_user_data)
     redirectPath: "/r/back_to_referer"
+    handleAuthCallbackError: handleAuthCallbackError
 
 github_init = (config, db) ->
   everyauth.github.configure
@@ -115,6 +122,7 @@ github_init = (config, db) ->
     findOrCreateUser: find_or_create_user(db, "SELECT @rid FROM V where _type = 'user' and github_id = ", merge_github_user_data)
     callbackPath: "/auth/github/callback"
     redirectPath: "/r/back_to_referer"
+    handleAuthCallbackError: handleAuthCallbackError
 
 foursquare_init = (config, db) ->
   everyauth.foursquare.configure
@@ -123,6 +131,7 @@ foursquare_init = (config, db) ->
     myHostname: config.hostname
     findOrCreateUser: find_or_create_user(db, "SELECT @rid FROM V where _type = 'user' and foursquare_id = ", merge_foursquare_user_data)
     redirectPath: "/r/back_to_referer"
+    handleAuthCallbackError: handleAuthCallbackError
 
 init = (config, db) ->
   everyauth.everymodule.findUserById (userId, callback) ->
