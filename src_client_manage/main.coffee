@@ -115,8 +115,7 @@ jQuery () ->
       $.ajax
         type: "DELETE"
         url: "/m/api/delete_slide/#{slide["@rid"].substr(1)}"
-        success: (chapter_and_edge) ->
-          chapters_and_edges.push(chapter_and_edge)
+        success: () ->
           delete_slides(slides, callback)
         error: () ->
           alert("An error occured while deleting the slides")
@@ -393,19 +392,21 @@ jQuery () ->
       false
 
     onclick_slide_left_right: (modifier) ->
+      slide_number = parseInt($helper.slide_number_player().val()) - 1 + modifier
+
+      return false if slide_number < 0
+
+      slides = @model.get("chapters.0.slides")
+
+      return false if slide_number >= slides.length
+
       prsntz.synchronized(false)
       $helper.synchronized_status(false)
 
       $slide_number_player = $helper.slide_number_player()
-      slide_number = parseInt($helper.slide_number_player().val()) - 1 + modifier
-      slides = @model.get("chapters.0.slides")
-
-      return false if slide_number < 0
-
       $slide_number_player.val(slide_number + 1)
 
-      if slide_number >= slides.length - 1 or slide_number < slides.length - 1
-        prsntz.changeSlide(slides[slide_number], 0, slide_number)
+      prsntz.changeSlide(slides[slide_number], 0, slide_number)
       false
 
     onclick_synchronized_status: (event) ->
