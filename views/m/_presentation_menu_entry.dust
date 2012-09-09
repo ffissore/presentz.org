@@ -1,3 +1,3 @@
-<li class="active"><a>{.title}</a></li>
+<li class="active"><a><span>{.title}</span>{?published}{:else} <sup class="label label-warning">hidden</sup>{/published}</a></li>
 <li><button class="save navbar-btn btn disabled" type="button" disabled="disabled">Save</button></li>
 <li class="notify_save"><a>Saved!</a></li>

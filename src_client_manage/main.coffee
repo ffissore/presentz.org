@@ -205,7 +205,7 @@ jQuery () ->
               return alert(err) if err?
 
               loader_hide()
-              app.navigationView.presentation_menu_entry utils.cut_string_at(@model.get("title"), 30)
+              app.navigationView.presentation_menu_entry utils.cut_string_at(@model.get("title"), 30), @model.get("published")
               @$el.html(out)
               init_presentz @model.attributes, true
               $helper.slide_containers().scrollspy
@@ -293,7 +293,7 @@ jQuery () ->
     onchange_title: (event) ->
       title = $(event.target).val()
       @model.set "title", title
-      app.navigationView.presentation_menu_entry utils.cut_string_at(@model.get("title"), 30)
+      app.navigationView.presentation_menu_entry utils.cut_string_at(@model.get("title"), 30), @model.get("published")
 
     onchange_slide_title: (event) ->
       $elem = $(event.target)
@@ -716,17 +716,17 @@ jQuery () ->
       $("li", @$el).removeClass "active"
       $("li", @$el).eq(highlight_idx).addClass "active" if highlight_idx?
 
-    presentation_menu_entry: (title) ->
+    presentation_menu_entry: (title, published) ->
       $li = $("li", @$el)
       if $li.length < 3
         $li.removeClass "active"
-        dust.render "_presentation_menu_entry", { title: title }, (err, out) =>
+        dust.render "_presentation_menu_entry", { title: title, published: published }, (err, out) =>
           return alert(err) if err?
 
           @$el.append(out)
           $helper.notify_save_text().hide()
       else
-        $("a", $li.eq(2)).text title
+        $("a span", $li.eq(2)).text title
 
     mypres: (event) ->
       router.navigate "mypres", trigger: true unless $(event.currentTarget).parent().hasClass "active"
