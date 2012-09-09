@@ -82,16 +82,16 @@ raw_presentation_from_catalog = (req, res, next) ->
     return next(err) if err?
 
     raw_presentation presentation, req, res
-  
+
 raw_presentation_from_user = (req, res, next) ->
   auth.social_column_from_prefix req.params.social_prefix, (err, social_column) ->
     return next(err) if err?
 
     storage.load_entire_presentation_from_users_catalog social_column, req.params.user_name, req.params.presentation, (err, presentation) ->
       return next(err) if err?
-  
+
       raw_presentation presentation, req, res
-  
+
 raw_presentation = (presentation, req, res) ->
   return res.send 404 unless presentation.published
 
@@ -206,6 +206,8 @@ show_presentation = (presentation, path, req, res) ->
     embed: req.query.embed?
 
 comment_presentation = (req, res, next) ->
+  return res.send 401 if !req.user?
+
   params = req.body
 
   get_node_to_link_to = (callback) ->

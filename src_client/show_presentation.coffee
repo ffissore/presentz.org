@@ -306,6 +306,9 @@ $().ready () ->
 
 
   $("#comment_form form").submit (e) ->
+    $submit = $("input[type=submit]", @)
+    $submit.attr("disabled", true)
+
     $textarea = $(e.currentTarget.comment)
     text = $.trim($textarea.val())
     return false if text is ""
@@ -333,7 +336,9 @@ $().ready () ->
         $textarea.val ""
         $chapter_index.val ""
         $slide_index.val ""
+        $submit.attr("disabled", false)
       error: () ->
+        $submit.attr("disabled", false)
         alert("An error occured while saving your comment")
     false
 
