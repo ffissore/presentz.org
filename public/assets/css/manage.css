@@ -165,3 +165,8 @@ li.play_pause_divider {
     border-right: 1px solid #ffffff;
     border-left: 1px solid #808080;
 }
+
+footer {
+    position: absolute;
+    bottom: 0px;
+}

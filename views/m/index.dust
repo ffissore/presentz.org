@@ -48,6 +48,7 @@
   </div>
   <div class="modal-body">
     <p></p>
+
     <p></p>
   </div>
   <div class="modal-footer">
@@ -55,9 +56,11 @@
   </div>
 </div>
 
-<div class="row-fluid">
-  <p class="span12" style="text-align: center;"><small>Some icons &copy; <a href="http://avetenebrae.deviantart.com/" target="_blank">Laurent Baumann</a>, downloaded from <a href="http://stopdreaming.deviantart.com/art/Albook-extended-811-png-95130593" target="_blank">here</a></small></p>
-</div>
+<footer>
+  <p class="span12" style="text-align: center;">
+    <small>Some icons &copy; <a href="http://avetenebrae.deviantart.com/" target="_blank">Laurent Baumann</a>, downloaded from <a href="http://stopdreaming.deviantart.com/art/Albook-extended-811-png-95130593" target="_blank">here</a></small>
+  </p>
+</footer>
 <script src="/managedassets/js/{.assetsCacheHashes.js_main}manage.js" type="text/javascript"></script>
 <script src="https://www.youtube.com/player_api" type="text/javascript"></script>
 </body>
