@@ -34,6 +34,10 @@
           <span>Slide #:&nbsp;</span><input type="text" name="slide_number_player" value="1" class="input-mini"/>
           <a href="#" class="slide_right_btn slide_right">right</a>
         </li>
+        <li class="play_pause_divider"></li>
+        <li>
+          <a href="#" class="set_time_btn set_time">time</a>
+        </li>
       </ul>
       <small><a href="#" class="hei_advanced">Hei! I'm an advanced user and this thing is way too slow!</a></small>
     </div>
