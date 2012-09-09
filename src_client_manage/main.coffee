@@ -563,7 +563,6 @@ jQuery () ->
       dust.render "_presentation_thumb", ctx, (err, out) =>
         return alert(err) if err?
 
-        loader_hide()
         @$el.html out
       @
 
@@ -767,10 +766,17 @@ jQuery () ->
 
       @presentationThumbList.on "reset", @reset, @
 
-    reset: (model) ->
-      view = new PresentationThumbListView model: model
-      @$el.html view.el
-      view.render()
+    reset: (models) ->
+      if models.length > 0
+        view = new PresentationThumbListView model: models
+        @$el.html view.el
+        view.render()
+      else
+        dust.render "_no_talks_here", {}, (err, out) =>
+          return alert(err) if err?
+  
+          @$el.html out
+      loader_hide()
 
     mypres: () ->
       @presentationThumbList.fetch()
