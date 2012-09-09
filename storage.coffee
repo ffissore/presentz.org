@@ -20,7 +20,10 @@ link_chapter_to_presentation = (chapter, presentation, callback) ->
   db.createEdge chapter, presentation, { label: "chapter_of" }, callback
 
 link_user_to_presentation = (user, presentation, callback) ->
-  db.createEdge user, presentation, { label: "authored" }, callback
+  if presentation.is_new
+    db.createEdge user, presentation, { label: "authored" }, callback
+  else
+    callback()
 
 cascading_save = (vertex, callback) ->
   db.cascadingSave vertex, callback

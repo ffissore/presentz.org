@@ -44,34 +44,34 @@ presentation_save_everything = (user, presentation, callback) ->
     slide: [ "@class", "@type", "@version", "@rid", "in", "out", "url", "title", "time", "_type", "public_url" ]
 
   utils.visit_presentation presentation, utils.ensure_only_wanted_map_of_fields_in, allowed_map_of_fields
-  
+
   save_all = (objs, callback) ->
     return callback(undefined, []) if objs.length is 0
-    
+
     saved_objs = []
     for obj in objs
       save obj, (err, obj) ->
         return callback(err) if err?
         saved_objs.push(obj)
         return callback(undefined, saved_objs) if saved_objs.length is objs.length
-  
+
   save = (obj, callback) ->
     is_new = !obj["@rid"]?
     cb = (err, obj) ->
       return callback(err) if err?
       obj.is_new = is_new
-      callback(undefined, obj)
-      
+      callback(undefined, obj, is_new)
+
     if is_new
       storage.create obj, cb
     else
       storage.save obj, cb
-      
+
   link_all_new = (objs, node_to_link_to, storage_function, callback) ->
     new_objs = _.filter objs, (obj) -> obj.is_new? and obj.is_new
-    
+
     return callback(undefined) if new_objs.length is 0
-    
+
     linked_objs = []
     for obj in new_objs
       storage_function obj, node_to_link_to, (err, link) ->
@@ -85,20 +85,22 @@ presentation_save_everything = (user, presentation, callback) ->
     for chapter in chapters
       save_all chapter.slides, (err, slides) ->
         return callback(err) if err?
+        delete chapter.slides
         save chapter, (err, chapter) ->
           return callback(err) if err?
           link_all_new slides, chapter, storage.link_slide_to_chapter, (err) ->
             return callback(err) if err?
             saved_chapters.push(chapter)
             return callback(undefined, saved_chapters) if saved_chapters.length is chapters.length
-        
+
   save_all_chapters presentation.chapters, (err, chapters) ->
     return callback(err) if err?
-    save presentation, (err, presentation) ->
+    delete presentation.chapters
+    save presentation, (err, presentation, was_new) ->
       return callback(err) if err?
       link_all_new chapters, presentation, storage.link_chapter_to_presentation, (err) ->
         return callback(err) if err?
-        
+
         storage.link_user_to_presentation user, presentation, (err) ->
           return callback(err) if err?
 
@@ -119,7 +121,7 @@ presentation_save = (req, res, next) ->
 
 presentation_load = (req, res, next) ->
   storage.load_entire_presentation_from_id req.params.presentation, (err, presentation) ->
-    return safe_next(next, err) if err? 
+    return safe_next(next, err) if err?
 
     res.send presentation
 
