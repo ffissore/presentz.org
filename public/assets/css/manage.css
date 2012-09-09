@@ -1,5 +1,13 @@
+html, body {
+    height: 100%;
+}
+
 body {
     padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+
+.container {
+    min-height: 100%;
 }
 
 .show-grid {
@@ -167,6 +175,8 @@ li.play_pause_divider {
 }
 
 footer {
-    position: absolute;
-    bottom: 0px;
+    position: relative;
+    clear: both;
+    margin-top: -40px; /* negative value of footer height */
+    height: 40px;
 }
