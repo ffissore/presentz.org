@@ -36,7 +36,9 @@ class SlideShare
     
   slideshow_info: (public_url, callback) ->
     public_url = "http://#{public_url}" unless _.str.startsWith(public_url, "http://")
-    @url_from_public_url url: "#{public_url}#1", public_url: public_url, (url, slideshow) =>
+    @url_from_public_url url: "#{public_url}#1", public_url: public_url, (err, url, slideshow) =>
+      return callback(err) if err?
+      
       slide =
         url: url
         public_url: public_url
@@ -73,13 +75,15 @@ class SlideShare
 
     if @slideshare_url_to_slideshows[public_url]?
       slideshow = @slideshare_url_to_slideshows[public_url]
-      callback make_url(slideshow.PPTLocation, slide_number), slideshow
+      callback undefined, make_url(slideshow.PPTLocation, slide_number), slideshow
       return
 
     $.get "/m/api/slideshare/url_to_doc_id", { url: public_url }, (ss) =>
+      return callback(ss.SlideShareServiceError.Message["$t"]) if ss.SlideShareServiceError? 
+      
       slideshow = ss.Slideshow
       @slideshare_url_to_slideshows[slide.public_url] = slideshow
-      callback make_url(slideshow.PPTLocation, slide_number), slideshow
+      callback undefined, make_url(slideshow.PPTLocation, slide_number), slideshow
 
   change_slide_number: (old_url, slide_number) ->
     old_url.substring(0, old_url.lastIndexOf("#") + 1).concat(slide_number)
@@ -111,7 +115,7 @@ class DummySlideBackend
 
   url_from_public_url: (slide, callback) ->
     if utils.is_url_valid slide.public_url
-      callback slide.public_url
+      callback undefined, slide.public_url
     else
       callback("Invalid URL: #{slide.public_url}")
 

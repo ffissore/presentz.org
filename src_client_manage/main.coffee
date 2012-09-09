@@ -365,7 +365,8 @@ jQuery () ->
       backend = _.find slide_backends, (backend) -> backend.handle(public_url)
       slide = @model.get slide_helper.model_selector
 
-      backend.url_from_public_url slide, (new_url) =>
+      backend.url_from_public_url slide, (err, new_url) =>
+        return alert(err) if err?
         @model.set "#{slide_helper.model_selector}.url", new_url
 
         backend.slide_info slide, (err, slide, slide_info) =>
@@ -653,7 +654,8 @@ jQuery () ->
       $thumb_container = $(".slide_thumb", @$el)
       $thumb_container.empty()
       $thumb_container.append("Fetching info...")
-      backend = _.find slide_backends, (backend) -> backend.handle(url)
+      #backend = _.find slide_backends, (backend) -> backend.handle(url)
+      backend = slide_backends[0] #slideshare
       backend.slideshow_info url, (err, slide, slideshow_info) =>
         $thumb_container.empty()
         @slideshow = null
