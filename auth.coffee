@@ -180,7 +180,6 @@ put_user_in_locals = (req, res, next) ->
       user.catalog = "/u/#{value.prefix}/#{user.user_name}" if user[value.col]?
 
     res.locals.user = user
-    user.admin = true if user.twitter_id is 1861911
   next()
 
 exports.init = init
