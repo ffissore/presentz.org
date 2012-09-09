@@ -35,6 +35,7 @@ class SlideShare
     slides    
     
   slideshow_info: (public_url, callback) ->
+    public_url = "http://#{public_url}" unless _.str.startsWith(public_url, "http://")
     @url_from_public_url url: "#{public_url}#1", public_url: public_url, (url, slideshow) =>
       slide =
         url: url

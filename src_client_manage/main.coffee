@@ -650,7 +650,6 @@ jQuery () ->
     onchange_slide: (event) ->
       $elem = $(event.target)
       url = $elem.val()
-      url = "http://#{url}" unless _.str.startsWith(url, "http://")
       $thumb_container = $(".slide_thumb", @$el)
       $thumb_container.empty()
       $thumb_container.append("Fetching info...")
