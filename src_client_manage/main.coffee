@@ -610,6 +610,7 @@ jQuery () ->
     @title: null
 
     render: () ->
+      $(window).scrollTop 0
       dust.render "_new", {}, (err, out) =>
         return alert(err) if err?
         loader_hide()
