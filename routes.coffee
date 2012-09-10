@@ -62,8 +62,9 @@ show_catalog_of_user = (social) ->
       return next(err) if err?
 
       storage.from_user_to_presentations user, (err, presentations) ->
+        presentations = _.filter presentations, (pres) -> pres.published
+        
         if presentations.length > 0
-          presentations = _.filter presentations, (pres) -> pres.published
           presentations = (pres_to_thumb(pres, "u/#{social.prefix}/#{user.user_name}") for pres in presentations)
           presentations = _.sortBy presentations, (presentation) ->
             return presentation.time if presentation.time?
