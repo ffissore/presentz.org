@@ -184,3 +184,7 @@ footer {
     margin-top: -40px; /* negative value of footer height */
     height: 40px;
 }
+
+div.span1.slide_number {
+    margin-left: 0;
+}

@@ -54,7 +54,7 @@ class SlideShare
     pack_response = (doc_id, slide, callback) =>
       number = @to_slide_number slide.url
       slides = @slideshare_infos[doc_id].Show.Slide
-      return callback("Invalid slide number #{number}") if number > slides.length
+      return callback("Invalid slide number #{number} (last slide is number #{slides.length})") if number > slides.length
 
       slide_thumb = slides[number - 1].Src
       callback undefined, slide,

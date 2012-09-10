@@ -83,7 +83,7 @@
         <div class="span1">
           <a class="slide_burn" href="#" slide_index="{@idx}{.}{/idx}">delete</a>
         </div>
-        <form class="span9 form-horizontal">
+        <form class="span8 form-horizontal">
           <fieldset>
             <div class="control-group">
               <label class="control-label">URL</label>
@@ -113,6 +113,7 @@
             </div>
           </fieldset>
         </form>
+        <div class="span1 slide_number">Slide {#onebased}{.}{/onebased}</div>
         <div class="slide_thumb span2" src="{.slide_thumb}" thumb_type="{._thumb_type}"></div>
       </div>
     {/slides}
@@ -125,6 +126,14 @@
   </div>
   <div class="modal-body">
     <p>If you like to be fast, synchronize this presentation on your computer, that is: play the video file with <a href="http://www.mplayerhq.hu/" target="_blank">MPlayer</a> or <a href="http://www.videolan.org/" target="_blank">VLC</a> and write down which slide is shown when.</p>
+    <p>You should make a text file (.txt or .csv) with the following format:</p>
+    <ol>
+      <li>
+        <code>TIME_IN_SECONDS,SLIDE_INDEX</code>
+        <p></p>
+      </li>
+    </ol>
+    {!
     <p>You should make a text file (.txt or .csv) with one of the following format:</p>
     <ol>
       <li>
@@ -138,6 +147,7 @@
         <p></p>
       </li>
     </ol>
+    !}
     <span class="help-inline">Get file</span> <input type="file" class="input-small">
   </div>
   <div class="modal-footer">
