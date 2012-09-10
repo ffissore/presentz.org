@@ -222,6 +222,14 @@ jQuery () ->
       load_slides_info slides
       @
 
+    onchange_speaker: (event) ->
+      $elem = $(event.target)
+      speaker = $.trim($elem.val())
+      if speaker is ""
+        @model.unset "speaker"
+      else
+        @model.set "speaker", $elem.val()
+
     onchange_video_url: (event) ->
       $elem = $(event.target)
       url = $elem.val()
@@ -531,6 +539,7 @@ jQuery () ->
       "click #advanced_user_data_preview button.btn-success": "onclick_confirm_data_import"
       "change input[type=file]": "onchange_slide_times_file"
 
+      "change input[name=speaker]": "onchange_speaker"
       "change input[name=video_url]": "onchange_video_url"
       "click button.reset_thumb": "reset_video_thumb"
       "change input[name=video_thumb]": "onchange_video_thumb_url"

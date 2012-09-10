@@ -190,7 +190,7 @@ show_presentation = (presentation, path, req, res) ->
   title_parts[title_parts.length - 1] = "<span>#{title_parts[title_parts.length - 1]}</span>"
   talk_title = title_parts.join(" ")
   pres_title = presentation.title
-  pres_title = "#{pres_title} - #{presentation.speaker}" if presentation.speaker?
+  pres_title = "#{pres_title} - #{presentation.speaker}" if presentation.speaker? and presentation.speaker isnt ""
 
   comments = comments_of presentation
 
