@@ -745,7 +745,7 @@ jQuery () ->
 
   class NavigationView extends Backbone.View
 
-    el: $(".navbar > .navbar-inner > .container > .nav-collapse > .nav")
+    el: $(".navbar > .navbar-inner > .container > .nav-collapse > .nav:first")
 
     reset: (highlight_idx) ->
       $("li:gt(1)", @$el).remove()
