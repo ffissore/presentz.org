@@ -94,6 +94,7 @@ assetsMiddleware = assetManager
   js_embed: new_js_conf("embed", ["src_client/embed.coffee"])
   js_manage: new_js_conf("manage", [
     "public/assets/js/jquery/jquery-1.8.0.js",
+    "public/assets/js/jquery/jquery-ui-1.8.23.custom.min.js",
     "public/assets/js/manage/jquery.jsonp.js",
     "public/assets/js/manage/jquery-scrollspy.js",
     "public/assets/js/manage/bootstrap.js",
@@ -125,6 +126,7 @@ assetsMiddleware = assetManager
     "src_client_manage/validation.coffee"
   ])
   css_manage: new_css_conf("manage", [
+    "public/assets/css/jquery-ui-1.8.23.custom.css",
     "public/assets/css/mediaelementplayer.css",
     "public/assets/css/bootstrap.css",
     "public/assets/css/bootstrap-responsive.css"

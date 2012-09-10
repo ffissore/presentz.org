@@ -220,15 +220,24 @@ jQuery () ->
                   $slide_thumb.empty()
 
       load_slides_info slides
+
+      $("input[name=time]").datepicker { dateFormat: "yymmdd" }
+
       @
 
-    onchange_speaker: (event) ->
+    onchange_simple_field: (fieldname, event) ->
       $elem = $(event.target)
       speaker = $.trim($elem.val())
       if speaker is ""
-        @model.unset "speaker"
+        @model.unset fieldname
       else
-        @model.set "speaker", $elem.val()
+        @model.set fieldname, $elem.val()
+
+    onchange_speaker: (event) ->
+      @onchange_simple_field("speaker", event)
+
+    onchange_time: (event) ->
+      @onchange_simple_field("time", event)
 
     onchange_video_url: (event) ->
       $elem = $(event.target)
@@ -540,6 +549,7 @@ jQuery () ->
       "change input[type=file]": "onchange_slide_times_file"
 
       "change input[name=speaker]": "onchange_speaker"
+      "change input[name=time]": "onchange_time"
       "change input[name=video_url]": "onchange_video_url"
       "click button.reset_thumb": "reset_video_thumb"
       "change input[name=video_thumb]": "onchange_video_thumb_url"
