@@ -15,7 +15,7 @@ class SlideShare
 
   to_slide_number: (url) ->
     parseInt(@presentzSlideShare.slideNumber(url: url))
-    
+
   make_url = (doc_id, slide_number) ->
     "http://www.slideshare.net/#{doc_id}##{slide_number}"
 
@@ -26,19 +26,19 @@ class SlideShare
     slides = []
     time = 0
     for ss_slide, idx in ss_slides
-      slide = 
+      slide =
         time: time
         url: make_url(doc_id, idx + 1)
         public_url: public_url
       time += mean_slide_duration
       slides.push slide
-    slides    
-    
+    slides
+
   slideshow_info: (public_url, callback) ->
     public_url = "http://#{public_url}" unless _.str.startsWith(public_url, "http://")
     @url_from_public_url url: "#{public_url}#1", public_url: public_url, (err, url, slideshow) =>
       return callback(err) if err?
-      
+
       slide =
         url: url
         public_url: public_url
@@ -54,7 +54,7 @@ class SlideShare
     pack_response = (doc_id, slide, callback) =>
       number = @to_slide_number slide.url
       slides = @slideshare_infos[doc_id].Show.Slide
-      return callback("Invalid slide number #{number} (last slide is number #{slides.length})") if number > slides.length
+      return callback("Invalid slide number #{number} (last slide is number is #{slides.length})") if number > slides.length
 
       slide_thumb = slides[number - 1].Src
       callback undefined, slide,
@@ -79,8 +79,8 @@ class SlideShare
       return
 
     $.get "/m/api/slideshare/url_to_doc_id", { url: public_url }, (ss) =>
-      return callback(ss.SlideShareServiceError.Message["$t"]) if ss.SlideShareServiceError? 
-      
+      return callback(ss.SlideShareServiceError.Message["$t"]) if ss.SlideShareServiceError?
+
       slideshow = ss.Slideshow
       @slideshare_url_to_slideshows[slide.public_url] = slideshow
       callback undefined, make_url(slideshow.PPTLocation, slide_number), slideshow
@@ -88,8 +88,13 @@ class SlideShare
   change_slide_number: (old_url, slide_number) ->
     old_url.substring(0, old_url.lastIndexOf("#") + 1).concat(slide_number)
 
-  set_slide_value_from_import: (slide, slide_index) ->
-    slide.url = @change_slide_number(slide.url, slide_index)
+  set_slide_value_from_import: (slide, slide_number) ->
+    slide.url = @change_slide_number(slide.url, slide_number)
+
+  check_slide_value_from_import: (slide, slide_number, callback) ->
+    new_slide = _.clone slide
+    new_slide.url = @change_slide_number(new_slide.url, slide_number)
+    @slide_info new_slide, callback
 
 class DummySlideBackend
 
@@ -122,6 +127,9 @@ class DummySlideBackend
   set_slide_value_from_import: (slide, slide_url) ->
     slide.url = slide_url
     slide.public_url = slide_url
+
+  check_slide_value_from_import: (slide, slide_number, callback) ->
+    callback()
 
 @presentzorg.slide_backends = {}
 @presentzorg.slide_backends.SlideShare = SlideShare

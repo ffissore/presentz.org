@@ -460,15 +460,31 @@ jQuery () ->
 
     onclick_confirm_data_import: () ->
       slides = @model.get("chapters.0.slides")
-      for slide, idx in slides when idx < @data.length
-        data_for_slide = @data[idx]
-        slide.time = data_for_slide.time
-        backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
-        backend.set_slide_value_from_import(slide, data_for_slide.value)
+      check_import_data = (callback) =>
+        checked = 0
+        for slide, idx in slides when idx < @data.length
+          data_for_slide = @data[idx]
+          backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
+          backend.check_slide_value_from_import slide, data_for_slide.value, (err) =>
+            return callback(err) if err?
+            checked++
+            return callback() if checked is @data.length
 
-      @model.set("chapters.0.slides", slides)
-      $helper.advanced_user_data_preview().modal("hide")
-      @render()
+      check_import_data (err) ->
+        if err?
+          $helper.advanced_user_data_preview().modal("hide")
+          alert(err)
+          return
+
+        for slide, idx in slides when idx < @data.length
+          data_for_slide = @data[idx]
+          slide.time = data_for_slide.time
+          backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
+          backend.set_slide_value_from_import(slide, data_for_slide.value)
+
+        @model.set("chapters.0.slides", slides)
+        $helper.advanced_user_data_preview().modal("hide")
+        @render()
 
     onclick_slide_burn: (event) ->
       $helper.slide_burn_confirm().remove()
@@ -655,7 +671,8 @@ jQuery () ->
       $thumb_container.empty()
       $thumb_container.append("Fetching info...")
       #backend = _.find slide_backends, (backend) -> backend.handle(url)
-      backend = slide_backends[0] #slideshare
+      #only slideshare
+      backend = slide_backends[0]
       backend.slideshow_info url, (err, slide, slideshow_info) =>
         $thumb_container.empty()
         @slideshow = null
@@ -776,7 +793,7 @@ jQuery () ->
       else
         dust.render "_no_talks_here", {}, (err, out) =>
           return alert(err) if err?
-  
+
           @$el.html out
       loader_hide()
 
