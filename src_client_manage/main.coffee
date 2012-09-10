@@ -538,10 +538,18 @@ jQuery () ->
       $helper.slide_burn_confirm().remove()
       false
 
+    onclick_set_time: (event) ->
+      slide_index = parseInt($helper.slide_number_player().val()) - 1
+      slide_time = parseFloat($helper.current_time().val())
+      @model.set("chapters.0.slides.#{slide_index}.time", slide_time)
+      $("input.slide_time", $helper.slide_of(slide_index, $helper.chapter(0))).val(slide_time)
+      false
+
     events:
       "click a.play_pause_btn": "onclick_playpause"
       "click a.slide_left_btn": "onclick_slide_left"
       "click a.slide_right_btn": "onclick_slide_right"
+      "click a.set_time_btn": "onclick_set_time"
       "click input.synchronized_status": "onclick_synchronized_status"
       "click a.hei_advanced": "onclick_advanced_user"
       "click #advanced_user_data_preview button.btn-danger": "onclick_advanced_user"
