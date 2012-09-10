@@ -1,1 +1,2 @@
-<span>Hello, <a href="{.catalog}">{.name}</a></span>
+{!<span>Hello, <a href="{.catalog}">{.name}</a></span>!}
+<span>Hello, {.name}</span>
