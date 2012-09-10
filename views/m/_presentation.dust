@@ -43,6 +43,22 @@
     </div>
   </div>
 </div>
+<span class="speaker">
+  <h3>Info</h3>
+  <div class="row-fluid">
+    <div class="span1"></div>
+    <form class="span9 form-horizontal">
+      <fieldset>
+        <div class="control-group">
+          <label class="control-label">Speaker</label>
+          <div class="controls">
+            <input name="speaker" type="text" class="input-xxlarge" value="{.speaker}">
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</span>
 {#chapters}
   <span class="chapter" id="chapter{@idx}{.}{/idx}">
     <h3>Chapter {#onebased}{.}{/onebased}</h3>

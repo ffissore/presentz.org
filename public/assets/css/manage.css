@@ -143,7 +143,7 @@ ul.play_pause {
     float: left;
 }
 
-.slide_even form.span9, .slide_odd form.span9, .chapter form.span9 {
+.slide_even form.span9, .slide_odd form.span9, .chapter form.span9 , .speaker form.span9 {
     margin-left: 0px;
 }
 
