@@ -45,6 +45,7 @@ app.configure ->
   app.set "views", "#{__dirname}/views"
   app.set "view engine", "dust"
   app.enable "view cache"
+  app.enable "trust proxy"
   app.use express.logger()
   app.use express.bodyParser()
   app.use express.cookieParser(config.presentz.session_secret)
