@@ -22,6 +22,10 @@
           <li><a href="#mypres">My Presentations</a></li>
           <li><a href="#make">Make One</a></li>
         </ul>
+        <ul class="nav pull-right">
+          <li><a href="{user.catalog}">Go to my catalog</a></li>
+          <li><a href="/">Back to HP</a></li>
+        </ul>
       </div>
     </div>
   </div>
