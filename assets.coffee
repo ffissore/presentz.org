@@ -33,13 +33,11 @@ new_js_conf = (suffix, files) ->
         coffee_compiler,
         dust_compiler
       ]
-  return conf
-###
     postManipulate:
       "^": [
         assetHandler.uglifyJsOptimize
       ]
-###
+  return conf
 
 new_css_conf = (suffix, files) ->
   conf =
