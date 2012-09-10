@@ -35,7 +35,7 @@ new_js_conf = (suffix, files) ->
       ]
     postManipulate:
       "^": [
-        assetHandler.uglifyJsOptimize
+        #assetHandler.uglifyJsOptimize
       ]
   return conf
 

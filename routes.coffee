@@ -257,7 +257,7 @@ static_view = (view_name) ->
     res.render view_name, options
 
 ensure_is_logged = (req, res, next) ->
-  return next() if req.user? and req.user.admin? and req.user.admin
+  return next() if req.user?
 
   #req.notify "error", "you need to be logged in"
   res.redirect 302, "/"
