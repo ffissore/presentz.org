@@ -94,7 +94,8 @@ assetsMiddleware = assetManager
     "public/assets/js/jquery/jquery-1.8.0.js",
     "public/assets/js/jquery/jquery-ui-1.8.23.custom.min.js",
     "public/assets/js/manage/jquery.jsonp.js",
-    "public/assets/js/manage/jquery-scrollspy.js",
+    "public/assets/js/manage/jquery.jsonp.js",
+    "public/assets/js/manage/jquery.movingboxes.js",
     "public/assets/js/manage/bootstrap.js",
     "public/assets/js/manage/underscore.js",
     "public/assets/js/manage/underscore.string.js",
@@ -129,6 +130,7 @@ assetsMiddleware = assetManager
     "public/assets/css/bootstrap.css",
     "public/assets/css/bootstrap-responsive.css"
     "public/assets/css/fluid_container.css",
+    "public/assets/css/movingboxes.css"
     "public/assets/css/manage.css"
   ])
 

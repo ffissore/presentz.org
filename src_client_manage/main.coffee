@@ -183,11 +183,6 @@ jQuery () ->
         for slide in chapter.slides
           slides.push slide
 
-      utils.visit_presentation @model.attributes, (objtype, obj, fields) ->
-        return unless objtype is "chapter"
-        for slide, idx in obj.slides
-          slide.evenness = if (idx % 2) is 0 then "even" else "odd"
-
       load_slides_info = (slides) =>
         slide = slides.pop()
         backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
@@ -207,22 +202,32 @@ jQuery () ->
               loader_hide()
               app.navigationView.presentation_menu_entry utils.cut_string_at(@model.get("title"), 30), @model.get("published")
               @$el.html(out)
-              init_presentz @model.attributes, true
-              $helper.slide_containers().scrollspy
-                buffer: app.navigationView.$el.height()
-                onEnter: ($elem) ->
-                  $slide_thumb = $helper.slide_thumb_container_in $elem
+
+              $("input[name=time]").datepicker { dateFormat: "yymmdd" }
+
+              $("div.slides").movingBoxes
+                startPanel: 1
+                reducedSize: 0.8
+                wrap: false
+                buildNav: true
+                hashTags: false
+                fixedHeight: true
+                navFormatter: (idx) -> "#{idx}"
+                initAnimation: false
+                stopAnimation: true
+                completed: (base, curPanel) ->
+                  for $elem in $helper.slide_containers()
+                    $slide_thumb = $helper.slide_thumb_container_in $elem
+                    $slide_thumb.empty()
+
+                  $slide_thumb = $helper.slide_thumb_container_in curPanel.$curPanel
                   dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { slide_thumb: $slide_thumb.attr "src" }, (err, out) ->
                     return alert(err) if err?
                     $slide_thumb.html out
-                onLeave: ($elem) ->
-                  $slide_thumb = $helper.slide_thumb_container_in $elem
-                  $slide_thumb.empty()
+
+              init_presentz @model.attributes, true
 
       load_slides_info slides
-
-      $("input[name=time]").datepicker { dateFormat: "yymmdd" }
-
       @
 
     onchange_simple_field: (fieldname, event) ->
