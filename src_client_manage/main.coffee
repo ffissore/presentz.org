@@ -140,8 +140,13 @@ jQuery () ->
         app.edit(@) if !@loading
         @loading = true
 
-      @bind "error", (model, err) ->
-        alert "Error #{err.status}: #{err.responseText}"
+      @bind "error", (model, error) ->
+        if _.isString(error)
+          alert error
+        else if error.status?
+          alert "Error: (#{error.status}): #{error.responseText}"
+        else if error.message?
+          alert "Error: #{error.message}"
       @bind "all", (event) =>
         if @loaded and _.str.startsWith(event, "change")
           app.navigationView.enable_save_button()
@@ -232,11 +237,11 @@ jQuery () ->
 
     onchange_simple_field: (fieldname, event) ->
       $elem = $(event.target)
-      speaker = $.trim($elem.val())
-      if speaker is ""
+      value = $.trim($elem.val())
+      if value is ""
         @model.unset fieldname
       else
-        @model.set fieldname, $elem.val(), { silent: true }
+        @model.set fieldname, $elem.val()
 
     onchange_speaker: (event) ->
       @onchange_simple_field("speaker", event)
@@ -260,8 +265,8 @@ jQuery () ->
         else
           $parent_control_group.removeClass "error"
           chapter_index = $elem.attr("chapter_index")
-          @model.set "chapters.#{chapter_index}.video.url", info.url, { silent: true }
-          @model.set "chapters.#{chapter_index}.duration", info.duration, { silent: true }
+          @model.set "chapters.#{chapter_index}.video.url", info.url
+          @model.set "chapters.#{chapter_index}.duration", info.duration
           $helper.video_duration_input_of(chapter_index).val info.duration
           init_presentz @model.attributes
           if info.thumb?
@@ -286,10 +291,16 @@ jQuery () ->
         $thumb_input.val info.thumb
         $thumb_input.change()
 
-        @model.set "chapters.#{chapter_index}.video.thumb", info.thumb, { silent: true }
+        @model.set "chapters.#{chapter_index}.video.thumb", info.thumb
         $helper.video_thumb_of(chapter_index).attr "src", info.thumb
 
         $elem.parent().empty()
+      false
+
+    onchange_video_duration: (event) ->
+      $elem = $(event.target)
+      chapter_index = $elem.attr("chapter_index")
+      @model.set("chapters.#{chapter_index}.duration", parseInt($elem.val()))
       false
 
     onchange_video_thumb_url: (event) ->
@@ -302,7 +313,7 @@ jQuery () ->
         $container.removeClass "error"
         $video_thumb_error_msg_container.empty()
         chapter_index = $elem.attr("chapter_index")
-        @model.set "chapters.#{chapter_index}.video.thumb", thumb_url, { silent: true }
+        @model.set "chapters.#{chapter_index}.video.thumb", thumb_url
         $helper.video_thumb_of(chapter_index).attr "src", thumb_url
       else
         $container.addClass "error"
@@ -314,14 +325,14 @@ jQuery () ->
 
     onchange_title: (event) ->
       title = $(event.target).val()
-      @model.set "title", title, { silent: true }
+      @model.set "title", title
       app.navigationView.presentation_menu_entry utils.cut_string_at(@model.get("title"), 30), @model.get("published")
 
     onchange_slide_title: (event) ->
       $elem = $(event.target)
       slide_helper = $helper.slide_helper $elem
 
-      @model.set "#{slide_helper.model_selector}.title", $elem.val(), { silent: true }
+      @model.set "#{slide_helper.model_selector}.title", $elem.val()
 
     onchange_slide_number: (event) ->
       $elem = $(event.target)
@@ -331,7 +342,7 @@ jQuery () ->
       backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
 
       new_url = backend.change_slide_number slide.url, $elem.val()
-      @model.set "#{slide_helper.model_selector}.url", new_url, { silent: true }
+      @model.set "#{slide_helper.model_selector}.url", new_url
 
       backend.slide_info slide, (err, slide, slide_info) =>
         if err?
@@ -352,7 +363,7 @@ jQuery () ->
       slide = @model.get slide_helper.model_selector
       backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
 
-      @model.set "#{slide_helper.model_selector}.time", Math.round($elem.val()), { silent: true }
+      @model.set "#{slide_helper.model_selector}.time", Math.round($elem.val())
 
       slides = @model.get "chapters.#{slide_helper.chapter_index}.slides"
       source_index = slides.indexOf slide
@@ -360,7 +371,7 @@ jQuery () ->
       dest_index = slides.indexOf slide
       return if source_index is dest_index
 
-      @model.set "chapters.#{slide_helper.chapter_index}.slides", slides, { silent: true }
+      @model.set "chapters.#{slide_helper.chapter_index}.slides", slides
 
       $source_element = $helper.slide_of source_index, slide_helper.$chapter
       $dest_element = $helper.slide_of dest_index, slide_helper.$chapter
@@ -382,14 +393,14 @@ jQuery () ->
 
       slide_helper = $helper.slide_helper $elem
 
-      @model.set "#{slide_helper.model_selector}.public_url", public_url, { silent: true }
+      @model.set "#{slide_helper.model_selector}.public_url", public_url
 
       backend = _.find slide_backends, (backend) -> backend.handle(public_url)
       slide = @model.get slide_helper.model_selector
 
       backend.url_from_public_url slide, (err, new_url) =>
         return alert(err) if err?
-        @model.set "#{slide_helper.model_selector}.url", new_url, { silent: true }
+        @model.set "#{slide_helper.model_selector}.url", new_url
 
         backend.slide_info slide, (err, slide, slide_info) =>
           return alert(err) if err?
@@ -504,7 +515,7 @@ jQuery () ->
           backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
           backend.set_slide_value_from_import(slide, data_for_slide.value)
 
-        @model.set("chapters.0.slides", slides, { silent: true })
+        @model.set("chapters.0.slides", slides)
         $helper.advanced_user_data_preview().modal("hide")
         @render()
 
@@ -532,7 +543,7 @@ jQuery () ->
       slides = @model.get("chapters.#{chapter_index}.slides")
       deleted_slide = slides.splice(slide_index, 1)[0]
 
-      @model.set("chapters.#{chapter_index}.slides", slides, { silent: true })
+      @model.set("chapters.#{chapter_index}.slides", slides)
       @model.slides_to_delete.push deleted_slide
 
       @render()
@@ -546,7 +557,7 @@ jQuery () ->
     onclick_set_time: (event) ->
       slide_index = parseInt($helper.slide_number_player().val()) - 1
       slide_time = parseFloat($helper.current_time().val())
-      @model.set("chapters.0.slides.#{slide_index}.time", slide_time, { silent: true })
+      @model.set("chapters.0.slides.#{slide_index}.time", slide_time)
       $("input.slide_time", $helper.slide_of(slide_index, $helper.chapter(0))).val(slide_time)
       false
 
@@ -565,6 +576,7 @@ jQuery () ->
       "change input[name=time]": "onchange_time"
       "change input[name=video_url]": "onchange_video_url"
       "click button.reset_thumb": "reset_video_thumb"
+      "change input[name=video_duration]": "onchange_video_duration"
       "change input[name=video_thumb]": "onchange_video_thumb_url"
       "change input.title-input": "onchange_title"
 
@@ -616,7 +628,7 @@ jQuery () ->
       @
 
     toogle_published: () ->
-      @model.set "published", !@model.get "published", { silent: true }
+      @model.set "published", !@model.get "published"
       @model.save()
       false
 

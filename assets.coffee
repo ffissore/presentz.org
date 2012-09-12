@@ -119,6 +119,7 @@ assetsMiddleware = assetManager
     "views/m/_no_talks_here.dust",
     "utils.coffee",
     "dustjs_helpers.coffee",
+    "src_client_manage/backbone_extensions.coffee"
     "src_client_manage/main.coffee"
     "src_client_manage/video_backends.coffee"
     "src_client_manage/slide_backends.coffee"
