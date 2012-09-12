@@ -22,14 +22,16 @@ jQuery () ->
     parent_control_group_of: ($elem) -> $elem.parentsUntil("div.control-group").parent()
     video_duration_input_of: (chapter_index) -> $("input[name=video_duration][chapter_index=#{chapter_index}]")
 
+    slides: () -> $("div.slides")
     current_time: () -> $("input[name=current_time]")
-    slide_number_player: () -> $("input[name=slide_number_player]")
+    ###
     synchronized_status: (synchronized) ->
       $("label.synchronized_status input").attr("checked", synchronized)
       if synchronized
         $("label.synchronized_status span.label").addClass("hidden")
       else
         $("label.synchronized_status span.label").removeClass("hidden")
+    ###
     play_pause_btn: () -> $("a.play_pause_btn")
 
     chapter: (chapter_index) -> $("#chapter#{chapter_index}")
@@ -212,7 +214,7 @@ jQuery () ->
 
               $("input[name=time]").datepicker { dateFormat: "yymmdd" }
 
-              $("div.slides").movingBoxes
+              $helper.slides().movingBoxes
                 startPanel: 1
                 reducedSize: 0.8
                 wrap: false
@@ -427,6 +429,7 @@ jQuery () ->
         $btn.removeClass("pause").addClass("play")
       false
 
+    ###
     onclick_slide_left_right: (modifier) ->
       slide_number = parseInt($helper.slide_number_player().val()) - 1 + modifier
 
@@ -455,6 +458,7 @@ jQuery () ->
 
     onclick_slide_right: () ->
       return @onclick_slide_left_right(1)
+    ###
 
     onclick_advanced_user: () ->
       $helper.advanced_user_data_preview().modal "hide"
@@ -557,7 +561,7 @@ jQuery () ->
       false
 
     onclick_set_time: (event) ->
-      slide_index = parseInt($helper.slide_number_player().val()) - 1
+      slide_index = $helper.slides().getMovingBoxes().curPanel - 1
       slide_time = parseFloat($helper.current_time().val())
       @model.set("chapters.0.slides.#{slide_index}.time", slide_time)
       $("input.slide_time", $helper.slide_of(slide_index, $helper.chapter(0))).val(slide_time)
@@ -565,10 +569,10 @@ jQuery () ->
 
     events:
       "click a.play_pause_btn": "onclick_playpause"
-      "click a.slide_left_btn": "onclick_slide_left"
-      "click a.slide_right_btn": "onclick_slide_right"
+      #"click a.slide_left_btn": "onclick_slide_left"
+      #"click a.slide_right_btn": "onclick_slide_right"
       "click a.set_time_btn": "onclick_set_time"
-      "click input.synchronized_status": "onclick_synchronized_status"
+      #"click input.synchronized_status": "onclick_synchronized_status"
       "click a.hei_advanced": "onclick_advanced_user"
       "click #advanced_user_data_preview button.btn-danger": "onclick_advanced_user"
       "click #advanced_user_data_preview button.btn-success": "onclick_confirm_data_import"
@@ -858,25 +862,18 @@ jQuery () ->
       @view = new PresentationEditView model: model
       @$el.html @view.el
       @view.render()
-      $("div[chapter_index=0] ~ div[slide_index=0]").addClass "alert alert-info"
 
       prsntz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
-        $("div[chapter_index=0] ~ div[slide_index=0]").removeClass "alert alert-info"
-        $("div[chapter_index=#{previous_chapter_index}] ~ div[slide_index=#{previous_slide_index}]").removeClass "alert alert-info"
-        $("div[chapter_index=#{new_chapter_index}] ~ div[slide_index=#{new_slide_index}]").addClass "alert alert-info"
-        $helper.slide_number_player().val(new_slide_index + 1)
+        $helper.slides().movingBoxes(new_slide_index + 1)
 
       prsntz.on "timechange", (current_time) ->
         $helper.current_time().val(current_time)
 
-      prsntz.on "play", () ->
-        $helper.play_pause_btn().addClass("pause").removeClass("play")
-
-      prsntz.on "pause", () ->
-        $helper.play_pause_btn().removeClass("pause").addClass("play")
-
-      prsntz.on "finish", () ->
-        $helper.play_pause_btn().removeClass("pause").addClass("play")
+      show_pause = () -> $helper.play_pause_btn().addClass("pause").removeClass("play")
+      show_play = () -> $helper.play_pause_btn().removeClass("pause").addClass("play")
+      prsntz.on "play", show_pause
+      prsntz.on "pause", show_play
+      prsntz.on "finish", show_play
 
       model.unbind "change", @edit
 

@@ -46,6 +46,7 @@
   <div class="row-fluid">
     <div class="span12">
       <div class="play_pause">
+        {!
         <form class="form-horizontal">
           <div class="control-group">
             <label class="synchronized_status checkbox">
@@ -54,13 +55,14 @@
             </label>
           </div>
         </form>
+        !}
         <ul class="play_pause">
           <li>
             <a href="#" class="play_pause_btn play">play</a>
           </li>
           <li class="play_pause_divider"></li>
           <li>
-            <span>Time:&nbsp;</span><input type="text" name="current_time" class="input-mini" value="0"/><span>&nbsp;seconds</span>
+            <span>At second&nbsp;</span><input type="text" name="current_time" class="input-mini" value="0"/>
           </li>
           <li class="play_pause_divider"></li>
           {!
