@@ -63,12 +63,14 @@
             <span>Time:&nbsp;</span><input type="text" name="current_time" class="input-mini" value="0"/><span>&nbsp;seconds</span>
           </li>
           <li class="play_pause_divider"></li>
+          {!
           <li>
             <a title="Previous slide" href="#" class="slide_left_btn slide_left">left</a>
             <span>Slide #:&nbsp;</span><input type="text" name="slide_number_player" value="1" class="input-mini"/>
             <a title="Next slide" href="#" class="slide_right_btn slide_right">right</a>
           </li>
           <li class="play_pause_divider"></li>
+          !}
           <li>
             <a title="Set time of slide" href="#" class="set_time_btn set_time">time</a>
           </li>
