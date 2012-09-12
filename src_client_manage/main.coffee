@@ -16,6 +16,7 @@ jQuery () ->
   slide_backends = [new presentzorg.slide_backends.SlideShare(prsntz.availableSlidePlugins.slideshare), new presentzorg.slide_backends.DummySlideBackend(prsntz.availableSlidePlugins.image)]
 
   $helper =
+    scroll_top: () -> $(window).scrollTop(0)
     slide_containers: () -> $("div[slide_index]")
     slide_thumb_container_in: ($elem) -> $("div.slide_thumb", $elem)
     parent_control_group_of: ($elem) -> $elem.parentsUntil("div.control-group").parent()
@@ -180,6 +181,7 @@ jQuery () ->
     tagName: "div"
 
     render: () ->
+      $helper.scroll_top()
       ctx = @model.attributes
       ctx.onebased = dustjs_helpers.onebased
 
@@ -656,6 +658,7 @@ jQuery () ->
     className: "thumbnails"
 
     render: () ->
+      $helper.scroll_top()
       @model.each (model) =>
         view = new PresentationThumbView model: model
         @$el.append view.el
@@ -671,7 +674,7 @@ jQuery () ->
     @title: null
 
     render: () ->
-      $(window).scrollTop 0
+      $helper.scroll_top()
       dust.render "_new", {}, (err, out) =>
         return alert(err) if err?
         loader_hide()
