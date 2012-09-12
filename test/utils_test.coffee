@@ -18,7 +18,8 @@ describe "Utils", () ->
 
   it "should find valid URLs", () ->
     assert utils.is_url_valid("http://presentz.org/assets/jugtorino/201102_akka/201105071337135616730.swf")
-
-  it "should get the real type of objects", () ->
-    assert.equal("string", utils.type_of(""))
-    assert.equal("error", utils.type_of(new Error()))
+    
+  it "should parse float and round", () ->
+    assert.equal 8.12, utils.my_parse_float("8.1234")
+    assert.equal 8.123, utils.my_parse_float("8.1234", 1000)
+    assert.equal 8.12, utils.my_parse_float(8.1234)

@@ -23,7 +23,7 @@ jQuery () ->
     video_duration_input_of: (chapter_index) -> $("input[name=video_duration][chapter_index=#{chapter_index}]")
 
     slides: () -> $("div.slides")
-    current_time: () -> $("input[name=current_time]")
+    current_time: () -> $("span[name=current_time]")
     ###
     synchronized_status: (synchronized) ->
       $("label.synchronized_status input").attr("checked", synchronized)
@@ -562,7 +562,7 @@ jQuery () ->
 
     onclick_set_time: (event) ->
       slide_index = $helper.slides().getMovingBoxes().curPanel - 1
-      slide_time = parseFloat($helper.current_time().val())
+      slide_time = utils.my_parse_float($helper.current_time().text())
       @model.set("chapters.0.slides.#{slide_index}.time", slide_time)
       $("input.slide_time", $helper.slide_of(slide_index, $helper.chapter(0))).val(slide_time)
       false
@@ -867,7 +867,7 @@ jQuery () ->
         $helper.slides().movingBoxes(new_slide_index + 1)
 
       prsntz.on "timechange", (current_time) ->
-        $helper.current_time().val(current_time)
+        $helper.current_time().text(utils.my_parse_float(current_time))
 
       show_pause = () -> $helper.play_pause_btn().addClass("pause").removeClass("play")
       show_play = () -> $helper.play_pause_btn().removeClass("pause").addClass("play")

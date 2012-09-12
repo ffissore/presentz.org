@@ -62,7 +62,7 @@
           </li>
           <li class="play_pause_divider"></li>
           <li>
-            <span>At second&nbsp;</span><input type="text" name="current_time" class="input-mini" value="0"/>
+            <span>At second&nbsp;</span><span name="current_time" class="input-mini uneditable-input">0</span>
           </li>
           <li class="play_pause_divider"></li>
           {!
@@ -123,30 +123,30 @@
     </div>
     {/slides}
   </div>
-  <span class="speaker">
-    <h3>Additional Info</h3>
-    <div class="row-fluid">
-      <div class="span1"></div>
-      <form class="span9 form-horizontal">
-        <fieldset>
-          <div class="control-group">
-            <label class="control-label">Speaker</label>
-            <div class="controls">
-              <input name="speaker" type="text" class="input-xxlarge" value="{.speaker}">
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label">Performed on</label>
-            <div class="controls">
-              <input name="time" type="text" class="input-xxlarge" value="{.time}">
-            </div>
-          </div>
-        </fieldset>
-      </form>
-    </div>
-  </span>
 </span>
 {/chapters}
+<span class="speaker">
+  <h3>Additional Info</h3>
+  <div class="row-fluid">
+    <div class="span1"></div>
+    <form class="span9 form-horizontal">
+      <fieldset>
+        <div class="control-group">
+          <label class="control-label">Speaker</label>
+          <div class="controls">
+            <input name="speaker" type="text" class="input-xxlarge" value="{.speaker}">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Performed on</label>
+          <div class="controls">
+            <input name="time" type="text" class="input-xxlarge" value="{.time}">
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</span>
 <div class="modal hide fade" id="advanced_user" tabindex="-1" role="dialog" aria-labelledby="advanced_user_label" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

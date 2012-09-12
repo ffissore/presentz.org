@@ -113,7 +113,7 @@ ul.play_pause {
     margin-top: 13px;
 }
 
-.play_pause li input {
+.play_pause li span.uneditable-input {
     margin-top: 8px;
     float: left;
 }

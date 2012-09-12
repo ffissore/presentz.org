@@ -12,7 +12,7 @@ init = (s, slideshare_conf) ->
   slideshare = new node_slideshare slideshare_conf.api_key, slideshare_conf.shared_secret
 
 safe_next = (next, err) ->
-  err = new Error(err) if utils.type_of(err) isnt "error"
+  err = new Error(err) if !(err instanceof Error)
   next(err)
 
 presentations = (req, res, next) ->
