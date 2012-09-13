@@ -138,7 +138,10 @@ slideshare_slides_of = (req, res, next) ->
       xml = xml.concat(chunk)
     response.on "end", () ->
       res.contentType "application/json"
-      res.send xml2json.toJson(xml)
+      slides = JSON.parse(xml2json.toJson(xml))
+      for slide in slides.Show.Slide
+        slide.Src = slide.Src.replace("http://slideshare.s3.amazonaws.com", "http://cdn.slidesharecdn.com")
+      res.send slides
 
   request.on "error", (e) ->
     console.warn arguments
