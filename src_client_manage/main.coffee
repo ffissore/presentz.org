@@ -12,17 +12,14 @@ jQuery () ->
     $video.width $video_parent.width()
     $video.height $video_parent.height()
     
-  rebuild_slide_indexes = ($slides, starting_slide_index) ->
-    $slides = $slides.filter (idx, elem) -> return elem if parseInt($(elem).attr("slide_index")) > starting_slide_index
-    new_index = starting_slide_index + 1
-    $slides.each (idx, elem) ->
+  rebuild_slide_indexes = ($slides) ->
+    $slides.each (new_index, elem) ->
       $elem = $(elem)
       $elem.attr("slide_index", new_index)
       $helper.elements_with_slide_index_in($elem).each (idx, subelem) ->
         $(subelem).attr("slide_index", new_index)
       $helper.elements_with_placeholder_in($elem).each (idx, subelem) ->
         $(subelem).attr("placeholder", "Slide #{new_index + 1}")
-      new_index++
     
   video_backends = [new presentzorg.video_backends.Youtube(prsntz.availableVideoPlugins.youtube), new presentzorg.video_backends.Vimeo(prsntz.availableVideoPlugins.vimeo), new presentzorg.video_backends.DummyVideoBackend(prsntz.availableVideoPlugins.html5)]
   slide_backends = [new presentzorg.slide_backends.SlideShare(prsntz.availableSlidePlugins.slideshare), new presentzorg.slide_backends.DummySlideBackend(prsntz.availableSlidePlugins.image)]
@@ -512,8 +509,8 @@ jQuery () ->
       $elem = $(event.target)
       $helper.slide_burn_confirm().modal("hide")
 
-      chapter_index = $elem.attr("chapter_index")
-      slide_index = $elem.attr("slide_index")
+      chapter_index = parseInt($elem.attr("chapter_index"))
+      slide_index = parseInt($elem.attr("slide_index"))
 
       chapter = @model.get("chapters.#{chapter_index}")
       slides = @model.get("chapters.#{chapter_index}.slides")
@@ -522,8 +519,18 @@ jQuery () ->
       @model.set("chapters.#{chapter_index}.slides", slides)
       @model.slides_to_delete.push deleted_slide
 
-      @render()
+      if slide_index - 1 < 0
+        new_slide_index = 0
+      else
+        new_slide_index = slide_index - 1
+        
+      $helper.slides().movingBoxes(new_slide_index + 1)
+      $chapter = $helper.chapter(chapter_index)
+      $helper.slide_of(slide_index, $chapter).remove()
+      $helper.slides().movingBoxes()
 
+      rebuild_slide_indexes($helper.slides_of($chapter))
+      
       false
 
     onclick_slide_burn_cancelled: (event) ->
@@ -554,7 +561,7 @@ jQuery () ->
         $helper.slide_at(slide_index).after(out)
         $helper.slides().movingBoxes()
         $helper.slides().movingBoxes(new_slide._onebased_index)
-        rebuild_slide_indexes($helper.slides_of($helper.chapter(0)), slide_index)
+        rebuild_slide_indexes($helper.slides_of($helper.chapter(0)))
       false
 
     events:
