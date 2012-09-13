@@ -11,7 +11,19 @@ jQuery () ->
     $video_parent = $video.parent()
     $video.width $video_parent.width()
     $video.height $video_parent.height()
-
+    
+  rebuild_slide_indexes = ($slides, starting_slide_index) ->
+    $slides = $slides.filter (idx, elem) -> return elem if parseInt($(elem).attr("slide_index")) > starting_slide_index
+    new_index = starting_slide_index + 1
+    $slides.each (idx, elem) ->
+      $elem = $(elem)
+      $elem.attr("slide_index", new_index)
+      $helper.elements_with_slide_index_in($elem).each (idx, subelem) ->
+        $(subelem).attr("slide_index", new_index)
+      $helper.elements_with_placeholder_in($elem).each (idx, subelem) ->
+        $(subelem).attr("placeholder", "Slide #{new_index + 1}")
+      new_index++
+    
   video_backends = [new presentzorg.video_backends.Youtube(prsntz.availableVideoPlugins.youtube), new presentzorg.video_backends.Vimeo(prsntz.availableVideoPlugins.vimeo), new presentzorg.video_backends.DummyVideoBackend(prsntz.availableVideoPlugins.html5)]
   slide_backends = [new presentzorg.slide_backends.SlideShare(prsntz.availableSlidePlugins.slideshare), new presentzorg.slide_backends.DummySlideBackend(prsntz.availableSlidePlugins.image)]
 
@@ -39,6 +51,7 @@ jQuery () ->
     slide_thumb_of: (slide_index, $chapter) -> $("div.slide_thumb", @slide_of(slide_index, $chapter))
     slides_of: ($chapter) -> $("div[slide_index]", $chapter)
     elements_with_slide_index_in: ($elem) -> $("[slide_index]", $elem)
+    elements_with_placeholder_in: ($elem) -> $("[placeholder]", $elem)
     slide_burn_confirm: () -> $("div.slide_burn_confirm")
 
     new_title: () -> $("input[name=title]")
@@ -539,7 +552,8 @@ jQuery () ->
       dust.render "_slide", new_slide, (err, out) ->
         $helper.slide_at(slide_index).after(out)
         $helper.slides().movingBoxes()
-        $helper.slides().movingBoxes(slide_index + 2)
+        $helper.slides().movingBoxes(new_slide._onebased_index)
+        rebuild_slide_indexes($helper.slides_of($helper.chapter(0)), slide_index)
       false
 
     events:
