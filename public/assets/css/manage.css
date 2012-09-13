@@ -84,7 +84,7 @@ button.navbar-btn {
 div.play_pause {
     width: 1%;
     display: table;
-    margin: 5px 27%;
+    margin: 5px 34%;
 }
 
 .play_pause form {
@@ -98,7 +98,7 @@ ul.play_pause {
     float: left;
     border: 1px solid #cdcdcd;
     border-radius: 3px 3px 3px 3px;
-    width: 542px;
+    width: 350px;
 }
 
 .play_pause li {
@@ -118,7 +118,7 @@ ul.play_pause {
     float: left;
 }
 
-.play_pause a.play_pause_btn, .play_pause a.slide_left_btn, .play_pause a.slide_right_btn, .play_pause a.set_time, a.slide_burn {
+.play_pause a.play_pause_btn, .play_pause a.slide_left_btn, .play_pause a.slide_right_btn, .play_pause a.set_time, a.slide_burn, .play_pause a.add_slide {
     background-repeat: no-repeat;
     background-position: center;
     text-indent: -9999px;
@@ -155,6 +155,10 @@ a.set_time {
     background-image: data-url(../../assets/img/time.png);
 }
 
+a.add_slide {
+    background-image: data-url(../../assets/img/plus.png);
+}
+
 li.play_pause_divider {
     height: 47px;
     margin: 0;
@@ -173,6 +177,8 @@ div.span1.slide_number {
     margin-left: 0;
 }
 
+/* jQuery DatePicker */
+
 .ui-datepicker {
     width: auto;
     line-height: 1em;
@@ -181,6 +187,8 @@ div.span1.slide_number {
 .ui-widget {
     font-size: 1em;
 }
+
+/* MovingBoxes */
 
 .mb-inside {
     border: 0;
