@@ -24,14 +24,6 @@ jQuery () ->
 
     slides: () -> $("div.slides")
     current_time: () -> $("span[name=current_time]")
-    ###
-    synchronized_status: (synchronized) ->
-      $("label.synchronized_status input").attr("checked", synchronized)
-      if synchronized
-        $("label.synchronized_status span.label").addClass("hidden")
-      else
-        $("label.synchronized_status span.label").removeClass("hidden")
-    ###
     play_pause_btn: () -> $("a.play_pause_btn")
 
     chapter: (chapter_index) -> $("#chapter#{chapter_index}")
@@ -429,37 +421,6 @@ jQuery () ->
         $btn.removeClass("pause").addClass("play")
       false
 
-    ###
-    onclick_slide_left_right: (modifier) ->
-      slide_number = parseInt($helper.slide_number_player().val()) - 1 + modifier
-
-      return false if slide_number < 0
-
-      slides = @model.get("chapters.0.slides")
-
-      return false if slide_number >= slides.length
-
-      prsntz.synchronized(false)
-      $helper.synchronized_status(false)
-
-      $slide_number_player = $helper.slide_number_player()
-      $slide_number_player.val(slide_number + 1)
-
-      prsntz.changeSlide(slides[slide_number], 0, slide_number)
-      false
-
-    onclick_synchronized_status: (event) ->
-      new_status = event.target.checked
-      prsntz.synchronized(new_status)
-      $helper.synchronized_status(new_status)
-
-    onclick_slide_left: () ->
-      return @onclick_slide_left_right(-1)
-
-    onclick_slide_right: () ->
-      return @onclick_slide_left_right(1)
-    ###
-
     onclick_advanced_user: () ->
       $helper.advanced_user_data_preview().modal "hide"
       $helper.advanced_user().modal "show"
@@ -569,10 +530,7 @@ jQuery () ->
 
     events:
       "click a.play_pause_btn": "onclick_playpause"
-      #"click a.slide_left_btn": "onclick_slide_left"
-      #"click a.slide_right_btn": "onclick_slide_right"
       "click a.set_time_btn": "onclick_set_time"
-      #"click input.synchronized_status": "onclick_synchronized_status"
       "click a.hei_advanced": "onclick_advanced_user"
       "click #advanced_user_data_preview button.btn-danger": "onclick_advanced_user"
       "click #advanced_user_data_preview button.btn-success": "onclick_confirm_data_import"

@@ -46,16 +46,6 @@
   <div class="row-fluid">
     <div class="span12">
       <div class="play_pause">
-        {!
-        <form class="form-horizontal">
-          <div class="control-group">
-            <label class="synchronized_status checkbox">
-              <input type="checkbox" class="synchronized_status" checked="true"/>
-              Video and slides are <span class="label label-important hidden">NOT</span> synchronized
-            </label>
-          </div>
-        </form>
-        !}
         <ul class="play_pause">
           <li>
             <a href="#" class="play_pause_btn play">play</a>
@@ -65,14 +55,6 @@
             <span>At second&nbsp;</span><span name="current_time" class="input-mini uneditable-input">0</span>
           </li>
           <li class="play_pause_divider"></li>
-          {!
-          <li>
-            <a title="Previous slide" href="#" class="slide_left_btn slide_left">left</a>
-            <span>Slide #:&nbsp;</span><input type="text" name="slide_number_player" value="1" class="input-mini"/>
-            <a title="Next slide" href="#" class="slide_right_btn slide_right">right</a>
-          </li>
-          <li class="play_pause_divider"></li>
-          !}
           <li>
             <a title="Set time of slide" href="#" class="set_time_btn set_time">time</a>
           </li>
