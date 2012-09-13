@@ -1,3 +1,11 @@
+make_new_slide = (url, time, public_url) ->
+  new_slide =
+    url: url
+    time: time
+  if public_url?
+    new_slide.public_url = public_url
+  new_slide
+  
 class SlideShare
 
   constructor: (@presentzSlideShare) ->
@@ -26,12 +34,9 @@ class SlideShare
     slides = []
     time = 0
     for ss_slide, idx in ss_slides
-      slide =
-        time: time
-        url: make_url(doc_id, idx + 1)
-        public_url: public_url
-      time += mean_slide_duration
+      slide = make_new_slide(make_url(doc_id, idx + 1), time, public_url)
       slides.push slide
+      time += mean_slide_duration
     slides
 
   slideshow_info: (public_url, callback) ->
@@ -96,6 +101,9 @@ class SlideShare
     new_slide.url = @change_slide_number(new_slide.url, slide_number)
     @slide_info new_slide, callback
 
+  make_new_from: (slide) ->
+    make_new_slide(slide.url, slide.time, slide.public_url)
+
 class DummySlideBackend
 
   constructor: () ->
@@ -130,6 +138,9 @@ class DummySlideBackend
 
   check_slide_value_from_import: (slide, slide_number, callback) ->
     callback()
+    
+  make_new_from: (slide) ->
+    make_new_slide(slide.url.substr(0, slide.url.lastIndexOf("/") + 1), slide.time)
 
 @presentzorg.slide_backends = {}
 @presentzorg.slide_backends.SlideShare = SlideShare

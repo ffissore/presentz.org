@@ -70,43 +70,7 @@
   <h4>Slides</h4>
   <div class="slides">
     {#slides}
-    <div class="row-fluid" slide_index="{@idx}{.}{/idx}">
-      <div class="span1">
-        <a class="slide_burn" href="#" slide_index="{@idx}{.}{/idx}"></a>
-      </div>
-      <form class="span8 form-horizontal">
-        <fieldset>
-          <div class="control-group">
-            <label class="control-label">URL</label>
-            <div class="controls">
-              <input type="text" class="slide_public_url input-xxlarge" value="{.public_url}" slide_index="{@idx}{.}{/idx}">
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label">Show at (second)</label>
-            <div class="controls">
-              <input type="text" class="slide_time input-xxlarge" value="{.time}" slide_index="{@idx}{.}{/idx}">
-            </div>
-          </div>
-          {?number}
-          <div class="control-group">
-            <label class="control-label">Slide #</label>
-            <div class="controls">
-              <input type="text" class="slide_number input-xxlarge" value="{number}" slide_index="{@idx}{.}{/idx}">
-            </div>
-          </div>
-          {/number}
-          <div class="control-group">
-            <label class="control-label">Title</label>
-            <div class="controls">
-              <input type="text" class="slide_title input-xxlarge" value="{.title}" placeholder="Slide {#onebased}{.}{/onebased}" slide_index="{@idx}{.}{/idx}">
-            </div>
-          </div>
-        </fieldset>
-      </form>
-      {!<div class="span1 slide_number">Slide {#onebased}{.}{/onebased}</div>!}
-      <div class="slide_thumb span2" src="{.slide_thumb}" thumb_type="{._thumb_type}"></div>
-    </div>
+      {>_slide/}
     {/slides}
   </div>
 </span>

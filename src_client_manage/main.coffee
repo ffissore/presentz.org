@@ -23,6 +23,7 @@ jQuery () ->
     video_duration_input_of: (chapter_index) -> $("input[name=video_duration][chapter_index=#{chapter_index}]")
 
     slides: () -> $("div.slides")
+    slide_at: (slide_index) -> $("div.slides div.row-fluid[slide_index=#{slide_index}]")
     current_time: () -> $("span[name=current_time]")
     play_pause_btn: () -> $("a.play_pause_btn")
 
@@ -134,6 +135,10 @@ jQuery () ->
       @bind "change", () ->
         app.edit(@) if !@loading
         @loading = true
+        for chapter, chapter_idx in @get("chapters")
+          chapter._index = chapter_idx
+          for slide, slide_idx in chapter.slides
+            slide._index = slide_idx
 
       @bind "error", (model, error) ->
         if _.isString(error)
@@ -157,18 +162,7 @@ jQuery () ->
         @fetch()
       else
         @set "id", utils.generate_id(@get("title"))
-        @set "@class", "V"
-        @set "@type", "d"
-        @set "_type", "presentation"
-        for chapter, chapter_idx in @get("chapters")
-          @set "chapters.#{chapter_idx}.@class", "V"
-          @set "chapters.#{chapter_idx}.@type", "d"
-          @set "chapters.#{chapter_idx}._type", "chapter"
-          @set "chapters.#{chapter_idx}._index", chapter_idx
-          for slide, slide_idx in @get("chapters.#{chapter_idx}.slides")
-            @set "chapters.#{chapter_idx}.slides.#{slide_idx}.@class", "V"
-            @set "chapters.#{chapter_idx}.slides.#{slide_idx}.@type", "d"
-            @set "chapters.#{chapter_idx}.slides.#{slide_idx}._type", "chapter"
+        @trigger("change", @, {})
 
   class PresentationEditView extends Backbone.View
 
@@ -181,7 +175,7 @@ jQuery () ->
 
       slides = []
       for chapter in @model.attributes.chapters
-        for slide in chapter.slides
+        for slide, idx in chapter.slides
           slides.push slide
 
       load_slides_info = (slides) =>
@@ -217,6 +211,7 @@ jQuery () ->
                 initAnimation: false
                 stopAnimation: true
                 completed: (base, curPanel) ->
+                  console.log curPanel.curPanel
                   for $elem in $helper.slide_containers()
                     $slide_thumb = $helper.slide_thumb_container_in $elem
                     $slide_thumb.empty()
@@ -528,9 +523,27 @@ jQuery () ->
       $("input.slide_time", $helper.slide_of(slide_index, $helper.chapter(0))).val(slide_time)
       false
 
+    onclick_add_slide: () ->
+      slide_index = $helper.slides().getMovingBoxes().curPanel - 1
+      slide = @model.get("chapters.0.slides.#{slide_index}")
+      backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
+      new_slide = backend.make_new_from(slide)
+      new_slide.time = utils.my_parse_float($helper.current_time().text())
+
+      slides = @model.get("chapters.0.slides")
+      slides.splice(slide_index + 1, 0, new_slide)
+      @model.set("chapters.0.slides", slides)
+
+      dust.render "_slide", new_slide, (err, out) ->
+        $helper.slide_at(slide_index).after(out)
+        $helper.slides().movingBoxes()
+        $helper.slides().movingBoxes(slide_index + 2)
+      false
+
     events:
       "click a.play_pause_btn": "onclick_playpause"
       "click a.set_time_btn": "onclick_set_time"
+      "click a.add_slide_btn": "onclick_add_slide"
       "click a.hei_advanced": "onclick_advanced_user"
       "click #advanced_user_data_preview button.btn-danger": "onclick_advanced_user"
       "click #advanced_user_data_preview button.btn-success": "onclick_confirm_data_import"
@@ -709,9 +722,6 @@ jQuery () ->
       backend = _.find slide_backends, (backend) => backend.handle(@slideshow.url)
       slides = backend.all_slides_of(@slideshow.url, @slideshow.public_url, @video.duration)
 
-      for slide, idx in slides
-        slide.evenness = if (idx % 2) is 0 then "even" else "odd"
-
       chapter =
         duration: @video.duration
         video:
@@ -725,6 +735,7 @@ jQuery () ->
         published: false
 
       presentation = new Presentation(presentation)
+      console.log presentation
       router.navigate presentation.get("id")
 
     events:
