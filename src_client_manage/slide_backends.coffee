@@ -102,7 +102,11 @@ class SlideShare
     @slide_info new_slide, callback
 
   make_new_from: (slide) ->
-    make_new_slide(slide.url, slide.time, slide.public_url)
+    new_slide = make_new_slide(slide.url, slide.time, slide.public_url)
+    new_slide._thumb_type = "swf"
+    new_slide.number = @to_slide_number(slide.url)
+    new_slide.slide_thumb = @slideshare_infos[@to_doc_id(slide.url)].Show.Slide[new_slide.number - 1].Src
+    new_slide
 
 class DummySlideBackend
 
@@ -140,7 +144,10 @@ class DummySlideBackend
     callback()
     
   make_new_from: (slide) ->
-    make_new_slide(slide.url.substr(0, slide.url.lastIndexOf("/") + 1), slide.time)
+    new_slide = make_new_slide(slide.url.substr(0, slide.url.lastIndexOf("/") + 1), slide.time)
+    new_slide._thumb_type = "img"
+    new_slide.slide_thumb = slide.url
+    new_slide
 
 @presentzorg.slide_backends = {}
 @presentzorg.slide_backends.SlideShare = SlideShare

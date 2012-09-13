@@ -139,6 +139,7 @@ jQuery () ->
           chapter._index = chapter_idx
           for slide, slide_idx in chapter.slides
             slide._index = slide_idx
+            slide._onebased_index = slide_idx + 1
 
       @bind "error", (model, error) ->
         if _.isString(error)
@@ -211,7 +212,6 @@ jQuery () ->
                 initAnimation: false
                 stopAnimation: true
                 completed: (base, curPanel) ->
-                  console.log curPanel.curPanel
                   for $elem in $helper.slide_containers()
                     $slide_thumb = $helper.slide_thumb_container_in $elem
                     $slide_thumb.empty()
@@ -528,6 +528,8 @@ jQuery () ->
       slide = @model.get("chapters.0.slides.#{slide_index}")
       backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
       new_slide = backend.make_new_from(slide)
+      new_slide._index = slide_index + 1
+      new_slide._onebased_index = new_slide._index + 1
       new_slide.time = utils.my_parse_float($helper.current_time().text())
 
       slides = @model.get("chapters.0.slides")
@@ -735,7 +737,6 @@ jQuery () ->
         published: false
 
       presentation = new Presentation(presentation)
-      console.log presentation
       router.navigate presentation.get("id")
 
     events:
