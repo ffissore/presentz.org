@@ -52,7 +52,6 @@ jQuery () ->
     slides_of: ($chapter) -> $("div[slide_index]", $chapter)
     elements_with_slide_index_in: ($elem) -> $("[slide_index]", $elem)
     elements_with_placeholder_in: ($elem) -> $("[placeholder]", $elem)
-    slide_burn_confirm: () -> $("div.slide_burn_confirm")
 
     new_title: () -> $("input[name=title]")
 
@@ -75,6 +74,7 @@ jQuery () ->
 
     advanced_user: () -> $("#advanced_user")
     advanced_user_data_preview: () -> $("#advanced_user_data_preview")
+    slide_burn_confirm: () -> $("#slide_burn_confirm")
 
     slide_helper: ($elem) ->
       $chapter = $helper.chapter_of $elem
@@ -93,6 +93,7 @@ jQuery () ->
   $helper.whoops().modal(show: false)
   $helper.advanced_user().modal(show: false)
   $helper.advanced_user_data_preview().modal(show: false)
+  $helper.slide_burn_confirm().modal(show: false)
 
   alert = (err, callback) ->
     $helper.whoops(err, callback)
@@ -495,21 +496,21 @@ jQuery () ->
         @render()
 
     onclick_slide_burn: (event) ->
-      $helper.slide_burn_confirm().remove()
-
       $elem = $(event.target)
       $slide_container = $elem.parentsUntil("div.row-fluid[slide_index]").last().parent()
       slide_index = $slide_container.attr("slide_index")
       chapter_index = $helper.chapter_index_from($helper.chapter_of($elem))
-      dust.render "_confirm_slide_burn", { chapter_index: chapter_index, slide_index: slide_index }, (err, out) ->
-        return alert(err) if err?
-
-        $slide_container.before(out)
+      
+      $btn_confirm = $(".btn-success", $helper.slide_burn_confirm())
+      $btn_confirm.attr("chapter_index", chapter_index)
+      $btn_confirm.attr("slide_index", slide_index)
+      $helper.slide_burn_confirm().modal("show")
+      
       false
 
     onclick_slide_burn_confirmed: (event) ->
       $elem = $(event.target)
-      $helper.slide_burn_confirm().remove()
+      $helper.slide_burn_confirm().modal("hide")
 
       chapter_index = $elem.attr("chapter_index")
       slide_index = $elem.attr("slide_index")
@@ -526,7 +527,7 @@ jQuery () ->
       false
 
     onclick_slide_burn_cancelled: (event) ->
-      $helper.slide_burn_confirm().remove()
+      $helper.slide_burn_confirm().modal("hide")
       false
 
     onclick_set_time: (event) ->
@@ -579,8 +580,8 @@ jQuery () ->
       "change input.slide_public_url": "onchange_slide_public_url"
 
       "click a.slide_burn": "onclick_slide_burn"
-      "click div.slide_burn_confirm a[slide_index][chapter_index]": "onclick_slide_burn_confirmed"
-      "click div.slide_burn_confirm .btn-danger": "onclick_slide_burn_cancelled"
+      "click #slide_burn_confirm button.btn-danger": "onclick_slide_burn_cancelled"
+      "click #slide_burn_confirm button.btn-success": "onclick_slide_burn_confirmed"
 
   class PresentationThumb extends Backbone.DeepModel
 
