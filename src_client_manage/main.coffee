@@ -622,10 +622,10 @@ jQuery () ->
     render: () ->
       if @model.get("published")
         published_css_class = ""
-        published_label = "Published"
+        published_label = "Hide"
       else
-        published_css_class = " btn-danger"
-        published_label = "Hidden"
+        published_css_class = " btn-info"
+        published_label = "Publish"
 
       ctx =
         thumb: @model.get "chapters.0.video.thumb"
