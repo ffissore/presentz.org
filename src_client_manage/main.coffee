@@ -30,6 +30,8 @@ jQuery () ->
     slide_thumb_container_in: ($elem) -> $("div.slide_thumb", $elem)
     parent_control_group_of: ($elem) -> $elem.parentsUntil("div.control-group").parent()
     video_duration_input_of: (chapter_index) -> $("input[name=video_duration][chapter_index=#{chapter_index}]")
+    
+    disable_forms: () -> $("form").submit () -> false
 
     slides: () -> $("div.slides")
     slide_at: (slide_index) -> $("div.slides div.row-fluid[slide_index=#{slide_index}]")
@@ -233,6 +235,7 @@ jQuery () ->
                     $slide_thumb.html out
 
               init_presentz @model.attributes, true
+              $helper.disable_forms()
 
       load_slides_info slides
       @
@@ -264,6 +267,7 @@ jQuery () ->
             return alert(err) if err?
 
             $video_url_error_msg_container.html out
+            $helper.disable_forms()
         else
           $parent_control_group.removeClass "error"
           chapter_index = $elem.attr("chapter_index")
@@ -276,6 +280,7 @@ jQuery () ->
               return alert(err) if err?
 
               $video_url_error_msg_container.html out
+              $helper.disable_forms()
           else
             $video_url_error_msg_container.empty()
       false
@@ -323,6 +328,7 @@ jQuery () ->
           return alert(err) if err?
 
           $video_thumb_error_msg_container.html out
+          $helper.disable_forms()
       false
 
     onchange_title: (event) ->
@@ -357,6 +363,7 @@ jQuery () ->
         dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { slide_thumb: $slide_thumb.attr "src" }, (err, out) ->
           return alert(err) if err?
           $slide_thumb.html out
+          $helper.disable_forms()
 
     onchange_slide_time: (event) ->
       $elem = $(event.target)
@@ -413,6 +420,7 @@ jQuery () ->
           dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { slide_thumb: $slide_thumb.attr "src" }, (err, out) ->
             return alert(err) if err?
             $slide_thumb.html out
+            $helper.disable_forms()
 
     save: () ->
       @model.save()
@@ -461,6 +469,7 @@ jQuery () ->
         dust.render "_slide_times_preview", { value_type: backend.import_file_value_column, data: @data }, (err, out) ->
           return alert(err) if err?
           $(".modal-body", $helper.advanced_user_data_preview()).html(out)
+          $helper.disable_forms()
 
       reader.readAsText(file)
 
@@ -562,6 +571,7 @@ jQuery () ->
         $helper.slides().movingBoxes()
         $helper.slides().movingBoxes(new_slide._onebased_index)
         rebuild_slide_indexes($helper.slides_of($helper.chapter(0)))
+        $helper.disable_forms()
       false
 
     events:
@@ -626,6 +636,8 @@ jQuery () ->
         return alert(err) if err?
 
         @$el.html out
+        
+        $helper.disable_forms()
       @
 
     toogle_published: () ->
@@ -678,6 +690,7 @@ jQuery () ->
         return alert(err) if err?
         loader_hide()
         @$el.html(out)
+        $helper.disable_forms()
 
     check_if_time_to_start: () ->
       $button = $("button", @$el)
@@ -734,6 +747,7 @@ jQuery () ->
         dust.render "_#{thumb_type}_slide_thumb", slideshow_info, (err, out) ->
           return alert(err) if err?
           $thumb_container.append(out)
+          $helper.disable_forms()
 
         $title = $helper.new_title()
         if slideshow_info.title? and $title.val() is ""
@@ -787,6 +801,7 @@ jQuery () ->
 
           @$el.append(out)
           $helper.notify_save_text().hide()
+          $helper.disable_forms()
       else
         $("a span", $li.eq(2)).text title
 
@@ -838,8 +853,9 @@ jQuery () ->
       else
         dust.render "_no_talks_here", {}, (err, out) =>
           return alert(err) if err?
-
           @$el.html out
+          $helper.disable_forms()
+            
       loader_hide()
 
     mypres: () ->
