@@ -5,10 +5,13 @@ _s = require "underscore.string"
 describe "Utils", () ->
   it "should make nice IDs", () ->
     id = utils.generate_id("Cloud Testing di applicazioni web con Python ed Amazon EC2")
-    assert _s.endsWith(id, "_cloud_testing_applicazioni_web_con_python_amazon_ec2")
+    assert _s.startsWith(id, "cloud_testing_applicazioni_web_con_python_amazon_ec2_")
 
     id = utils.generate_id("Cloud Testing di applicazioni web con Python ed Amazon EC2 ed")
-    assert _s.endsWith(id, "_cloud_testing_applicazioni_web_con_python_amazon_ec2")
+    assert _s.startsWith(id, "cloud_testing_applicazioni_web_con_python_amazon_ec2_")
+
+    id = utils.generate_id("di Cloud Testing di applicazioni web con Python ed Amazon EC2 ed")
+    assert _s.startsWith(id, "cloud_testing_applicazioni_web_con_python_amazon_ec2_")
 
   it "should ignore empty titles", () ->
     id = utils.generate_id()

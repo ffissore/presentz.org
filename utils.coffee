@@ -74,8 +74,9 @@ generate_id = (title) ->
   while title.indexOf("__") isnt -1
     title = title.replace("__", "_")
   title = title.replace(/[_]+$/, "")
+  title = title.replace(/^[_]+/, "")
 
-  id.concat("_", title)
+  title.concat("_", id)
 
 is_url_valid = (url) ->
   uri = Uri(url)
