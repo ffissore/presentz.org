@@ -67,21 +67,22 @@ generate_id = (title) ->
   for idx in [0...10]
     c = parseInt(Math.random() * chars.length)
     id = id.concat(chars[c])
-  
+
   return id unless title? and title isnt ""
 
   title = title.toLowerCase().replace(non_word_chars, " ").replace(short_words, "").replace(/\s/g, "_")
   while title.indexOf("__") isnt -1
     title = title.replace("__", "_")
   title = title.replace(/[_]+$/, "")
-  
+
   id.concat("_", title)
 
-url_regexp = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-
 is_url_valid = (url) ->
-  url_regexp.test(url)
-  
+  uri = Uri(url)
+  host = uri.host()
+  path = uri.path()
+  host? and host isnt "" and host.indexOf(".") isnt -1 and path? and path isnt ""
+
 my_parse_float = (s, precision = 100) ->
   f = parseFloat(s)
   Math.round(f * precision) / precision

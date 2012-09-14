@@ -16,9 +16,6 @@ describe "Utils", () ->
     id = utils.generate_id("")
     assert id.length is 10
 
-  it "should find valid URLs", () ->
-    assert utils.is_url_valid("http://presentz.org/assets/jugtorino/201102_akka/201105071337135616730.swf")
-    
   it "should parse float and round", () ->
     assert.equal 8.12, utils.my_parse_float("8.1234")
     assert.equal 8.123, utils.my_parse_float("8.1234", 1000)

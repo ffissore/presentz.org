@@ -691,6 +691,7 @@ jQuery () ->
     onchange_video: (event) ->
       $elem = $(event.target)
       url = $elem.val()
+      return if url is ""
       $thumb_container = $(".video_thumb", @$el)
       $thumb_container.empty()
       $thumb_container.append("Fetching info...")
@@ -713,6 +714,7 @@ jQuery () ->
     onchange_slide: (event) ->
       $elem = $(event.target)
       url = $elem.val()
+      return if url is ""
       $thumb_container = $(".slide_thumb", @$el)
       $thumb_container.empty()
       $thumb_container.append("Fetching info...")

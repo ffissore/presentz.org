@@ -102,6 +102,7 @@ assetsMiddleware = assetManager
     "public/assets/js/manage/backbone.js",
     "public/assets/js/manage/deep-model.js",
     "public/assets/js/manage/dust-core-1.0.0.js",
+    "public/assets/js/manage/jsuri-1.1.1.js",
     "public/assets/js/froogaloop.js",
     "public/assets/js/swfobject.js",
     "public/assets/js/mediaelement-and-player.js",
