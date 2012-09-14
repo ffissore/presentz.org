@@ -27,6 +27,10 @@ class SlideShare
   make_url = (doc_id, slide_number) ->
     "http://www.slideshare.net/#{doc_id}##{slide_number}"
 
+  clean_url = (url) ->
+    url = Uri(url)
+    "#{url.protocol()}://#{url.host()}#{url.path()}"
+
   all_slides_of: (url, public_url, duration) ->
     doc_id = @to_doc_id(url)
     ss_slides = @slideshare_infos[doc_id].Show.Slide
@@ -76,7 +80,10 @@ class SlideShare
 
   url_from_public_url: (slide, callback) ->
     slide_number = @to_slide_number slide.url
-    public_url = slide.public_url
+
+    return callback("Invalid URL") if !utils.is_url_valid(slide.public_url)
+
+    public_url = slide.public_url = clean_url(slide.public_url)
 
     if @slideshare_url_to_slideshows[public_url]?
       slideshow = @slideshare_url_to_slideshows[public_url]

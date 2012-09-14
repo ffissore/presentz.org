@@ -13,6 +13,9 @@ describe "Utils", () ->
     id = utils.generate_id("di Cloud Testing di applicazioni web con Python ed Amazon EC2 ed")
     assert _s.startsWith(id, "cloud_testing_applicazioni_web_con_python_amazon_ec2_")
 
+    id = utils.generate_id("Startup in action: Frēstyl")
+    assert _s.startsWith(id, "startup_action_styl_")
+
   it "should ignore empty titles", () ->
     id = utils.generate_id()
     assert id.length is 10

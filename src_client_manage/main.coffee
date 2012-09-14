@@ -144,13 +144,13 @@ jQuery () ->
       _.bindAll @
 
       @bind "change", () ->
-        app.edit(@) if !@loading
-        @loading = true
         for chapter, chapter_idx in @get("chapters")
           chapter._index = chapter_idx
           for slide, slide_idx in chapter.slides
             slide._index = slide_idx
             slide._onebased_index = slide_idx + 1
+        app.edit(@) if !@loading
+        @loading = true
 
       @bind "error", (model, error) ->
         if _.isString(error)
