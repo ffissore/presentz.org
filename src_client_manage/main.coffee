@@ -11,7 +11,7 @@ jQuery () ->
     $video_parent = $video.parent()
     $video.width $video_parent.width()
     $video.height $video_parent.height()
-    
+
   rebuild_slide_indexes = ($slides) ->
     $slides.each (new_index, elem) ->
       $elem = $(elem)
@@ -20,7 +20,7 @@ jQuery () ->
         $(subelem).attr("slide_index", new_index)
       $helper.elements_with_placeholder_in($elem).each (idx, subelem) ->
         $(subelem).attr("placeholder", "Slide #{new_index + 1}")
-    
+
   video_backends = [new presentzorg.video_backends.Youtube(prsntz.availableVideoPlugins.youtube), new presentzorg.video_backends.Vimeo(prsntz.availableVideoPlugins.vimeo), new presentzorg.video_backends.DummyVideoBackend(prsntz.availableVideoPlugins.html5)]
   slide_backends = [new presentzorg.slide_backends.SlideShare(prsntz.availableSlidePlugins.slideshare), new presentzorg.slide_backends.DummySlideBackend(prsntz.availableSlidePlugins.image)]
 
@@ -30,7 +30,7 @@ jQuery () ->
     slide_thumb_container_in: ($elem) -> $("div.slide_thumb", $elem)
     parent_control_group_of: ($elem) -> $elem.parentsUntil("div.control-group").parent()
     video_duration_input_of: (chapter_index) -> $("input[name=video_duration][chapter_index=#{chapter_index}]")
-    
+
     disable_forms: () -> $("form").submit () -> false
 
     slides: () -> $("div.slides")
@@ -209,7 +209,7 @@ jQuery () ->
               return alert(err) if err?
 
               loader_hide()
-              app.navigationView.presentation_menu_entry utils.cut_string_at(@model.get("title"), 30), @model.get("published")
+              app.navigationView.presentation_menu_title_save_btn utils.cut_string_at(@model.get("title"), 30), @model.get("published")
               @$el.html(out)
 
               $("input[name=time]").datepicker { dateFormat: "yymmdd" }
@@ -334,7 +334,7 @@ jQuery () ->
     onchange_title: (event) ->
       title = $(event.target).val()
       @model.set "title", title
-      app.navigationView.presentation_menu_entry utils.cut_string_at(@model.get("title"), 30), @model.get("published")
+      app.navigationView.presentation_menu_title_save_btn utils.cut_string_at(@model.get("title"), 30), @model.get("published")
 
     onchange_slide_title: (event) ->
       $elem = $(event.target)
@@ -424,6 +424,7 @@ jQuery () ->
 
     save: () ->
       @model.save()
+      @model.get("id")
 
     onclick_playpause: (event) ->
       $btn = $(event.target)
@@ -506,12 +507,12 @@ jQuery () ->
       $slide_container = $elem.parentsUntil("div.row-fluid[slide_index]").last().parent()
       slide_index = $slide_container.attr("slide_index")
       chapter_index = $helper.chapter_index_from($helper.chapter_of($elem))
-      
+
       $btn_confirm = $(".btn-success", $helper.slide_burn_confirm())
       $btn_confirm.attr("chapter_index", chapter_index)
       $btn_confirm.attr("slide_index", slide_index)
       $helper.slide_burn_confirm().modal("show")
-      
+
       false
 
     onclick_slide_burn_confirmed: (event) ->
@@ -532,14 +533,14 @@ jQuery () ->
         new_slide_index = 0
       else
         new_slide_index = slide_index - 1
-        
+
       $helper.slides().movingBoxes(new_slide_index + 1)
       $chapter = $helper.chapter(chapter_index)
       $helper.slide_of(slide_index, $chapter).remove()
       $helper.slides().movingBoxes()
 
       rebuild_slide_indexes($helper.slides_of($chapter))
-      
+
       false
 
     onclick_slide_burn_cancelled: (event) ->
@@ -636,7 +637,7 @@ jQuery () ->
         return alert(err) if err?
 
         @$el.html out
-        
+
         $helper.disable_forms()
       @
 
@@ -794,11 +795,11 @@ jQuery () ->
       $("li", @$el).removeClass "active"
       $("li", @$el).eq(highlight_idx).addClass "active" if highlight_idx?
 
-    presentation_menu_entry: (title, published) ->
+    presentation_menu_title_save_btn: (title, published) ->
       $li = $("li", @$el)
       if $li.length < 3
         $li.removeClass "active"
-        dust.render "_presentation_menu_entry", { title: title, published: published }, (err, out) =>
+        dust.render "_presentation_menu_title_save_btn", { title: title, published: published }, (err, out) =>
           return alert(err) if err?
 
           @$el.append(out)
@@ -828,8 +829,10 @@ jQuery () ->
       $notify_save.fadeIn "slow", () ->
         $notify_save.fadeOut "slow"
 
-    save: () ->
-      app.save()
+    save: (event) ->
+      presentation_id = app.save()
+      if $(event.target).hasClass("preview")
+        window.open "#{user_catalog}/#{presentation_id}?preview", "preview"
 
     events:
       "click a[href=#mypres]": "mypres"
@@ -857,7 +860,7 @@ jQuery () ->
           return alert(err) if err?
           @$el.html out
           $helper.disable_forms()
-            
+
       loader_hide()
 
     mypres: () ->

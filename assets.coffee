@@ -108,7 +108,7 @@ assetsMiddleware = assetManager
     "public/assets/js/mediaelement-and-player.js",
     "public/assets/js/presentz.js",
     "views/m/_presentation_thumb.dust",
-    "views/m/_presentation_menu_entry.dust",
+    "views/m/_presentation_menu_title_save_btn.dust",
     "views/m/_presentation.dust",
     "views/m/_slide.dust",
     "views/m/_help_inline.dust",
