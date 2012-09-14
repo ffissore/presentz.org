@@ -705,6 +705,7 @@ jQuery () ->
       $elem = $(event.target)
       url = $elem.val()
       return if url is ""
+      url = "http://#{url}" unless _.str.startsWith(url, "http")
       $thumb_container = $(".video_thumb", @$el)
       $thumb_container.empty()
       $thumb_container.append("Fetching info...")
@@ -728,6 +729,7 @@ jQuery () ->
       $elem = $(event.target)
       url = $elem.val()
       return if url is ""
+      url = "http://#{url}" unless _.str.startsWith(url, "http")
       $thumb_container = $(".slide_thumb", @$el)
       $thumb_container.empty()
       $thumb_container.append("Fetching info...")
