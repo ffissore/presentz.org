@@ -63,11 +63,11 @@
             <a title="Add a slide" href="#" class="add_slide_btn add_slide">slide</a>
           </li>
         </ul>
-        <small><a href="#" class="hei_advanced">Hei! I'm an advanced user and this thing is way too slow!</a></small>
+        {!<small><a href="#" class="hei_advanced">Hei! I'm an advanced user and this thing is way too slow!</a></small>!}
       </div>
     </div>
   </div>
-  <h4>Slides</h4>
+  <h4 class="slides">Slides</h4>
   <div class="slides">
     {#slides}
       {>_slide/}

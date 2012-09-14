@@ -210,3 +210,8 @@ a.mb-scrollButtons.mb-right {
     color: black;
     font-weight: bold;
 }
+
+h4.slides {
+    margin-top: -25px;
+    position: absolute;
+}
