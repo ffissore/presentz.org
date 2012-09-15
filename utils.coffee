@@ -88,10 +88,7 @@ my_parse_float = (s, precision = 100) ->
   f = parseFloat(s)
   Math.round(f * precision) / precision
 
-if exports?
-  root = exports
-else
-  root = (@utils = {})
+root = exports ? (@utils = {})
 
 root.exec_for_each = exec_for_each
 root.cut_string_at = cut_string_at
