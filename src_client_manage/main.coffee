@@ -260,7 +260,7 @@ jQuery () ->
       backend = _.find video_backends, (backend) -> backend.handle(url)
       backend.fetch_info url, (err, info) =>
         $parent_control_group = $helper.parent_control_group_of $elem
-        $video_url_error_msg_container = $elem.next()
+        $video_url_error_msg_container = $(".video_message_container")
         if err?
           $parent_control_group.addClass "error"
           dust.render "_help_inline", { text: "Invalid URL"}, (err, out) ->

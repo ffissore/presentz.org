@@ -10,7 +10,6 @@
           <label class="control-label">Video URL</label>
           <div class="controls">
             <input name="video_url" type="text" class="input-xxlarge" value="{.video.url}" chapter_index="{@idx}{.}{/idx}">
-            <span></span>
           </div>
         </div>
         <div class="control-group">
@@ -23,8 +22,11 @@
           <label class="control-label">Thumb URL</label>
           <div class="controls">
             <input name="video_thumb" type="text" class="input-xxlarge" value="{.video.thumb}" chapter_index="{@idx}{.}{/idx}">
-            <span></span>
           </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label"></label>
+          <div class="controls video_message_container"></div>
         </div>
       </fieldset>
     </form>
