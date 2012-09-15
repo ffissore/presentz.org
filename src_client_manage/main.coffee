@@ -55,21 +55,29 @@ jQuery () ->
     new_title: () -> $("input[name=title]")
 
     notify_save_text: ($parent) -> $("li.notify_save", $parent)
-    whoops: (err, callback) ->
+    whoops: (message, callback) ->
       $whoops = $("#whoops")
-      return $whoops if !err?
+      return $whoops unless message?
 
-      if typeof err is "string"
-        $(".modal-body p:first", $whoops).text err
+      if typeof message is "string"
+        $(".modal-body p:first", $whoops).text message
       else
-        $(".modal-body p:first", $whoops).text err.message
-        $(".modal-body p:last", $whoops).text err.stack
+        $(".modal-body p:first", $whoops).text message.message
+        $(".modal-body p:last", $whoops).text message.stack
 
       if callback?
         $whoops.on "hidden", () ->
           $whoops.off "hidden"
           callback()
       $whoops.modal "show"
+      
+    confirm: (message, callback) ->
+      $confirm = $("#confirm")
+      return $confirm unless message?
+
+      $(".modal-body p", $confirm).text(message)
+      $(".modal-footer button:last").click callback
+      $confirm.modal "show"
 
     advanced_user: () -> $("#advanced_user")
     advanced_user_data_preview: () -> $("#advanced_user_data_preview")
@@ -90,12 +98,16 @@ jQuery () ->
       return result
 
   $helper.whoops().modal(show: false)
+  $helper.confirm().modal(show: false)
   $helper.advanced_user().modal(show: false)
   $helper.advanced_user_data_preview().modal(show: false)
   $helper.slide_burn_confirm().modal(show: false)
 
-  alert = (err, callback) ->
-    $helper.whoops(err, callback)
+  alert = (message, callback) ->
+    $helper.whoops(message, callback)
+
+  confirm = (message, callback) ->
+    $helper.confirm(message, callback)
 
   class Presentation extends Backbone.DeepModel
 
@@ -163,9 +175,9 @@ jQuery () ->
           alert "Error: #{error.message}"
       @bind "all", (event) =>
         if @loaded and _.str.startsWith(event, "change")
-          app.navigationView.enable_save_button()
+          app.enable_save_button()
         if @loaded and event is "sync"
-          app.navigationView.disable_save_button()
+          app.disable_save_button()
         if event is "change"
           @loaded = true
         console.log arguments
@@ -841,6 +853,8 @@ jQuery () ->
 
   class AppView extends Backbone.View
 
+    dirty: false
+
     el: $ "body > .container"
 
     initialize: () ->
@@ -864,16 +878,25 @@ jQuery () ->
       loader_hide()
 
     mypres: () ->
+      @clear_dirty()
+      loader_show()
       @presentationThumbList.fetch()
       @navigationView.reset(0)
 
     make: () ->
+      @clear_dirty()
       @navigationView.reset(1)
       view = new PresentationNewView()
       @$el.html view.el
       view.render()
-
+      
+    presentation: (id) ->
+      @clear_dirty()
+      loader_show()
+      presentation = new Presentation({ id: id })
+  
     edit: (model) ->
+      @clear_dirty()
       @view = new PresentationEditView model: model
       @$el.html @view.el
       @view.render()
@@ -894,30 +917,43 @@ jQuery () ->
 
     save: () ->
       @view.save()
+      
+    enable_save_button: () ->
+      @set_dirty()
+      @navigationView.enable_save_button()
+
+    disable_save_button: () ->
+      @clear_dirty()
+      @navigationView.disable_save_button()
+      
+    set_dirty: () ->
+      @dirty = true
+
+    clear_dirty: () ->
+      @dirty = false
 
   app = new AppView()
 
   class AppRouter extends Backbone.Router
 
     routes:
-      "": "go_mypres"
+      "": "mypres"
       "mypres": "mypres"
       "make": "make"
+      "hp": "hp"
       ":presentation": "presentation"
 
-    go_mypres: () ->
-      @navigate "mypres", trigger: true
-
     mypres: () ->
-      loader_show()
       app.mypres()
 
     make: () ->
       app.make()
+      
+    hp: () ->
+      window.location = "/"
 
     presentation: (id) ->
-      loader_show()
-      presentation = new Presentation({ id: id })
+      app.presentation(id)
 
   router = new AppRouter()
 
@@ -933,6 +969,12 @@ jQuery () ->
       $("body > .container").empty()
       $("div.loader").show()
       loader_shown = true
+
+  $("ul.nav a").click (event) ->
+    return true unless app.dirty
+    confirm "You have unsaved changes. Are you sure you want to proceed?", () ->
+      window.location.hash = event.target.hash
+    false
 
   Backbone.history.start pushState: false, root: "/m/"
   $.jsonp.setup callbackParameter: "callback"
