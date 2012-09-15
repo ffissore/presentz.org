@@ -611,74 +611,6 @@ jQuery () ->
       "click #slide_burn_confirm button.btn-danger": "onclick_slide_burn_cancelled"
       "click #slide_burn_confirm button.btn-success": "onclick_slide_burn_confirmed"
 
-  class PresentationThumbView extends Backbone.View
-
-    tagName: "li"
-
-    className: "span3"
-
-    initialize: () ->
-      _.bindAll @
-
-      @model.bind "change", @render
-
-    render: () ->
-      if @model.get("published")
-        published_css_class = ""
-        published_label = "Hide"
-      else
-        published_css_class = " btn-info"
-        published_label = "Publish"
-
-      ctx =
-        thumb: @model.get "chapters.0.video.thumb"
-        title: utils.cut_string_at(@model.get("title"), 30)
-        published_css_class: published_css_class
-        published_label: published_label
-      dust.render "_presentation_thumb", ctx, (err, out) =>
-        return alert(err) if err?
-
-        @$el.html out
-
-        $helper.disable_forms()
-      @
-
-    toogle_published: () ->
-      @model.set "published", !@model.get "published"
-      @model.save()
-      false
-
-    edit: () ->
-      router.navigate @model.get("id"), trigger: true
-      false
-
-    events:
-      "click a.publish": "toogle_published"
-      "click a.edit": "edit"
-
-  class PresentationThumbList extends Backbone.Collection
-
-    url: "/m/api/presentations"
-
-    model: models.PresentationThumb
-
-    comparator: (presentation) ->
-      presentation.get("title").toLowerCase()
-
-  class PresentationThumbListView extends Backbone.View
-
-    tagName: "ul"
-
-    className: "thumbnails"
-
-    render: () ->
-      $helper.scroll_top()
-      @model.each (model) =>
-        view = new PresentationThumbView model: model
-        @$el.append view.el
-        view.render()
-      @
-
   class PresentationNewView extends Backbone.View
 
     tagName: "div"
@@ -848,17 +780,23 @@ jQuery () ->
     el: $ "body > .container"
 
     initialize: () ->
+      _.bindAll(@)
+      
       @navigationView = new NavigationView()
 
-      @presentationThumbList = new PresentationThumbList()
+      @presentationThumbList = new window.models.PresentationThumbList()
 
       @presentationThumbList.on "reset", @reset, @
 
     reset: (models) ->
       if models.length > 0
-        view = new PresentationThumbListView model: models
+        view = new window.views.PresentationThumbListView model: models
         @$el.html view.el
         view.render()
+        view.bind "edit", (id) =>
+          router.navigate(id, trigger: true)
+          @presentation(id)
+          
       else
         dust.render "_no_talks_here", {}, (err, out) =>
           return alert(err) if err?

@@ -2,3 +2,4 @@
 @video_backends = {}
 
 @models = {}
+@views = {}
