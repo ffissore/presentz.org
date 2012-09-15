@@ -57,7 +57,7 @@ class DummyVideoBackend
 
   fetch_info: (url, callback) ->
     if utils.is_url_valid url
-      callback undefined, url: url, duration: -1
+      callback undefined, url: url, duration: 0
     else
       callback(new Error("invalid"))
 
