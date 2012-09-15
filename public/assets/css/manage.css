@@ -55,6 +55,12 @@ input.title-input {
     height: 150px;
 }
 
+.thumbswf {
+    height: 150px;
+    width: 200px;
+    max-width: 200px;
+}
+
 .thumbloading {
     width: 200px;
     height: 150px;

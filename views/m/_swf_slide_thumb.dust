@@ -1,5 +1,5 @@
 <div class="thumbloading">
-  <object type="application/x-shockwave-flash" data="{.slide_thumb}" class="thumb">
+  <object type="application/x-shockwave-flash" data="{.slide_thumb}" class="thumbswf">
     <param name="wmode" value="transparent"/>
   </object>
 </div>
