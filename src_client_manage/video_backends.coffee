@@ -9,19 +9,21 @@ class Youtube
     @presentzYoutube.videoId url: url
 
   query: (url, callback) ->
-    return callback("invalid url") if @id_from(url) is ""
+    id = @id_from(url)
+    return callback("invalid url") if id is ""
     $.jsonp
-      url: "https://gdata.youtube.com/feeds/api/videos/#{@id_from(url)}?v=2&alt=json"
+      url: "https://gdata.youtube.com/feeds/api/videos/#{id}?v=2&alt=json"
       success: (response) ->
         callback(undefined, response)
       error: (options, status) ->
         callback(status)
 
   fetch_info: (url, callback) ->
-    @query url, (err, response) ->
+    @query url, (err, response) =>
       return callback(err) if err?
       thumb = _.find(response.entry.media$group.media$thumbnail, (elem) -> elem.yt$name is "mqdefault")
       duration = parseInt(response.entry.media$group.yt$duration.seconds)
+      url = "http://www.youtube.com/watch?v=#{@id_from(url)}"
       callback undefined, url: url, thumb: thumb.url, duration: duration
 
 class Vimeo
@@ -46,7 +48,8 @@ class Vimeo
   fetch_info: (url, callback) ->
     @query url, (err, videos) ->
       return callback(err) if err?
-      callback undefined, url: videos[0].url, thumb: videos[0].thumbnail_medium, duration: videos[0].duration
+      video = videos[0]
+      callback undefined, url: video.url, thumb: video.thumbnail_medium, duration: video.duration
 
 class DummyVideoBackend
 
