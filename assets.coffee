@@ -62,28 +62,28 @@ new_css_conf = (suffix, files) ->
 
 assetsMiddleware = assetManager
   js_main: new_js_conf("main", [
-    "public/assets/js/jquery/jquery-1.8.0.js",
-    "public/assets/js/jquery/jquery.easing.1.3.js",
-    "public/assets/js/jquery/jquery.scrollTo-1.4.2-min.js",
-    "public/assets/js/jquery/jquery-ui-1.8.23.custom.min.js",
-    "public/assets/js/modernizr.js",
+    "public/assets/js/jquery/jquery-1.8.0.js"
+    "public/assets/js/jquery/jquery.easing.1.3.js"
+    "public/assets/js/jquery/jquery.scrollTo-1.4.2-min.js"
+    "public/assets/js/jquery/jquery-ui-1.8.23.custom.min.js"
+    "public/assets/js/modernizr.js"
     "src_client/main.coffee"
   ])
   css: new_css_conf("main", [
-    "public/assets/css/mediaelementplayer.css",
-    "public/assets/css/reset.css",
-    "public/assets/css/default.css",
-    "public/assets/css/fluid_container.css",
-    "public/assets/css/font_style.css",
-    "public/assets/css/fe_style.css",
-    "public/assets/css/default_responsive.css",
+    "public/assets/css/mediaelementplayer.css"
+    "public/assets/css/reset.css"
+    "public/assets/css/default.css"
+    "public/assets/css/fluid_container.css"
+    "public/assets/css/font_style.css"
+    "public/assets/css/fe_style.css"
+    "public/assets/css/default_responsive.css"
     "public/assets/css/fe_style_responsive.css"
   ])
   js_pres: new_js_conf("pres", [
-    "public/assets/js/froogaloop.js",
-    "public/assets/js/swfobject.js",
-    "public/assets/js/mediaelement-and-player.js",
-    "public/assets/js/presentz.js",
+    "public/assets/js/froogaloop.js"
+    "public/assets/js/swfobject.js"
+    "public/assets/js/mediaelement-and-player.js"
+    "public/assets/js/presentz.js"
     "src_client/show_presentation.coffee"
   ])
   css_pres: new_css_conf("pres", [
@@ -91,36 +91,36 @@ assetsMiddleware = assetManager
   ])
   js_embed: new_js_conf("embed", ["src_client/embed.coffee"])
   js_manage: new_js_conf("manage", [
-    "public/assets/js/jquery/jquery-1.8.0.js",
-    "public/assets/js/jquery/jquery-ui-1.8.23.custom.min.js",
-    "public/assets/js/manage/jquery.jsonp.js",
-    "public/assets/js/manage/jquery.jsonp.js",
-    "public/assets/js/manage/jquery.movingboxes.js",
-    "public/assets/js/manage/bootstrap.js",
-    "public/assets/js/manage/underscore.js",
-    "public/assets/js/manage/underscore.string.js",
-    "public/assets/js/manage/backbone.js",
-    "public/assets/js/manage/deep-model.js",
-    "public/assets/js/manage/dust-core-1.0.0.js",
-    "public/assets/js/manage/jsuri-1.1.1.js",
-    "public/assets/js/froogaloop.js",
-    "public/assets/js/swfobject.js",
-    "public/assets/js/mediaelement-and-player.js",
-    "public/assets/js/presentz.js",
-    "views/m/_presentation_thumb.dust",
-    "views/m/_presentation_menu_title_save_btn.dust",
-    "views/m/_presentation.dust",
-    "views/m/_slide.dust",
-    "views/m/_help_inline.dust",
-    "views/m/_reset_thumb.dust",
-    "views/m/_img_slide_thumb.dust",
-    "views/m/_swf_slide_thumb.dust",
-    "views/m/_new.dust",
-    "views/m/_slide_times_preview.dust",
-    "views/m/_confirm_slide_burn.dust",
-    "views/m/_no_talks_here.dust",
-    "utils.coffee",
-    "dustjs_helpers.coffee",
+    "public/assets/js/jquery/jquery-1.8.0.js"
+    "public/assets/js/jquery/jquery-ui-1.8.23.custom.min.js"
+    "public/assets/js/manage/jquery.jsonp.js"
+    "public/assets/js/manage/jquery.jsonp.js"
+    "public/assets/js/manage/jquery.movingboxes.js"
+    "public/assets/js/manage/bootstrap.js"
+    "public/assets/js/manage/underscore.js"
+    "public/assets/js/manage/underscore.string.js"
+    "public/assets/js/manage/backbone.js"
+    "public/assets/js/manage/deep-model.js"
+    "public/assets/js/manage/dust-core-1.0.0.js"
+    "public/assets/js/manage/jsuri-1.1.1.js"
+    "public/assets/js/froogaloop.js"
+    "public/assets/js/swfobject.js"
+    "public/assets/js/mediaelement-and-player.js"
+    "public/assets/js/presentz.js"
+    "views/m/_presentation_thumb.dust"
+    "views/m/_presentation_menu_title_save_btn.dust"
+    "views/m/_presentation.dust"
+    "views/m/_slide.dust"
+    "views/m/_help_inline.dust"
+    "views/m/_reset_thumb.dust"
+    "views/m/_img_slide_thumb.dust"
+    "views/m/_swf_slide_thumb.dust"
+    "views/m/_new.dust"
+    "views/m/_slide_times_preview.dust"
+    "views/m/_confirm_slide_burn.dust"
+    "views/m/_no_talks_here.dust"
+    "utils.coffee"
+    "dustjs_helpers.coffee"
     "src_client_manage/backbone_extensions.coffee"
     "src_client_manage/main.coffee"
     "src_client_manage/video_backends.coffee"
@@ -128,11 +128,11 @@ assetsMiddleware = assetManager
     "src_client_manage/validation.coffee"
   ])
   css_manage: new_css_conf("manage", [
-    "public/assets/css/jquery-ui-1.8.23.custom.css",
-    "public/assets/css/mediaelementplayer.css",
-    "public/assets/css/bootstrap.css",
+    "public/assets/css/jquery-ui-1.8.23.custom.css"
+    "public/assets/css/mediaelementplayer.css"
+    "public/assets/css/bootstrap.css"
     "public/assets/css/bootstrap-responsive.css"
-    "public/assets/css/fluid_container.css",
+    "public/assets/css/fluid_container.css"
     "public/assets/css/movingboxes.css"
     "public/assets/css/manage.css"
   ])
