@@ -56,7 +56,7 @@ visit_presentation = (presentation, func, fields_or_maps_of_fields) ->
           for comment in slide.comments
             apply_on "comment", comment
             apply_on "user", comment.user if comment.user?
-  return
+  presentation
 
 chars = "0123456789qwertyuiopasdfghjklzxcvbnm"
 non_word_chars = /[\W]/g

@@ -30,7 +30,7 @@ class SlideShare
     slides = []
     time = 0
     for ss_slide, idx in ss_slides
-      slide = @slide_backends.make_new_slide(make_url(doc_id, idx + 1), time, public_url)
+      slide = slide_backends.make_new_slide(make_url(doc_id, idx + 1), time, public_url)
       slides.push slide
       time += mean_slide_duration
     slides

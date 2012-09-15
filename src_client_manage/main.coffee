@@ -23,13 +23,10 @@ jQuery () ->
   slide_backends = [new window.slide_backends.SlideShare(prsntz.availableSlidePlugins.slideshare), new window.slide_backends.Dummy(prsntz.availableSlidePlugins.image)]
 
   $helper =
-    scroll_top: () -> $(window).scrollTop(0)
     slide_containers: () -> $("div[slide_index]")
     slide_thumb_container_in: ($elem) -> $("div.slide_thumb", $elem)
     parent_control_group_of: ($elem) -> $elem.parentsUntil("div.control-group").parent()
     video_duration_input_of: (chapter_index) -> $("input[name=video_duration][chapter_index=#{chapter_index}]")
-
-    disable_forms: () -> $("form").submit () -> false
 
     slides: () -> $("div.slides")
     slide_at: (slide_index) -> $("div.slides div.row-fluid[slide_index=#{slide_index}]")
@@ -107,93 +104,16 @@ jQuery () ->
   confirm = (message, callback) ->
     $helper.confirm(message, callback)
 
-  class Presentation extends Backbone.DeepModel
-
-    urlRoot: "/m/api/presentations/"
-
-    validate: validation
-
-    loaded: false
-    loading: false
-    slides_to_delete: []
-
-    toJSON: () ->
-      presentation = $.extend true, {}, @attributes
-
-      utils.visit_presentation presentation, utils.remove_unwanted_fields_from, [ "onebased", "$idx", "$len", "_plugin" ]
-
-      return presentation
-
-    delete_slides = (slides, callback) ->
-      return callback() if !slides? or slides.length is 0
-
-      slide = slides.pop()
-
-      delete_slides(slides, callback) unless slide["@rid"]?
-
-      $.ajax
-        type: "DELETE"
-        url: "/m/api/delete_slide/#{slide["@rid"].substr(1)}"
-        success: () ->
-          delete_slides(slides, callback)
-        error: () ->
-          alert("An error occured while deleting the slides")
-
-    save: (attributes, options) ->
-      options ||= {}
-      options.success = (model, resp) =>
-        if @slides_to_delete.length is 0
-          return @trigger("sync", model, resp)
-
-        delete_slides @slides_to_delete, () =>
-          @loading = false
-          @loaded = false
-          @fetch { success: () => @trigger("sync") }
-
-      Backbone.DeepModel.prototype.save.call(this, attributes, options)
-
-    initialize: () ->
-      _.bindAll @
-
-      @bind "change", () ->
-        for chapter, chapter_idx in @get("chapters")
-          chapter._index = chapter_idx
-          for slide, slide_idx in chapter.slides
-            slide._index = slide_idx
-            slide._onebased_index = slide_idx + 1
-        app.edit(@) if !@loading
-        @loading = true
-
-      @bind "error", (model, error) ->
-        if _.isString(error)
-          alert error
-        else if error.status?
-          alert "Error: (#{error.status}): #{error.responseText}"
-        else if error.message?
-          alert "Error: #{error.message}"
-      @bind "all", (event) =>
-        if @loaded and _.str.startsWith(event, "change")
-          app.enable_save_button()
-        if @loaded and event is "sync"
-          app.disable_save_button()
-        if event is "change"
-          @loaded = true
-        console.log arguments
-
-      keys = (key for key, value of @attributes)
-
-      if keys.length is 1 and keys[0] is "id"
-        @fetch()
-      else
-        @set "id", utils.generate_id(@get("title"))
-        @trigger("change", @, {})
-
   class PresentationEditView extends Backbone.View
 
     tagName: "div"
+    
+    initialize: () ->
+      @model.bind "change", () ->
+        console.log "PresentationEditView", arguments
 
     render: () ->
-      $helper.scroll_top()
+      window.views.scroll_top()
       ctx = @model.attributes
       ctx.onebased = dustjs_helpers.onebased
 
@@ -218,7 +138,7 @@ jQuery () ->
             dust.render "_presentation", ctx, (err, out) =>
               return alert(err) if err?
 
-              loader_hide()
+              window.views.loader_hide()
               app.navigationView.presentation_menu_title_save_btn utils.cut_string_at(@model.get("title"), 30), @model.get("published")
               @$el.html(out)
 
@@ -245,7 +165,7 @@ jQuery () ->
                     $slide_thumb.html out
 
               init_presentz @model.attributes, true
-              $helper.disable_forms()
+              window.views.disable_forms()
 
       load_slides_info slides
       @
@@ -277,7 +197,7 @@ jQuery () ->
             return alert(err) if err?
 
             $video_url_error_msg_container.html out
-            $helper.disable_forms()
+            window.views.disable_forms()
         else
           $parent_control_group.removeClass "error"
           chapter_index = $elem.attr("chapter_index")
@@ -290,7 +210,7 @@ jQuery () ->
               return alert(err) if err?
 
               $video_url_error_msg_container.html out
-              $helper.disable_forms()
+              window.views.disable_forms()
           else
             $video_url_error_msg_container.empty()
       false
@@ -338,7 +258,7 @@ jQuery () ->
           return alert(err) if err?
 
           $video_thumb_error_msg_container.html out
-          $helper.disable_forms()
+          window.views.disable_forms()
       false
 
     onchange_title: (event) ->
@@ -373,7 +293,7 @@ jQuery () ->
         dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { slide_thumb: $slide_thumb.attr "src" }, (err, out) ->
           return alert(err) if err?
           $slide_thumb.html out
-          $helper.disable_forms()
+          window.views.disable_forms()
 
     onchange_slide_time: (event) ->
       $elem = $(event.target)
@@ -430,7 +350,7 @@ jQuery () ->
           dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { slide_thumb: $slide_thumb.attr "src" }, (err, out) ->
             return alert(err) if err?
             $slide_thumb.html out
-            $helper.disable_forms()
+            window.views.disable_forms()
 
     save: () ->
       @model.save()
@@ -480,7 +400,7 @@ jQuery () ->
         dust.render "_slide_times_preview", { value_type: backend.import_file_value_column, data: @data }, (err, out) ->
           return alert(err) if err?
           $(".modal-body", $helper.advanced_user_data_preview()).html(out)
-          $helper.disable_forms()
+          window.views.disable_forms()
 
       reader.readAsText(file)
 
@@ -582,7 +502,7 @@ jQuery () ->
         $helper.slides().movingBoxes()
         $helper.slides().movingBoxes(new_slide._onebased_index)
         rebuild_slide_indexes($helper.slides_of($helper.chapter(0)))
-        $helper.disable_forms()
+        window.views.disable_forms()
       false
 
     events:
@@ -611,115 +531,6 @@ jQuery () ->
       "click #slide_burn_confirm button.btn-danger": "onclick_slide_burn_cancelled"
       "click #slide_burn_confirm button.btn-success": "onclick_slide_burn_confirmed"
 
-  class PresentationNewView extends Backbone.View
-
-    tagName: "div"
-
-    @video: null
-    @slideshow: null
-    @title: null
-
-    render: () ->
-      $helper.scroll_top()
-      dust.render "_new", {}, (err, out) =>
-        return alert(err) if err?
-        loader_hide()
-        @$el.html(out)
-        $helper.disable_forms()
-
-    check_if_time_to_start: () ->
-      $button = $("button", @$el)
-      if @video? and @slideshow?
-        $button.removeClass("disabled")
-        $button.attr("disabled", false)
-      else
-        $button.addClass("disabled")
-        $button.attr("disabled", true)
-
-    onchange_video: (event) ->
-      $elem = $(event.target)
-      url = $elem.val()
-      return if url is ""
-      url = "http://#{url}" unless _.str.startsWith(url, "http")
-      $thumb_container = $(".video_thumb", @$el)
-      $thumb_container.empty()
-      $thumb_container.append("Fetching info...")
-      backend = _.find video_backends, (backend) -> backend.handle(url)
-      backend.fetch_info url, (err, info) =>
-        $thumb_container.empty()
-        @video = null
-        if err?
-          $thumb_container.append("<div class=\"alert alert-error\">This URL does not look good</div>")
-          return
-        feedback = "<p>Looks good!"
-        if info.thumb?
-          feedback = feedback.concat(" Here is the thumb.</p><img class=\"smallthumb\" src=\"#{info.thumb}\"/>")
-        else
-          feedback = feedback.concat(" At least the URL is well made. Hope there is a real video there.</p>")
-        $thumb_container.append(feedback)
-        @video = info
-        @check_if_time_to_start()
-
-    onchange_slide: (event) ->
-      $elem = $(event.target)
-      url = $elem.val()
-      return if url is ""
-      url = "http://#{url}" unless _.str.startsWith(url, "http")
-      $thumb_container = $(".slide_thumb", @$el)
-      $thumb_container.empty()
-      $thumb_container.append("Fetching info...")
-      #backend = _.find slide_backends, (backend) -> backend.handle(url)
-      #only slideshare
-      backend = slide_backends[0]
-      backend.slideshow_info url, (err, slide, slideshow_info) =>
-        $thumb_container.empty()
-        @slideshow = null
-        if err?
-          $thumb_container.append("<div class=\"alert alert-error\">This URL does not look good</div>")
-          return
-        $thumb_container.append("<p>Looks good! Here is the first slide.</p>")
-        @slideshow = slideshow_info
-        @check_if_time_to_start()
-        thumb_type = backend.thumb_type_of(slideshow_info.slide_thumb)
-        dust.render "_#{thumb_type}_slide_thumb", slideshow_info, (err, out) ->
-          return alert(err) if err?
-          $thumb_container.append(out)
-          $helper.disable_forms()
-
-        $title = $helper.new_title()
-        if slideshow_info.title? and $title.val() is ""
-          $title.val(slideshow_info.title)
-          $title.change()
-
-    onchange_title: (event) ->
-      $elem = $(event.target)
-      @title = $elem.val()
-
-    onclick_start: () ->
-      backend = _.find slide_backends, (backend) => backend.handle(@slideshow.url)
-      slides = backend.all_slides_of(@slideshow.url, @slideshow.public_url, @video.duration)
-
-      chapter =
-        duration: @video.duration
-        video:
-          url: @video.url
-          thumb: @video.thumb
-        slides: slides
-
-      presentation =
-        title: @title,
-        chapters: [ chapter ],
-        published: false
-
-      presentation = new Presentation(presentation)
-      router.navigate presentation.get("id")
-
-    events:
-      "change input[name=video_url]": "onchange_video"
-      "change input[name=slide_url]": "onchange_slide"
-      "change input[name=title]": "onchange_title"
-      "click button": "onclick_start"
-
   class NavigationView extends Backbone.View
 
     el: $(".navbar > .navbar-inner > .container > .nav-collapse > .nav:first")
@@ -738,7 +549,7 @@ jQuery () ->
 
           @$el.append(out)
           $helper.notify_save_text().hide()
-          $helper.disable_forms()
+          window.views.disable_forms()
       else
         $("a span", $li.eq(2)).text title
 
@@ -795,33 +606,35 @@ jQuery () ->
         view.render()
         view.bind "edit", (id) =>
           router.navigate(id, trigger: true)
-          @presentation(id)
           
       else
         dust.render "_no_talks_here", {}, (err, out) =>
           return alert(err) if err?
           @$el.html out
-          $helper.disable_forms()
+          window.views.disable_forms()
 
-      loader_hide()
+      window.views.loader_hide()
 
     mypres: () ->
       @clear_dirty()
-      loader_show()
+      window.views.loader_show()
       @presentationThumbList.fetch()
       @navigationView.reset(0)
 
     make: () ->
       @clear_dirty()
       @navigationView.reset(1)
-      view = new PresentationNewView()
+      view = new window.views.PresentationNewView(video_backends, slide_backends)
+      view.render().bind "new", (presentation) =>
+        @edit(presentation)
+        router.navigate presentation.get("id")
       @$el.html view.el
-      view.render()
       
     presentation: (id) ->
       @clear_dirty()
-      loader_show()
-      presentation = new Presentation({ id: id })
+      window.views.loader_show()
+      presentation = new window.models.Presentation({ id: id })
+      presentation.bind "change", @edit
   
     edit: (model) ->
       @clear_dirty()
@@ -865,12 +678,15 @@ jQuery () ->
   class AppRouter extends Backbone.Router
 
     routes:
-      "": "mypres"
+      "": "go_mypres"
       "mypres": "mypres"
       "make": "make"
       "hp": "hp"
       ":presentation": "presentation"
 
+    go_mypres: () ->
+      @navigate("mypres", trigger: true)
+      
     mypres: () ->
       app.mypres()
 
@@ -884,19 +700,6 @@ jQuery () ->
       app.presentation(id)
 
   router = new AppRouter()
-
-  loader_shown = true
-
-  loader_hide = () ->
-    if loader_shown
-      $("div.loader").hide()
-      loader_shown = false
-
-  loader_show = () ->
-    if !loader_shown
-      $("body > .container").empty()
-      $("div.loader").show()
-      loader_shown = true
 
   $("ul.nav a").click (event) ->
     return true unless app.dirty
