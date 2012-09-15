@@ -1,11 +1,3 @@
-make_new_slide = (url, time, public_url) ->
-  new_slide =
-    url: url
-    time: time
-  if public_url?
-    new_slide.public_url = public_url
-  new_slide
-  
 class SlideShare
 
   constructor: (@presentzSlideShare) ->
@@ -38,7 +30,7 @@ class SlideShare
     slides = []
     time = 0
     for ss_slide, idx in ss_slides
-      slide = make_new_slide(make_url(doc_id, idx + 1), time, public_url)
+      slide = @slide_backends.make_new_slide(make_url(doc_id, idx + 1), time, public_url)
       slides.push slide
       time += mean_slide_duration
     slides
@@ -110,53 +102,10 @@ class SlideShare
     @slide_info new_slide, callback
 
   make_new_from: (slide) ->
-    new_slide = make_new_slide(slide.url, slide.time, slide.public_url)
+    new_slide = @slide_backends.make_new_slide(slide.url, slide.time, slide.public_url)
     new_slide._thumb_type = "swf"
     new_slide.number = @to_slide_number(slide.url)
     new_slide.slide_thumb = @slideshare_infos[@to_doc_id(slide.url)].Show.Slide[new_slide.number - 1].Src
     new_slide
 
-class DummySlideBackend
-
-  constructor: () ->
-    @import_file_value_column = "Slide URL"
-
-  handle: (url) -> true
-
-  thumb_type_of: (url) ->
-    return "swf" if url.indexOf(".swf") isnt -1
-    "img"
-
-  slide_info: (slide, callback) ->
-    if utils.is_url_valid(slide.url)
-      callback undefined, slide,
-        public_url: slide.url
-        slide_thumb: slide.url
-    else
-      callback("Invalid URL: '#{slide.url}'")
-
-  slideshow_info: (url, callback) ->
-    @slide_info url: url, callback
-
-  url_from_public_url: (slide, callback) ->
-    if utils.is_url_valid slide.public_url
-      callback undefined, slide.public_url
-    else
-      callback("Invalid URL: #{slide.public_url}")
-
-  set_slide_value_from_import: (slide, slide_url) ->
-    slide.url = slide_url
-    slide.public_url = slide_url
-
-  check_slide_value_from_import: (slide, slide_number, callback) ->
-    callback()
-    
-  make_new_from: (slide) ->
-    new_slide = make_new_slide(slide.url.substr(0, slide.url.lastIndexOf("/") + 1), slide.time)
-    new_slide._thumb_type = "img"
-    new_slide.slide_thumb = slide.url
-    new_slide
-
-@presentzorg.slide_backends = {}
-@presentzorg.slide_backends.SlideShare = SlideShare
-@presentzorg.slide_backends.DummySlideBackend = DummySlideBackend
+@slide_backends.SlideShare = SlideShare

@@ -6,4 +6,4 @@ validate = (presentation, options) ->
   
   return
   
-@presentzorg.validation = validate
+@validation = validate

@@ -122,9 +122,16 @@ assetsMiddleware = assetManager
     "utils.coffee"
     "dustjs_helpers.coffee"
     "src_client_manage/backbone_extensions.coffee"
+    "src_client_manage/namespaces.coffee"
+    "src_client_manage/slide_backends/slideshare.coffee"
+    "src_client_manage/slide_backends/dummy.coffee"
+    "src_client_manage/slide_backends/utils.coffee"
+    "src_client_manage/video_backends/youtube.coffee"
+    "src_client_manage/video_backends/vimeo.coffee"
+    "src_client_manage/video_backends/dummy.coffee"
+    "src_client_manage/models/presentation_thumb.coffee"
     "src_client_manage/main.coffee"
     "src_client_manage/video_backends.coffee"
-    "src_client_manage/slide_backends.coffee"
     "src_client_manage/validation.coffee"
   ])
   css_manage: new_css_conf("manage", [

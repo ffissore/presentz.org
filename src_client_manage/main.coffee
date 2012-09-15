@@ -1,5 +1,3 @@
-@presentzorg = {}
-
 jQuery () ->
   prsntz = new Presentz("#video", "460x420", "#slide", "460x420")
 
@@ -21,8 +19,8 @@ jQuery () ->
       $helper.elements_with_placeholder_in($elem).each (idx, subelem) ->
         $(subelem).attr("placeholder", "Slide #{new_index + 1}")
 
-  video_backends = [new presentzorg.video_backends.Youtube(prsntz.availableVideoPlugins.youtube), new presentzorg.video_backends.Vimeo(prsntz.availableVideoPlugins.vimeo), new presentzorg.video_backends.DummyVideoBackend(prsntz.availableVideoPlugins.html5)]
-  slide_backends = [new presentzorg.slide_backends.SlideShare(prsntz.availableSlidePlugins.slideshare), new presentzorg.slide_backends.DummySlideBackend(prsntz.availableSlidePlugins.image)]
+  video_backends = [new window.video_backends.Youtube(prsntz.availableVideoPlugins.youtube), new window.video_backends.Vimeo(prsntz.availableVideoPlugins.vimeo), new window.video_backends.DummyVideoBackend(prsntz.availableVideoPlugins.html5)]
+  slide_backends = [new window.slide_backends.SlideShare(prsntz.availableSlidePlugins.slideshare), new window.slide_backends.DummySlideBackend(prsntz.availableSlidePlugins.image)]
 
   $helper =
     scroll_top: () -> $(window).scrollTop(0)
@@ -113,7 +111,7 @@ jQuery () ->
 
     urlRoot: "/m/api/presentations/"
 
-    validate: presentzorg.validation
+    validate: validation
 
     loaded: false
     loading: false
@@ -613,14 +611,6 @@ jQuery () ->
       "click #slide_burn_confirm button.btn-danger": "onclick_slide_burn_cancelled"
       "click #slide_burn_confirm button.btn-success": "onclick_slide_burn_confirmed"
 
-  class PresentationThumb extends Backbone.DeepModel
-
-    initialize: () ->
-      _.bindAll @
-
-      @bind "all", () ->
-        console.log arguments
-
   class PresentationThumbView extends Backbone.View
 
     tagName: "li"
@@ -670,7 +660,7 @@ jQuery () ->
 
     url: "/m/api/presentations"
 
-    model: PresentationThumb
+    model: models.PresentationThumb
 
     comparator: (presentation) ->
       presentation.get("title").toLowerCase()
