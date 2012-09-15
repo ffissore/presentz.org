@@ -4,8 +4,7 @@
   {!<h3>Chapter {#onebased}{.}{/onebased}</h3>!}
   <h4>Video</h4>
   <div class="row-fluid" chapter_index="{@idx}{.}{/idx}">
-    <div class="span1"></div>
-    <form class="span9 form-horizontal">
+    <form class="span8 form-horizontal">
       <fieldset>
         <div class="control-group">
           <label class="control-label">Video URL</label>
@@ -29,16 +28,16 @@
         </div>
       </fieldset>
     </form>
-    <div class="video_thumb span2">
+    <div class="video_thumb span4">
       <img class="thumb" src="{.video.thumb}" chapter_index="{@idx}{.}{/idx}"/>
     </div>
   </div>
   <div class="row-fluid">
-    <div class="span6 show-grid">
+    <div class="span6">
       <h3>Video</h3>
       <div id="video" class="fluid_container" style="width: 460px; height: 420px"></div>
     </div>
-    <div class="span6 show-grid">
+    <div class="span6">
       <h3>Slides</h3>
       <div id="slide"></div>
     </div>

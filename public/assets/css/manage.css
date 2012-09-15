@@ -16,14 +16,24 @@ body {
     padding: 10px;
 }
 
+h4 {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+.control-group {
+    margin-top: 0;
+}
+
 #video, #slide {
     text-align: center;
 }
 
 input.title-input {
-    font-size: 30px;
-    height: 30px;
-    width: 99%
+    font-size: 25px;
+    height: 25px;
+    width: 99%;
+    margin-bottom: 0;
 }
 
 .loader {
@@ -42,9 +52,7 @@ input.title-input {
 }
 
 .thumb {
-    width: 200px;
     height: 150px;
-    max-width: 200px;
 }
 
 .thumbloading {
@@ -57,7 +65,7 @@ input.title-input {
 }
 
 img {
-    width: 100%;
+    /*width: 100%;*/
 }
 
 button.navbar-btn {
