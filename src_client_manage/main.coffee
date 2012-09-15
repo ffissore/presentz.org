@@ -19,8 +19,8 @@ jQuery () ->
       $helper.elements_with_placeholder_in($elem).each (idx, subelem) ->
         $(subelem).attr("placeholder", "Slide #{new_index + 1}")
 
-  video_backends = [new window.video_backends.Youtube(prsntz.availableVideoPlugins.youtube), new window.video_backends.Vimeo(prsntz.availableVideoPlugins.vimeo), new window.video_backends.DummyVideoBackend(prsntz.availableVideoPlugins.html5)]
-  slide_backends = [new window.slide_backends.SlideShare(prsntz.availableSlidePlugins.slideshare), new window.slide_backends.DummySlideBackend(prsntz.availableSlidePlugins.image)]
+  video_backends = [new window.video_backends.Youtube(prsntz.availableVideoPlugins.youtube), new window.video_backends.Vimeo(prsntz.availableVideoPlugins.vimeo), new window.video_backends.Dummy(prsntz.availableVideoPlugins.html5)]
+  slide_backends = [new window.slide_backends.SlideShare(prsntz.availableSlidePlugins.slideshare), new window.slide_backends.Dummy(prsntz.availableSlidePlugins.image)]
 
   $helper =
     scroll_top: () -> $(window).scrollTop(0)

@@ -1,4 +1,4 @@
-class DummySlideBackend
+class Dummy
 
   constructor: () ->
     @import_file_value_column = "Slide URL"
@@ -39,4 +39,4 @@ class DummySlideBackend
     new_slide.slide_thumb = slide.url
     new_slide
 
-@slide_backends.DummySlideBackend = DummySlideBackend
+@slide_backends.Dummy = Dummy

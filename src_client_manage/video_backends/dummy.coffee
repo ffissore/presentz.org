@@ -1,4 +1,4 @@
-class DummyVideoBackend
+class Dummy
 
   handle: (url) -> true
 
@@ -8,4 +8,4 @@ class DummyVideoBackend
     else
       callback(new Error("invalid"))
 
-@video_backends.DummyVideoBackend = DummyVideoBackend
+@video_backends.Dummy = Dummy
