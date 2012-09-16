@@ -15,7 +15,7 @@ class NavigationView extends Backbone.View
         return alert(err) if err?
 
         @$el.append(out)
-        $helper.notify_save_text().hide()
+        $("li.notify_save").hide()
         views.disable_forms()
     else
       $("a span", $li.eq(2)).text title
@@ -37,7 +37,7 @@ class NavigationView extends Backbone.View
     $button.attr "disabled", true
     $button.addClass "disabled"
     $button.removeClass "btn-warning"
-    $notify_save = $helper.notify_save_text()
+    $notify_save = $("li.notify_save")
     $notify_save.fadeIn "slow", () ->
       $notify_save.fadeOut "slow"
 
