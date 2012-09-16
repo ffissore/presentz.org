@@ -1,8 +1,12 @@
 $SLIDES = () -> $("div.slides")
-$SLIDE_CONTAINERS = () -> $("div[slide_index]")
+$SLIDE_CONTAINERS = () -> $("div.row-fluid[slide_index]")
 $SLIDE_THUMB_CONTAINER_IN = ($elem) -> $("div.slide_thumb", $elem)
 $FORM_ROW_OF = ($elem) -> $elem.parentsUntil("div.control-group").parent()
 $VIDEO_THUMB_OF = (chapter_index) -> $("img[chapter_index=#{chapter_index}]")
+$CHAPTER_OF = ($elem) -> $elem.parentsUntil("span.chapter").last().parent()
+$CHAPTER = (chapter_index) -> $("#chapter#{chapter_index}")
+$SLIDE = (chapter_index, slide_index) -> $("span[chapter_index=#{chapter_index}] div[slide_index=#{slide_index}]")
+$SLIDES_OF_CHAPTER = (chapter_index) -> $("span[chapter_index=#{chapter_index}] div[slide_index]")
 
 change_simple_field = (self, fieldname, event) ->
   $elem = $(event.target)
@@ -12,6 +16,15 @@ change_simple_field = (self, fieldname, event) ->
   else
     self.model.set fieldname, $elem.val()
   false
+
+rebuild_slide_indexes = ($slides) ->
+  $slides.each (slide_index, elem) ->
+    $elem = $(elem)
+    $elem.attr("slide_index", slide_index)
+    $("[slide_index]", $elem).each (idx, subelem) ->
+      $(subelem).attr("slide_index", slide_index)
+    $("[placeholder]", $elem).each (idx, subelem) ->
+      $(subelem).attr("placeholder", "Slide #{slide_index + 1}")
 
 class PresentationEditView extends Backbone.View
 
@@ -144,16 +157,16 @@ class PresentationEditView extends Backbone.View
     $elem = $(event.target)
     thumb_url = $elem.val()
     $video_error_msg_container = $(".video_alerts")
-    $container = $FORM_ROW_OF($elem)
+    $form_row = $FORM_ROW_OF($elem)
 
     if utils.is_url_valid(thumb_url)
-      $container.removeClass "error"
+      $form_row.removeClass "error"
       $video_error_msg_container.removeClass("alert alert-warning").empty()
       chapter_index = $elem.attr("chapter_index")
       @model.set("chapters.#{chapter_index}.video.thumb", thumb_url)
       $VIDEO_THUMB_OF(chapter_index).attr("src", thumb_url)
     else
-      $container.addClass("error")
+      $form_row.addClass("error")
       $video_error_msg_container.addClass("alert alert-warning").html("Invalid URL")
     false
 
@@ -161,7 +174,7 @@ class PresentationEditView extends Backbone.View
     $elem = $(event.target)
     slide_helper = $helper.slide_helper $elem
 
-    @model.set "#{slide_helper.model_selector}.title", $elem.val()
+    @model.set("#{slide_helper.model_selector}.title", $elem.val())
 
   onchange_slide_number: (event) ->
     $elem = $(event.target)
@@ -329,52 +342,50 @@ class PresentationEditView extends Backbone.View
     $elem = $(event.target)
     $slide_container = $elem.parentsUntil("div.row-fluid[slide_index]").last().parent()
     slide_index = $slide_container.attr("slide_index")
-    chapter_index = $helper.chapter_index_from($helper.chapter_of($elem))
+    chapter_index = $CHAPTER_OF($elem).attr("chapter_index")
 
-    $btn_confirm = $(".btn-success", $helper.slide_burn_confirm())
+    $btn_confirm = $("#slide_delete_confirm .btn-success")
     $btn_confirm.attr("chapter_index", chapter_index)
     $btn_confirm.attr("slide_index", slide_index)
-    $helper.slide_burn_confirm().modal("show")
+    $("#slide_delete_confirm").modal("show")
 
     false
 
   onclick_slide_delete_confirmed: (event) ->
     $elem = $(event.target)
-    $helper.slide_burn_confirm().modal("hide")
+    $("#slide_delete_confirm").modal("hide")
 
     chapter_index = parseInt($elem.attr("chapter_index"))
     slide_index = parseInt($elem.attr("slide_index"))
 
-    chapter = @model.get("chapters.#{chapter_index}")
     slides = @model.get("chapters.#{chapter_index}.slides")
-    deleted_slide = slides.splice(slide_index, 1)[0]
+    slide_to_delete = slides.splice(slide_index, 1)[0]
 
     @model.set("chapters.#{chapter_index}.slides", slides)
-    @model.slides_to_delete.push deleted_slide
+    @model.slides_to_delete.push(slide_to_delete)
 
-    if slide_index - 1 < 0
-      new_slide_index = 0
+    if slide_index is slides.length
+      new_slide_index = slides.length - 1
     else
-      new_slide_index = slide_index - 1
+      new_slide_index = slide_index
 
     $SLIDES().movingBoxes(new_slide_index + 1)
-    $chapter = $helper.chapter(chapter_index)
-    $helper.slide_of(slide_index, $chapter).remove()
+    $SLIDE(chapter_index, slide_index).remove()
     $SLIDES().movingBoxes()
 
-    rebuild_slide_indexes($helper.slides_of($chapter))
+    rebuild_slide_indexes($SLIDES_OF_CHAPTER(chapter_index))
 
     false
 
   onclick_slide_delete_cancelled: (event) ->
-    $helper.slide_burn_confirm().modal("hide")
+    $("#slide_delete_confirm").modal("hide")
     false
 
   onclick_set_time: (event) ->
     slide_index = $SLIDES().getMovingBoxes().curPanel - 1
     slide_time = utils.my_parse_float($helper.current_time().text())
     @model.set("chapters.0.slides.#{slide_index}.time", slide_time)
-    $("input.slide_time", $helper.slide_of(slide_index, $helper.chapter(0))).val(slide_time)
+    $("input.slide_time", $helper.slide_of(slide_index, $CHAPTER(0))).val(slide_time)
     false
 
   onclick_add_slide: () ->
@@ -394,7 +405,7 @@ class PresentationEditView extends Backbone.View
       $helper.slide_at(slide_index).after(out)
       $SLIDES().movingBoxes()
       $SLIDES().movingBoxes(new_slide._onebased_index)
-      rebuild_slide_indexes(SLIDES_of($helper.chapter(0)))
+      rebuild_slide_indexes(SLIDES_of($CHAPTER(0)))
       views.disable_forms()
     false
 
@@ -426,8 +437,8 @@ class PresentationEditView extends Backbone.View
     "change input.slide_time": "onchange_slide_time"
     "change input.slide_public_url": "onchange_slide_public_url"
 
-    "click a.slide_burn": "onclick_slide_delete"
-    "click #slide_burn_confirm button.btn-danger": "onclick_slide_delete_cancelled"
-    "click #slide_burn_confirm button.btn-success": "onclick_slide_delete_confirmed"
+    "click a.slide_delete": "onclick_slide_delete"
+    "click #slide_delete_confirm button.btn-danger": "onclick_slide_delete_cancelled"
+    "click #slide_delete_confirm button.btn-success": "onclick_slide_delete_confirmed"
 
 @views.PresentationEditView = PresentationEditView

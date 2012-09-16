@@ -132,7 +132,7 @@ ul.play_pause {
     float: left;
 }
 
-.play_pause a.play_pause_btn, .play_pause a.set_time, a.slide_burn, .play_pause a.add_slide {
+.play_pause a.play_pause_btn, .play_pause a.set_time, a.slide_delete, .play_pause a.add_slide {
     background-repeat: no-repeat;
     background-position: center;
     text-indent: -9999px;
@@ -153,8 +153,8 @@ a.pause {
     background-image: data-url(../../assets/img/pause2.png);
 }
 
-a.slide_burn {
-    background-image: data-url(../../assets/img/Burn.png);
+a.slide_delete {
+    background-image: data-url(../../assets/img/reduce.png);
 }
 
 a.set_time {
