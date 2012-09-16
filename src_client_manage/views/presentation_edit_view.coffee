@@ -316,10 +316,8 @@ class PresentationEditView extends Backbone.View
     $btn = $(event.target)
     if @prsntz.isPaused()
       @prsntz.play()
-      $btn.removeClass("play").addClass("pause")
     else
       @prsntz.pause()
-      $btn.removeClass("pause").addClass("play")
     false
 
   ###
@@ -429,15 +427,19 @@ class PresentationEditView extends Backbone.View
 
     false
 
-  onclick_slide_delete_cancelled: (event) ->
+  onclick_slide_delete_aborted: (event) ->
     $("#slide_delete_confirm").modal("hide")
     false
 
   onclick_set_time: (event) ->
+    @prsntz.pause()
+    
     slide_index = $SLIDES().getMovingBoxes().curPanel - 1
     slide_time = utils.my_parse_float($CURRENT_TIME().text())
     @model.set("chapters.0.slides.#{slide_index}.time", slide_time)
-    $("input.slide_time", $helper.slide_of(slide_index, $CHAPTER(0))).val(slide_time)
+    $("input.slide_time", $SLIDE(0, slide_index)).val(slide_time)
+    $slide_time_elem = $("input.slide_time", $SLIDES().getMovingBoxes().$curPanel)
+    @onchange_slide_time(target: $slide_time_elem)
     false
 
   onclick_add_slide: () ->
@@ -490,7 +492,7 @@ class PresentationEditView extends Backbone.View
     "change input.slide_public_url": "onchange_slide_public_url"
 
     "click a.slide_delete": "onclick_slide_delete"
-    "click #slide_delete_confirm button.btn-danger": "onclick_slide_delete_cancelled"
+    "click #slide_delete_confirm button.btn-danger": "onclick_slide_delete_aborted"
     "click #slide_delete_confirm button.btn-success": "onclick_slide_delete_confirmed"
 
 @views.PresentationEditView = PresentationEditView
