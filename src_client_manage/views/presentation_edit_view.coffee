@@ -100,33 +100,38 @@ class PresentationEditView extends Backbone.View
 
             views.loader_hide()
             @trigger("presentation_title", @model.get("title"), @model.get("published"))
+
             @$el.html(out)
 
-            $("input[name=time]").datepicker { dateFormat: "yymmdd" }
+            when_rendered = () =>
+              $("input[name=time]").datepicker(dateFormat: "yymmdd")
 
-            $SLIDES().movingBoxes
-              startPanel: 1
-              reducedSize: 0.8
-              wrap: false
-              buildNav: true
-              hashTags: false
-              fixedHeight: true
-              navFormatter: (idx) -> "#{idx}"
-              initAnimation: false
-              stopAnimation: true
-              completed: (base, curPanel) ->
-                for $elem in $SLIDE_CONTAINERS()
-                  $slide_thumb = $SLIDE_THUMB_CONTAINER_IN($elem)
-                  $slide_thumb.empty()
+              $SLIDES().movingBoxes
+                startPanel: 1
+                reducedSize: 0.8
+                wrap: false
+                buildNav: true
+                hashTags: false
+                fixedHeight: true
+                navFormatter: (idx) -> "#{idx}"
+                initAnimation: false
+                stopAnimation: true
+                completed: (base, curPanel) ->
+                  for $elem in $SLIDE_CONTAINERS()
+                    $slide_thumb = $SLIDE_THUMB_CONTAINER_IN($elem)
+                    $slide_thumb.empty()
 
-                $slide_thumb = $SLIDE_THUMB_CONTAINER_IN(curPanel.$curPanel)
-                dust.render "_#{$slide_thumb.attr("thumb_type")}_slide_thumb", { slide_thumb: $slide_thumb.attr("src")}, (err, out) ->
-                  return views.alert(err) if err?
+                  $slide_thumb = $SLIDE_THUMB_CONTAINER_IN(curPanel.$curPanel)
+                  dust.render "_#{$slide_thumb.attr("thumb_type")}_slide_thumb", { slide_thumb: $slide_thumb.attr("src")}, (err, out) ->
+                    return views.alert(err) if err?
 
-                  $slide_thumb.html out
+                    $slide_thumb.html out
 
-            @init_presentz @model.attributes, true
-            views.disable_forms()
+              @init_presentz(@model.attributes, true)
+              views.disable_forms()
+
+            #TODO: WTF? is .html async?
+            setTimeout when_rendered, 100
 
     load_slides_info slides
     @

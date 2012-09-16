@@ -39,7 +39,8 @@ class AppView extends Backbone.View
     @clear_dirty()
     @navigation_view.reset(1)
     view = new views.PresentationNewView(@video_backends, @slide_backends)
-    view.render().bind "new", (presentation) =>
+    view.render()
+    view.bind "new", (presentation) =>
       @edit(presentation)
       @trigger("new_presentation", presentation.get("id"))
     @$el.html view.el

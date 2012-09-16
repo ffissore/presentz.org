@@ -35,20 +35,22 @@ class PresentationNewView extends Backbone.View
     url = "http://#{url}" unless _.str.startsWith(url, "http")
     $thumb_container = $(".video_thumb", @$el)
     $thumb_container.empty()
-    $thumb_container.append("Fetching info...")
+    $thumb_container.html("Fetching info...")
     backend = _.find @video_backends, (backend) -> backend.handle(url)
     backend.fetch_info url, (err, info) =>
       $thumb_container.empty()
       @video = null
+      
       if err?
-        $thumb_container.append("<div class=\"alert alert-error\">This URL does not look good</div>")
+        $thumb_container.html("<div class=\"alert alert-error\">This URL does not look good</div>")
         return
+        
       feedback = "<p>Looks good!"
       if info.thumb?
         feedback = feedback.concat(" Here is the thumb.</p><img class=\"smallthumb\" src=\"#{info.thumb}\"/>")
       else
         feedback = feedback.concat(" At least the URL is well made. Hope there is a real video there.</p>")
-      $thumb_container.append(feedback)
+      $thumb_container.html(feedback)
       @video = info
       @check_if_time_to_start()
 
@@ -60,17 +62,19 @@ class PresentationNewView extends Backbone.View
     url = "http://#{url}" unless _.str.startsWith(url, "http")
     $thumb_container = $(".slide_thumb", @$el)
     $thumb_container.empty()
-    $thumb_container.append("Fetching info...")
+    $thumb_container.html("Fetching info...")
     #backend = _.find slide_backends, (backend) -> backend.handle(url)
     #only slideshare
     backend = @slide_backends[0]
     backend.slideshow_info url, (err, slide, slideshow_info) =>
       $thumb_container.empty()
       @slideshow = null
+      
       if err?
-        $thumb_container.append("<div class=\"alert alert-error\">This URL does not look good</div>")
+        $thumb_container.html("<div class=\"alert alert-error\">This URL does not look good</div>")
         return
-      $thumb_container.append("<p>Looks good! Here is the first slide.</p>")
+      
+      $thumb_container.html("<p>Looks good! Here is the first slide.</p>")
       @slideshow = slideshow_info
       @check_if_time_to_start()
       thumb_type = backend.thumb_type_of(slideshow_info.slide_thumb)
