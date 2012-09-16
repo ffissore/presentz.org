@@ -1,6 +1,6 @@
 $SLIDES = () -> $("div.slides")
 $SLIDE_CONTAINERS = () -> $("div.row-fluid[slide_index]")
-$SLIDE_THUMB_CONTAINER_IN = ($elem) -> $("div.slide_thumb", $elem)
+$SLIDE_THUMB = ($elem) -> $("div.slide_thumb", $elem)
 $FORM_ROW_OF = ($elem) -> $elem.parentsUntil("div.control-group").parent()
 $VIDEO_THUMB_OF = (chapter_index) -> $("img[chapter_index=#{chapter_index}]")
 $CHAPTER_OF = ($elem) -> $elem.parentsUntil("span.chapter").last().parent()
@@ -8,6 +8,11 @@ $CHAPTER = (chapter_index) -> $("#chapter#{chapter_index}")
 $SLIDE = (chapter_index, slide_index) -> $("span[chapter_index=#{chapter_index}] div[slide_index=#{slide_index}]")
 $SLIDES_OF_CHAPTER = (chapter_index) -> $("span[chapter_index=#{chapter_index}] div[slide_index]")
 $CURRENT_TIME = () -> $("span[name=current_time]")
+$CHAPTER_INDEX_OF = ($elem) -> $CHAPTER_OF($elem).attr("chapter_index")
+$MODEL_SELECTOR_OF_SLIDE = ($elem) ->
+  chapter_index = $CHAPTER_INDEX_OF($elem)
+  slide_index = $elem.attr("slide_index")
+  "chapters.#{chapter_index}.slides.#{slide_index}"
 
 change_simple_field = (self, fieldname, event) ->
   $elem = $(event.target)
@@ -35,6 +40,7 @@ class PresentationEditView extends Backbone.View
     _.bindAll(@)
 
     @model.bind "all", (event) =>
+      console.log arguments
       if @model.loaded and _.str.startsWith(event, "change")
         @trigger("enable_save_button")
 
@@ -100,16 +106,16 @@ class PresentationEditView extends Backbone.View
     load_slides_info slides, () =>
       dust.render "_presentation", ctx, (err, out) =>
         return views.alert(err) if err?
-    
+
         views.loader_hide()
-    
+
         @$el.html(out)
-    
+
         when_rendered = () =>
           @trigger("presentation_title", @model.get("title"), @model.get("published"))
-    
+
           $("input[name=time]").datepicker(dateFormat: "yymmdd")
-    
+
           $SLIDES().movingBoxes
             startPanel: 1
             reducedSize: 0.8
@@ -122,18 +128,18 @@ class PresentationEditView extends Backbone.View
             stopAnimation: true
             completed: (base, curPanel) ->
               for $elem in $SLIDE_CONTAINERS()
-                $slide_thumb = $SLIDE_THUMB_CONTAINER_IN($elem)
+                $slide_thumb = $SLIDE_THUMB($elem)
                 $slide_thumb.empty()
-    
-              $slide_thumb = $SLIDE_THUMB_CONTAINER_IN(curPanel.$curPanel)
+
+              $slide_thumb = $SLIDE_THUMB(curPanel.$curPanel)
               dust.render "_#{$slide_thumb.attr("thumb_type")}_slide_thumb", { slide_thumb: $slide_thumb.attr("src")}, (err, out) ->
                 return views.alert(err) if err?
-    
+
                 $slide_thumb.html out
-    
+
           @init_presentz(@model.attributes, true)
           views.disable_forms()
-    
+
         #TODO: WTF? is .html async?
         setTimeout when_rendered, 100
     @
@@ -214,19 +220,19 @@ class PresentationEditView extends Backbone.View
 
   onchange_slide_title: (event) ->
     $elem = $(event.target)
-    slide_helper = $helper.slide_helper $elem
+    selector = $MODEL_SELECTOR_OF_SLIDE($elem)
 
-    @model.set("#{slide_helper.model_selector}.title", $elem.val())
+    @model.set("#{selector}.title", $elem.val())
 
   onchange_slide_number: (event) ->
     $elem = $(event.target)
-    slide_helper = $helper.slide_helper $elem
+    selector = $MODEL_SELECTOR_OF_SLIDE($elem)
 
-    slide = @model.get slide_helper.model_selector
+    slide = @model.get(selector)
     backend = _.find @slide_backends, (backend) -> backend.handle(slide.url)
 
-    new_url = backend.change_slide_number slide.url, $elem.val()
-    @model.set "#{slide_helper.model_selector}.url", new_url
+    new_url = backend.change_slide_number(slide.url, $elem.val())
+    @model.set("#{selector}.url", new_url)
 
     backend.slide_info slide, (err, slide, slide_info) =>
       if err?
@@ -234,10 +240,12 @@ class PresentationEditView extends Backbone.View
           $elem.focus()
         return
       slide.slide_thumb = slide_info.slide_thumb if slide_info.slide_thumb?
-      $slide_thumb = slide_helper.slide_thumb()
-      $slide_thumb.attr "src", slide.slide_thumb
-      dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { slide_thumb: $slide_thumb.attr "src" }, (err, out) ->
+      
+      $slide_thumb = $SLIDE_THUMB($SLIDE($CHAPTER_INDEX_OF($elem), $elem.attr("slide_index")))
+      $slide_thumb.attr("src", slide.slide_thumb)
+      dust.render "_#{$slide_thumb.attr("thumb_type")}_slide_thumb", { slide_thumb: $slide_thumb.attr("src")}, (err, out) ->
         return views.alert(err) if err?
+        
         $slide_thumb.html out
         views.disable_forms()
 
