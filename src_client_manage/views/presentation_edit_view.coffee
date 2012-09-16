@@ -38,7 +38,7 @@ class PresentationEditView extends Backbone.View
       if @model.loaded and _.str.startsWith(event, "change")
         @trigger("enable_save_button")
 
-    @model.bind "sync", () ->
+    @model.bind "sync", () =>
       @trigger("disable_save_button")
 
     @model.bind "error", (model, error) ->

@@ -20,12 +20,6 @@ class NavigationView extends Backbone.View
     else
       $("a span", $li.eq(2)).text title
 
-  #mypres: (event) ->
-  #  router.navigate "mypres", trigger: true unless $(event.currentTarget).parent().hasClass "active"
-
-  #make: (event) ->
-  #  router.navigate "make", trigger: true unless $(event.currentTarget).parent().hasClass "active"
-
   enable_save_button: () ->
     $button = $("button", @$el)
     $button.attr "disabled", false
