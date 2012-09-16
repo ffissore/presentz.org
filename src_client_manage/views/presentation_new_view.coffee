@@ -31,6 +31,7 @@ class PresentationNewView extends Backbone.View
     $elem = $(event.target)
     url = $elem.val()
     return if url is ""
+    
     url = "http://#{url}" unless _.str.startsWith(url, "http")
     $thumb_container = $(".video_thumb", @$el)
     $thumb_container.empty()
@@ -55,6 +56,7 @@ class PresentationNewView extends Backbone.View
     $elem = $(event.target)
     url = $elem.val()
     return if url is ""
+    
     url = "http://#{url}" unless _.str.startsWith(url, "http")
     $thumb_container = $(".slide_thumb", @$el)
     $thumb_container.empty()

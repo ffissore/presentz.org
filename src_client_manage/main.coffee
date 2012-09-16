@@ -65,7 +65,7 @@ jQuery () ->
           $whoops.off "hidden"
           callback()
       $whoops.modal "show"
-      
+
     confirm: (message, callback) ->
       $confirm = $("#confirm")
       return $confirm unless message?
@@ -103,433 +103,6 @@ jQuery () ->
 
   confirm = (message, callback) ->
     $helper.confirm(message, callback)
-
-  class PresentationEditView extends Backbone.View
-
-    tagName: "div"
-    
-    initialize: () ->
-      @model.bind "change", () ->
-        console.log "PresentationEditView", arguments
-
-    render: () ->
-      window.views.scroll_top()
-      ctx = @model.attributes
-      ctx.onebased = dustjs_helpers.onebased
-
-      slides = []
-      for chapter in @model.attributes.chapters
-        for slide, idx in chapter.slides
-          slides.push slide
-
-      load_slides_info = (slides) =>
-        slide = slides.pop()
-        backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
-        slide._thumb_type = backend.thumb_type_of slide.url
-        backend.slide_info slide, (err, slide, slide_info) =>
-          return alert(err) if err?
-          slide.public_url = slide_info.public_url
-          slide.number = slide_info.number if slide_info.number?
-          slide.slide_thumb = slide_info.slide_thumb if slide_info.slide_thumb?
-
-          if slides.length > 0
-            load_slides_info slides
-          else
-            dust.render "_presentation", ctx, (err, out) =>
-              return alert(err) if err?
-
-              window.views.loader_hide()
-              app.navigationView.presentation_menu_title_save_btn utils.cut_string_at(@model.get("title"), 30), @model.get("published")
-              @$el.html(out)
-
-              $("input[name=time]").datepicker { dateFormat: "yymmdd" }
-
-              $helper.slides().movingBoxes
-                startPanel: 1
-                reducedSize: 0.8
-                wrap: false
-                buildNav: true
-                hashTags: false
-                fixedHeight: true
-                navFormatter: (idx) -> "#{idx}"
-                initAnimation: false
-                stopAnimation: true
-                completed: (base, curPanel) ->
-                  for $elem in $helper.slide_containers()
-                    $slide_thumb = $helper.slide_thumb_container_in $elem
-                    $slide_thumb.empty()
-
-                  $slide_thumb = $helper.slide_thumb_container_in curPanel.$curPanel
-                  dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { slide_thumb: $slide_thumb.attr "src" }, (err, out) ->
-                    return alert(err) if err?
-                    $slide_thumb.html out
-
-              init_presentz @model.attributes, true
-              window.views.disable_forms()
-
-      load_slides_info slides
-      @
-
-    onchange_simple_field: (fieldname, event) ->
-      $elem = $(event.target)
-      value = $.trim($elem.val())
-      if value is ""
-        @model.unset fieldname
-      else
-        @model.set fieldname, $elem.val()
-
-    onchange_speaker: (event) ->
-      @onchange_simple_field("speaker", event)
-
-    onchange_time: (event) ->
-      @onchange_simple_field("time", event)
-
-    onchange_video_url: (event) ->
-      $elem = $(event.target)
-      url = $elem.val()
-      backend = _.find video_backends, (backend) -> backend.handle(url)
-      backend.fetch_info url, (err, info) =>
-        $parent_control_group = $helper.parent_control_group_of $elem
-        $video_url_error_msg_container = $(".video_message_container")
-        if err?
-          $parent_control_group.addClass "error"
-          dust.render "_help_inline", { text: "Invalid URL"}, (err, out) ->
-            return alert(err) if err?
-
-            $video_url_error_msg_container.html out
-            window.views.disable_forms()
-        else
-          $parent_control_group.removeClass "error"
-          chapter_index = $elem.attr("chapter_index")
-          @model.set "chapters.#{chapter_index}.video.url", info.url
-          @model.set "chapters.#{chapter_index}.duration", info.duration
-          $helper.video_duration_input_of(chapter_index).val info.duration
-          init_presentz @model.attributes
-          if info.thumb?
-            dust.render "_reset_thumb", { chapter_index: chapter_index }, (err, out) ->
-              return alert(err) if err?
-
-              $video_url_error_msg_container.html out
-              window.views.disable_forms()
-          else
-            $video_url_error_msg_container.empty()
-      false
-
-    reset_video_thumb: (event) ->
-      $elem = $(event.target)
-      chapter_index = parseInt $elem.attr("chapter_index")
-      video_url = $helper.video_url_input_of(chapter_index).val()
-
-      backend = _.find video_backends, (backend) -> backend.handle(video_url)
-      backend.fetch_info video_url, (err, info) =>
-        return alert(err) if err?
-
-        $thumb_input = $helper.video_thumb_input_of(chapter_index)
-        $thumb_input.val info.thumb
-        $thumb_input.change()
-
-        @model.set "chapters.#{chapter_index}.video.thumb", info.thumb
-        $helper.video_thumb_of(chapter_index).attr "src", info.thumb
-
-        $elem.parent().empty()
-      false
-
-    onchange_video_duration: (event) ->
-      $elem = $(event.target)
-      chapter_index = $elem.attr("chapter_index")
-      @model.set("chapters.#{chapter_index}.duration", parseInt($elem.val()))
-      false
-
-    onchange_video_thumb_url: (event) ->
-      $elem = $(event.target)
-      thumb_url = $elem.val()
-      $video_thumb_error_msg_container = $elem.next()
-      $container = $helper.parent_control_group_of($elem)
-
-      if utils.is_url_valid thumb_url
-        $container.removeClass "error"
-        $video_thumb_error_msg_container.empty()
-        chapter_index = $elem.attr("chapter_index")
-        @model.set "chapters.#{chapter_index}.video.thumb", thumb_url
-        $helper.video_thumb_of(chapter_index).attr "src", thumb_url
-      else
-        $container.addClass "error"
-        dust.render "_help_inline", { text: "Invalid URL"}, (err, out) ->
-          return alert(err) if err?
-
-          $video_thumb_error_msg_container.html out
-          window.views.disable_forms()
-      false
-
-    onchange_title: (event) ->
-      title = $(event.target).val()
-      @model.set "title", title
-      app.navigationView.presentation_menu_title_save_btn utils.cut_string_at(@model.get("title"), 30), @model.get("published")
-
-    onchange_slide_title: (event) ->
-      $elem = $(event.target)
-      slide_helper = $helper.slide_helper $elem
-
-      @model.set "#{slide_helper.model_selector}.title", $elem.val()
-
-    onchange_slide_number: (event) ->
-      $elem = $(event.target)
-      slide_helper = $helper.slide_helper $elem
-
-      slide = @model.get slide_helper.model_selector
-      backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
-
-      new_url = backend.change_slide_number slide.url, $elem.val()
-      @model.set "#{slide_helper.model_selector}.url", new_url
-
-      backend.slide_info slide, (err, slide, slide_info) =>
-        if err?
-          alert err, () ->
-            $elem.focus()
-          return
-        slide.slide_thumb = slide_info.slide_thumb if slide_info.slide_thumb?
-        $slide_thumb = slide_helper.slide_thumb()
-        $slide_thumb.attr "src", slide.slide_thumb
-        dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { slide_thumb: $slide_thumb.attr "src" }, (err, out) ->
-          return alert(err) if err?
-          $slide_thumb.html out
-          window.views.disable_forms()
-
-    onchange_slide_time: (event) ->
-      $elem = $(event.target)
-      slide_helper = $helper.slide_helper $elem
-
-      slide = @model.get slide_helper.model_selector
-      backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
-
-      @model.set "#{slide_helper.model_selector}.time", Math.round($elem.val())
-
-      slides = @model.get "chapters.#{slide_helper.chapter_index}.slides"
-      source_index = slides.indexOf slide
-      slides = _.sortBy slides, (slide) -> slide.time
-      dest_index = slides.indexOf slide
-      return if source_index is dest_index
-
-      @model.set "chapters.#{slide_helper.chapter_index}.slides", slides
-
-      $source_element = $helper.slide_of source_index, slide_helper.$chapter
-      $dest_element = $helper.slide_of dest_index, slide_helper.$chapter
-      if dest_index < source_index
-        $source_element.insertBefore $dest_element
-      else
-        $source_element.insertAfter $dest_element
-
-      $helper.slides_of(slide_helper.$chapter).each (current_index, element) ->
-        $elem = $(element)
-        $elem.attr "slide_index", current_index
-        $helper.elements_with_slide_index_in($elem).each (idx, element) ->
-          $(element).attr "slide_index", current_index
-
-    onchange_slide_public_url: (event) ->
-      $elem = $(event.target)
-      public_url = $elem.val()
-      return if !utils.is_url_valid public_url
-
-      slide_helper = $helper.slide_helper $elem
-
-      @model.set "#{slide_helper.model_selector}.public_url", public_url
-
-      backend = _.find slide_backends, (backend) -> backend.handle(public_url)
-      slide = @model.get slide_helper.model_selector
-
-      backend.url_from_public_url slide, (err, new_url) =>
-        return alert(err) if err?
-        @model.set "#{slide_helper.model_selector}.url", new_url
-
-        backend.slide_info slide, (err, slide, slide_info) =>
-          return alert(err) if err?
-          slide.slide_thumb = slide_info.slide_thumb if slide_info.slide_thumb?
-          $slide_thumb = slide_helper.slide_thumb()
-          $slide_thumb.attr "src", slide.slide_thumb
-          $slide_thumb.attr "thumb_type", backend.thumb_type_of slide.url
-          dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { slide_thumb: $slide_thumb.attr "src" }, (err, out) ->
-            return alert(err) if err?
-            $slide_thumb.html out
-            window.views.disable_forms()
-
-    save: () ->
-      @model.save()
-      @model.get("id")
-
-    onclick_playpause: (event) ->
-      $btn = $(event.target)
-      if prsntz.isPaused()
-        prsntz.play()
-        $btn.removeClass("play").addClass("pause")
-      else
-        prsntz.pause()
-        $btn.removeClass("pause").addClass("play")
-      false
-
-    onclick_advanced_user: () ->
-      $helper.advanced_user_data_preview().modal "hide"
-      $helper.advanced_user().modal "show"
-      false
-
-    onchange_slide_times_file: (event) ->
-      return if !event.target.files or event.target.files.length is 0
-
-      file = event.target.files[0]
-      if file.type not in ["text/plain", "text/csv"]
-        alert("Only plain text or CSV files are supported")
-        return
-
-      reader = new FileReader()
-      reader.onload = (load) =>
-        text = load.target.result.replace(/\r/g, "\n")
-        while text.indexOf(/\n\n/) isnt -1
-          text = text.replace(/\n\n/g, "\n")
-
-        rows = text.split(/\n/)
-        @data = []
-        for row in rows
-          match = /(.+),(.+)/.exec(row)
-          if match? and match.length >= 3
-            @data.push time: parseInt(match[1]), value: match[2]
-
-        $helper.advanced_user().modal("hide")
-        $helper.advanced_user_data_preview().modal("show")
-        first_slide_url = @model.get("chapters.0.slides.0.url")
-        backend = _.find slide_backends, (backend) -> backend.handle(first_slide_url)
-
-        dust.render "_slide_times_preview", { value_type: backend.import_file_value_column, data: @data }, (err, out) ->
-          return alert(err) if err?
-          $(".modal-body", $helper.advanced_user_data_preview()).html(out)
-          window.views.disable_forms()
-
-      reader.readAsText(file)
-
-    onclick_confirm_data_import: () ->
-      slides = @model.get("chapters.0.slides")
-      check_import_data = (callback) =>
-        checked = 0
-        for slide, idx in slides when idx < @data.length
-          data_for_slide = @data[idx]
-          backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
-          backend.check_slide_value_from_import slide, data_for_slide.value, (err) =>
-            return callback(err) if err?
-            checked++
-            return callback() if checked is @data.length
-
-      check_import_data (err) ->
-        if err?
-          $helper.advanced_user_data_preview().modal("hide")
-          alert(err)
-          return
-
-        for slide, idx in slides when idx < @data.length
-          data_for_slide = @data[idx]
-          slide.time = data_for_slide.time
-          backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
-          backend.set_slide_value_from_import(slide, data_for_slide.value)
-
-        @model.set("chapters.0.slides", slides)
-        $helper.advanced_user_data_preview().modal("hide")
-        @render()
-
-    onclick_slide_burn: (event) ->
-      $elem = $(event.target)
-      $slide_container = $elem.parentsUntil("div.row-fluid[slide_index]").last().parent()
-      slide_index = $slide_container.attr("slide_index")
-      chapter_index = $helper.chapter_index_from($helper.chapter_of($elem))
-
-      $btn_confirm = $(".btn-success", $helper.slide_burn_confirm())
-      $btn_confirm.attr("chapter_index", chapter_index)
-      $btn_confirm.attr("slide_index", slide_index)
-      $helper.slide_burn_confirm().modal("show")
-
-      false
-
-    onclick_slide_burn_confirmed: (event) ->
-      $elem = $(event.target)
-      $helper.slide_burn_confirm().modal("hide")
-
-      chapter_index = parseInt($elem.attr("chapter_index"))
-      slide_index = parseInt($elem.attr("slide_index"))
-
-      chapter = @model.get("chapters.#{chapter_index}")
-      slides = @model.get("chapters.#{chapter_index}.slides")
-      deleted_slide = slides.splice(slide_index, 1)[0]
-
-      @model.set("chapters.#{chapter_index}.slides", slides)
-      @model.slides_to_delete.push deleted_slide
-
-      if slide_index - 1 < 0
-        new_slide_index = 0
-      else
-        new_slide_index = slide_index - 1
-
-      $helper.slides().movingBoxes(new_slide_index + 1)
-      $chapter = $helper.chapter(chapter_index)
-      $helper.slide_of(slide_index, $chapter).remove()
-      $helper.slides().movingBoxes()
-
-      rebuild_slide_indexes($helper.slides_of($chapter))
-
-      false
-
-    onclick_slide_burn_cancelled: (event) ->
-      $helper.slide_burn_confirm().modal("hide")
-      false
-
-    onclick_set_time: (event) ->
-      slide_index = $helper.slides().getMovingBoxes().curPanel - 1
-      slide_time = utils.my_parse_float($helper.current_time().text())
-      @model.set("chapters.0.slides.#{slide_index}.time", slide_time)
-      $("input.slide_time", $helper.slide_of(slide_index, $helper.chapter(0))).val(slide_time)
-      false
-
-    onclick_add_slide: () ->
-      slide_index = $helper.slides().getMovingBoxes().curPanel - 1
-      slide = @model.get("chapters.0.slides.#{slide_index}")
-      backend = _.find slide_backends, (backend) -> backend.handle(slide.url)
-      new_slide = backend.make_new_from(slide)
-      new_slide._index = slide_index + 1
-      new_slide._onebased_index = new_slide._index + 1
-      new_slide.time = utils.my_parse_float($helper.current_time().text())
-
-      slides = @model.get("chapters.0.slides")
-      slides.splice(slide_index + 1, 0, new_slide)
-      @model.set("chapters.0.slides", slides)
-
-      dust.render "_slide", new_slide, (err, out) ->
-        $helper.slide_at(slide_index).after(out)
-        $helper.slides().movingBoxes()
-        $helper.slides().movingBoxes(new_slide._onebased_index)
-        rebuild_slide_indexes($helper.slides_of($helper.chapter(0)))
-        window.views.disable_forms()
-      false
-
-    events:
-      "click a.play_pause_btn": "onclick_playpause"
-      "click a.set_time_btn": "onclick_set_time"
-      "click a.add_slide_btn": "onclick_add_slide"
-      "click a.hei_advanced": "onclick_advanced_user"
-      "click #advanced_user_data_preview button.btn-danger": "onclick_advanced_user"
-      "click #advanced_user_data_preview button.btn-success": "onclick_confirm_data_import"
-      "change input[type=file]": "onchange_slide_times_file"
-
-      "change input[name=speaker]": "onchange_speaker"
-      "change input[name=time]": "onchange_time"
-      "change input[name=video_url]": "onchange_video_url"
-      "click button.reset_thumb": "reset_video_thumb"
-      "change input[name=video_duration]": "onchange_video_duration"
-      "change input[name=video_thumb]": "onchange_video_thumb_url"
-      "change input.title-input": "onchange_title"
-
-      "change input.slide_number": "onchange_slide_number"
-      "change input.slide_title": "onchange_slide_title"
-      "change input.slide_time": "onchange_slide_time"
-      "change input.slide_public_url": "onchange_slide_public_url"
-
-      "click a.slide_burn": "onclick_slide_burn"
-      "click #slide_burn_confirm button.btn-danger": "onclick_slide_burn_cancelled"
-      "click #slide_burn_confirm button.btn-success": "onclick_slide_burn_confirmed"
 
   class NavigationView extends Backbone.View
 
@@ -592,7 +165,7 @@ jQuery () ->
 
     initialize: () ->
       _.bindAll(@)
-      
+
       @navigationView = new NavigationView()
 
       @presentationThumbList = new window.models.PresentationThumbList()
@@ -606,7 +179,7 @@ jQuery () ->
         view.render()
         view.bind "edit", (id) =>
           router.navigate(id, trigger: true)
-          
+
       else
         dust.render "_no_talks_here", {}, (err, out) =>
           return alert(err) if err?
@@ -629,18 +202,19 @@ jQuery () ->
         @edit(presentation)
         router.navigate presentation.get("id")
       @$el.html view.el
-      
+
     presentation: (id) ->
       @clear_dirty()
       window.views.loader_show()
       presentation = new window.models.Presentation({ id: id })
       presentation.bind "change", @edit
-  
+
     edit: (model) ->
       @clear_dirty()
-      @view = new PresentationEditView model: model
+      @view = new window.views.PresentationEditView(model: model, video_backends, slide_backends)
+      @view.render().bind "presentation_title", (title, published) =>
+        @navigationView.presentation_menu_title_save_btn utils.cut_string_at(title, 30), published
       @$el.html @view.el
-      @view.render()
 
       prsntz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
         $helper.slides().movingBoxes(new_slide_index + 1)
@@ -658,7 +232,7 @@ jQuery () ->
 
     save: () ->
       @view.save()
-      
+
     enable_save_button: () ->
       @set_dirty()
       @navigationView.enable_save_button()
@@ -666,7 +240,7 @@ jQuery () ->
     disable_save_button: () ->
       @clear_dirty()
       @navigationView.disable_save_button()
-      
+
     set_dirty: () ->
       @dirty = true
 
@@ -686,13 +260,13 @@ jQuery () ->
 
     go_mypres: () ->
       @navigate("mypres", trigger: true)
-      
+
     mypres: () ->
       app.mypres()
 
     make: () ->
       app.make()
-      
+
     hp: () ->
       window.location = "/"
 
