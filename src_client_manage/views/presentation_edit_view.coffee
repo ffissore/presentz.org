@@ -281,27 +281,30 @@ class PresentationEditView extends Backbone.View
   onchange_slide_public_url: (event) ->
     $elem = $(event.target)
     public_url = $elem.val()
-    return if !utils.is_url_valid public_url
+    return if !utils.is_url_valid(public_url)
 
-    slide_helper = $helper.slide_helper $elem
+    selector = $MODEL_SELECTOR_OF_SLIDE($elem)
 
-    @model.set "#{slide_helper.model_selector}.public_url", public_url
+    @model.set("#{selector}.public_url", public_url)
 
     backend = _.find @slide_backends, (backend) -> backend.handle(public_url)
-    slide = @model.get slide_helper.model_selector
+    slide = @model.get(selector)
 
     backend.url_from_public_url slide, (err, new_url) =>
       return views.alert(err) if err?
-      @model.set "#{slide_helper.model_selector}.url", new_url
+      
+      @model.set("#{selector}.url", new_url)
 
       backend.slide_info slide, (err, slide, slide_info) =>
         return views.alert(err) if err?
+        
         slide.slide_thumb = slide_info.slide_thumb if slide_info.slide_thumb?
-        $slide_thumb = slide_helper.slide_thumb()
-        $slide_thumb.attr "src", slide.slide_thumb
-        $slide_thumb.attr "thumb_type", backend.thumb_type_of slide.url
-        dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { slide_thumb: $slide_thumb.attr "src" }, (err, out) ->
+        $slide_thumb = $SLIDE_THUMB($SLIDE($CHAPTER_INDEX_OF($elem), $elem.attr("slide_index")))
+        $slide_thumb.attr("src", slide.slide_thumb)
+        $slide_thumb.attr("thumb_type", backend.thumb_type_of(slide.url))
+        dust.render "_#{$slide_thumb.attr("thumb_type")}_slide_thumb", { slide_thumb: $slide_thumb.attr("src")}, (err, out) ->
           return views.alert(err) if err?
+
           $slide_thumb.html out
           views.disable_forms()
 
