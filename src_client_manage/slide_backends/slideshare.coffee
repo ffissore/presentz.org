@@ -102,7 +102,7 @@ class SlideShare
     @slide_info new_slide, callback
 
   make_new_from: (slide) ->
-    new_slide = @slide_backends.make_new_slide(slide.url, slide.time, slide.public_url)
+    new_slide = slide_backends.make_new_slide(slide.url, slide.time, slide.public_url)
     new_slide._thumb_type = "swf"
     new_slide.number = @to_slide_number(slide.url)
     new_slide.slide_thumb = @slideshare_infos[@to_doc_id(slide.url)].Show.Slide[new_slide.number - 1].Src

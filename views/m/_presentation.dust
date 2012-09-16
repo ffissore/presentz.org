@@ -49,7 +49,7 @@
       <div class="play_pause">
         <ul class="play_pause">
           <li>
-            <a href="#" class="play_pause_btn play">play</a>
+            <a href="#" class="play_pause_btn play" title="Play/Pause">play</a>
           </li>
           <li class="play_pause_divider"></li>
           <li>
@@ -57,11 +57,11 @@
           </li>
           <li class="play_pause_divider"></li>
           <li>
-            <a title="Set time of slide" href="#" class="set_time_btn set_time">time</a>
+            <a title="Set these seconds on the slide below" href="#" class="set_time_btn set_time">time</a>
           </li>
           <li class="play_pause_divider"></li>
           <li>
-            <a title="Add a slide" href="#" class="add_slide_btn add_slide">slide</a>
+            <a title="Add a slide at this time" href="#" class="add_slide_btn add_slide">slide</a>
           </li>
         </ul>
         {!<small><a href="#" class="hei_advanced">Hei! I'm an advanced user and this thing is way too slow!</a></small>!}

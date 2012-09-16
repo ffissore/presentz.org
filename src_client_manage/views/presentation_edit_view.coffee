@@ -40,7 +40,6 @@ class PresentationEditView extends Backbone.View
     _.bindAll(@)
 
     @model.bind "all", (event) =>
-      console.log arguments
       if @model.loaded and _.str.startsWith(event, "change")
         @trigger("enable_save_button")
 
@@ -247,7 +246,6 @@ class PresentationEditView extends Backbone.View
         return views.alert(err) if err?
 
         $slide_thumb.html out
-        views.disable_forms()
 
   onchange_slide_time: (event) ->
     $elem = $(event.target)
@@ -292,12 +290,12 @@ class PresentationEditView extends Backbone.View
 
     backend.url_from_public_url slide, (err, new_url) =>
       return views.alert(err) if err?
-      
+
       @model.set("#{selector}.url", new_url)
 
       backend.slide_info slide, (err, slide, slide_info) =>
         return views.alert(err) if err?
-        
+
         slide.slide_thumb = slide_info.slide_thumb if slide_info.slide_thumb?
         $slide_thumb = $SLIDE_THUMB($SLIDE($CHAPTER_INDEX_OF($elem), $elem.attr("slide_index")))
         $slide_thumb.attr("src", slide.slide_thumb)
@@ -306,7 +304,6 @@ class PresentationEditView extends Backbone.View
           return views.alert(err) if err?
 
           $slide_thumb.html out
-          views.disable_forms()
 
   save: () ->
     @model.save()
@@ -433,7 +430,7 @@ class PresentationEditView extends Backbone.View
 
   onclick_set_time: (event) ->
     @prsntz.pause()
-    
+
     slide_index = $SLIDES().getMovingBoxes().curPanel - 1
     slide_time = utils.my_parse_float($CURRENT_TIME().text())
     @model.set("chapters.0.slides.#{slide_index}.time", slide_time)
@@ -443,23 +440,41 @@ class PresentationEditView extends Backbone.View
     false
 
   onclick_add_slide: () ->
-    slide_index = $SLIDES().getMovingBoxes().curPanel - 1
-    slide = @model.get("chapters.0.slides.#{slide_index}")
-    backend = _.find @slide_backends, (backend) -> backend.handle(slide.url)
-    new_slide = backend.make_new_from(slide)
-    new_slide._index = slide_index + 1
-    new_slide._onebased_index = new_slide._index + 1
-    new_slide.time = utils.my_parse_float($CURRENT_TIME().text())
+    @prsntz.pause()
+    
+    find_next_slide_idx = (slides, time) ->
+      for slide, idx in slides
+        return idx if slide.time > time
+
+      return slides.length
 
     slides = @model.get("chapters.0.slides")
-    slides.splice(slide_index + 1, 0, new_slide)
+    new_time = utils.my_parse_float($CURRENT_TIME().text())
+    new_index = find_next_slide_idx(slides, new_time)
+
+    slide_template = @model.get("chapters.0.slides.#{$SLIDES().getMovingBoxes().curPanel - 1}")
+    backend = _.find @slide_backends, (backend) -> backend.handle(slide_template.url)
+    new_slide = backend.make_new_from(slide_template)
+
+    new_slide._index = new_index
+    new_slide._onebased_index = new_slide._index + 1
+    new_slide.time = new_time
+
+    slides = @model.get("chapters.0.slides")
+    slides.splice(new_index, 0, new_slide)
     @model.set("chapters.0.slides", slides)
 
-    dust.render "_slide", new_slide, (err, out) ->
-      $helper.slide_at(slide_index).after(out)
+    dust.render "_slide", new_slide, (err, out) =>
+      if new_index is slides.length
+        $SLIDES_OF_CHAPTER(0).last().after(out)
+      else if new_index is 0
+        $SLIDES_OF_CHAPTER(0).first().before(out)
+      else
+        $SLIDE(0, new_index - 1).after(out)
+
       $SLIDES().movingBoxes()
-      $SLIDES().movingBoxes(new_slide._onebased_index)
-      rebuild_slide_indexes(SLIDES_of($CHAPTER(0)))
+      $SLIDES().movingBoxes(new_index + 1)
+      rebuild_slide_indexes($SLIDES_OF_CHAPTER(0))
       views.disable_forms()
     false
 

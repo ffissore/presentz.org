@@ -1,6 +1,6 @@
 <div class="row-fluid" slide_index="{._index}">
   <div class="span1">
-    <a class="slide_delete" href="#" slide_index="{._index}"></a>
+    <a class="slide_delete" href="#" slide_index="{._index}" title="Delete this slide"></a>
   </div>
   <form class="span8 form-horizontal">
     <fieldset>
