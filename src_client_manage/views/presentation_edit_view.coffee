@@ -240,44 +240,43 @@ class PresentationEditView extends Backbone.View
           $elem.focus()
         return
       slide.slide_thumb = slide_info.slide_thumb if slide_info.slide_thumb?
-      
+
       $slide_thumb = $SLIDE_THUMB($SLIDE($CHAPTER_INDEX_OF($elem), $elem.attr("slide_index")))
       $slide_thumb.attr("src", slide.slide_thumb)
       dust.render "_#{$slide_thumb.attr("thumb_type")}_slide_thumb", { slide_thumb: $slide_thumb.attr("src")}, (err, out) ->
         return views.alert(err) if err?
-        
+
         $slide_thumb.html out
         views.disable_forms()
 
   onchange_slide_time: (event) ->
     $elem = $(event.target)
-    slide_helper = $helper.slide_helper $elem
+    selector = $MODEL_SELECTOR_OF_SLIDE($elem)
 
-    slide = @model.get slide_helper.model_selector
+    slide = @model.get(selector)
     backend = _.find @slide_backends, (backend) -> backend.handle(slide.url)
 
-    @model.set "#{slide_helper.model_selector}.time", Math.round($elem.val())
+    @model.set("#{selector}.time", Math.round($elem.val()))
 
-    slides = @model.get "chapters.#{slide_helper.chapter_index}.slides"
-    source_index = slides.indexOf slide
+    chapter_index = $CHAPTER_INDEX_OF($elem)
+    slides = @model.get("chapters.#{chapter_index}.slides")
+    source_index = slides.indexOf(slide)
     slides = _.sortBy slides, (slide) -> slide.time
-    dest_index = slides.indexOf slide
+    dest_index = slides.indexOf(slide)
     return if source_index is dest_index
 
-    @model.set "chapters.#{slide_helper.chapter_index}.slides", slides
+    @model.set("chapters.#{chapter_index}.slides", slides)
 
-    $source_element = $helper.slide_of source_index, slide_helper.$chapter
-    $dest_element = $helper.slide_of dest_index, slide_helper.$chapter
+    $source_element = $SLIDE(chapter_index, source_index)
+    $dest_element = $SLIDE(chapter_index, dest_index)
     if dest_index < source_index
-      $source_element.insertBefore $dest_element
+      $source_element.insertBefore($dest_element)
     else
-      $source_element.insertAfter $dest_element
+      $source_element.insertAfter($dest_element)
 
-    $helper.slides_of(slide_helper.$chapter).each (current_index, element) ->
-      $elem = $(element)
-      $elem.attr "slide_index", current_index
-      $helper.elements_with_slide_index_in($elem).each (idx, element) ->
-        $(element).attr "slide_index", current_index
+    $SLIDES().movingBoxes()
+    $SLIDES().movingBoxes(dest_index + 1)
+    rebuild_slide_indexes($SLIDES_OF_CHAPTER(chapter_index))
 
   onchange_slide_public_url: (event) ->
     $elem = $(event.target)
