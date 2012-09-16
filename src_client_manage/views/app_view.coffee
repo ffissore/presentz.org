@@ -69,8 +69,10 @@ class AppView extends Backbone.View
     @edit_view.bind "enable_save_button", @enable_save_button
     @$el.html @edit_view.el
 
-  save: () ->
-    @edit_view.save()
+  save: (preview) ->
+    presentation_id = @edit_view.save()
+    if preview? and preview
+      window.open "#{user_catalog}/#{presentation_id}?preview", "preview"
 
   enable_save_button: () ->
     @set_dirty()

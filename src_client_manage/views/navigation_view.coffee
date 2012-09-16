@@ -42,14 +42,9 @@ class NavigationView extends Backbone.View
       $notify_save.fadeOut "slow"
 
   save: (event) ->
-    @trigger("save")
-    presentation_id = app.save()
-    if $(event.target).hasClass("preview")
-      window.open "#{user_catalog}/#{presentation_id}?preview", "preview"
+    @trigger("save", $(event.target).hasClass("preview"))
 
   events:
-    #"click a[href=#mypres]": "mypres"
-    #"click a[href=#make]": "make"
     "click button.save": "save"
 
 @views.NavigationView = NavigationView

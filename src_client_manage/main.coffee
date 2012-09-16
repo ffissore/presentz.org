@@ -116,7 +116,7 @@ jQuery () ->
 
   $("ul.nav a").click (event) ->
     return true unless app.dirty
-    confirm "You have unsaved changes. Are you sure you want to proceed?", () ->
+    window.views.confirm "You have unsaved changes. Are you sure you want to proceed?", () ->
       window.location.hash = event.target.hash
     false
 

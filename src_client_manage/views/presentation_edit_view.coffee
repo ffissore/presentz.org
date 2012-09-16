@@ -300,6 +300,7 @@ class PresentationEditView extends Backbone.View
 
   save: () ->
     @model.save()
+    @model.get("id")
 
   onclick_playpause: (event) ->
     $btn = $(event.target)
