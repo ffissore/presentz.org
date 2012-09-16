@@ -111,6 +111,9 @@ jQuery () ->
   app = new window.views.AppView(prsntz, video_backends, slide_backends)
   router = new window.AppRouter(app)
 
+  window.views.alert().modal(show: false)
+  window.views.confirm().modal(show: false)
+
   $("ul.nav a").click (event) ->
     return true unless app.dirty
     confirm "You have unsaved changes. Are you sure you want to proceed?", () ->

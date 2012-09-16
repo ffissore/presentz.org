@@ -12,7 +12,7 @@ class PresentationNewView extends Backbone.View
   render: () ->
     views.scroll_top()
     dust.render "_new", {}, (err, out) =>
-      return alert(err) if err?
+      return views.alert(err) if err?
       views.loader_hide()
       @$el.html(out)
       views.disable_forms()
@@ -75,7 +75,7 @@ class PresentationNewView extends Backbone.View
       @check_if_time_to_start()
       thumb_type = backend.thumb_type_of(slideshow_info.slide_thumb)
       dust.render "_#{thumb_type}_slide_thumb", slideshow_info, (err, out) ->
-        return alert(err) if err?
+        return views.alert(err) if err?
         $thumb_container.append(out)
         views.disable_forms()
 

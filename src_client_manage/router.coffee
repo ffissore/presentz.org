@@ -8,6 +8,8 @@ class AppRouter extends Backbone.Router
 
     @app_view.bind "new_presentation", (id) =>
       @navigate(id)
+    @app_view.bind "mypres", () =>
+      @go_mypres()
 
   routes:
     "": "go_mypres"

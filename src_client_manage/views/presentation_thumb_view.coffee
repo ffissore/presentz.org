@@ -24,7 +24,7 @@ class PresentationThumbView extends Backbone.View
       published_label: published_label
       
     dust.render "_presentation_thumb", ctx, (err, out) =>
-      return alert(err) if err?
+      return views.alert(err) if err?
 
       @$el.html out
     @

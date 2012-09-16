@@ -23,7 +23,7 @@ class AppView extends Backbone.View
 
     else
       dust.render "_no_talks_here", {}, (err, out) =>
-        return alert(err) if err?
+        return views.alert(err) if err?
         @$el.html out
         views.disable_forms()
 
@@ -49,6 +49,11 @@ class AppView extends Backbone.View
     views.loader_show()
     presentation = new models.Presentation({ id: id })
     presentation.bind "change", @edit
+    presentation.bind "error", (model, error) =>
+      error = JSON.parse(error.responseText).error
+      views.alert error.message, () =>
+        @trigger("mypres")
+    presentation.fetch()
 
   edit: (model) ->
     @clear_dirty()
@@ -59,6 +64,8 @@ class AppView extends Backbone.View
     @edit_view.render()
     @edit_view.bind "presentation_title", (title, published) =>
       @navigation_view.presentation_menu_title_save_btn utils.cut_string_at(title, 30), published
+    @edit_view.bind "disable_save_button", @disable_save_button
+    @edit_view.bind "enable_save_button", @enable_save_button
     @$el.html @edit_view.el
 
   save: () ->

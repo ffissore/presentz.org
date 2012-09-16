@@ -34,12 +34,24 @@ class PresentationEditView extends Backbone.View
   initialize: (_ignore, @prsntz, @video_backends, @slide_backends) ->
     _.bindAll(@)
 
-    @model.bind "all", () ->
-      console.log "PresentationEditView", arguments
+    @model.bind "all", (event) =>
+      if @model.loaded and _.str.startsWith(event, "change")
+        @trigger("enable_save_button")
+
+    @model.bind "sync", () ->
+      @trigger("disable_save_button")
+
+    @model.bind "error", (model, error) ->
+      if _.isString(error)
+        views.alert(error)
+      else if error.status?
+        views.alert("Error: (#{error.status}): #{error.responseText}")
+      else if error.message?
+        views.alert("Error: #{error.message}")
 
   init_presentz: (presentation, first) ->
-    @prsntz.init presentation
-    @prsntz.changeChapter 0, 0, false
+    @prsntz.init(presentation)
+    @prsntz.changeChapter(0, 0, false)
     return unless first? and first
 
     $video = $("#video")
@@ -74,7 +86,7 @@ class PresentationEditView extends Backbone.View
       backend = _.find @slide_backends, (backend) -> backend.handle(slide.url)
       slide._thumb_type = backend.thumb_type_of slide.url
       backend.slide_info slide, (err, slide, slide_info) =>
-        return alert(err) if err?
+        return views.alert(err) if err?
 
         slide.public_url = slide_info.public_url
         slide.number = slide_info.number if slide_info.number?
@@ -84,7 +96,7 @@ class PresentationEditView extends Backbone.View
           load_slides_info slides
         else
           dust.render "_presentation", ctx, (err, out) =>
-            return alert(err) if err?
+            return views.alert(err) if err?
 
             views.loader_hide()
             @trigger("presentation_title", @model.get("title"), @model.get("published"))
@@ -109,7 +121,7 @@ class PresentationEditView extends Backbone.View
 
                 $slide_thumb = $SLIDE_THUMB_CONTAINER_IN(curPanel.$curPanel)
                 dust.render "_#{$slide_thumb.attr("thumb_type")}_slide_thumb", { slide_thumb: $slide_thumb.attr("src")}, (err, out) ->
-                  return alert(err) if err?
+                  return views.alert(err) if err?
 
                   $slide_thumb.html out
 
@@ -145,7 +157,7 @@ class PresentationEditView extends Backbone.View
         @init_presentz @model.attributes
         if info.thumb?
           dust.render "_reset_thumb", { chapter_index: chapter_index }, (err, out) ->
-            return alert(err) if err?
+            return views.alert(err) if err?
 
             $video_error_msg_container.html(out)
     false
@@ -157,7 +169,7 @@ class PresentationEditView extends Backbone.View
 
     backend = _.find @video_backends, (backend) -> backend.handle(video_url)
     backend.fetch_info video_url, (err, info) =>
-      return alert(err) if err?
+      return views.alert(err) if err?
 
       @model.set("chapters.#{chapter_index}.video.thumb", info.thumb)
 
@@ -211,14 +223,14 @@ class PresentationEditView extends Backbone.View
 
     backend.slide_info slide, (err, slide, slide_info) =>
       if err?
-        alert err, () ->
+        views.alert err, () ->
           $elem.focus()
         return
       slide.slide_thumb = slide_info.slide_thumb if slide_info.slide_thumb?
       $slide_thumb = slide_helper.slide_thumb()
       $slide_thumb.attr "src", slide.slide_thumb
       dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { slide_thumb: $slide_thumb.attr "src" }, (err, out) ->
-        return alert(err) if err?
+        return views.alert(err) if err?
         $slide_thumb.html out
         views.disable_forms()
 
@@ -265,17 +277,17 @@ class PresentationEditView extends Backbone.View
     slide = @model.get slide_helper.model_selector
 
     backend.url_from_public_url slide, (err, new_url) =>
-      return alert(err) if err?
+      return views.alert(err) if err?
       @model.set "#{slide_helper.model_selector}.url", new_url
 
       backend.slide_info slide, (err, slide, slide_info) =>
-        return alert(err) if err?
+        return views.alert(err) if err?
         slide.slide_thumb = slide_info.slide_thumb if slide_info.slide_thumb?
         $slide_thumb = slide_helper.slide_thumb()
         $slide_thumb.attr "src", slide.slide_thumb
         $slide_thumb.attr "thumb_type", backend.thumb_type_of slide.url
         dust.render "_#{$slide_thumb.attr "thumb_type"}_slide_thumb", { slide_thumb: $slide_thumb.attr "src" }, (err, out) ->
-          return alert(err) if err?
+          return views.alert(err) if err?
           $slide_thumb.html out
           views.disable_forms()
 
