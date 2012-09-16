@@ -7,6 +7,7 @@ $CHAPTER_OF = ($elem) -> $elem.parentsUntil("span.chapter").last().parent()
 $CHAPTER = (chapter_index) -> $("#chapter#{chapter_index}")
 $SLIDE = (chapter_index, slide_index) -> $("span[chapter_index=#{chapter_index}] div[slide_index=#{slide_index}]")
 $SLIDES_OF_CHAPTER = (chapter_index) -> $("span[chapter_index=#{chapter_index}] div[slide_index]")
+$CURRENT_TIME = () -> $("span[name=current_time]")
 
 change_simple_field = (self, fieldname, event) ->
   $elem = $(event.target)
@@ -29,6 +30,32 @@ rebuild_slide_indexes = ($slides) ->
 class PresentationEditView extends Backbone.View
 
   tagName: "div"
+
+  prsntz: new Presentz("#video", "460x420", "#slide", "460x420")
+
+  init_presentz: (presentation, first) ->
+    @prsntz.init presentation
+    @prsntz.changeChapter 0, 0, false
+    return unless first? and first
+    
+    $video = $("#video")
+    $video_parent = $video.parent()
+    $video.width $video_parent.width()
+    $video.height $video_parent.height()
+
+    @prsntz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
+      $SLIDES().movingBoxes(new_slide_index + 1)
+
+    @prsntz.on "timechange", (current_time) ->
+      $CURRENT_TIME().text(utils.my_parse_float(current_time))
+
+    show_pause = () -> $("a.play_pause_btn").addClass("pause").removeClass("play")
+    show_play = () -> $("a.play_pause_btn").removeClass("pause").addClass("play")
+    @prsntz.on "play", show_pause
+    @prsntz.on "pause", show_play
+    @prsntz.on "finish", show_play
+
+
 
   initialize: (_ignore, @video_backends, @slide_backends) ->
     _.bindAll(@)
@@ -90,7 +117,7 @@ class PresentationEditView extends Backbone.View
 
                   $slide_thumb.html out
 
-            #init_presentz @model.attributes, true
+            @init_presentz @model.attributes, true
             views.disable_forms()
 
     load_slides_info slides
@@ -119,7 +146,7 @@ class PresentationEditView extends Backbone.View
         @model.set("chapters.#{chapter_index}.video.url", info.url)
         @model.set("chapters.#{chapter_index}.duration", info.duration)
         $("input[name=video_duration][chapter_index=#{chapter_index}]").val(info.duration)
-        #init_presentz @model.attributes
+        @init_presentz @model.attributes
         if info.thumb?
           dust.render "_reset_thumb", { chapter_index: chapter_index }, (err, out) ->
             return alert(err) if err?
@@ -262,11 +289,11 @@ class PresentationEditView extends Backbone.View
 
   onclick_playpause: (event) ->
     $btn = $(event.target)
-    if prsntz.isPaused()
-      prsntz.play()
+    if @prsntz.isPaused()
+      @prsntz.play()
       $btn.removeClass("play").addClass("pause")
     else
-      prsntz.pause()
+      @prsntz.pause()
       $btn.removeClass("pause").addClass("play")
     false
 
@@ -383,7 +410,7 @@ class PresentationEditView extends Backbone.View
 
   onclick_set_time: (event) ->
     slide_index = $SLIDES().getMovingBoxes().curPanel - 1
-    slide_time = utils.my_parse_float($helper.current_time().text())
+    slide_time = utils.my_parse_float($CURRENT_TIME().text())
     @model.set("chapters.0.slides.#{slide_index}.time", slide_time)
     $("input.slide_time", $helper.slide_of(slide_index, $CHAPTER(0))).val(slide_time)
     false
@@ -395,7 +422,7 @@ class PresentationEditView extends Backbone.View
     new_slide = backend.make_new_from(slide)
     new_slide._index = slide_index + 1
     new_slide._onebased_index = new_slide._index + 1
-    new_slide.time = utils.my_parse_float($helper.current_time().text())
+    new_slide.time = utils.my_parse_float($CURRENT_TIME().text())
 
     slides = @model.get("chapters.0.slides")
     slides.splice(slide_index + 1, 0, new_slide)

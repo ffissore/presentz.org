@@ -211,24 +211,14 @@ jQuery () ->
 
     edit: (model) ->
       @clear_dirty()
-      @view = new window.views.PresentationEditView(model: model, video_backends, slide_backends)
-      @view.render().bind "presentation_title", (title, published) =>
-        @navigationView.presentation_menu_title_save_btn utils.cut_string_at(title, 30), published
-      @$el.html @view.el
-
-      prsntz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
-        $helper.slides().movingBoxes(new_slide_index + 1)
-
-      prsntz.on "timechange", (current_time) ->
-        $helper.current_time().text(utils.my_parse_float(current_time))
-
-      show_pause = () -> $helper.play_pause_btn().addClass("pause").removeClass("play")
-      show_play = () -> $helper.play_pause_btn().removeClass("pause").addClass("play")
-      prsntz.on "play", show_pause
-      prsntz.on "pause", show_play
-      prsntz.on "finish", show_play
 
       model.unbind "change", @edit
+
+      @view = new window.views.PresentationEditView(model: model, video_backends, slide_backends)
+      @view.render()
+      @view.bind "presentation_title", (title, published) =>
+        @navigationView.presentation_menu_title_save_btn utils.cut_string_at(title, 30), published
+      @$el.html @view.el
 
     save: () ->
       @view.save()
@@ -248,32 +238,7 @@ jQuery () ->
       @dirty = false
 
   app = new AppView()
-
-  class AppRouter extends Backbone.Router
-
-    routes:
-      "": "go_mypres"
-      "mypres": "mypres"
-      "make": "make"
-      "hp": "hp"
-      ":presentation": "presentation"
-
-    go_mypres: () ->
-      @navigate("mypres", trigger: true)
-
-    mypres: () ->
-      app.mypres()
-
-    make: () ->
-      app.make()
-
-    hp: () ->
-      window.location = "/"
-
-    presentation: (id) ->
-      app.presentation(id)
-
-  router = new AppRouter()
+  router = new AppRouter(app)
 
   $("ul.nav a").click (event) ->
     return true unless app.dirty
