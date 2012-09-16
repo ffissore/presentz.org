@@ -1,6 +1,13 @@
 class AppRouter extends Backbone.Router
 
-  initialize: (@appView) ->
+  initialize: (@app_view) ->
+    _.bindAll(@)
+    
+    @app_view.bind "edit_presentation", (id) =>
+      @navigate(id, trigger: true)
+
+    @app_view.bind "new_presentation", (id) =>
+      @navigate(id)
 
   routes:
     "": "go_mypres"
@@ -13,15 +20,15 @@ class AppRouter extends Backbone.Router
     @navigate("mypres", trigger: true)
 
   mypres: () ->
-    @appView.mypres()
+    @app_view.mypres()
 
   make: () ->
-    @appView.make()
+    @app_view.make()
 
   hp: () ->
     window.location = "/"
 
   presentation: (id) ->
-    @appView.presentation(id)
+    @app_view.presentation(id)
 
 @AppRouter = AppRouter

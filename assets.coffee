@@ -136,6 +136,8 @@ assetsMiddleware = assetManager
     "src_client_manage/views/presentation_thumb_list_view.coffee"
     "src_client_manage/views/presentation_new_view.coffee"
     "src_client_manage/views/presentation_edit_view.coffee"
+    "src_client_manage/views/app_view.coffee"
+    "src_client_manage/views/navigation_view.coffee"
     "src_client_manage/router.coffee"
     "src_client_manage/main.coffee"
     "src_client_manage/video_backends.coffee"

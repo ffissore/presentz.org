@@ -104,7 +104,7 @@ class PresentationNewView extends Backbone.View
       chapters: [ chapter ],
       published: false
 
-    presentation = new window.models.Presentation(presentation)
+    presentation = new models.Presentation(presentation)
     @trigger("new", presentation)
 
   events:
