@@ -257,6 +257,7 @@ class PresentationEditView extends Backbone.View
       $btn.removeClass("pause").addClass("play")
     false
 
+  ###
   onclick_advanced_user: () ->
     $helper.advanced_user_data_preview().modal "hide"
     $helper.advanced_user().modal "show"
@@ -322,8 +323,9 @@ class PresentationEditView extends Backbone.View
       @model.set("chapters.0.slides", slides)
       $helper.advanced_user_data_preview().modal("hide")
       @render()
+  ###
 
-  onclick_slide_burn: (event) ->
+  onclick_slide_delete: (event) ->
     $elem = $(event.target)
     $slide_container = $elem.parentsUntil("div.row-fluid[slide_index]").last().parent()
     slide_index = $slide_container.attr("slide_index")
@@ -336,7 +338,7 @@ class PresentationEditView extends Backbone.View
 
     false
 
-  onclick_slide_burn_confirmed: (event) ->
+  onclick_slide_delete_confirmed: (event) ->
     $elem = $(event.target)
     $helper.slide_burn_confirm().modal("hide")
 
@@ -364,7 +366,7 @@ class PresentationEditView extends Backbone.View
 
     false
 
-  onclick_slide_burn_cancelled: (event) ->
+  onclick_slide_delete_cancelled: (event) ->
     $helper.slide_burn_confirm().modal("hide")
     false
 
@@ -406,10 +408,10 @@ class PresentationEditView extends Backbone.View
     "click a.play_pause_btn": "onclick_playpause"
     "click a.set_time_btn": "onclick_set_time"
     "click a.add_slide_btn": "onclick_add_slide"
-    "click a.hei_advanced": "onclick_advanced_user"
-    "click #advanced_user_data_preview button.btn-danger": "onclick_advanced_user"
-    "click #advanced_user_data_preview button.btn-success": "onclick_confirm_data_import"
-    "change input[type=file]": "onchange_slide_times_file"
+    #"click a.hei_advanced": "onclick_advanced_user"
+    #"click #advanced_user_data_preview button.btn-danger": "onclick_advanced_user"
+    #"click #advanced_user_data_preview button.btn-success": "onclick_confirm_data_import"
+    #"change input[type=file]": "onchange_slide_times_file"
 
     "change input[name=speaker]": "onchange_speaker"
     "change input[name=time]": "onchange_time"
@@ -424,8 +426,8 @@ class PresentationEditView extends Backbone.View
     "change input.slide_time": "onchange_slide_time"
     "change input.slide_public_url": "onchange_slide_public_url"
 
-    "click a.slide_burn": "onclick_slide_burn"
-    "click #slide_burn_confirm button.btn-danger": "onclick_slide_burn_cancelled"
-    "click #slide_burn_confirm button.btn-success": "onclick_slide_burn_confirmed"
+    "click a.slide_burn": "onclick_slide_delete"
+    "click #slide_burn_confirm button.btn-danger": "onclick_slide_delete_cancelled"
+    "click #slide_burn_confirm button.btn-success": "onclick_slide_delete_confirmed"
 
 @views.PresentationEditView = PresentationEditView
