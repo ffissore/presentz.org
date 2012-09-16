@@ -81,7 +81,7 @@ class PresentationEditView extends Backbone.View
       for slide, idx in chapter.slides
         slides.push slide
 
-    load_slides_info = (slides) =>
+    load_slides_info = (slides, callback) =>
       slide = slides.pop()
       backend = _.find @slide_backends, (backend) -> backend.handle(slide.url)
       slide._thumb_type = backend.thumb_type_of slide.url
@@ -93,47 +93,49 @@ class PresentationEditView extends Backbone.View
         slide.slide_thumb = slide_info.slide_thumb if slide_info.slide_thumb?
 
         if slides.length > 0
-          load_slides_info slides
+          load_slides_info(slides, callback)
         else
-          dust.render "_presentation", ctx, (err, out) =>
-            return views.alert(err) if err?
+          callback()
 
-            views.loader_hide()
-            @trigger("presentation_title", @model.get("title"), @model.get("published"))
-
-            @$el.html(out)
-
-            when_rendered = () =>
-              $("input[name=time]").datepicker(dateFormat: "yymmdd")
-
-              $SLIDES().movingBoxes
-                startPanel: 1
-                reducedSize: 0.8
-                wrap: false
-                buildNav: true
-                hashTags: false
-                fixedHeight: true
-                navFormatter: (idx) -> "#{idx}"
-                initAnimation: false
-                stopAnimation: true
-                completed: (base, curPanel) ->
-                  for $elem in $SLIDE_CONTAINERS()
-                    $slide_thumb = $SLIDE_THUMB_CONTAINER_IN($elem)
-                    $slide_thumb.empty()
-
-                  $slide_thumb = $SLIDE_THUMB_CONTAINER_IN(curPanel.$curPanel)
-                  dust.render "_#{$slide_thumb.attr("thumb_type")}_slide_thumb", { slide_thumb: $slide_thumb.attr("src")}, (err, out) ->
-                    return views.alert(err) if err?
-
-                    $slide_thumb.html out
-
-              @init_presentz(@model.attributes, true)
-              views.disable_forms()
-
-            #TODO: WTF? is .html async?
-            setTimeout when_rendered, 100
-
-    load_slides_info slides
+    load_slides_info slides, () =>
+      dust.render "_presentation", ctx, (err, out) =>
+        return views.alert(err) if err?
+    
+        views.loader_hide()
+    
+        @$el.html(out)
+    
+        when_rendered = () =>
+          @trigger("presentation_title", @model.get("title"), @model.get("published"))
+    
+          $("input[name=time]").datepicker(dateFormat: "yymmdd")
+    
+          $SLIDES().movingBoxes
+            startPanel: 1
+            reducedSize: 0.8
+            wrap: false
+            buildNav: true
+            hashTags: false
+            fixedHeight: true
+            navFormatter: (idx) -> "#{idx}"
+            initAnimation: false
+            stopAnimation: true
+            completed: (base, curPanel) ->
+              for $elem in $SLIDE_CONTAINERS()
+                $slide_thumb = $SLIDE_THUMB_CONTAINER_IN($elem)
+                $slide_thumb.empty()
+    
+              $slide_thumb = $SLIDE_THUMB_CONTAINER_IN(curPanel.$curPanel)
+              dust.render "_#{$slide_thumb.attr("thumb_type")}_slide_thumb", { slide_thumb: $slide_thumb.attr("src")}, (err, out) ->
+                return views.alert(err) if err?
+    
+                $slide_thumb.html out
+    
+          @init_presentz(@model.attributes, true)
+          views.disable_forms()
+    
+        #TODO: WTF? is .html async?
+        setTimeout when_rendered, 100
     @
 
   onchange_title: (event) ->
