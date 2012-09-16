@@ -94,15 +94,13 @@ class PresentationEditView extends Backbone.View
     backend = _.find @video_backends, (backend) -> backend.handle(url)
     backend.fetch_info url, (err, info) =>
       $form_row = $FORM_ROW_OF($elem)
-      $video_url_error_msg_container = $(".video_alerts")
+      $video_error_msg_container = $(".video_alerts")
       if err?
         $form_row.addClass("error")
-        $video_url_error_msg_container.addClass("alert alert-warning")
-        $video_url_error_msg_container.html("Invalid URL")
+        $video_error_msg_container.addClass("alert alert-warning").html("Invalid URL")
       else
         $form_row.removeClass "error"
-        $video_url_error_msg_container.removeClass("alert alert-warning")
-        $video_url_error_msg_container.empty()
+        $video_error_msg_container.removeClass("alert alert-warning").empty()
 
         chapter_index = $elem.attr("chapter_index")
         @model.set("chapters.#{chapter_index}.video.url", info.url)
@@ -113,8 +111,7 @@ class PresentationEditView extends Backbone.View
           dust.render "_reset_thumb", { chapter_index: chapter_index }, (err, out) ->
             return alert(err) if err?
 
-            $video_url_error_msg_container.html out
-            views.disable_forms()
+            $video_error_msg_container.html(out)
     false
 
   reset_video_thumb: (event) ->
@@ -146,22 +143,18 @@ class PresentationEditView extends Backbone.View
   onchange_video_thumb_url: (event) ->
     $elem = $(event.target)
     thumb_url = $elem.val()
-    $video_thumb_error_msg_container = $elem.next()
+    $video_error_msg_container = $(".video_alerts")
     $container = $FORM_ROW_OF($elem)
 
-    if utils.is_url_valid thumb_url
+    if utils.is_url_valid(thumb_url)
       $container.removeClass "error"
-      $video_thumb_error_msg_container.empty()
+      $video_error_msg_container.removeClass("alert alert-warning").empty()
       chapter_index = $elem.attr("chapter_index")
-      @model.set "chapters.#{chapter_index}.video.thumb", thumb_url
-      $VIDEO_THUMB_OF(chapter_index).attr "src", thumb_url
+      @model.set("chapters.#{chapter_index}.video.thumb", thumb_url)
+      $VIDEO_THUMB_OF(chapter_index).attr("src", thumb_url)
     else
-      $container.addClass "error"
-      dust.render "_help_inline", { text: "Invalid URL"}, (err, out) ->
-        return alert(err) if err?
-
-        $video_thumb_error_msg_container.html out
-        views.disable_forms()
+      $container.addClass("error")
+      $video_error_msg_container.addClass("alert alert-warning").html("Invalid URL")
     false
 
   onchange_slide_title: (event) ->
