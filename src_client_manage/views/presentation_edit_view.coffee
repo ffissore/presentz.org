@@ -1,6 +1,8 @@
 $SLIDES = () -> $("div.slides")
 $SLIDE_CONTAINERS = () -> $("div[slide_index]")
 $SLIDE_THUMB_CONTAINER_IN = ($elem) -> $("div.slide_thumb", $elem)
+$FORM_ROW_OF = ($elem) -> $elem.parentsUntil("div.control-group").parent()
+$VIDEO_THUMB_OF = (chapter_index) -> $("img[chapter_index=#{chapter_index}]")
 
 change_simple_field = (self, fieldname, event) ->
   $elem = $(event.target)
@@ -9,7 +11,7 @@ change_simple_field = (self, fieldname, event) ->
     self.model.unset fieldname
   else
     self.model.set fieldname, $elem.val()
-
+  false
 
 class PresentationEditView extends Backbone.View
 
@@ -17,7 +19,7 @@ class PresentationEditView extends Backbone.View
 
   initialize: (_ignore, @video_backends, @slide_backends) ->
     _.bindAll(@)
-    
+
     @model.bind "all", () ->
       console.log "PresentationEditView", arguments
 
@@ -72,7 +74,7 @@ class PresentationEditView extends Backbone.View
                 $slide_thumb = $SLIDE_THUMB_CONTAINER_IN(curPanel.$curPanel)
                 dust.render "_#{$slide_thumb.attr("thumb_type")}_slide_thumb", { slide_thumb: $slide_thumb.attr("src")}, (err, out) ->
                   return alert(err) if err?
-                  
+
                   $slide_thumb.html out
 
             #init_presentz @model.attributes, true
@@ -83,62 +85,56 @@ class PresentationEditView extends Backbone.View
 
   onchange_title: (event) ->
     change_simple_field(@, "title", event)
-    @trigger("presentation_title", title, @model.get("published"))
-
-  onchange_speaker: (event) ->
-    change_simple_field(@, "speaker", event)
-
-  onchange_time: (event) ->
-    change_simple_field(@, "time", event)
+    @trigger("presentation_title", @model.get("title"), @model.get("published"))
+    false
 
   onchange_video_url: (event) ->
     $elem = $(event.target)
     url = $elem.val()
     backend = _.find @video_backends, (backend) -> backend.handle(url)
     backend.fetch_info url, (err, info) =>
-      $parent_control_group = $helper.parent_control_group_of $elem
-      $video_url_error_msg_container = $(".video_message_container")
+      $form_row = $FORM_ROW_OF($elem)
+      $video_url_error_msg_container = $(".video_alerts")
       if err?
-        $parent_control_group.addClass "error"
-        dust.render "_help_inline", { text: "Invalid URL"}, (err, out) ->
-          return alert(err) if err?
-
-          $video_url_error_msg_container.html out
-          views.disable_forms()
+        $form_row.addClass("error")
+        $video_url_error_msg_container.addClass("alert alert-warning")
+        $video_url_error_msg_container.html("Invalid URL")
       else
-        $parent_control_group.removeClass "error"
+        $form_row.removeClass "error"
+        $video_url_error_msg_container.removeClass("alert alert-warning")
+        $video_url_error_msg_container.empty()
+
         chapter_index = $elem.attr("chapter_index")
-        @model.set "chapters.#{chapter_index}.video.url", info.url
-        @model.set "chapters.#{chapter_index}.duration", info.duration
-        $helper.video_duration_input_of(chapter_index).val info.duration
-        init_presentz @model.attributes
+        @model.set("chapters.#{chapter_index}.video.url", info.url)
+        @model.set("chapters.#{chapter_index}.duration", info.duration)
+        $("input[name=video_duration][chapter_index=#{chapter_index}]").val(info.duration)
+        #init_presentz @model.attributes
         if info.thumb?
           dust.render "_reset_thumb", { chapter_index: chapter_index }, (err, out) ->
             return alert(err) if err?
 
             $video_url_error_msg_container.html out
             views.disable_forms()
-        else
-          $video_url_error_msg_container.empty()
     false
 
   reset_video_thumb: (event) ->
     $elem = $(event.target)
-    chapter_index = parseInt $elem.attr("chapter_index")
-    video_url = $helper.video_url_input_of(chapter_index).val()
+    chapter_index = parseInt($elem.attr("chapter_index"))
+    video_url = @model.get("chapters.#{chapter_index}.video.url")
 
     backend = _.find @video_backends, (backend) -> backend.handle(video_url)
     backend.fetch_info video_url, (err, info) =>
       return alert(err) if err?
 
-      $thumb_input = $helper.video_thumb_input_of(chapter_index)
-      $thumb_input.val info.thumb
+      @model.set("chapters.#{chapter_index}.video.thumb", info.thumb)
+
+      $thumb_input = $("#chapter#{chapter_index} input[name=video_thumb]")
+      $thumb_input.val(info.thumb)
       $thumb_input.change()
 
-      @model.set "chapters.#{chapter_index}.video.thumb", info.thumb
-      $helper.video_thumb_of(chapter_index).attr "src", info.thumb
+      $VIDEO_THUMB_OF(chapter_index).attr("src", info.thumb)
 
-      $elem.parent().empty()
+      $elem.remove()
     false
 
   onchange_video_duration: (event) ->
@@ -151,14 +147,14 @@ class PresentationEditView extends Backbone.View
     $elem = $(event.target)
     thumb_url = $elem.val()
     $video_thumb_error_msg_container = $elem.next()
-    $container = $helper.parent_control_group_of($elem)
+    $container = $FORM_ROW_OF($elem)
 
     if utils.is_url_valid thumb_url
       $container.removeClass "error"
       $video_thumb_error_msg_container.empty()
       chapter_index = $elem.attr("chapter_index")
       @model.set "chapters.#{chapter_index}.video.thumb", thumb_url
-      $helper.video_thumb_of(chapter_index).attr "src", thumb_url
+      $VIDEO_THUMB_OF(chapter_index).attr "src", thumb_url
     else
       $container.addClass "error"
       dust.render "_help_inline", { text: "Invalid URL"}, (err, out) ->
@@ -406,6 +402,12 @@ class PresentationEditView extends Backbone.View
       rebuild_slide_indexes(SLIDES_of($helper.chapter(0)))
       views.disable_forms()
     false
+
+  onchange_speaker: (event) ->
+    change_simple_field(@, "speaker", event)
+
+  onchange_time: (event) ->
+    change_simple_field(@, "time", event)
 
   events:
     "click a.play_pause_btn": "onclick_playpause"

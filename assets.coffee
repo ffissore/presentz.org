@@ -111,7 +111,6 @@ assetsMiddleware = assetManager
     "views/m/_presentation_menu_title_save_btn.dust"
     "views/m/_presentation.dust"
     "views/m/_slide.dust"
-    "views/m/_help_inline.dust"
     "views/m/_reset_thumb.dust"
     "views/m/_img_slide_thumb.dust"
     "views/m/_swf_slide_thumb.dust"
