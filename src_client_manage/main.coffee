@@ -1,4 +1,5 @@
 jQuery () ->
+  ###
   prsntz = new Presentz("#video", "460x420", "#slide", "460x420")
 
   init_presentz = (presentation, first) ->
@@ -18,9 +19,6 @@ jQuery () ->
         $(subelem).attr("slide_index", new_index)
       $helper.elements_with_placeholder_in($elem).each (idx, subelem) ->
         $(subelem).attr("placeholder", "Slide #{new_index + 1}")
-
-  video_backends = [new window.video_backends.Youtube(prsntz.availableVideoPlugins.youtube), new window.video_backends.Vimeo(prsntz.availableVideoPlugins.vimeo), new window.video_backends.Dummy(prsntz.availableVideoPlugins.html5)]
-  slide_backends = [new window.slide_backends.SlideShare(prsntz.availableSlidePlugins.slideshare), new window.slide_backends.Dummy(prsntz.availableSlidePlugins.image)]
 
   $helper =
     slide_containers: () -> $("div[slide_index]")
@@ -103,6 +101,12 @@ jQuery () ->
 
   confirm = (message, callback) ->
     $helper.confirm(message, callback)
+  ###
+
+  prsntz = new Presentz("#video", "460x420", "#slide", "460x420")
+
+  video_backends = [new window.video_backends.Youtube(prsntz.availableVideoPlugins.youtube), new window.video_backends.Vimeo(prsntz.availableVideoPlugins.vimeo), new window.video_backends.Dummy(prsntz.availableVideoPlugins.html5)]
+  slide_backends = [new window.slide_backends.SlideShare(prsntz.availableSlidePlugins.slideshare), new window.slide_backends.Dummy(prsntz.availableSlidePlugins.image)]
 
   class NavigationView extends Backbone.View
 
@@ -214,7 +218,7 @@ jQuery () ->
 
       model.unbind "change", @edit
 
-      @view = new window.views.PresentationEditView(model: model, video_backends, slide_backends)
+      @view = new window.views.PresentationEditView(model: model, prsntz, video_backends, slide_backends)
       @view.render()
       @view.bind "presentation_title", (title, published) =>
         @navigationView.presentation_menu_title_save_btn utils.cut_string_at(title, 30), published

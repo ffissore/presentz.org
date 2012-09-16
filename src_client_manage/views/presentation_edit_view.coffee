@@ -31,13 +31,17 @@ class PresentationEditView extends Backbone.View
 
   tagName: "div"
 
-  prsntz: new Presentz("#video", "460x420", "#slide", "460x420")
+  initialize: (_ignore, @prsntz, @video_backends, @slide_backends) ->
+    _.bindAll(@)
+
+    @model.bind "all", () ->
+      console.log "PresentationEditView", arguments
 
   init_presentz: (presentation, first) ->
     @prsntz.init presentation
     @prsntz.changeChapter 0, 0, false
     return unless first? and first
-    
+
     $video = $("#video")
     $video_parent = $video.parent()
     $video.width $video_parent.width()
@@ -54,14 +58,6 @@ class PresentationEditView extends Backbone.View
     @prsntz.on "play", show_pause
     @prsntz.on "pause", show_play
     @prsntz.on "finish", show_play
-
-
-
-  initialize: (_ignore, @video_backends, @slide_backends) ->
-    _.bindAll(@)
-
-    @model.bind "all", () ->
-      console.log "PresentationEditView", arguments
 
   render: () ->
     views.scroll_top()
