@@ -41,7 +41,7 @@ class AppView extends Backbone.View
     view = new views.PresentationNewView(@video_backends, @slide_backends)
     view.render()
     view.bind "new", (presentation) =>
-      @edit(presentation)
+      @edit(presentation, null, true)
       @trigger("new_presentation", presentation.get("id"))
     @$el.html view.el
 
@@ -56,18 +56,21 @@ class AppView extends Backbone.View
         @trigger("mypres")
     presentation.fetch()
 
-  edit: (model) ->
+  edit: (model, options, force_save_btn_enabled = false) ->
     @clear_dirty()
 
     model.unbind "change", @edit
 
     @edit_view = new views.PresentationEditView(model: model, @prsntz, @video_backends, @slide_backends)
     @edit_view.render()
+    @$el.html @edit_view.el
+
     @edit_view.bind "presentation_title", (title, published) =>
       @navigation_view.presentation_menu_title_save_btn utils.cut_string_at(title, 30), published
     @edit_view.bind "disable_save_button", @disable_save_button
     @edit_view.bind "enable_save_button", @enable_save_button
-    @$el.html @edit_view.el
+    @edit_view.bind "rendered", () =>
+      @enable_save_button() if force_save_btn_enabled
 
   save: (preview) ->
     presentation_id = @edit_view.save()

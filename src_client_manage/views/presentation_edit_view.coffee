@@ -138,6 +138,7 @@ class PresentationEditView extends Backbone.View
 
           @init_presentz(@model.attributes, true)
           views.disable_forms()
+          @trigger("rendered")
 
         #TODO: WTF? is .html async?
         setTimeout when_rendered, 100
