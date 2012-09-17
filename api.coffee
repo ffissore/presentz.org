@@ -12,7 +12,7 @@ init = (s, slideshare_conf) ->
   slideshare = new node_slideshare slideshare_conf.api_key, slideshare_conf.shared_secret
 
 safe_next = (next, err) ->
-  err = new Error(err) if utils.type_of(err) isnt "error"
+  err = new Error(err) if !(err instanceof Error)
   next(err)
 
 presentations = (req, res, next) ->
@@ -45,16 +45,6 @@ presentation_save_everything = (user, presentation, callback) ->
 
   utils.visit_presentation presentation, utils.ensure_only_wanted_map_of_fields_in, allowed_map_of_fields
 
-  save_all = (objs, callback) ->
-    return callback(undefined, []) if objs.length is 0
-
-    saved_objs = []
-    for obj in objs
-      save obj, (err, obj) ->
-        return callback(err) if err?
-        saved_objs.push(obj)
-        return callback(undefined, saved_objs) if saved_objs.length is objs.length
-
   save = (obj, callback) ->
     is_new = !obj["@rid"]?
     cb = (err, obj) ->
@@ -79,11 +69,29 @@ presentation_save_everything = (user, presentation, callback) ->
         linked_objs.push(link)
         return callback(undefined) if linked_objs.length is new_objs.length
 
+  save_all_slides = (slides, callback) ->
+    return callback(undefined, []) if slides.length is 0
+
+    saved_slides = []
+    for slide in slides
+      slide["@class"] ?= "V"
+      slide["@type"] ?= "d"
+      slide._type ?= "slide"
+
+      save slide, (err, slide) ->
+        return callback(err) if err?
+        saved_slides.push(slide)
+        return callback(undefined, saved_slides) if saved_slides.length is slides.length
+
   save_all_chapters = (chapters, callback) ->
     return callback(undefined, []) if chapters.length is 0
     saved_chapters = []
     for chapter in chapters
-      save_all chapter.slides, (err, slides) ->
+      chapter["@class"] ?= "V"
+      chapter["@type"] ?= "d"
+      chapter._type ?= "chapter"
+
+      save_all_slides chapter.slides, (err, slides) ->
         return callback(err) if err?
         delete chapter.slides
         save chapter, (err, chapter) ->
@@ -92,6 +100,10 @@ presentation_save_everything = (user, presentation, callback) ->
             return callback(err) if err?
             saved_chapters.push(chapter)
             return callback(undefined, saved_chapters) if saved_chapters.length is chapters.length
+
+  presentation["@class"] ?= "V"
+  presentation["@type"] ?= "d"
+  presentation._type ?= "presentation"
 
   save_all_chapters presentation.chapters, (err, chapters) ->
     return callback(err) if err?
@@ -138,7 +150,10 @@ slideshare_slides_of = (req, res, next) ->
       xml = xml.concat(chunk)
     response.on "end", () ->
       res.contentType "application/json"
-      res.send xml2json.toJson(xml)
+      slides = JSON.parse(xml2json.toJson(xml))
+      for slide in slides.Show.Slide
+        slide.Src = slide.Src.replace("http://slideshare.s3.amazonaws.com", "http://cdn.slidesharecdn.com")
+      res.send slides
 
   request.on "error", (e) ->
     console.warn arguments

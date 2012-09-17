@@ -23,8 +23,7 @@
           <li><a href="#make">Make One</a></li>
         </ul>
         <ul class="nav pull-right">
-          <li><a href="{user.catalog}">Go to my <span class="label label-success">catalog</span></a></li>
-          <li><a href="/">Back to <span class="label label-success">HP</span></a></li>
+          <li><a href="#hp">Back to <span class="label label-success">HP</span></a></li>
         </ul>
       </div>
     </div>
@@ -60,6 +59,18 @@
   </div>
 </div>
 
+<div class="modal hide fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="confirm_label" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3 id="confirm_label">Attention!</h3>
+  </div>
+  <div class="modal-body"><p></p></div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Yes</button>
+  </div>
+</div>
+
 <footer>
   <p class="span12" style="text-align: center;">
     <small>Some icons &copy; <a href="http://avetenebrae.deviantart.com/" target="_blank">Laurent Baumann</a>, downloaded from <a href="http://stopdreaming.deviantart.com/art/Albook-extended-811-png-95130593" target="_blank">here</a></small>
@@ -67,5 +78,8 @@
 </footer>
 <script src="/managedassets/js/{.assetsCacheHashes.js_main}manage.js" type="text/javascript"></script>
 <script src="https://www.youtube.com/player_api" type="text/javascript"></script>
+<script type="text/javascript">
+  user_catalog = "{user.catalog}";
+</script>
 </body>
 </html>

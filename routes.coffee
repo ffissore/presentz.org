@@ -91,10 +91,10 @@ raw_presentation_from_user = (req, res, next) ->
     storage.load_entire_presentation_from_users_catalog social_column, req.params.user_name, req.params.presentation, (err, presentation) ->
       return next(err) if err?
 
-      raw_presentation presentation, req, res
+      raw_presentation presentation, req, res, (req.headers.referer? and req.headers.referer.indexOf("preview") isnt -1) 
 
-raw_presentation = (presentation, req, res) ->
-  return res.send 404 unless presentation.published
+raw_presentation = (presentation, req, res, preview) ->
+  return res.send 404 unless presentation.published or preview
 
   utils.visit_presentation presentation, utils.remove_unwanted_fields_from, [ "id", "out", "_type", "_index", "@class", "@type", "@version", "@rid", "user" ]
 
@@ -121,10 +121,10 @@ show_presentation_from_user = (req, res, next) ->
     storage.load_entire_presentation_from_users_catalog social_column, req.params.user_name, req.params.presentation, (err, presentation) ->
       return next(err) if err?
 
-      show_presentation presentation, path, req, res
+      show_presentation presentation, path, req, res, req.query.preview
 
-show_presentation = (presentation, path, req, res) ->
-  return res.send 404 unless presentation.published
+show_presentation = (presentation, path, req, res, preview) ->
+  return res.send 404 unless presentation.published or preview?
 
   comments_of = (presentation) ->
     comments = []
@@ -200,7 +200,7 @@ show_presentation = (presentation, path, req, res) ->
     speaker: presentation.speaker
     slides: slides
     comments: comments
-    domain: "http://#{req.headers["x-forwarded-host"] or req.headers.host}"
+    domain: "http://#{req.headers.host}"
     path: path
     thumb: presentation.chapters[0].video.thumb
     wrapper_css: "class=\"section_player\""
@@ -257,7 +257,7 @@ static_view = (view_name) ->
     res.render view_name, options
 
 ensure_is_logged = (req, res, next) ->
-  return next() if req.user? and req.user.admin? and req.user.admin
+  return next() if req.user?
 
   #req.notify "error", "you need to be logged in"
   res.redirect 302, "/"

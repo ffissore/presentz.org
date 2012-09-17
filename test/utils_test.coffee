@@ -5,10 +5,16 @@ _s = require "underscore.string"
 describe "Utils", () ->
   it "should make nice IDs", () ->
     id = utils.generate_id("Cloud Testing di applicazioni web con Python ed Amazon EC2")
-    assert _s.endsWith(id, "_cloud_testing_applicazioni_web_con_python_amazon_ec2")
+    assert _s.startsWith(id, "cloud_testing_applicazioni_web_con_python_amazon_ec2_")
 
     id = utils.generate_id("Cloud Testing di applicazioni web con Python ed Amazon EC2 ed")
-    assert _s.endsWith(id, "_cloud_testing_applicazioni_web_con_python_amazon_ec2")
+    assert _s.startsWith(id, "cloud_testing_applicazioni_web_con_python_amazon_ec2_")
+
+    id = utils.generate_id("di Cloud Testing di applicazioni web con Python ed Amazon EC2 ed")
+    assert _s.startsWith(id, "cloud_testing_applicazioni_web_con_python_amazon_ec2_")
+
+    id = utils.generate_id("Startup in action: Frēstyl")
+    assert _s.startsWith(id, "startup_action_styl_")
 
   it "should ignore empty titles", () ->
     id = utils.generate_id()
@@ -16,9 +22,7 @@ describe "Utils", () ->
     id = utils.generate_id("")
     assert id.length is 10
 
-  it "should find valid URLs", () ->
-    assert utils.is_url_valid("http://presentz.org/assets/jugtorino/201102_akka/201105071337135616730.swf")
-
-  it "should get the real type of objects", () ->
-    assert.equal("string", utils.type_of(""))
-    assert.equal("error", utils.type_of(new Error()))
+  it "should parse float and round", () ->
+    assert.equal 8.12, utils.my_parse_float("8.1234")
+    assert.equal 8.123, utils.my_parse_float("8.1234", 1000)
+    assert.equal 8.12, utils.my_parse_float(8.1234)

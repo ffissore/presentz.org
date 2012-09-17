@@ -1,3 +1,4 @@
 <li class="active"><a><span>{.title}</span> <sup class="label label-info">{?published}Published{:else}Hidden{/published}</sup></a></li>
 <li><button class="save navbar-btn btn disabled" type="button" disabled="disabled">Save</button></li>
+<li><button class="save preview navbar-btn btn disabled" type="button" disabled="disabled">Save and preview</button></li>
 <li class="notify_save"><a>Saved!</a></li>

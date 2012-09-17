@@ -110,5 +110,3 @@ app.post "/:catalog_name/:presentation/comment", routes.comment_presentation
 
 app.listen config.port
 console.log "Express server listening on port #{config.port} in #{app.settings.env} mode"
-
-require "./subdomain"

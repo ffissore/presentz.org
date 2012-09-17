@@ -56,7 +56,7 @@ visit_presentation = (presentation, func, fields_or_maps_of_fields) ->
           for comment in slide.comments
             apply_on "comment", comment
             apply_on "user", comment.user if comment.user?
-  return
+  presentation
 
 chars = "0123456789qwertyuiopasdfghjklzxcvbnm"
 non_word_chars = /[\W]/g
@@ -67,29 +67,28 @@ generate_id = (title) ->
   for idx in [0...10]
     c = parseInt(Math.random() * chars.length)
     id = id.concat(chars[c])
-  
+
   return id unless title? and title isnt ""
 
   title = title.toLowerCase().replace(non_word_chars, " ").replace(short_words, "").replace(/\s/g, "_")
   while title.indexOf("__") isnt -1
     title = title.replace("__", "_")
   title = title.replace(/[_]+$/, "")
-  
-  id.concat("_", title)
+  title = title.replace(/^[_]+/, "")
 
-url_regexp = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+  title.concat("_", id)
 
 is_url_valid = (url) ->
-  url_regexp.test(url)
+  uri = Uri(url)
+  host = uri.host()
+  path = uri.path()
+  host? and host isnt "" and host.indexOf(".") isnt -1 and path? and path isnt ""
 
-type_of = (value) ->
-  type = toString.call(value).substr(8)
-  type.substr(0, type.length - 1).toLowerCase()
+my_parse_float = (s, precision = 100) ->
+  f = parseFloat(s)
+  Math.round(f * precision) / precision
 
-if exports?
-  root = exports
-else
-  root = (@utils = {})
+root = exports ? (@utils = {})
 
 root.exec_for_each = exec_for_each
 root.cut_string_at = cut_string_at
@@ -100,4 +99,4 @@ root.ensure_only_wanted_map_of_fields_in = ensure_only_wanted_map_of_fields_in
 root.visit_presentation = visit_presentation
 root.generate_id = generate_id
 root.is_url_valid = is_url_valid
-root.type_of = type_of
+root.my_parse_float = my_parse_float
