@@ -96,7 +96,6 @@ assetsMiddleware = assetManager
     "public/assets/js/jquery/jquery-1.8.0.js"
     "public/assets/js/jquery/jquery-ui-1.8.23.custom.min.js"
     "public/assets/js/manage/jquery.jsonp.js"
-    "public/assets/js/manage/jquery.jsonp.js"
     "public/assets/js/manage/jquery.movingboxes.js"
     "public/assets/js/manage/bootstrap.js"
     "public/assets/js/manage/underscore.js"

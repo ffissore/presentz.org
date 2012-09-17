@@ -1,4 +1,4 @@
-﻿/*!
+/*!
  * Moving Boxes v2.2.16
  * by Chris Coyier
  * http://css-tricks.com/moving-boxes/
