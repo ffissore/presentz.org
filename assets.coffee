@@ -68,6 +68,7 @@ assetsMiddleware = assetManager
     "public/assets/js/jquery/jquery-ui-1.8.23.custom.min.js"
     "public/assets/js/modernizr.js"
     "src_client/main.coffee"
+    "public/assets/js/piwik.js"
   ])
   css: new_css_conf("main", [
     "public/assets/css/mediaelementplayer.css"
@@ -91,6 +92,7 @@ assetsMiddleware = assetManager
   ])
   js_embed: new_js_conf("embed", ["src_client/embed.coffee"])
   js_manage: new_js_conf("manage", [
+    "public/assets/js/piwik.js"
     "public/assets/js/jquery/jquery-1.8.0.js"
     "public/assets/js/jquery/jquery-ui-1.8.23.custom.min.js"
     "public/assets/js/manage/jquery.jsonp.js"
