@@ -74,6 +74,12 @@
             Youtube player, Speaker Deck player
           </li>
           <li class="box4 demo_thumb_item">
+            <a href="/demo/youtube-rvlio" title="Demo: Youtube player, rvl.io player">Demo: Youtube player, rvl.io player</a>
+            <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_youtube.png" alt="youtube icon"/></span>
+            <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_rvlio.png" alt="rvlio icon"/></span>
+            Youtube player, rvl.io player
+          </li>
+          <li class="box4 demo_thumb_item">
             <a href="/demo/04_youtube-img" title="Demo: Youtube player, images as slides">Demo: Youtube player, images as slides</a>
             <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_youtube.png" alt="youtube icon"/></span>
             <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_images.png" alt="images icon"/></span>

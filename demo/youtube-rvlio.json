@@ -1,0 +1,46 @@
+{
+  "title": "Youtube player, Rvl.io player",
+  "chapters": [
+    {
+      "duration": 21,
+      "media": {
+        "video": {
+          "url": "http://youtu.be/hJgncy4I1ig",
+          "thumb": "/assets/demo/youtube-slideshare.png"
+        },
+        "slides": [
+          {
+            "url": "http://www.rvl.io/federico/presentz/#/0",
+            "time": 0
+          },
+          {
+            "url": "http://www.rvl.io/federico/presentz/#/1",
+            "time": 7
+          },
+          {
+            "url": "http://www.rvl.io/federico/presentz/#/2",
+            "time": 9.5
+          },
+          {
+            "url": "http://www.rvl.io/federico/presentz/#/3",
+            "time": 14
+          }
+        ]
+      }
+    },
+    {
+      "duration": 7,
+      "media": {
+        "video": {
+          "url": "http://youtu.be/WK0MSxOUm-o"
+        },
+        "slides": [
+          {
+            "url": "http://www.rvl.io/federico/presentz/#/4",
+            "time": 0
+          }
+        ]
+      }
+    }
+  ]
+}
