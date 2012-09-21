@@ -52,7 +52,9 @@ db.open (err) ->
               assert(!err, err)
 
               link_chapters_to_pres= (chapters, presentation) ->
-                return if chapters.length is 0
+                if chapters.length is 0
+                  db.close()
+                  return
 
                 chapter = chapters.pop()
                 chapter.video = chapter.media.video
