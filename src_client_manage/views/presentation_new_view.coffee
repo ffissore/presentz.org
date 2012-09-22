@@ -63,9 +63,7 @@ class PresentationNewView extends Backbone.View
     $thumb_container = $(".slide_thumb", @$el)
     $thumb_container.empty()
     $thumb_container.html("Fetching info...")
-    #backend = _.find slide_backends, (backend) -> backend.handle(url)
-    #only slideshare
-    backend = @slide_backends[0]
+    backend = _.find @slide_backends, (backend) -> backend.handle(url)
     backend.slideshow_info url, (err, slide, slideshow_info) =>
       $thumb_container.empty()
       @slideshow = null
