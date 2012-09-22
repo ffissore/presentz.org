@@ -49,7 +49,7 @@ class PresentationNewView extends Backbone.View
       if info.thumb?
         feedback = feedback.concat(" Here is the thumb.</p><img class=\"smallthumb\" src=\"#{info.thumb}\"/>")
       else
-        feedback = feedback.concat(" At least the URL is well made. Hope there is a real video there.</p>")
+        feedback = feedback.concat(" At least the URL is well made. Hope that is a video file.</p>")
       $thumb_container.html(feedback)
       @video = info
       @check_if_time_to_start()
