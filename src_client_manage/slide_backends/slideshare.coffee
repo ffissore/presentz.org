@@ -23,17 +23,8 @@ class SlideShare
     url = Uri(url)
     "#{url.protocol()}://#{url.host()}#{url.path()}"
 
-  all_slides_of: (url, public_url, duration) ->
-    doc_id = @to_doc_id(url)
-    ss_slides = @slideshare_infos[doc_id].Show.Slide
-    mean_slide_duration = Math.floor(duration / ss_slides.length)
-    slides = []
-    time = 0
-    for ss_slide, idx in ss_slides
-      slide = slide_backends.make_new_slide(make_url(doc_id, idx + 1), time, public_url)
-      slides.push slide
-      time += mean_slide_duration
-    slides
+  first_slide: (slideshow) ->
+    slide_backends.make_new_slide(slideshow.url, 0, slideshow.public_url)
 
   slideshow_info: (public_url, callback) ->
     public_url = "http://#{public_url}" unless _.str.startsWith(public_url, "http://")

@@ -5,7 +5,7 @@ class PresentationNewView extends Backbone.View
   @video: null
   @slideshow: null
   @title: null
-  
+
   initialize: (@video_backends, @slide_backends) ->
     _.bindAll(@)
 
@@ -31,7 +31,7 @@ class PresentationNewView extends Backbone.View
     $elem = $(event.target)
     url = $elem.val()
     return if url is ""
-    
+
     url = "http://#{url}" unless _.str.startsWith(url, "http")
     $thumb_container = $(".video_thumb", @$el)
     $thumb_container.empty()
@@ -40,11 +40,11 @@ class PresentationNewView extends Backbone.View
     backend.fetch_info url, (err, info) =>
       $thumb_container.empty()
       @video = null
-      
+
       if err?
         $thumb_container.html("<div class=\"alert alert-error\">This URL does not look good</div>")
         return
-        
+
       feedback = "<p>Looks good!"
       if info.thumb?
         feedback = feedback.concat(" Here is the thumb.</p><img class=\"smallthumb\" src=\"#{info.thumb}\"/>")
@@ -58,7 +58,7 @@ class PresentationNewView extends Backbone.View
     $elem = $(event.target)
     url = $elem.val()
     return if url is ""
-    
+
     url = "http://#{url}" unless _.str.startsWith(url, "http")
     $thumb_container = $(".slide_thumb", @$el)
     $thumb_container.empty()
@@ -69,11 +69,11 @@ class PresentationNewView extends Backbone.View
     backend.slideshow_info url, (err, slide, slideshow_info) =>
       $thumb_container.empty()
       @slideshow = null
-      
+
       if err?
         $thumb_container.html("<div class=\"alert alert-error\">This URL does not look good</div>")
         return
-      
+
       $thumb_container.html("<p>Looks good! Here is the first slide.</p>")
       @slideshow = slideshow_info
       @check_if_time_to_start()
@@ -94,7 +94,7 @@ class PresentationNewView extends Backbone.View
 
   onclick_start: () ->
     backend = _.find @slide_backends, (backend) => backend.handle(@slideshow.url)
-    slides = backend.all_slides_of(@slideshow.url, @slideshow.public_url, @video.duration)
+    slides = [ backend.first_slide(@slideshow) ]
 
     chapter =
       duration: @video.duration

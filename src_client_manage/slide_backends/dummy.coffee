@@ -17,6 +17,9 @@ class Dummy
     else
       callback("Invalid URL: '#{slide.url}'")
 
+  first_slide: (slideshow) ->
+    slide_backends.make_new_slide(slideshow.url, 0, slideshow.public_url)
+
   slideshow_info: (url, callback) ->
     @slide_info url: url, callback
 
