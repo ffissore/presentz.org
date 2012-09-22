@@ -34,16 +34,35 @@
       <img class="thumb" src="{.video.thumb}" chapter_index="{@idx}{.}{/idx}"/>
     </div>
   </div>
+  <h3>Synchronize</h3>
   <div class="row-fluid">
-    <div class="span6">
-      <h3>Video</h3>
-      <div id="video" class="fluid_container" style="width: 460px; height: 420px"></div>
+    <div class="span5">
+      <div id="video" style="width: 450px; height: 400px"></div>
     </div>
-    <div class="span6">
-      <h3>Slides</h3>
+    <div class="span2">
+      <div class="play_pause">
+        <ul class="play_pause">
+          <li>
+            <a href="#" class="play_pause_btn play" title="Play/Pause">play</a>
+          </li>
+          <li>
+            <span>Time</span><span name="current_time" class="input-mini uneditable-input">0</span>
+          </li>
+          <li>
+            <a title="Set these seconds on the slide below" href="#" class="set_time_btn set_time">time</a>
+          </li>
+          <li>
+            <a title="Add a slide at this time" href="#" class="add_slide_btn add_slide">slide</a>
+          </li>
+        </ul>
+        {!<small><a href="#" class="hei_advanced">Hei! I'm an advanced user and this thing is way too slow!</a></small>!}
+      </div>
+    </div>
+    <div class="span5">
       <div id="slide"></div>
     </div>
   </div>
+  {!
   <div class="row-fluid">
     <div class="span12">
       <div class="play_pause">
@@ -64,10 +83,11 @@
             <a title="Add a slide at this time" href="#" class="add_slide_btn add_slide">slide</a>
           </li>
         </ul>
-        {!<small><a href="#" class="hei_advanced">Hei! I'm an advanced user and this thing is way too slow!</a></small>!}
+        <small><a href="#" class="hei_advanced">Hei! I'm an advanced user and this thing is way too slow!</a></small>
       </div>
     </div>
   </div>
+  !}
   <h4 class="slides">Slides</h4>
   <div class="slides">
     {#slides}

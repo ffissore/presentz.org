@@ -103,7 +103,7 @@ jQuery () ->
     $helper.confirm(message, callback)
   ###
 
-  prsntz = new Presentz("#video", "460x420", "#slide", "460x420")
+  prsntz = new Presentz("#video", "450x400", "#slide", "450x400")
 
   video_backends = [new window.video_backends.Youtube(prsntz.availableVideoPlugins.youtube), new window.video_backends.Vimeo(prsntz.availableVideoPlugins.vimeo), new window.video_backends.Dummy(prsntz.availableVideoPlugins.html5)]
   slide_backends = [new window.slide_backends.SlideShare(prsntz.availableSlidePlugins.slideshare), new window.slide_backends.Dummy(prsntz.availableSlidePlugins.image)]
