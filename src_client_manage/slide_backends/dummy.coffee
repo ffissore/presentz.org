@@ -12,13 +12,12 @@ class Dummy
   slide_info: (slide, callback) ->
     if utils.is_url_valid(slide.url)
       callback undefined, slide,
-        public_url: slide.url
         slide_thumb: slide.url
     else
       callback("Invalid URL: '#{slide.url}'")
 
   first_slide: (slideshow) ->
-    slide_backends.make_new_slide(slideshow.url, 0, slideshow.public_url)
+    slide_backends.make_new_slide(slideshow.url, 0)
 
   slideshow_info: (url, callback) ->
     @slide_info url: url, callback
@@ -31,7 +30,6 @@ class Dummy
 
   set_slide_value_from_import: (slide, slide_url) ->
     slide.url = slide_url
-    slide.public_url = slide_url
 
   check_slide_value_from_import: (slide, slide_number, callback) ->
     callback()
