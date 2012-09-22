@@ -410,7 +410,7 @@ class PresentationEditView extends Backbone.View
     slide_to_delete = slides.splice(slide_index, 1)[0]
 
     @model.set("chapters.#{chapter_index}.slides", slides)
-    @model.slides_to_delete.push(slide_to_delete)
+    @model.slides_to_delete.push(slide_to_delete) if slide_to_delete["@rid"]?
 
     if slide_index is slides.length
       new_slide_index = slides.length - 1
