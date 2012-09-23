@@ -174,10 +174,6 @@ speakerdeck_url_to_data_id = (req, res, next) ->
     host: "speakerdeck.com"
     path: url.parse(req.query.url).pathname
 
-  console.log req.query.url
-  console.log url.parse(req.query.url)
-  console.log request_params
-  
   request = https.request request_params, (response) ->
     return res.send 500, "Unable to find data-id" if response.statusCode isnt 200
     
