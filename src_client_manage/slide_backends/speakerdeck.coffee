@@ -80,4 +80,7 @@ class Speakerdeck
     new_slide.slide_thumb = @to_thumb(slide_url)
     new_slide
 
+  change_slide_number: (old_url, slide_number) ->
+    old_url.substring(0, old_url.lastIndexOf("#") + 1).concat(slide_number)
+
 @slide_backends.Speakerdeck = Speakerdeck
