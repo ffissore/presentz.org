@@ -1,8 +1,10 @@
 http = require "http"
+https = require "https"
 xml2json = require "xml2json"
 node_slideshare = require "slideshare"
 utils = require "./utils"
 _ = require "underscore"
+url = require "url"
 
 storage = null
 slideshare = null
@@ -140,7 +142,6 @@ presentation_load = (req, res, next) ->
 slideshare_slides_of = (req, res, next) ->
   request_params =
     host: "cdn.slidesharecdn.com"
-    port: 80
     path: "/#{req.params.doc_id}.xml"
 
   request = http.request request_params, (response) ->
@@ -166,6 +167,34 @@ slideshare_url_to_doc_id = (req, res, next) ->
     res.contentType "application/json"
     res.send xml2json.toJson(xml)
 
+speaker_deck_data_id_regexp = /data-id="([0-9a-zA-Z]+)"/
+
+speakerdeck_url_to_data_id = (req, res, next) ->
+  request_params =
+    host: "speakerdeck.com"
+    path: url.parse(req.query.url).pathname
+
+  request = https.request request_params, (response) ->
+    return res.send 500, "Unable to find data-id" if response.statusCode isnt 200
+    
+    response.setEncoding "utf8"
+    html = ""
+    response.on "data", (chunk) ->
+      html = html.concat(chunk)
+    response.on "end", () ->
+      matches = html.match speaker_deck_data_id_regexp
+
+      return res.send 500, "Unable to find data-id" if !matches? or matches.length < 2
+
+      res.send { data_id: matches[1] }
+
+  request.on "error", (e) ->
+    console.warn arguments
+    res.render {}
+
+  request.end()
+
+
 delete_slide = (req, res, next) ->
   storage.delete_slide req.params.node_id, (err) ->
     return next(err) if err?
@@ -178,4 +207,5 @@ exports.presentation_save = presentation_save
 exports.presentation_load = presentation_load
 exports.slideshare_slides_of = slideshare_slides_of
 exports.slideshare_url_to_doc_id = slideshare_url_to_doc_id
+exports.speakerdeck_url_to_data_id = speakerdeck_url_to_data_id
 exports.delete_slide = delete_slide
