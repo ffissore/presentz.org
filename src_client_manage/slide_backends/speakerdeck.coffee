@@ -6,7 +6,10 @@ class Speakerdeck
   handle: (url) ->
     @presentzSpeakerdeck.handle url: url
 
-  thumb_type_of: (url) -> "none"
+  thumb_type_of: (url) -> "img"
+
+  to_data_id: (url) ->
+    @presentzSpeakerdeck.slideId url: url
 
   to_slide_number: (url) ->
     parseInt(@presentzSpeakerdeck.slideNumber(url: url))
@@ -33,7 +36,13 @@ class Speakerdeck
       callback undefined, slide
   
   slide_info: (slide, callback) ->
-    callback(undefined, slide, slide)
+    number = @to_slide_number(slide.url)
+    data_id = @to_data_id(slide.url)
+    thumb = "https://speakerd.s3.amazonaws.com/presentations/#{data_id}/slide_#{number - 1}.jpg"
+    callback undefined, slide,
+      public_url: slide.public_url
+      number: number
+      slide_thumb: thumb
 
   url_from_public_url: (slide, public_url, callback) ->
     slide_number = @to_slide_number slide.url

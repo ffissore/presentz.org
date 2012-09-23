@@ -115,7 +115,6 @@ assetsMiddleware = assetManager
     "views/m/_reset_thumb.dust"
     "views/m/_img_slide_thumb.dust"
     "views/m/_swf_slide_thumb.dust"
-    "views/m/_none_slide_thumb.dust"
     "views/m/_new.dust"
     "views/m/_slide_times_preview.dust"
     "views/m/_confirm_slide_delete.dust"
