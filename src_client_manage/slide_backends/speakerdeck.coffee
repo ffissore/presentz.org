@@ -14,6 +14,11 @@ class Speakerdeck
   to_slide_number: (url) ->
     parseInt(@presentzSpeakerdeck.slideNumber(url: url))
 
+  to_thumb: (url) ->
+    number = @to_slide_number(url)
+    data_id = @to_data_id(url)
+    "https://speakerd.s3.amazonaws.com/presentations/#{data_id}/slide_#{number - 1}.jpg"
+
   clean_url = (url) ->
     url = Uri(url)
     "#{url.protocol()}://#{url.host()}#{url.path()}"
@@ -33,16 +38,15 @@ class Speakerdeck
       slide =
         url: new_url
         public_url: public_url
+        number: @to_slide_number(new_url)
+        slide_thumb: @to_thumb(new_url)
       callback undefined, slide
-  
+
   slide_info: (slide, callback) ->
-    number = @to_slide_number(slide.url)
-    data_id = @to_data_id(slide.url)
-    thumb = "https://speakerd.s3.amazonaws.com/presentations/#{data_id}/slide_#{number - 1}.jpg"
     callback undefined, slide,
       public_url: slide.public_url
-      number: number
-      slide_thumb: thumb
+      number: @to_slide_number(slide.url)
+      slide_thumb: @to_thumb(slide.url)
 
   url_from_public_url: (slide, public_url, callback) ->
     slide_number = @to_slide_number slide.url
@@ -50,11 +54,12 @@ class Speakerdeck
     if @public_url_data_id[public_url]?
       callback(undefined, make_url(@public_url_data_id[public_url], slide_number))
       return
-    
+
     $.ajax
       type: "GET"
       url: "/m/api/speakerdeck/url_to_data_id"
-      data: { url: public_url }
+      data:
+        { url: public_url }
       success: (response) =>
         @public_url_data_id[public_url] = response.data_id
         callback(undefined, make_url(@public_url_data_id[public_url], slide_number))
