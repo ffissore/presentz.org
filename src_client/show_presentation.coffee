@@ -131,9 +131,20 @@ Controls =
 
 prsntz = new Presentz("#player_video", "460x420", "#slideshow_player", "460x420")
 
-init_presentz = (presentation) ->
-  window.presentation = presentation
+youtube_ready = false
+presentation_ready = false
 
+onYouTubeIframeAPIReady = () ->
+  youtube_ready = true
+  init_presentz()
+
+init_presentz = (presentation) ->
+  if presentation?
+    window.presentation = presentation
+    presentation_ready = true
+    
+  return unless youtube_ready and presentation_ready
+  
   oneBasedAbsoluteSlideIndex= (presentation, chapter_index, slide_index) ->
     absoluteSlideIndex = 0
     if chapter_index > 0
@@ -143,12 +154,12 @@ init_presentz = (presentation) ->
     absoluteSlideIndex + slide_index + 1
 
   prsntz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
-    fromSlide = oneBasedAbsoluteSlideIndex presentation, previous_chapter_index, previous_slide_index
+    fromSlide = oneBasedAbsoluteSlideIndex window.presentation, previous_chapter_index, previous_slide_index
     $from = $("#controls .chapter:nth-child(#{fromSlide}), #chapters ol li:nth-child(#{fromSlide}) a:nth-child(1)")
     $from.removeClass "selected"
     $from.addClass "past"
 
-    toSlide = oneBasedAbsoluteSlideIndex presentation, new_chapter_index, new_slide_index
+    toSlide = oneBasedAbsoluteSlideIndex window.presentation, new_chapter_index, new_slide_index
     $to = $("#controls .chapter:nth-child(#{toSlide}), #chapters ol li:nth-child(#{toSlide}) a:nth-child(1)")
     $to.removeClass "past"
     $to.addClass "selected"
@@ -158,7 +169,7 @@ init_presentz = (presentation) ->
     show_comments_for_slide(new_chapter_index, new_slide_index)
     return
 
-  prsntz.init presentation
+  prsntz.init window.presentation
   prsntz.changeChapter 0, 0, true
 
 openPopupTo = (width, height, url) ->
@@ -271,6 +282,7 @@ window.hide = hide
 window.show = show
 window.comment_this_slide = comment_this_slide
 window.comment_this_presentation = comment_this_presentation
+window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady
 
 $().ready () ->
   Controls.init()
@@ -357,4 +369,13 @@ $().ready () ->
   $li_share_gplus.bind "click", () ->
     plusShare()
     false
+
+  #ensure speakerdeck iframe has not styles, so ours are applied
+  speakerdeck_message = (event) ->
+    return if event.origin.indexOf("speakerdeck.com") is -1
+    $speakerdeck_iframe = $("iframe.speakerdeck-iframe")
+    $speakerdeck_iframe.attr("style", "")
+
+  window.addEventListener "message", speakerdeck_message, false
+
   return
