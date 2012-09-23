@@ -66,4 +66,18 @@ class Speakerdeck
       error: (jqXHR, textStatus, errorThrown) ->
         callback("Invalid url", public_url)
 
+  make_new_from: (slide) ->
+    data_id = @to_data_id(slide.url)
+    if $("iframe.speakerdeck-iframe").length > 0
+      slide_number = @presentzSpeakerdeck.currentSlide + 1
+    else
+      slide_number = @to_slide_number(slide.url)
+
+    slide_url = make_url(data_id, slide_number)
+    new_slide = slide_backends.make_new_slide(slide_url, slide.time, slide.public_url)
+    new_slide._thumb_type = "img"
+    new_slide.number = slide_number
+    new_slide.slide_thumb = @to_thumb(slide_url)
+    new_slide
+
 @slide_backends.Speakerdeck = Speakerdeck
