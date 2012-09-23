@@ -37,9 +37,8 @@ class SlideShare
         public_url: public_url
       @slide_info slide, (err, slide, slide_info) ->
         return callback(err) if err?
-        slide_info.url = slide.url
-        slide_info.title = slideshow.Title
-        callback undefined, slide, slide_info
+        slide.title = slideshow.title
+        callback undefined, slide
 
   slide_info: (slide, callback) ->
     doc_id = @to_doc_id slide.url
@@ -62,12 +61,12 @@ class SlideShare
         @slideshare_infos[doc_id] = ss
         pack_response doc_id, slide, callback
 
-  url_from_public_url: (slide, callback) ->
+  url_from_public_url: (slide, public_url, callback) ->
     slide_number = @to_slide_number slide.url
 
-    return callback("Invalid URL") if !utils.is_url_valid(slide.public_url)
+    return callback("Invalid URL") if !utils.is_url_valid(public_url)
 
-    public_url = slide.public_url = clean_url(slide.public_url)
+    public_url = clean_url(public_url)
 
     if @slideshare_url_to_slideshows[public_url]?
       slideshow = @slideshare_url_to_slideshows[public_url]
@@ -78,7 +77,7 @@ class SlideShare
       return callback(ss.SlideShareServiceError.Message["$t"]) if ss.SlideShareServiceError?
 
       slideshow = ss.Slideshow
-      @slideshare_url_to_slideshows[slide.public_url] = slideshow
+      @slideshare_url_to_slideshows[public_url] = slideshow
       callback undefined, make_url(slideshow.PPTLocation, slide_number), slideshow
 
   change_slide_number: (old_url, slide_number) ->

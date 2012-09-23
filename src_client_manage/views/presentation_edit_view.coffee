@@ -284,15 +284,14 @@ class PresentationEditView extends Backbone.View
 
     selector = $MODEL_SELECTOR_OF_SLIDE($elem)
 
-    @model.set("#{selector}.public_url", public_url)
-
     backend = _.find @slide_backends, (backend) -> backend.handle(public_url)
     slide = @model.get(selector)
 
-    backend.url_from_public_url slide, (err, new_url) =>
+    backend.url_from_public_url slide, public_url, (err, new_url) =>
       return views.alert(err) if err?
 
       @model.set("#{selector}.url", new_url)
+      @model.set("#{selector}.public_url", public_url)
 
       backend.slide_info slide, (err, slide, slide_info) =>
         return views.alert(err) if err?

@@ -59,12 +59,11 @@ class PresentationNewView extends Backbone.View
     url = $elem.val()
     return if url is ""
 
-    url = "http://#{url}" unless _.str.startsWith(url, "http")
     $thumb_container = $(".slide_thumb", @$el)
     $thumb_container.empty()
     $thumb_container.html("Fetching info...")
     backend = _.find @slide_backends, (backend) -> backend.handle(url)
-    backend.slideshow_info url, (err, slide, slideshow_info) =>
+    backend.slideshow_info url, (err, slideshow_info) =>
       $thumb_container.empty()
       @slideshow = null
 
