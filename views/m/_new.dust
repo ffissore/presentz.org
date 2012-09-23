@@ -18,7 +18,7 @@
 !}
 <div class="row-fluid">
   <form class="span6">
-    <input name="slide_url" type="text" class="input-xxlarge" placeholder="Slideshare URL">
+    <input name="slide_url" type="text" class="input-xxlarge" placeholder="Slides URL">
   </form>
   <div class="slide_thumb span4"></div>
 </div>

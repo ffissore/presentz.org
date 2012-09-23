@@ -239,14 +239,16 @@ class PresentationEditView extends Backbone.View
         views.alert err, () ->
           $elem.focus()
         return
-      slide.slide_thumb = slide_info.slide_thumb if slide_info.slide_thumb?
 
-      $slide_thumb = $SLIDE_THUMB($SLIDE($CHAPTER_INDEX_OF($elem), $elem.attr("slide_index")))
-      $slide_thumb.attr("src", slide.slide_thumb)
-      dust.render "_#{$slide_thumb.attr("thumb_type")}_slide_thumb", { slide_thumb: $slide_thumb.attr("src")}, (err, out) ->
-        return views.alert(err) if err?
-
-        $slide_thumb.html out
+      if slide_info.slide_thumb?
+        slide.slide_thumb = slide_info.slide_thumb
+  
+        $slide_thumb = $SLIDE_THUMB($SLIDE($CHAPTER_INDEX_OF($elem), $elem.attr("slide_index")))
+        $slide_thumb.attr("src", slide.slide_thumb)
+        dust.render "_#{$slide_thumb.attr("thumb_type")}_slide_thumb", { slide_thumb: $slide_thumb.attr("src")}, (err, out) ->
+          return views.alert(err) if err?
+  
+          $slide_thumb.html out
 
   onchange_slide_time: (event) ->
     $elem = $(event.target)
@@ -296,14 +298,15 @@ class PresentationEditView extends Backbone.View
       backend.slide_info slide, (err, slide, slide_info) =>
         return views.alert(err) if err?
 
-        slide.slide_thumb = slide_info.slide_thumb if slide_info.slide_thumb?
-        $slide_thumb = $SLIDE_THUMB($SLIDE($CHAPTER_INDEX_OF($elem), $elem.attr("slide_index")))
-        $slide_thumb.attr("src", slide.slide_thumb)
-        $slide_thumb.attr("thumb_type", backend.thumb_type_of(slide.url))
-        dust.render "_#{$slide_thumb.attr("thumb_type")}_slide_thumb", { slide_thumb: $slide_thumb.attr("src")}, (err, out) ->
-          return views.alert(err) if err?
-
-          $slide_thumb.html out
+        if slide_info.slide_thumb?
+          slide.slide_thumb = slide_info.slide_thumb
+          $slide_thumb = $SLIDE_THUMB($SLIDE($CHAPTER_INDEX_OF($elem), $elem.attr("slide_index")))
+          $slide_thumb.attr("src", slide.slide_thumb)
+          $slide_thumb.attr("thumb_type", backend.thumb_type_of(slide.url))
+          dust.render "_#{$slide_thumb.attr("thumb_type")}_slide_thumb", { slide_thumb: $slide_thumb.attr("src")}, (err, out) ->
+            return views.alert(err) if err?
+  
+            $slide_thumb.html out
 
   save: () ->
     @model.save()

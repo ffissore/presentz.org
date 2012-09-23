@@ -20,7 +20,7 @@ class PresentationNewView extends Backbone.View
 
   check_if_time_to_start: () ->
     $button = $("button", @$el)
-    if @video? and @slideshow?
+    if @video? and @slideshow? and @title? and @title isnt ""
       $button.removeClass("disabled")
       $button.attr("disabled", false)
     else
@@ -88,6 +88,7 @@ class PresentationNewView extends Backbone.View
   onchange_title: (event) ->
     $elem = $(event.target)
     @title = $elem.val()
+    @check_if_time_to_start()
 
   onclick_start: () ->
     backend = _.find @slide_backends, (backend) => backend.handle(@slideshow.url)

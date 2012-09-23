@@ -8,7 +8,7 @@ exec_for_each = (callable, elements, callback) ->
       return callback(undefined, elements) if exec_times is elements.length
 
 cut_string_at = (str, size) ->
-  if str.length > size + 3
+  if str? and str.length > size + 3
     return "#{str.substring(0, size)}..."
   str
 

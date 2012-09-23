@@ -35,7 +35,7 @@ new_js_conf = (suffix, files) ->
       ]
     postManipulate:
       "^": [
-        assetHandler.uglifyJsOptimize
+        #assetHandler.uglifyJsOptimize
       ]
   return conf
 
@@ -115,6 +115,7 @@ assetsMiddleware = assetManager
     "views/m/_reset_thumb.dust"
     "views/m/_img_slide_thumb.dust"
     "views/m/_swf_slide_thumb.dust"
+    "views/m/_none_slide_thumb.dust"
     "views/m/_new.dust"
     "views/m/_slide_times_preview.dust"
     "views/m/_confirm_slide_delete.dust"
@@ -125,6 +126,7 @@ assetsMiddleware = assetManager
     "src_client_manage/namespaces.coffee"
     "src_client_manage/slide_backends/utils.coffee"
     "src_client_manage/slide_backends/slideshare.coffee"
+    "src_client_manage/slide_backends/speakerdeck.coffee"
     "src_client_manage/slide_backends/dummy.coffee"
     "src_client_manage/video_backends/youtube.coffee"
     "src_client_manage/video_backends/vimeo.coffee"

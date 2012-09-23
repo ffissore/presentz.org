@@ -31,6 +31,9 @@ class Speakerdeck
         url: new_url
         public_url: public_url
       callback undefined, slide
+  
+  slide_info: (slide, callback) ->
+    callback(undefined, slide, slide)
 
   url_from_public_url: (slide, public_url, callback) ->
     slide_number = @to_slide_number slide.url
