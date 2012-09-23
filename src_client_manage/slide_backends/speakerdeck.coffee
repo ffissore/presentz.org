@@ -17,7 +17,7 @@ class Speakerdeck
   to_thumb: (url) ->
     number = @to_slide_number(url)
     data_id = @to_data_id(url)
-    "https://speakerd.s3.amazonaws.com/presentations/#{data_id}/slide_#{number - 1}.jpg"
+    "https://speakerd.s3.amazonaws.com/presentations/#{data_id}/thumb_slide_#{number - 1}.jpg"
 
   clean_url = (url) ->
     url = Uri(url)

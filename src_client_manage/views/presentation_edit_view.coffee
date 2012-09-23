@@ -294,6 +294,8 @@ class PresentationEditView extends Backbone.View
 
       @model.set("#{selector}.url", new_url)
       @model.set("#{selector}.public_url", public_url)
+      
+      slide._plugin = @prsntz.findSlidePlugin(slide)
 
       backend.slide_info slide, (err, slide, slide_info) =>
         return views.alert(err) if err?
@@ -462,6 +464,7 @@ class PresentationEditView extends Backbone.View
     new_slide._index = new_index
     new_slide._onebased_index = new_slide._index + 1
     new_slide.time = new_time
+    new_slide._plugin = @prsntz.findSlidePlugin(new_slide)
 
     slides = @model.get("chapters.0.slides")
     slides.splice(new_index, 0, new_slide)
