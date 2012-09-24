@@ -2,6 +2,7 @@ class Speakerdeck
 
   constructor: (@presentzSpeakerdeck) ->
     @public_url_data_id = {}
+    @import_file_value_column = "Slide Index"
 
   handle: (url) ->
     @presentzSpeakerdeck.handle url: url
@@ -82,5 +83,11 @@ class Speakerdeck
 
   change_slide_number: (old_url, slide_number) ->
     old_url.substring(0, old_url.lastIndexOf("#") + 1).concat(slide_number)
+
+  check_slide_value_from_import: (slide, slide_number, callback) ->
+    callback()
+
+  set_slide_value_from_import: (slide, slide_number) ->
+    slide.url = @change_slide_number(slide.url, slide_number)
 
 @slide_backends.Speakerdeck = Speakerdeck

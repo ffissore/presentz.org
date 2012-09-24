@@ -13,6 +13,8 @@ $MODEL_SELECTOR_OF_SLIDE = ($elem) ->
   chapter_index = $CHAPTER_INDEX_OF($elem)
   slide_index = $elem.attr("slide_index")
   "chapters.#{chapter_index}.slides.#{slide_index}"
+$ADVANCED_USER = () -> $("#advanced_user")
+$ADVANCED_USER_DATA_PREVIEW = () -> $("#advanced_user_data_preview")
 
 change_simple_field = (self, fieldname, event) ->
   $elem = $(event.target)
@@ -53,6 +55,9 @@ class PresentationEditView extends Backbone.View
         views.alert("Error: (#{error.status}): #{error.responseText}")
       else if error.message?
         views.alert("Error: #{error.message}")
+
+    $ADVANCED_USER().modal(show: false)
+    $ADVANCED_USER_DATA_PREVIEW().modal(show: false)
 
   init_presentz: (presentation, first) ->
     @prsntz.init(presentation)
@@ -323,8 +328,8 @@ class PresentationEditView extends Backbone.View
     false
 
   onclick_advanced_user: () ->
-    $helper.advanced_user_data_preview().modal "hide"
-    $helper.advanced_user().modal "show"
+    $ADVANCED_USER_DATA_PREVIEW().modal("hide")
+    $ADVANCED_USER().modal("show")
     false
 
   onchange_slide_times_file: (event) ->
@@ -346,46 +351,49 @@ class PresentationEditView extends Backbone.View
       for row in rows
         match = /(.+),(.+)/.exec(row)
         if match? and match.length >= 3
-          @data.push time: parseInt(match[1]), value: match[2]
+          @data.push time: parseFloat(match[1]), value: match[2]
 
-      $helper.advanced_user().modal("hide")
-      $helper.advanced_user_data_preview().modal("show")
+      $ADVANCED_USER().modal("hide")
+      $ADVANCED_USER_DATA_PREVIEW().modal("show")
       first_slide_url = @model.get("chapters.0.slides.0.url")
       backend = _.find @slide_backends, (backend) -> backend.handle(first_slide_url)
 
       dust.render "_slide_times_preview", { value_type: backend.import_file_value_column, data: @data }, (err, out) ->
         return alert(err) if err?
-        $(".modal-body", $helper.advanced_user_data_preview()).html(out)
+        $(".modal-body", $ADVANCED_USER_DATA_PREVIEW()).html(out)
         views.disable_forms()
 
     reader.readAsText(file)
 
   onclick_confirm_data_import: () ->
     slides = @model.get("chapters.0.slides")
+    first_slide = slides[0]
+    
+    backend = _.find @slide_backends, (backend) -> backend.handle(first_slide.url)
+    
     check_import_data = (callback) =>
       checked = 0
-      for slide, idx in slides when idx < @data.length
-        data_for_slide = @data[idx]
-        backend = _.find @slide_backends, (backend) -> backend.handle(slide.url)
-        backend.check_slide_value_from_import slide, data_for_slide.value, (err) =>
+      for slide_data, idx in @data
+        backend.check_slide_value_from_import first_slide, slide_data.value, (err) =>
           return callback(err) if err?
           checked++
           return callback() if checked is @data.length
 
-    check_import_data (err) ->
+    check_import_data (err) =>
       if err?
-        $helper.advanced_user_data_preview().modal("hide")
+        $ADVANCED_USER_DATA_PREVIEW().modal("hide")
         alert(err)
         return
 
-      for slide, idx in slides when idx < @data.length
-        data_for_slide = @data[idx]
-        slide.time = data_for_slide.time
-        backend = _.find @slide_backends, (backend) -> backend.handle(slide.url)
-        backend.set_slide_value_from_import(slide, data_for_slide.value)
+      
+      for slide_data, idx in @data
+        slide = backend.make_new_from(first_slide)
+        slide.time = slide_data.time
+        backend.set_slide_value_from_import(slide, slide_data.value)
+        slides[idx] = slide
 
       @model.set("chapters.0.slides", slides)
-      $helper.advanced_user_data_preview().modal("hide")
+      $ADVANCED_USER_DATA_PREVIEW().modal("hide")
       @render()
 
   onclick_slide_delete: (event) ->

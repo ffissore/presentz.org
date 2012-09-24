@@ -35,6 +35,7 @@ class Dummy
 
   set_slide_value_from_import: (slide, slide_url) ->
     slide.url = slide_url
+    slide.public_url = slide_url
 
   check_slide_value_from_import: (slide, slide_number, callback) ->
     callback()
