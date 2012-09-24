@@ -12,7 +12,7 @@ class Dummy
   slide_info: (slide, callback) ->
     if utils.is_url_valid(slide.url)
       slide.slide_thumb = slide.url
-      callback undefined, slide
+      callback undefined, slide, slide
     else
       callback("Invalid URL: '#{slide.url}'")
 
@@ -20,7 +20,7 @@ class Dummy
     slide_backends.make_new_slide(slideshow.url, 0)
 
   slideshow_info: (url, callback) ->
-    url = "http://#{url}" unless url.indexOf("http") isnt 0
+    url = "http://#{url}" unless _.str.startsWith(url, "http")
     @slide_info url: url, callback
 
   url_from_public_url: (slide, public_url, callback) ->

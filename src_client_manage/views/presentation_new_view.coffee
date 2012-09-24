@@ -68,7 +68,7 @@ class PresentationNewView extends Backbone.View
       @slideshow = null
 
       if err?
-        $thumb_container.html("<div class=\"alert alert-error\">This URL does not look good</div>")
+        $thumb_container.html("<div class=\"alert alert-error\">This URL does not look good (#{err})</div>")
         return
 
       $thumb_container.html("<p>Looks good! Here is the first slide.</p>")
