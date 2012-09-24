@@ -30,6 +30,11 @@ h4 {
     background-color: #cdcdcd;
 }
 
+.revealjs {
+    width: 450px;
+    height: 400px;
+}
+
 input.title-input {
     font-size: 25px;
     height: 25px;
