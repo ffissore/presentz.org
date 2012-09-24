@@ -433,6 +433,7 @@ class PresentationEditView extends Backbone.View
     $("#slide_delete_confirm").modal("hide")
     false
 
+  ###
   onclick_set_time: (event) ->
     @prsntz.pause()
 
@@ -443,6 +444,7 @@ class PresentationEditView extends Backbone.View
     $slide_time_elem = $("input.slide_time", $SLIDES().getMovingBoxes().$curPanel)
     @onchange_slide_time(target: $slide_time_elem)
     false
+  ###
 
   onclick_add_slide: () ->
     @prsntz.pause()
@@ -492,7 +494,7 @@ class PresentationEditView extends Backbone.View
 
   events:
     "click a.play_pause_btn": "onclick_playpause"
-    "click a.set_time_btn": "onclick_set_time"
+    #"click a.set_time_btn": "onclick_set_time"
     "click a.add_slide_btn": "onclick_add_slide"
     #"click a.hei_advanced": "onclick_advanced_user"
     #"click #advanced_user_data_preview button.btn-danger": "onclick_advanced_user"
