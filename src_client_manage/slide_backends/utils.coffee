@@ -4,6 +4,8 @@ make_new_slide = (url, time, public_url) ->
     time: time
   if public_url?
     new_slide.public_url = public_url
+  else
+    new_slide.public_url = new_slide.url
   new_slide
 
 @slide_backends.make_new_slide = make_new_slide
