@@ -69,7 +69,7 @@ class Speakerdeck
   make_new_from: (slide) ->
     data_id = @to_data_id(slide.url)
     if $("iframe.speakerdeck-iframe").length > 0
-      slide_number = @presentzSpeakerdeck.currentSlide + 1
+      slide_number = @presentzSpeakerdeck.currentSlide
     else
       slide_number = @to_slide_number(slide.url)
 
