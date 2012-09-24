@@ -29,22 +29,25 @@ class SlideShare
   slideshow_info: (public_url, callback) ->
     public_url = "http://#{public_url}" unless _.str.startsWith(public_url, "http://")
     public_url = clean_url(public_url)
-    @url_from_public_url url: "#{public_url}#1", public_url: public_url, (err, url, slideshow) =>
+    @url_from_public_url url: "#{public_url}#1", public_url, (err, url, slideshow) =>
       return callback(err) if err?
-
+      
       slide =
         url: url
         public_url: public_url
       @slide_info slide, (err, slide, slide_info) ->
         return callback(err) if err?
-        slide.title = slideshow.title
+        slide.title = slideshow.Title
+        slide.public_url = slide_info.public_url
+        slide.number = slide_info.number
+        slide.slide_thumb = slide_info.slide_thumb
         callback undefined, slide
 
   slide_info: (slide, callback) ->
     doc_id = @to_doc_id slide.url
 
     pack_response = (doc_id, slide, callback) =>
-      number = @to_slide_number slide.url
+      number = @to_slide_number(slide.url)
       slides = @slideshare_infos[doc_id].Show.Slide
       return callback("Invalid slide number #{number} (last slide is number is #{slides.length})") if number > slides.length
 
