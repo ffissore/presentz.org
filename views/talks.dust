@@ -7,7 +7,11 @@
       {?logo}
         <div id="ico_item_category" class="box1">
           <div class="box_over">
-            <a href="javascript:void(0)"></a>
+            {?website}
+              <a href="{.website}" target="_blank"></a>
+            {:else}
+              <a href="javascript:void(0)"></a>
+            {/website}
           </div>
           <div class="img_category">
             <img src="{.logo}" alt="{.name}" /></a>
