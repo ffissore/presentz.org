@@ -20,7 +20,7 @@ db.open (err) ->
 
       catalog =
         name: "Toolbox Coworking"
-        logo: "/assets/codemotion12/banner130x130.gif"
+        logo: "/assets/toolbox/logo.png"
         website: "http://www.toolboxoffice.it/"
         _type: "catalog"
         id: "toolbox"
