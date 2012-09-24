@@ -1,4 +1,4 @@
-<input class="title-input" type="text" value="{.title}" />
+<input class="title-input" type="text" value="{.title}"/>
 {#chapters}
 <span class="chapter" id="chapter{@idx}{.}{/idx}" chapter_index="{@idx}{.}{/idx}">
   {!<h3>Chapter {#onebased}{.}{/onebased}</h3>!}
@@ -52,11 +52,16 @@
             <a title="Add a slide at this time" href="#" class="add_slide_btn add_slide">slide</a>
           </li>
         </ul>
-        {!<small><a href="#" class="hei_advanced">Hei! I'm an advanced user and this thing is way too slow!</a></small>!}
       </div>
     </div>
     <div class="span5">
       <div id="slide"></div>
+    </div>
+  </div>
+  <div class="row-fluid">
+    <div class="span4 offset4">
+      <p></p>
+      <small><p><a href="#" class="hei_advanced">Hei! I'm an advanced user and this thing is way too slow!</a></p></small>
     </div>
   </div>
   <h4 class="slides">Slides</h4>

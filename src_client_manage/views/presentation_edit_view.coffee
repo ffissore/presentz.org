@@ -322,7 +322,6 @@ class PresentationEditView extends Backbone.View
       @prsntz.pause()
     false
 
-  ###
   onclick_advanced_user: () ->
     $helper.advanced_user_data_preview().modal "hide"
     $helper.advanced_user().modal "show"
@@ -388,7 +387,6 @@ class PresentationEditView extends Backbone.View
       @model.set("chapters.0.slides", slides)
       $helper.advanced_user_data_preview().modal("hide")
       @render()
-  ###
 
   onclick_slide_delete: (event) ->
     $elem = $(event.target)
@@ -496,10 +494,10 @@ class PresentationEditView extends Backbone.View
     "click a.play_pause_btn": "onclick_playpause"
     #"click a.set_time_btn": "onclick_set_time"
     "click a.add_slide_btn": "onclick_add_slide"
-    #"click a.hei_advanced": "onclick_advanced_user"
-    #"click #advanced_user_data_preview button.btn-danger": "onclick_advanced_user"
-    #"click #advanced_user_data_preview button.btn-success": "onclick_confirm_data_import"
-    #"change input[type=file]": "onchange_slide_times_file"
+    "click a.hei_advanced": "onclick_advanced_user"
+    "click #advanced_user_data_preview button.btn-danger": "onclick_advanced_user"
+    "click #advanced_user_data_preview button.btn-success": "onclick_confirm_data_import"
+    "change input[type=file]": "onchange_slide_times_file"
 
     "change input[name=speaker]": "onchange_speaker"
     "change input[name=time]": "onchange_time"
