@@ -123,9 +123,7 @@ class PresentationEditView extends Backbone.View
           $("input[name=time]").datepicker(dateFormat: "yymmdd")
 
           $SLIDES().movingBoxes
-            startPanel: 1
-            reducedSize: 0.8
-            wrap: false
+            reducedSize: 1
             buildNav: true
             hashTags: false
             fixedHeight: true
