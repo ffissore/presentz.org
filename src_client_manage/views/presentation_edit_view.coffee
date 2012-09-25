@@ -90,6 +90,8 @@ class PresentationEditView extends Backbone.View
     for chapter in @model.attributes.chapters
       for slide, idx in chapter.slides
         slides.push slide
+        
+    ctx.advanced = slides.length <= 1
 
     load_slides_info = (slides, callback) =>
       slide = slides.pop()

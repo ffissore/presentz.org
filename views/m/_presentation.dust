@@ -58,12 +58,14 @@
       <div id="slide"></div>
     </div>
   </div>
+  {?advanced}
   <div class="row-fluid">
     <div class="span4 offset4">
       <p></p>
       <small><p><a href="#" class="hei_advanced">Hei! I'm an advanced user and this thing is way too slow!</a></p></small>
     </div>
   </div>
+  {/advanced}
   <h4 class="slides">Slides</h4>
   <div class="slides">
     {#slides}
@@ -101,15 +103,6 @@
   </div>
   <div class="modal-body">
     <p>If you like to be fast, synchronize this presentation on your computer, that is: play the video file with <a href="http://www.mplayerhq.hu/" target="_blank">MPlayer</a> or <a href="http://www.videolan.org/" target="_blank">VLC</a> and write down which slide is shown when.</p>
-    {!
-    <p>You should make a text file (.txt or .csv) with the following format:</p>
-    <ol>
-      <li>
-        <code>TIME_IN_SECONDS,SLIDE_INDEX</code>
-        <p></p>
-      </li>
-    </ol>
-    !}
     <p>You should make a text file (.txt or .csv) with one of the following format:</p>
     <ol>
       <li>
