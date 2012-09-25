@@ -27,7 +27,10 @@ h4 {
 
 #video, #slide {
     text-align: center;
+    vertical-align: middle;
     background-color: #cdcdcd;
+    border: 5px solid #cdcdcd;
+    border-radius: 5px 5px 5px 5px;
 }
 
 .revealjs {
