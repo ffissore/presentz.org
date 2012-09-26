@@ -65,15 +65,19 @@ $().ready () ->
     $play_home.click ->
       document.location = "/r/talks.html"
 
-  $link_demos_link_learn_more = $("#link_demos, .link_demos, #link_learn_more")
+  $link_demos_link_learn_more = $("#link_demos, .link_demos, #link_learn_more, #link_make_your_own, .link_make_your_own")
   $link_demos_link_learn_more.unbind "click"
   $link_demos_link_learn_more.bind "click", (e) ->
-    e.preventDefault()
-    $.scrollTo.window().queue([]).stop()
-    $.scrollTo $(e.target).attr("href"), 1200,
-      easing: "easeInOutQuart",
-      offset:
-        top: -60
+    href = $(e.target).attr("href")
+    if href.indexOf("/") is 0
+      href = href.substr(1)
+    if $(href).length > 0
+      e.preventDefault()
+      $.scrollTo.window().queue([]).stop()
+      $.scrollTo href, 1200,
+        easing: "easeInOutQuart",
+        offset:
+          top: -60
 
   $link_login_link_in_comment = $("#link_login, #link_login_in_comment")
   $link_login_link_in_comment.unbind "click"
@@ -114,5 +118,8 @@ $().ready () ->
     
   if document.location.search is "?access_denied"
     $link_login_link_in_comment.click()
+    
+  if document.location.hash.indexOf("#make_your_own") isnt -1 and $(document.location.hash).length > 0
+    $(window).scrollTop($(document.location.hash).offset().top - 60)
     
   return
