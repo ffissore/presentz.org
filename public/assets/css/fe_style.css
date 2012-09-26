@@ -345,6 +345,10 @@ header h1 a {
     margin-top: -17px;
 }
 
+#home p.wrapper_learn_more.last {
+    background-repeat: no-repeat;
+}
+
 .wrapper_learn_more span {
     display: inline-block;
     padding: 0px 7px;

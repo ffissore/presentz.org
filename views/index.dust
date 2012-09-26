@@ -15,7 +15,7 @@
         <br />
         <a href="#learn1" id="link_learn_more">Learn More</a>
       </p>
-      <p class="wrapper_learn_more box3">
+      <p class="wrapper_learn_more last box3">
         <span>and</span>
         <br />
         <a href="#make_your_own" id="link_make_your_own">Make Your Own</a>
