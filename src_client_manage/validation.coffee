@@ -1,3 +1,5 @@
+"use strict"
+
 validate = (presentation, options) ->
   return if options.skip_validation
   

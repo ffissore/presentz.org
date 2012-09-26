@@ -1,3 +1,5 @@
+"use strict"
+
 class NavigationView extends Backbone.View
 
   el: $(".navbar > .navbar-inner > .container > .nav-collapse > .nav:first")

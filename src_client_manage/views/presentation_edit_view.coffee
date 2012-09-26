@@ -1,3 +1,5 @@
+"use strict"
+
 $SLIDES = () -> $("div.slides")
 $SLIDE_CONTAINERS = () -> $("div.row-fluid[slide_index]")
 $SLIDE_THUMB = ($elem) -> $("div.slide_thumb", $elem)
@@ -33,6 +35,7 @@ rebuild_slide_indexes = ($slides) ->
       $(subelem).attr("slide_index", slide_index)
     $("[placeholder]", $elem).each (idx, subelem) ->
       $(subelem).attr("placeholder", "Slide #{slide_index + 1}")
+  return
 
 class PresentationEditView extends Backbone.View
 
@@ -58,6 +61,7 @@ class PresentationEditView extends Backbone.View
 
     $ADVANCED_USER().modal(show: false)
     $ADVANCED_USER_DATA_PREVIEW().modal(show: false)
+    return
 
   init_presentz: (presentation, first) ->
     @prsntz.init(presentation)
@@ -80,6 +84,7 @@ class PresentationEditView extends Backbone.View
     @prsntz.on "play", show_pause
     @prsntz.on "pause", show_play
     @prsntz.on "finish", show_play
+    return
 
   render: () ->
     views.scroll_top()
@@ -228,6 +233,7 @@ class PresentationEditView extends Backbone.View
     selector = $MODEL_SELECTOR_OF_SLIDE($elem)
 
     @model.set("#{selector}.title", $elem.val())
+    false
 
   onchange_slide_number: (event) ->
     $elem = $(event.target)
@@ -254,6 +260,7 @@ class PresentationEditView extends Backbone.View
           return views.alert(err) if err?
   
           $slide_thumb.html out
+    false
 
   onchange_slide_time: (event) ->
     $elem = $(event.target)
@@ -283,6 +290,7 @@ class PresentationEditView extends Backbone.View
     $SLIDES().movingBoxes()
     $SLIDES().movingBoxes(dest_index + 1)
     rebuild_slide_indexes($SLIDES_OF_CHAPTER(chapter_index))
+    false
 
   onchange_slide_public_url: (event) ->
     $elem = $(event.target)
@@ -314,6 +322,7 @@ class PresentationEditView extends Backbone.View
             return views.alert(err) if err?
   
             $slide_thumb.html out
+    false
 
   save: () ->
     @model.save()
@@ -364,6 +373,7 @@ class PresentationEditView extends Backbone.View
         views.disable_forms()
 
     reader.readAsText(file)
+    return
 
   onclick_confirm_data_import: () ->
     slides = @model.get("chapters.0.slides")
@@ -384,7 +394,6 @@ class PresentationEditView extends Backbone.View
         $ADVANCED_USER_DATA_PREVIEW().modal("hide")
         alert(err)
         return
-
       
       for slide_data, idx in @data
         slide = backend.make_new_from(first_slide)
@@ -395,6 +404,7 @@ class PresentationEditView extends Backbone.View
       @model.set("chapters.0.slides", slides)
       $ADVANCED_USER_DATA_PREVIEW().modal("hide")
       @render()
+    return
 
   onclick_slide_delete: (event) ->
     $elem = $(event.target)

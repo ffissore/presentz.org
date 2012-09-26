@@ -1,3 +1,5 @@
+"use strict"
+
 class AppRouter extends Backbone.Router
 
   initialize: (@app_view) ->

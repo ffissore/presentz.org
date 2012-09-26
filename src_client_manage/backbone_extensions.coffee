@@ -1,3 +1,5 @@
+"use strict"
+
 Backbone.DeepModel::_upstream_set = Backbone.DeepModel::set
 Backbone.Model::_upstream_set = Backbone.Model::set
 

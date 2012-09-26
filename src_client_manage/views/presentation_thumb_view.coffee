@@ -1,3 +1,5 @@
+"use strict"
+
 class PresentationThumbView extends Backbone.View
 
   tagName: "li"

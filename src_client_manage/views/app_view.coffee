@@ -1,3 +1,5 @@
+"use strict"
+
 class AppView extends Backbone.View
 
   dirty: false

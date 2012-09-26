@@ -1,3 +1,5 @@
+"use strict"
+
 class Presentation extends Backbone.DeepModel
 
   urlRoot: "/m/api/presentations/"
@@ -11,19 +13,21 @@ class Presentation extends Backbone.DeepModel
     _.bindAll(@)
 
     @bind "change", () ->
-      unless @loaded
-        for chapter, chapter_idx in @get("chapters")
-          chapter._index = chapter_idx
-          for slide, slide_idx in chapter.slides
-            slide._index = slide_idx
-            slide._onebased_index = slide_idx + 1
-        @loaded = true
+      @loaded = true
+      for chapter, chapter_idx in @get("chapters")
+        chapter._index ?= chapter_idx
+        for slide, slide_idx in chapter.slides
+          slide._index ?= slide_idx
+          slide._onebased_index ?= slide_idx + 1
+      return
 
     keys = (key for key, value of @attributes)
 
     if keys.length > 1
       @set "id", utils.generate_id(@get("title"))
       @trigger("change", @, {})
+    
+    return
 
   toJSON: () ->
     presentation = $.extend true, {}, @attributes
@@ -44,6 +48,8 @@ class Presentation extends Backbone.DeepModel
         delete_slides(slides, callback)
       error: () ->
         views.alert("An error occured while deleting the slides")
+    
+    return
 
   save: (attributes, options) ->
     options ||= {}

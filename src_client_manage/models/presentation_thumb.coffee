@@ -1,3 +1,5 @@
+"use strict"
+
 class PresentationThumb extends Backbone.DeepModel
 
   initialize: () ->

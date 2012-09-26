@@ -1,3 +1,5 @@
+"use strict"
+
 jQuery () ->
   ###
   prsntz = new Presentz("#video", "460x420", "#slide", "460x420")

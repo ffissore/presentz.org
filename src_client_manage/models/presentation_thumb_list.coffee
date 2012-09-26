@@ -1,3 +1,5 @@
+"use strict"
+
 class PresentationThumbList extends Backbone.Collection
 
   url: "/m/api/presentations"

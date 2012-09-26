@@ -1,3 +1,5 @@
+"use strict"
+
 loader_shown = true
 
 scroll_top = () ->

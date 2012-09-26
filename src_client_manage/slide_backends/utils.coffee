@@ -1,3 +1,5 @@
+"use strict"
+
 make_new_slide = (url, time, public_url) ->
   new_slide =
     url: url
