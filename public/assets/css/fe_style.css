@@ -331,7 +331,13 @@ header h1 a {
     text-indent: -999999px;
 }
 
-#home p#wrapper_learn_more {
+#home p.wrapper_learn_more {
+    background-image: data-url(../../assets/img/fe/border_demos.png);
+    background-position: bottom left;
+    background-repeat: repeat-x;
+    float: none;
+    margin: 0 auto;
+    padding-bottom: 14px;
     font-size: 14px;
     font-family: 'ChivoItalic';
     text-shadow: 0px 1px 0px #003366;
@@ -339,7 +345,7 @@ header h1 a {
     margin-top: -17px;
 }
 
-#wrapper_learn_more span {
+.wrapper_learn_more span {
     display: inline-block;
     padding: 0px 7px;
     background-image: data-url(../../assets/img/fe/home_pattern.jpg);
@@ -347,7 +353,7 @@ header h1 a {
     background-repeat: no-repeat;
 }
 
-#wrapper_learn_more a {
+.wrapper_learn_more a {
     color: #FFFFFF;
     text-decoration: none;
     font-size: 16px;

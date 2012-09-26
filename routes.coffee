@@ -22,7 +22,7 @@ list_catalogs = (req, res, next) ->
 
     res.render "catalogs",
       title: "Presentz talks"
-      css_section_talks: "class=\"selected\""
+      css_section_talks: "selected"
       catalogs: catalogs
       list: draw_6_boxes
 
@@ -255,7 +255,7 @@ static_view = (view_name) ->
   return (req, res) ->
     options =
       title: "Presentz"
-    options["css_section_#{view_name}"] = "class=\"selected\""
+    options["css_section_#{view_name}"] = "selected"
     res.render view_name, options
 
 ensure_is_logged = (req, res, next) ->

@@ -10,7 +10,16 @@
       <div id="wrapper_link_demos" class="box3">
         <a href="#demo_home" id="link_demos">View the demos</a>
       </div>
-      <p id="wrapper_learn_more"><span>or</span> <br /> <a href="#learn1" id="link_learn_more">Learn More</a></p>
+      <p class="wrapper_learn_more box3">
+        <span>or</span>
+        <br />
+        <a href="#learn1" id="link_learn_more">Learn More</a>
+      </p>
+      <p class="wrapper_learn_more box3">
+        <span>and</span>
+        <br />
+        <a href="#make_your_own" id="link_make_your_own">Make Your Own</a>
+      </p>
     </div>
     <div class="box8">
       <span id="ico_play_home"></span>
@@ -22,6 +31,19 @@
   <div class="main">
     <div class="box6" id="learn1">
       <h3>Learn More</h3>
+      <div class="testo">
+        <p>
+          Presentz is a mashup, as it merges things like Vimeo, Youtube, Blip.tv and Slideshare. But you can use images and video files as well, unleashing the HTML5 video tag power.
+        </p>
+        <p>
+          Presentz is a work-in-progress. Soon there will be an editor, while more video and slide backends will be supported.
+        </p>
+        <p>
+          For now, <a href="mailto:federico^_^AT^_^presentz.org">drop an email</a> and ask questions, take a look at the <a class="link_demos" href="#demo_home">demo talks</a> or enjoy the <a href="/jugtorino">JUG Torino</a>, the <a href="/iad11">8th Italian Agile Day</a> and the <a href="/codemotion12">Codemotion 2012</a>  talks.
+        </p>
+        <p>&nbsp;</p>
+      </div>
+      <h3>Make your own</h3>
       <div class="testo">
         <p>
           Presentz is a mashup, as it merges things like Vimeo, Youtube, Blip.tv and Slideshare. But you can use images and video files as well, unleashing the HTML5 video tag power.
