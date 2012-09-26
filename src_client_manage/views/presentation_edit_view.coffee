@@ -145,6 +145,8 @@ class PresentationEditView extends Backbone.View
                 return views.alert(err) if err?
 
                 $slide_thumb.html out
+            initialized: () -> 
+              $SLIDES().getMovingBoxes().completed() if $SLIDES().children().length > 0
 
           @init_presentz(@model.attributes, true)
           views.disable_forms()
@@ -399,6 +401,8 @@ class PresentationEditView extends Backbone.View
         slide = backend.make_new_from(first_slide)
         slide.time = slide_data.time
         backend.set_slide_value_from_import(slide, slide_data.value)
+        if slides[idx]?
+          slide = $.extend(slides[idx], slide)
         slides[idx] = slide
 
       @model.set("chapters.0.slides", slides)
