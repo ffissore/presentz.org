@@ -1,3 +1,5 @@
+"use strict"
+
 exec_for_each = (callable, elements, callback) ->
   return callback(undefined, elements) if elements.length is 0
   exec_times = 0

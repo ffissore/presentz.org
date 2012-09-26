@@ -1,3 +1,5 @@
+"use strict"
+
 assetManager = require "connect-assetmanager"
 assetHandler = require "connect-assetmanager-handlers"
 coffee = require "coffee-script"

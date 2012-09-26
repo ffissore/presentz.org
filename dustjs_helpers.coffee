@@ -1,3 +1,5 @@
+"use strict"
+
 draw_boxes = (number_of_boxes) ->
   return (chunk, context, bodies) ->
     boxes = context.current()

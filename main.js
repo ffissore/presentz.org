@@ -1,3 +1,5 @@
+"use strict"
+
 require("coffee-script");
 require("./presentz.coffee");
 /*

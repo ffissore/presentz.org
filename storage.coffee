@@ -1,3 +1,5 @@
+"use strict"
+
 utils = require "./utils"
 _ = require "underscore"
 

@@ -1,3 +1,5 @@
+"use strict"
+
 http = require "http"
 https = require "https"
 xml2json = require "xml2json"

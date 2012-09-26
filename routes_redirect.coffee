@@ -1,3 +1,5 @@
+"use strict"
+
 redirect_to = (url) ->
   return (req, res, next) ->
     res.redirect 302, url

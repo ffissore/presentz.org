@@ -1,3 +1,5 @@
+"use strict"
+
 fs = require "fs"
 orient = require "orientdb"
 assert = require "assert"

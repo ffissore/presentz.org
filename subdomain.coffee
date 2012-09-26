@@ -1,3 +1,5 @@
+"use strict"
+
 express = require "express"
 redirect_routes = require "./routes_redirect"
 

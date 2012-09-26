@@ -1,3 +1,5 @@
+"use strict"
+
 find_presentation_data = () ->
   scripts = document.getElementsByTagName("script")
   for idx in [scripts.length - 1..0]

@@ -1,3 +1,5 @@
+"use strict"
+
 everyauth = require "everyauth"
 
 merge_facebook_user_data = (user, ext_user) ->

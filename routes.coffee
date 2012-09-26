@@ -1,3 +1,5 @@
+"use strict"
+
 _ = require "underscore"
 dateutil = require "dateutil"
 moment = require "moment"

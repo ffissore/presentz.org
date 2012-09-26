@@ -1,3 +1,5 @@
+"use strict"
+
 fs = require "fs"
 assert = require "assert"
 

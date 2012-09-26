@@ -1,3 +1,5 @@
+"use strict"
+
 assert = require "assert"
 utils = require("../utils")
 _s = require "underscore.string"

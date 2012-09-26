@@ -1,3 +1,5 @@
+"use strict"
+
 DemoScroller =
 
   displayItemNumber: 3

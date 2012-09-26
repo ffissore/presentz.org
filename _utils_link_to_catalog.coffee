@@ -1,3 +1,5 @@
+"use strict"
+
 orient = require "orientdb"
 assert = require "assert"
 

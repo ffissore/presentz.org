@@ -1,3 +1,5 @@
+"use strict"
+
 express = require "express"
 orient = require "orientdb"
 cons = require "consolidate"
