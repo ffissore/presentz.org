@@ -53,7 +53,7 @@ show_catalog = (req, res, next) ->
         presentations = presentations.reverse()
 
       res.render "talks",
-        title: "#{catalog.name} talks"
+        title: "#{catalog.name}"
         catalog: catalog
         presentations: presentations
         list: draw_4_boxes
