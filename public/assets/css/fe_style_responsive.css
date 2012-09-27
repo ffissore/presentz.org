@@ -116,7 +116,7 @@
     }
 
     .no_talks {
-        font-size: 20px;
+        font-size: 30px;
     }
 
     .testo p {
@@ -279,7 +279,6 @@
     }
 
     #talks_detail h3, .no_talks {
-        width: 400px;
         margin-top: 8px;
         margin-bottom: 15px;
     }

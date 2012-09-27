@@ -39,7 +39,10 @@
         {>_presentation_thumb/}
       {/list}
     {:else}
-      <span class="no_talks">There are no talks here!</span>
+      <span class="no_talks">
+        There are no talks here!
+        {?is_same_user} Start making one!{/is_same_user}
+      </span>
     {/presentations}
     <div class="clear"></div>
     <div class="clear"></div>

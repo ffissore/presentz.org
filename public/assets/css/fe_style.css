@@ -558,7 +558,7 @@ header h1 a {
     margin-top: 15px;
 }
 
-#talks_detail h3, .no_talks {
+#talks_detail h3 {
     width: 620px;
 }
 

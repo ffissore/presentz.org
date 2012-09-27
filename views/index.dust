@@ -46,13 +46,10 @@
       <h3 id="make_your_own">Make your own</h3>
       <div class="testo">
         <p>
-          Presentz is a mashup, as it merges things like Vimeo, Youtube, Blip.tv and Slideshare. But you can use images and video files as well, unleashing the HTML5 video tag power.
+          Start making your own presentations: as you <a id="link_login_hp" href="#">log in</a>, the "MAKE" button in the top menu will lead you to "Presentz Maker", our editor.
         </p>
         <p>
-          Presentz is a work-in-progress. Soon there will be an editor, while more video and slide backends will be supported.
-        </p>
-        <p>
-          For now, <a href="mailto:federico^_^AT^_^presentz.org">drop an email</a> and ask questions, take a look at the <a class="link_demos" href="#demo_home">demo talks</a> or enjoy the <a href="/jugtorino">JUG Torino</a>, the <a href="/iad11">8th Italian Agile Day</a> and the <a href="/codemotion12">Codemotion 2012</a>  talks.
+          Once done and published, your presentations will be listed on your personal page: log in and click on your name to see it.
         </p>
       </div>
     </div>

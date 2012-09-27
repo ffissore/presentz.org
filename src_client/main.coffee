@@ -79,7 +79,7 @@ $().ready () ->
         offset:
           top: -60
 
-  $link_login_link_in_comment = $("#link_login, #link_login_in_comment")
+  $link_login_link_in_comment = $("#link_login, #link_login_in_comment, #link_login_hp")
   $link_login_link_in_comment.unbind "click"
   $link_login_link_in_comment.bind "click", (e) ->
     e.preventDefault()

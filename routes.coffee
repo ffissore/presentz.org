@@ -75,9 +75,15 @@ show_catalog_of_user = (social) ->
           if presentations[0].time?
             presentations = presentations.reverse()
 
+        if req.user? and req.user.user_name is req.params.user_name
+          is_same_user = true
+        else
+          is_same_user = false
+        
         res.render "talks",
           title: "#{user.name}'s talks"
           presentations: presentations
+          is_same_user: is_same_user
           list: draw_4_boxes
 
 raw_presentation_from_catalog = (req, res, next) ->
