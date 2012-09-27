@@ -139,16 +139,44 @@ ul.play_pause {
 .play_pause li span.uneditable-input {
     margin-top: 8px;
     float: left;
+    text-align: center;
 }
 
 .play_pause a.play_pause_btn, .play_pause a.set_time, a.slide_delete, .play_pause a.add_slide {
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: 0 0;
     text-indent: -9999px;
+    float: left;
+}
+
+.play_pause a.play_pause_btn {
     height: 45px;
     width: 40px;
-    float: left;
     margin: 0 15px;
+}
+
+.play_pause a.play_pause_btn:hover {
+    background-position: -40px 0;
+}
+
+.play_pause a.add_slide {
+    height: 33px;
+    width: 33px;
+    margin-bottom: 8px;
+    margin-left: 20px;
+}
+
+a.slide_delete {
+    height: 33px;
+    width: 33px;
+}
+
+a.slide_delete:hover {
+    background-position: -33px 0;
+}
+
+.play_pause a.add_slide:hover {
+    background-position: -33px 0;
 }
 
 .chapter form.span9, .speaker form.span9 {
