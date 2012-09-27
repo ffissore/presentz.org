@@ -2,7 +2,7 @@
 
 {<body}
 <section id="home">
-  <a href="https://github.com/ffissore/presentz.js"><img class="github" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+  <a href="https://github.com/ffissore/presentz.js"><img width="149" height="149" class="github" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
   <div class="main">
     <div class="box4">
       <h2>Presentz</h2>
@@ -76,44 +76,44 @@
         <ul>
           <li class="box4 demo_thumb_item">
             <a href="/demo/05_youtube-slideshare" title="Demo: Youtube player, Slideshare player">Demo: Youtube player, Slideshare player</a>
-            <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_youtube.png" alt="youtube icon"/></span>
-            <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_slideshare.png" alt="slideshare icon"/></span>
+            <span class="demo_thumb_item_icon left"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_youtube.png" alt="youtube icon"/></span>
+            <span class="demo_thumb_item_icon right"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_slideshare.png" alt="slideshare icon"/></span>
             Youtube player, Slideshare player
           </li>
           <li class="box4 demo_thumb_item">
             <a href="/demo/03_vimeo-img" title="Demo: Vimeo player, images as slides">Demo: Vimeo player, images as slides</a>
-            <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_vimeo.png" alt="vimeo icon"/></span>
-            <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_images.png" alt="images icon"/></span>
+            <span class="demo_thumb_item_icon left"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_vimeo.png" alt="vimeo icon"/></span>
+            <span class="demo_thumb_item_icon right"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_images.png" alt="images icon"/></span>
             Vimeo player, images as slides
           </li>
           <li class="box4 demo_thumb_item">
             <a href="/demo/06_youtube-speakerdeck" title="Demo: Youtube player, Speaker Deck player">Demo: Youtube player, Speaker Deck player</a>
-            <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_youtube.png" alt="youtube icon"/></span>
-            <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_speakerdeck.png" alt="speakerdeck icon"/></span>
+            <span class="demo_thumb_item_icon left"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_youtube.png" alt="youtube icon"/></span>
+            <span class="demo_thumb_item_icon right"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_speakerdeck.png" alt="speakerdeck icon"/></span>
             Youtube player, Speaker Deck player
           </li>
           <li class="box4 demo_thumb_item">
             <a href="/demo/youtube-rvlio" title="Demo: Youtube player, rvl.io player">Demo: Youtube player, rvl.io player</a>
-            <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_youtube.png" alt="youtube icon"/></span>
-            <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_rvlio.png" alt="rvlio icon"/></span>
+            <span class="demo_thumb_item_icon left"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_youtube.png" alt="youtube icon"/></span>
+            <span class="demo_thumb_item_icon right"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_rvlio.png" alt="rvlio icon"/></span>
             Youtube player, rvl.io player
           </li>
           <li class="box4 demo_thumb_item">
             <a href="/demo/04_youtube-img" title="Demo: Youtube player, images as slides">Demo: Youtube player, images as slides</a>
-            <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_youtube.png" alt="youtube icon"/></span>
-            <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_images.png" alt="images icon"/></span>
+            <span class="demo_thumb_item_icon left"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_youtube.png" alt="youtube icon"/></span>
+            <span class="demo_thumb_item_icon right"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_images.png" alt="images icon"/></span>
             Youtube player, images as slides
           </li>
           <li class="box4 demo_thumb_item">
             <a href="/demo/02_videotag-slideshare" title="Demo: Video tag, Slideshare player">Demo: Video tag, Slideshare player</a>
-            <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_video.png" alt="video tag icon"/></span>
-            <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_slideshare.png" alt="slideshare icon"/></span>
+            <span class="demo_thumb_item_icon left"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_video.png" alt="video tag icon"/></span>
+            <span class="demo_thumb_item_icon right"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_slideshare.png" alt="slideshare icon"/></span>
             Video tag, Slideshare player
           </li>
           <li class="box4 demo_thumb_item">
             <a href="/demo/01_videotag-img" title="Demo: Video tag, images as slides">Demo: Video tag, images as slides</a>
-            <span class="demo_thumb_item_icon left"><img src="/assets/img/fe/demo_thumb_icon_video.png" alt="video tag icon"/></span>
-            <span class="demo_thumb_item_icon right"><img src="/assets/img/fe/demo_thumb_icon_images.png" alt="images icon"/></span>
+            <span class="demo_thumb_item_icon left"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_video.png" alt="video tag icon"/></span>
+            <span class="demo_thumb_item_icon right"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_images.png" alt="images icon"/></span>
             Video tag, images as slides
           </li>
         </ul>

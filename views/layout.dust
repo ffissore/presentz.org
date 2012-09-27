@@ -50,15 +50,15 @@
         <a href="javascript:void(0)" class="close">Close</a>
         <p class="title">Login with:</p>
         <ul>
-          <li><a href="/auth/facebook" target="_self"><span><img src="/assets/img/fe/login_facebook.png" title="Login with Facebook" alt="Login with Facebook"/></span>Facebook</a></li>
-          <li><a href="/auth/twitter" target="_self"><span><img src="/assets/img/fe/login_twitter.png" title="Login with Twitter" alt="Login with Twitter"/></span>Twitter</a></li>
-          <li><a href="/auth/google" target="_self"><span><img src="/assets/img/fe/login_gplus.png" title="Login with Google" alt="Login with Google"/></span>Google</a></li>
+          <li><a href="/auth/facebook" target="_self"><span><img width="9" height="17" src="/assets/img/fe/login_facebook.png" title="Login with Facebook" alt="Login with Facebook"/></span>Facebook</a></li>
+          <li><a href="/auth/twitter" target="_self"><span><img width="13" height="17" src="/assets/img/fe/login_twitter.png" title="Login with Twitter" alt="Login with Twitter"/></span>Twitter</a></li>
+          <li><a href="/auth/google" target="_self"><span><img width="12" height="17" src="/assets/img/fe/login_gplus.png" title="Login with Google" alt="Login with Google"/></span>Google</a></li>
           {!
           <li><a href="javascript:void(0)" target="_self"><span><img src="/assets/img/fe/login_instagram.png" title="Login with Instagram" alt="Login with Instagram"/></span>Instagram</a></li>
           !}
-          <li><a href="/auth/foursquare" target="_self"><span><img src="/assets/img/fe/login_foursquare.png" title="Login with Foursquare" alt="Login with Foursquare"/></span>Foursquare</a></li>
-          <li><a href="/auth/linkedin" target="_self"><span><img src="/assets/img/fe/login_linkedin.png" title="Login with Linkedin" alt="Login with Linkedin"/></span>Linkedin</a></li>
-          <li><a href="/auth/github" target="_self"><span><img src="/assets/img/fe/login_github.png" title="Login with Github" alt="Login with Github"/></span>Github</a></li>
+          <li><a href="/auth/foursquare" target="_self"><span><img width="17" height="15" src="/assets/img/fe/login_foursquare.png" title="Login with Foursquare" alt="Login with Foursquare"/></span>Foursquare</a></li>
+          <li><a href="/auth/linkedin" target="_self"><span><img width="17" height="16" src="/assets/img/fe/login_linkedin.png" title="Login with Linkedin" alt="Login with Linkedin"/></span>Linkedin</a></li>
+          <li><a href="/auth/github" target="_self"><span><img width="10" height="17" src="/assets/img/fe/login_github.png" title="Login with Github" alt="Login with Github"/></span>Github</a></li>
           {!
           <li><a href="javascript:void(0)" target="_self"><span><img src="/assets/img/fe/login_openid.png" title="Login with OpenId" alt="Login with OpenId"/></span>OpenId</a></li>
           !}
