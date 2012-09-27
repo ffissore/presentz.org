@@ -52,11 +52,15 @@ show_catalog = (req, res, next) ->
       if presentations[0].time?
         presentations = presentations.reverse()
 
-      res.render "talks",
+      render_ctx =
         title: "#{catalog.name}"
         catalog: catalog
         presentations: presentations
         list: draw_4_boxes
+      if catalog.description? and catalog.description isnt ""
+        render_ctx.subtitle = "#{catalog.description}"
+
+      res.render "talks", render_ctx
 
 show_catalog_of_user = (social) ->
   return (req, res, next) ->

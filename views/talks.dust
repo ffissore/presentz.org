@@ -19,7 +19,7 @@
         </div>
       {/logo}
     {/catalog}
-    <h3>{.title}</h3>
+    <h3>{.title}{?subtitle}<br /><span>{.subtitle}</span>{/subtitle}</h3>
     <div class="search">
     {!
       <form action="#">

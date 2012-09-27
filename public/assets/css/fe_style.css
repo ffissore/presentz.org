@@ -558,6 +558,11 @@ header h1 a {
     margin-top: 15px;
 }
 
+#talks h3 span, #talks_detail h3 span {
+    color: #ababab;
+    font-size: 40px;
+}
+
 #talks_detail h3 {
     width: 620px;
 }

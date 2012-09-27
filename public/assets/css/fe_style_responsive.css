@@ -115,6 +115,10 @@
         font-size: 40px;
     }
 
+    #talks h3 span, #talks_detail h3 span {
+        font-size: 20px;
+    }
+
     .no_talks {
         font-size: 30px;
     }
