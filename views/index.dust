@@ -46,7 +46,7 @@
       <h3 id="make_your_own">Make your own</h3>
       <div class="testo">
         <p>
-          Start making your own presentations: as you <a id="link_login_hp" href="#">log in</a>, the "MAKE" button in the top menu will lead you to "Presentz Maker", our editor.
+          Start making your own presentations: as you {?user}log in{:else}<a id="link_login_hp" href="#">log in</a>{/user}, the "MAKE" button in the top menu will lead you to "Presentz Maker", our editor.
         </p>
         <p>
           Once done and published, your presentations will be listed on your personal page: log in and click on your name to see it.
