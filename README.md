@@ -1,9 +1,9 @@
 Presentz.org
 =
 
-Presentz.org is a website for publishing videos synchronized with slides: it's youtube with slideshare, even tough we support even vimeo, speakerdeck and others.
+Presentz.org is a website for publishing videos synchronized with slides: it's youtube with slideshare, even tough we support even vimeo, speakerdeck and others. Check out [Presentz.js](https://github.com/ffissore/presentz.js) for further info on video and slide service support. 
 
-For further info, go to http://presentz.org/
+If you'd like to see in action, go to http://presentz.org/
 
 License
 -----------
