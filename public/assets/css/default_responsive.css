@@ -88,6 +88,10 @@
         width: 220px
     }
 
+    .box4.hp {
+        margin-top: -30px;
+    }
+
     .box5 {
         width: 280px
     }
@@ -206,6 +210,10 @@
 
     .box4 {
         width: 380px
+    }
+
+    .box4.hp {
+        margin-top: -25px;
     }
 
     .box5 {
