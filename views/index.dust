@@ -63,7 +63,7 @@
         <p>Most alternatives to Presentz.js have a centralized approach: you give them your video or audio, your slides, you use their tool to mix them, and they will host and publish the result.</p>
         <p>We don't. There are enough streaming and slide sharing services available without us making another. And if you prefer to host your files on your own, do that. With Presentz.js you just mix them all.</p>
         <p>Well, not really ALL of them. Not yet. In Presentz.js, there are a number of video and slide "plugins". So, if we don't support your favourite slide sharing or video streaming service, poke us on the <a href="https://github.com/ffissore/presentz.js/issues">issue tracker</a> and join us in developing <a href="https://github.com/ffissore/presentz.js">Presentz.js</a>.</p>
-        <p>As of now, Presentz.js supports the following video backends: Youtube, Vimeo, video files. And the following slide backends: Slideshare, Speakerdeck, Rvl.io, custom SWF files, images. Take a look at the <a class="link_demos" href="#demo_home">demos</a> to see them working.</p>
+        <p>As of now, Presentz.js has plugins for the following video services: Youtube, Vimeo, your own video files. And the following slide services: Slideshare, Speakerdeck, Rvl.io, your own SWF files and images. Take a look at the <a class="link_demos" href="#demo_home">demos</a> to see them working.</p>
         <p>Thank you for your interest in Presentz.js.</p>
       </div>
     </div>
