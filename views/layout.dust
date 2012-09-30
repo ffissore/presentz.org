@@ -55,7 +55,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <li><a href="/byebye">Logout</a></li>
             {:else}
               <li><a href="/#make_your_own" class="link_make_your_own">Make</a></li>
-              <li><a href="javascript:void(0)" id="link_login">Login</a></li>
+              {!<li><a href="javascript:void(0)" id="link_login">Login</a></li>!}
             {/user}
           </ul>
         </nav>
