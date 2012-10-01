@@ -78,7 +78,7 @@ $().ready () ->
         easing: "easeInOutQuart"
         offset:
           top: 0
-          
+
     $play_home = $("#ico_play_home")
     $play_home.unbind "click"
     $play_home.click ->
@@ -134,11 +134,15 @@ $().ready () ->
   $window.unbind "resize"
   $window.bind "resize", () ->
     DemoScroller.resize() if $("#content_slider").length > 0
-    
+
   if document.location.search is "?access_denied"
     $link_login_link_in_comment.click()
-    
+
   if document.location.hash.indexOf("#make_your_own") isnt -1 and $(document.location.hash).length > 0
-    $(window).scrollTop($(document.location.hash).offset().top - 60)
-    
+    make_your_own_scroll_fix = () ->
+      $(window).scrollTop($(document.location.hash).offset().top - 60)
+
+    setTimeout(make_your_own_scroll_fix, 30)
+    make_your_own_scroll_fix()
+
   return

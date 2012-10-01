@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Presentz Backend</title>
+  <title>{.head_title}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/managedassets/css/{.assetsCacheHashes.css}manage.css" rel="stylesheet" type="text/css"/>
 </head>
