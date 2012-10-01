@@ -163,7 +163,6 @@ assetsMiddleware = assetManager
     "src_client_manage/views/navigation_view.coffee"
     "src_client_manage/router.coffee"
     "src_client_manage/main.coffee"
-    "src_client_manage/video_backends.coffee"
     "src_client_manage/validation.coffee"
   ])
   css_manage: new_css_conf("manage", [
