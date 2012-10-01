@@ -20,17 +20,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+  <meta name="title" content="{.head_title}"/>
+  <meta name="description" content="{.head_description}"/>
+  <meta name="keywords" content="presentation, video, slide, slides, synchronized, talk, vimeo, youtube, speakerdeck, slideshare, webm, mp4, mediaelementjs, rvl.io, revealjs, reveal.js"/>
+  <meta name="googlebot" content="noodp">
+  <meta property="fb:app_id" content="166873390098258"/>
   <meta property="og:type" content="website"/>
-  <meta property="og:title" content="{.title}"/>
-  <meta property="og:description" content="{.title}"/>
+  <meta property="og:title" content="{.head_title}"/>
+  <meta property="og:description" content="{.head_description}"/>
   <meta property="og:site_name" content="Presentz"/>
   {?embed}
     <base target="_blank">
   {/embed}
   {?thumb}
     <meta property="og:image" content="{.thumb}"/>
+  {:else}
+    <meta property="og:image" content="/assets/img/logo_icon.png"/>
   {/thumb}
-  <title>{.title}</title>
+  <title>{.head_title}</title>
   <link href="/managedassets/css/{.assetsCacheHashes.css}main.css" rel="stylesheet" type="text/css"/>
   {+presentz_css}
   {/presentz_css}
@@ -99,9 +106,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             is free (as in free speech) software.
             <br/>
             You are strongly invited to <br/>
-            <a href="https://github.com/ffissore/presentz.js" target="blank">hack</a>, 
-            <a href="https://github.com/ffissore/presentz.js" target="blank">fork</a> and 
-            <a href="https://github.com/ffissore/presentz.js/issues" target="blank">contribute</a> to the code.
+            <a href="https://github.com/ffissore/presentz.org" target="blank">hack</a>, 
+            <a href="https://github.com/ffissore/presentz.org" target="blank">fork</a> and 
+            <a href="https://github.com/ffissore/presentz.org/issues" target="blank">contribute</a> to the code.
           </p>
           <p>Follow <a href="https://twitter.com/presentzorg" target="_blank">@presentzorg</a> on twitter.</p>
           <p><a href="/r/tos.html">Terms of service</a></p>

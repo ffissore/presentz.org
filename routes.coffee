@@ -39,11 +39,15 @@ list_catalogs = (req, res, next) ->
   storage.list_catalogs_with_presentation_count (err, catalogs) ->
     return next(err) if err?
 
-    res.render "catalogs",
+    render_ctx =
       title: "Presentz featured talks"
+      head_title: "Featured talks - Presentz"
       css_section_talks: "selected"
       catalogs: catalogs
       list: draw_6_boxes
+    render_ctx.head_description = render_ctx.title
+
+    res.render "catalogs", render_ctx
 
 pres_to_thumb = (presentation, catalog_name) ->
   pres =
@@ -52,6 +56,7 @@ pres_to_thumb = (presentation, catalog_name) ->
     thumb: presentation.chapters[0].video.thumb
     speaker: presentation.speaker
     title: presentation.title
+    description: presentation.title
 
   pres.time = dateutil.format(dateutil.parse(presentation.time, "YYYYMMDD"), "Y/m") if presentation.time
   pres
@@ -72,12 +77,15 @@ show_catalog = (req, res, next) ->
         presentations = presentations.reverse()
 
       render_ctx =
-        title: "#{catalog.name}"
+        title: catalog.name
+        head_title: "#{catalog.name} - Presentz"
         catalog: catalog
         presentations: presentations
         list: draw_4_boxes
+      render_ctx.head_description = render_ctx.title
       if catalog.description? and catalog.description isnt ""
-        render_ctx.subtitle = "#{catalog.description}"
+        render_ctx.head_description = catalog.description
+        render_ctx.subtitle = catalog.description
 
       res.render "talks", render_ctx
 
@@ -88,7 +96,7 @@ show_catalog_of_user = (social) ->
 
       storage.from_user_to_presentations user, (err, presentations) ->
         presentations = _.filter presentations, (pres) -> pres.published
-        
+
         if presentations.length > 0
           presentations = (pres_to_thumb(pres, "u/#{social.prefix}/#{user.user_name}") for pres in presentations)
           presentations = _.sortBy presentations, (presentation) ->
@@ -102,12 +110,16 @@ show_catalog_of_user = (social) ->
           is_same_user = true
         else
           is_same_user = false
-        
-        res.render "talks",
+
+        render_ctx =
           title: "#{user.name}'s talks"
+          head_title: "#{user.name}'s talks - Presentz"
           presentations: presentations
           is_same_user: is_same_user
           list: draw_4_boxes
+        render_ctx.head_description = render_ctx.title
+
+        res.render "talks", render_ctx
 
 raw_presentation_from_catalog = (req, res, next) ->
   storage.load_entire_presentation_from_catalog req.params.catalog_name, req.params.presentation, (err, presentation) ->
@@ -122,7 +134,7 @@ raw_presentation_from_user = (req, res, next) ->
     storage.load_entire_presentation_from_users_catalog social_column, req.params.user_name, req.params.presentation, (err, presentation) ->
       return next(err) if err?
 
-      raw_presentation presentation, req, res, (req.headers.referer? and req.headers.referer.indexOf("preview") isnt -1) 
+      raw_presentation presentation, req, res, (req.headers.referer? and req.headers.referer.indexOf("preview") isnt -1)
 
 raw_presentation = (presentation, req, res, preview) ->
   return res.send 404 unless presentation.published or preview
@@ -227,6 +239,8 @@ show_presentation = (presentation, path, req, res, preview) ->
 
   res.render "presentation",
     title: pres_title
+    head_title: "#{pres_title} - Presentz"
+    head_description: pres_title #TODO add a description to the presentation
     talk_title: talk_title
     speaker: presentation.speaker
     slides: slides
@@ -280,10 +294,12 @@ comment_presentation = (req, res, next) ->
       res.render "_comment_",
         comment: comment
 
-static_view = (view_name) ->
+static_view = (view_name, title, head_title, head_description) ->
   return (req, res) ->
     options =
-      title: "Presentz"
+      title: title
+      head_title: head_title
+      head_description: head_description
     options["css_section_#{view_name}"] = "selected"
     res.render view_name, options
 
