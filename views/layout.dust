@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   {?thumb}
     <meta property="og:image" content="{.thumb}"/>
   {:else}
-    <meta property="og:image" content="/assets/img/logo_icon.png"/>
+    <meta property="og:image" content="http://presentz.org/assets/img/logo_icon.png"/>
   {/thumb}
   <title>{.head_title}</title>
   <link href="/managedassets/css/{.assetsCacheHashes.css}main.css" rel="stylesheet" type="text/css"/>
