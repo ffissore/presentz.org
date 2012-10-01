@@ -36,13 +36,13 @@
           Presentz is a mashup, as it merges things like Vimeo, Youtube, Slideshare and Speakerdeck. But you can use images and video files as well, unleashing the HTML5 video tag power.
         </p>
         <p>
-          Presentz wants to be easy to use: watch a talk, share it, comment it or <a href="#make_your_own" class="link_make_your_own">make a brand new one</a>. If there is something that doesn't work for you, tell us <a href="mailto:federico^_^AT^_^presentz.org">by email</a> or <a href="https://twitter.com/presentzorg">on twitter</a>: we'll fix it.
+          Presentz wants to be easy to use: watch a talk, comment it, <a href="#make_your_own" class="link_make_your_own">make a brand new one</a> and share it. If there is something that doesn't work for you, tell us <a href="mailto:federico^_^AT^_^presentz.org">by email</a> or <a href="https://twitter.com/presentzorg">on twitter</a>: we'll fix it.
         </p>
         <p>
           Take a look at the featured talks: the <a class="link_demos" href="#demo_home">demos</a> are just below, the others are in the <a href="/r/talks.html">talks section</a>.
         </p>
         <p>
-          Last but not least, Presentz.org is opensource. Check out our <a href="https://github.com/ffissore/presentz.org">git repo</a> and improve it.
+          Last but not least, Presentz is opensource. Check out our <a href="https://github.com/ffissore/presentz.org">git repo</a> and improve it.
         </p>
         <p>&nbsp;</p>
       </div>
@@ -59,12 +59,12 @@
     <div class="box6">
       <h3>About</h3>
       <div class="testo">
-        <p>The purpose of Presentz.js is to allow everyone to faithfully reproduce presentations and conference talks, without imposing any technology constraint.</p>
-        <p>Most alternatives to Presentz.js have a centralized approach: you give them your video or audio, your slides, you use their tool to mix them, and they will host and publish the result.</p>
-        <p>We don't. There are enough streaming and slide sharing services available without us making another. And if you prefer to host your files on your own, do that. With Presentz.js you just mix them all.</p>
-        <p>Well, not really ALL of them. Not yet. In Presentz.js, there are a number of video and slide "plugins". So, if we don't support your favourite slide sharing or video streaming service, poke us on the <a href="https://github.com/ffissore/presentz.js/issues">issue tracker</a> and join us in developing <a href="https://github.com/ffissore/presentz.js">Presentz.js</a>.</p>
-        <p>As of now, Presentz.js has plugins for the following video services: Youtube, Vimeo, your own video files. And the following slide services: Slideshare, Speakerdeck, Rvl.io, your own SWF files and images. Take a look at the <a class="link_demos" href="#demo_home">demos</a> to see them working.</p>
-        <p>Thank you for your interest in Presentz.js.</p>
+        <p>The purpose of Presentz is to allow everyone to faithfully reproduce presentations and conference talks, without imposing any technology constraint.</p>
+        <p>Most alternatives to Presentz have a centralized approach: you give them your video or audio, your slides, you use their tool to mix them, and they will host and publish the result.</p>
+        <p>We don't. There are enough streaming and slide sharing services available without us making another. And if you prefer to host your files on your own, do that. With Presentz you just mix them all.</p>
+        <p>Well, not really ALL of them. Not yet. In <a href="https://github.com/ffissore/presentz.js">Presentz.js</a> (the js library at the hearth of Presentz) there are a number of video and slide "plugins". So, if we don't support your favourite slide sharing or video streaming service, poke us on the <a href="https://github.com/ffissore/presentz.js/issues">issue tracker</a>.</p>
+        <p>As of now, we support the following video services: Youtube, Vimeo, your own video files. And the following slide services: Slideshare, Speakerdeck, Rvl.io, your own SWF files and images. Take a look at the <a class="link_demos" href="#demo_home">demos</a> to see them working.</p>
+        <p>Thank you for your interest in Presentz.</p>
       </div>
     </div>
     <div class="clear"></div>

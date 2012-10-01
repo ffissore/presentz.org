@@ -1,7 +1,6 @@
 {
   "name": "presentz.org",
-  "version": "0.0.1",
-  "private": true,
+  "version": "1.0.0",
   "dependencies": {
     "connect": "git://github.com/senchalabs/connect.git",
     "express": "git://github.com/visionmedia/express.git",
