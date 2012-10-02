@@ -43,7 +43,7 @@ class Presentation extends Backbone.DeepModel
     keys = (key for key, value of @attributes)
 
     if keys.length > 1
-      @set "id", utils.generate_id(@get("title"))
+      @set "id", utils.generate_id(window.accent.accent_fold, @get("title"))
       @trigger("change", @, {})
     
     return

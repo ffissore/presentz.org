@@ -83,15 +83,15 @@ chars = "0123456789qwertyuiopasdfghjklzxcvbnm"
 non_word_chars = /[\W]/g
 short_words = /\b\w{2}\b/g
 
-generate_id = (title) ->
+generate_id = (accent_fold, title) ->
   id = ""
-  for idx in [0...10]
+  for idx in [0...5]
     c = parseInt(Math.random() * chars.length)
     id = id.concat(chars[c])
 
   return id unless title? and title isnt ""
 
-  title = title.toLowerCase().replace(non_word_chars, " ").replace(short_words, "").replace(/\s/g, "_")
+  title = accent_fold(title.toLowerCase()).replace(non_word_chars, " ").replace(short_words, "").replace(/\s/g, "_")
   while title.indexOf("__") isnt -1
     title = title.replace("__", "_")
   title = title.replace(/[_]+$/, "")
