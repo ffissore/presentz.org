@@ -387,7 +387,7 @@ $().ready () ->
     $("div.main").css({ "width": new_width })
 
     fullscreen_selectors.push("#player")
-    $("#player").css({ "margin-left": 10, "margin-top": 10})
+    $("#player").css({ "margin-top": 10 })
 
     fullscreen_selectors.push("#player_video, #slideshow_player")
     $("#player_video, #slideshow_player").css({"width": Math.floor(parseInt($("#player_video, #slideshow_player").css("width")) * ratio), "height": Math.floor(parseInt($("#player_video, #slideshow_player").css("height")) * ratio)})
