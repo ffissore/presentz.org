@@ -394,8 +394,9 @@ $().ready () ->
 
     fullscreen_selectors.push("#site_wrapper")
     $("#site_wrapper").css({"padding-bottom": 0})
-    fullscreen_selectors.push("#presentation")
-    $("#presentation").css({ "height": $(document).height() - 18})
+
+    fullscreen_selectors.push("#wrapper")
+    $("#wrapper").css({ "background-color": $("#presentation").css("background-color")})
 
     $fullscreen = $(".fullscreen")
     fullscreen_selectors.push(".fullscreen")
