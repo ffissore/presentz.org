@@ -366,22 +366,22 @@ $().ready () ->
     plusShare()
     false
 
-  #ensure speakerdeck iframe has not styles, so ours are applied
+  #ensure speakerdeck iframe has not width/height, so it becomes responsive
   speakerdeck_message = (event) ->
     return if event.origin.indexOf("speakerdeck.com") is -1
     $speakerdeck_iframe = $("iframe.speakerdeck-iframe")
-    $speakerdeck_iframe.attr("style", "")
+    $speakerdeck_iframe.css({"width": "100%", "height": "100%" })
 
   window.addEventListener "message", speakerdeck_message, false
 
   fullscreen_selectors = []
   fullscreen_active = false
-  
+
   fullscreen_activate = () ->
     $(window).scrollTop(0)
     $("div.main h3, div.main h4, #tools, #controls, #header, #footer").hide(200)
 
-    new_width = $(window).width() - $(".fullscreen").width() * 1.1
+    new_width = $(window).width()
     ratio = new_width / parseInt($("div.main").css("width"))
     fullscreen_selectors.push("div.main")
     $("div.main").css({ "width": new_width })
@@ -397,16 +397,21 @@ $().ready () ->
     fullscreen_selectors.push("#presentation")
     $("#presentation").css({ "height": $(document).height() - 18})
 
-    $(".fullscreen").unbind "click"
-    $(".fullscreen").bind "click", fullscreen_de_activate
+    $fullscreen = $(".fullscreen")
+    fullscreen_selectors.push(".fullscreen")
+    $fullscreen.css({"left": 10})
+
+    $fullscreen.unbind("click")
+    $fullscreen.bind("click", fullscreen_de_activate)
     fullscreen_active = true
     false
 
   fullscreen_de_activate = () ->
     $("div.main h3, div.main h4, #tools, #controls, #header, #footer").show(200)
     $(selector).attr("style", "") for selector in fullscreen_selectors
-    $(".fullscreen").unbind "click"
-    $(".fullscreen").bind "click", fullscreen_activate
+    $fullscreen = $(".fullscreen")
+    $fullscreen.unbind("click")
+    $fullscreen.bind("click", fullscreen_activate)
     fullscreen_active = false
     false
 
