@@ -783,6 +783,20 @@ header h1 a {
 
 #player {
     margin-top: 35px;
+    position: relative;
+}
+
+.fullscreen {
+    position: absolute;
+    display: block;
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    background-image: data-url(../../assets/img/fe/fullscreen.png);
+    text-indent: -999999px;
+    left: -17px;
+    top: -28px;
+    width: 28px;
+    height: 28px;
 }
 
 #player_video, #slideshow_player {

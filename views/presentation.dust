@@ -7,6 +7,7 @@
     <h4>{.speaker}</h4>
 
     <div id="player">
+      <a href="#" class="fullscreen">full</a>
       <div id="container_player">
         <div id="player_video" class="fluid_container box6">
         </div>

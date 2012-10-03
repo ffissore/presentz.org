@@ -163,9 +163,9 @@ init_presentz = (presentation) ->
   if presentation?
     window.presentation = presentation
     presentation_ready = true
-    
+
   return unless youtube_ready and presentation_ready
-  
+
   oneBasedAbsoluteSlideIndex= (presentation, chapter_index, slide_index) ->
     absoluteSlideIndex = 0
     if chapter_index > 0
@@ -191,7 +191,7 @@ init_presentz = (presentation) ->
     return
 
   prsntz.init window.presentation
-  prsntz.changeChapter 0, 0, true
+  prsntz.changeChapter 0, 0, false
 
 openPopupTo = (width, height, url) ->
   left = (screen.width - width) / 2
@@ -313,31 +313,6 @@ $().ready () ->
   $window.bind "resize", () ->
     Controls.resize() if $("#controls").length > 0
 
-  $document = $(document)
-  $document.unbind "keyup"
-  $document.unbind "keydown"
-  $document.unbind "keypress"
-  $document.bind "keydown", (event) ->
-    keyCode = event.keyCode
-    return if keyCode isnt 32 and keyCode isnt 37 and keyCode isnt 39
-
-    tagName = (event.target or event.srcElement).tagName.toUpperCase()
-
-    return if tagName is "INPUT" or tagName is "SELECT" or tagName is "TEXTAREA"
-
-    event.preventDefault()
-    switch keyCode
-      when 32
-        if prsntz.isPaused()
-          prsntz.play()
-        else
-          prsntz.pause()
-      when 37
-        prsntz.previous()
-      when 39
-        prsntz.next()
-
-
   $("#comment_form form").submit (e) ->
     $submit = $("input[type=submit]", @)
     $submit.attr("disabled", true)
@@ -398,5 +373,72 @@ $().ready () ->
     $speakerdeck_iframe.attr("style", "")
 
   window.addEventListener "message", speakerdeck_message, false
+
+  fullscreen_selectors = []
+  fullscreen_active = false
+  
+  fullscreen_activate = () ->
+    $(window).scrollTop(0)
+    $("div.main h3, div.main h4, #tools, #controls, #header, #footer").hide(200)
+
+    new_width = $(window).width() - $(".fullscreen").width() * 1.1
+    ratio = new_width / parseInt($("div.main").css("width"))
+    fullscreen_selectors.push("div.main")
+    $("div.main").css({ "width": new_width })
+
+    fullscreen_selectors.push("#player")
+    $("#player").css({ "margin-left": 10, "margin-top": 10})
+
+    fullscreen_selectors.push("#player_video, #slideshow_player")
+    $("#player_video, #slideshow_player").css({"width": Math.floor(parseInt($("#player_video, #slideshow_player").css("width")) * ratio), "height": Math.floor(parseInt($("#player_video, #slideshow_player").css("height")) * ratio)})
+
+    fullscreen_selectors.push("#site_wrapper")
+    $("#site_wrapper").css({"padding-bottom": 0})
+    fullscreen_selectors.push("#presentation")
+    $("#presentation").css({ "height": $(document).height() - 18})
+
+    $(".fullscreen").unbind "click"
+    $(".fullscreen").bind "click", fullscreen_de_activate
+    fullscreen_active = true
+    false
+
+  fullscreen_de_activate = () ->
+    $("div.main h3, div.main h4, #tools, #controls, #header, #footer").show(200)
+    $(selector).attr("style", "") for selector in fullscreen_selectors
+    $(".fullscreen").unbind "click"
+    $(".fullscreen").bind "click", fullscreen_activate
+    fullscreen_active = false
+    false
+
+  $(".fullscreen").unbind "click"
+  $(".fullscreen").bind "click", fullscreen_activate
+
+  $document = $(document)
+  $document.unbind "keyup"
+  $document.unbind "keydown"
+  $document.unbind "keypress"
+  $document.bind "keydown", (event) ->
+    keyCode = event.keyCode
+    return if keyCode isnt 32 and keyCode isnt 37 and keyCode isnt 39 and keyCode isnt 27
+
+    if keyCode is 27 and fullscreen_active
+      $(".fullscreen").click()
+      return
+
+    tagName = (event.target or event.srcElement).tagName.toUpperCase()
+
+    return if tagName is "INPUT" or tagName is "SELECT" or tagName is "TEXTAREA"
+
+    event.preventDefault()
+    switch keyCode
+      when 32
+        if prsntz.isPaused()
+          prsntz.play()
+        else
+          prsntz.pause()
+      when 37
+        prsntz.previous()
+      when 39
+        prsntz.next()
 
   return
