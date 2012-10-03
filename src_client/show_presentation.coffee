@@ -191,7 +191,7 @@ init_presentz = (presentation) ->
     return
 
   prsntz.init window.presentation
-  prsntz.changeChapter 0, 0, false
+  prsntz.changeChapter 0, 0, true
 
 openPopupTo = (width, height, url) ->
   left = (screen.width - width) / 2
@@ -393,10 +393,10 @@ $().ready () ->
     $("#player_video, #slideshow_player").css({"width": Math.floor(parseInt($("#player_video, #slideshow_player").css("width")) * ratio), "height": Math.floor(parseInt($("#player_video, #slideshow_player").css("height")) * ratio)})
 
     fullscreen_selectors.push("#site_wrapper")
-    $("#site_wrapper").css({"padding-bottom": 0})
+    $("#site_wrapper").css({"padding-bottom": 0, display: "table-cell", "vertical-align": "middle"})
 
     fullscreen_selectors.push("#wrapper")
-    $("#wrapper").css({ "background-color": $("#presentation").css("background-color")})
+    $("#wrapper").css({ "background-color": $("#presentation").css("background-color"), display: "table", height: 400, overflow: "hidden"})
 
     $fullscreen = $(".fullscreen")
     fullscreen_selectors.push(".fullscreen")
