@@ -800,9 +800,10 @@ header h1 a {
 
 #controls_slide {
     height: 40px;
-    width: 150px;
+    width: 165px;
     margin: 0 auto;
     margin-bottom: 20px;
+    padding-left: 13px;
 }
 
 #controls_slide a {
@@ -829,7 +830,7 @@ header h1 a {
 
 #controls_slide a#fullscreen {
     margin-left: 16px;
-    margin-right: 10px;
+    margin-right: 16px;
     background-image: data-url(../../assets/img/fe/fullscreen.png);
     background-repeat: no-repeat;
 }

@@ -378,7 +378,7 @@ $().ready () ->
   fullscreen_active = false
 
   fullscreen_activate = (event) ->
-    $(event.target).toggleClass("enter_fullscreen, exit_fullscreen")
+    $(event.target).toggleClass("enter_fullscreen exit_fullscreen")
     $(window).scrollTop(0)
     $("div.main h3, div.main h4, #tools, #controls, #header, #footer, #allcomments, #comments, #chapters, #embed, #share").hide(200)
 
@@ -397,19 +397,27 @@ $().ready () ->
     $("#site_wrapper").css({"padding-bottom": 0, display: "table-cell", "vertical-align": "middle"})
 
     fullscreen_selectors.push("#wrapper")
-    $("#wrapper").css({ "background-color": $("#presentation").css("background-color"), display: "table", height: 400, overflow: "hidden"})
+    $("#wrapper").css({ display: "table", height: 400, overflow: "hidden"})
+
+    fullscreen_selectors.push("body")
+    $("body").css({ "background-color": $("#presentation").css("background-color") })
+
+    window_width = $(window).width()
+    if window_width >= 1257
+      fullscreen_selectors.push("#controls_slide")
+      if window_width < 1587
+        $("#controls_slide").css({ "padding-left": 5 })
+      else
+        $("#controls_slide").css({ "padding-left": 0 })
 
     $fullscreen = $("#fullscreen")
-    fullscreen_selectors.push(".fullscreen")
-    $fullscreen.css({"left": 10})
-
     $fullscreen.unbind("click")
     $fullscreen.bind("click", fullscreen_de_activate)
     fullscreen_active = true
     false
 
   fullscreen_de_activate = (event) ->
-    $(event.target).toggleClass("enter_fullscreen, exit_fullscreen")
+    $(event.target).toggleClass("enter_fullscreen exit_fullscreen")
     $("div.main h3, div.main h4, #tools, #controls, #header, #footer").show(200)
     $(selector).attr("style", "") for selector in fullscreen_selectors
     $fullscreen = $("#fullscreen")
