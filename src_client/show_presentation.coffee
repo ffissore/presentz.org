@@ -377,9 +377,10 @@ $().ready () ->
   fullscreen_selectors = []
   fullscreen_active = false
 
-  fullscreen_activate = () ->
+  fullscreen_activate = (event) ->
+    $(event.target).toggleClass("enter_fullscreen, exit_fullscreen")
     $(window).scrollTop(0)
-    $("div.main h3, div.main h4, #tools, #controls, #header, #footer").hide(200)
+    $("div.main h3, div.main h4, #tools, #controls, #header, #footer, #allcomments, #comments, #chapters, #embed, #share").hide(200)
 
     new_width = $(window).width()
     ratio = new_width / parseInt($("div.main").css("width"))
@@ -398,7 +399,7 @@ $().ready () ->
     fullscreen_selectors.push("#wrapper")
     $("#wrapper").css({ "background-color": $("#presentation").css("background-color"), display: "table", height: 400, overflow: "hidden"})
 
-    $fullscreen = $(".fullscreen")
+    $fullscreen = $("#fullscreen")
     fullscreen_selectors.push(".fullscreen")
     $fullscreen.css({"left": 10})
 
@@ -407,17 +408,18 @@ $().ready () ->
     fullscreen_active = true
     false
 
-  fullscreen_de_activate = () ->
+  fullscreen_de_activate = (event) ->
+    $(event.target).toggleClass("enter_fullscreen, exit_fullscreen")
     $("div.main h3, div.main h4, #tools, #controls, #header, #footer").show(200)
     $(selector).attr("style", "") for selector in fullscreen_selectors
-    $fullscreen = $(".fullscreen")
+    $fullscreen = $("#fullscreen")
     $fullscreen.unbind("click")
     $fullscreen.bind("click", fullscreen_activate)
     fullscreen_active = false
     false
 
-  $(".fullscreen").unbind "click"
-  $(".fullscreen").bind "click", fullscreen_activate
+  $("#fullscreen").unbind "click"
+  $("#fullscreen").bind "click", fullscreen_activate
 
   $document = $(document)
   $document.unbind "keyup"
@@ -428,7 +430,7 @@ $().ready () ->
     return if keyCode isnt 32 and keyCode isnt 37 and keyCode isnt 39 and keyCode isnt 27
 
     if keyCode is 27 and fullscreen_active
-      $(".fullscreen").click()
+      $("#fullscreen").click()
       return
 
     tagName = (event.target or event.srcElement).tagName.toUpperCase()

@@ -7,7 +7,6 @@
     <h4>{.speaker}</h4>
 
     <div id="player">
-      <a href="#" class="fullscreen">full</a>
       <div id="container_player">
         <div id="player_video" class="fluid_container box6">
         </div>
@@ -17,6 +16,7 @@
       <div class="clear"></div>
       <div id="controls_slide">
         <a href="javascript:void(0);" id="prev_slide">Prev</a>
+        <a href="javascript:void(0);" id="fullscreen" class="enter_fullscreen">FullScreen</a>
         <a href="javascript:void(0);" id="next_slide">Next</a>
       </div>
       <div id="controls">
