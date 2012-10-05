@@ -7,9 +7,11 @@
 	text-indent: 0;
 }
 
+/*
 .me-plugin {
 	position: absolute;
 }
+*/
 
 .mejs-embed, .mejs-embed body {
 	width: 100%;
