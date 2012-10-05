@@ -34,7 +34,7 @@ class Dummy
     if utils.is_url_valid(slide.url)
       callback undefined, slide,
         slide_thumb: slide.url
-        public_url: slide.public_url
+        public_url: slide.url
     else
       callback("Invalid URL: '#{slide.url}'")
 
