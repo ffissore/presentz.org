@@ -98,6 +98,7 @@ generic_description = "The purpose of Presentz is to allow everyone to faithfull
 
 app.get "/", routes.static_view "index", "Presentz", "Presentz", generic_description
 app.get "/favicon.ico", express.static "#{__dirname}/public/assets/img"
+app.get "/apple-touch-icon*", express.static "#{__dirname}/public/assets/img"
 app.get "/robots.txt", express.static "#{__dirname}/public/assets"
 app.get "/r/back_to_referer", redirect_routes.back_to_referer config
 app.get "/r/tos.html", routes.static_view "tos", "Terms of Service", "Terms of Service - Presentz", generic_description
