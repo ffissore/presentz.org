@@ -295,6 +295,8 @@ insert_new_comment = ($container, chapter, slide, new_comment_html) ->
 
   $("div.content_comments", $container).append(new_comment_html)
 
+mejs.MediaElementDefaults.pluginPath = "/assets/img/mediaelementjs/"
+  
 window.init_presentz = init_presentz
 window.fbShare = fbShare
 window.twitterShare = twitterShare
