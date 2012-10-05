@@ -7,12 +7,10 @@
 	text-indent: 0;
 }
 
-/*
 .me-plugin {
-	position: absolute;
+  display: table-cell;
+  vertical-align: middle;
 }
-*/
-
 .mejs-embed, .mejs-embed body {
 	width: 100%;
 	height: 100%;
@@ -49,6 +47,8 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
+  display: table;
+  overflow: hidden;
 }
 .mejs-poster {
 	position: absolute;
