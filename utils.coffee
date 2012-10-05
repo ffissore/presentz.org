@@ -100,6 +100,7 @@ generate_id = (accent_fold, title) ->
   title.concat("_", id)
 
 is_url_valid = (url) ->
+  url = "http://www.example.com#{url}" if url.indexOf("/") is 0
   uri = Uri(url)
   host = uri.host()
   path = uri.path()
