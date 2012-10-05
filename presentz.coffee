@@ -32,14 +32,14 @@ assets = require "./assets"
 api = require "./api"
 routes = require "./routes"
 
-Number:: pad = (pad, pad_char = "0") ->
+Number::pad = (pad, pad_char = "0") ->
   s = @.toString()
   while s.length < pad
     s = "#{pad_char}#{s}"
   s
 
 ONE_WEEK = 604800000
-  
+
 app = express()
 
 config = require "./config.#{app.settings.env}"
@@ -78,8 +78,8 @@ app.configure ->
   app.use express.methodOverride()
   app.use everyauth.middleware()
   app.use auth.put_user_in_locals
+  app.use express.static "#{__dirname}/public" if app.settings.env is "development"
   app.use app.router
-  app.use express.static "#{__dirname}/public"
   app.use redirect_routes.redirect_to "/"
 
 app.configure "development", ->
@@ -95,7 +95,7 @@ app.locals
   assetsCacheHashes: assets.assetsMiddleware.cacheHashes
 
 generic_description = "The purpose of Presentz is to allow everyone to faithfully reproduce presentations and conference talks, without imposing any technology constraint. Presentz is a mashup, as it merges things like Vimeo, Youtube, Slideshare and Speakerdeck. But you can use images and video files as well, unleashing the HTML5 video tag power."
-  
+
 app.get "/", routes.static_view "index", "Presentz", "Presentz", generic_description
 app.get "/favicon.ico", express.static "#{__dirname}/public/assets/img"
 app.get "/robots.txt", express.static "#{__dirname}/public/assets"

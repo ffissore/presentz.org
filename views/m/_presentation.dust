@@ -37,7 +37,7 @@
   <h3>Synchronize</h3>
   <div class="row-fluid">
     <div class="span5">
-      <div id="video" style="width: 450px; height: 400px"></div>
+      <div id="video" class="fluid_container" style="width: 450px; height: 400px"></div>
     </div>
     <div class="span2">
       <div class="play_pause">
@@ -55,7 +55,7 @@
       </div>
     </div>
     <div class="span5">
-      <div id="slide"></div>
+      <div id="slide" class="fluid_container"></div>
     </div>
   </div>
   {?advanced}
