@@ -55,7 +55,7 @@
       </div>
     </div>
     <div class="span5">
-      <div id="slide" class="fluid_container"></div>
+      <div id="slide" class="fluid_container" style="width: 450px; height: 400px"></div>
     </div>
   </div>
   {?advanced}
