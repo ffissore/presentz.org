@@ -35,7 +35,9 @@ class SlideShare
     @presentzSlideShare.slideId url: url
 
   to_slide_number: (url) ->
-    parseInt(@presentzSlideShare.slideNumber(url: url))
+    number = parseInt(@presentzSlideShare.slideNumber(url: url))
+    return 1 if isNaN(number)
+    return number  
 
   make_url = (doc_id, slide_number) ->
     "http://www.slideshare.net/#{doc_id}##{slide_number}"
