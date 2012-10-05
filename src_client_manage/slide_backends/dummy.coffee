@@ -44,6 +44,7 @@ class Dummy
   slideshow_info: (url, callback) ->
     url = "http://#{url}" unless _.str.startsWith(url, "http")
     @slide_info url: url, (err, slide, slide_info) ->
+      return callback(err) if err?
       slide.slide_thumb = slide_info.slide_thumb
       slide.public_url = slide_info.public_url
       callback(undefined, slide)
