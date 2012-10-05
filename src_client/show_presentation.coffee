@@ -297,11 +297,13 @@ insert_new_comment = ($container, chapter, slide, new_comment_html) ->
 
 fullscreen_selectors = []
 fullscreen_active = false
+fullscreen_deactivate_called = false
 
 fullscreen_activate = (event) ->
-  $(event.target).toggleClass("enter_fullscreen exit_fullscreen")
+  $fullscreen = $("#fullscreen")
+  $fullscreen.toggleClass("enter_fullscreen exit_fullscreen")
   $(window).scrollTop(0)
-  $("div.main h3, div.main h4, #tools, #controls, #header, #footer, #allcomments, #comments, #chapters, #embed, #share").hide(200)
+  $("div.main h3, div.main h4, #tools, #controls, #header, #footer, #allcomments, #comments, #chapters, #embed, #share").hide()
 
   new_width = $(window).width()
   ratio = new_width / parseInt($("div.main").css("width"))
@@ -331,24 +333,50 @@ fullscreen_activate = (event) ->
     else
       $("#controls_slide").css({ "padding-left": 0 })
 
-  $fullscreen = $("#fullscreen")
   $fullscreen.unbind("click")
   $fullscreen.bind("click", fullscreen_de_activate)
-  fullscreen_active = true
+
+  elem = document.body
+  if elem.requestFullScreen?
+    elem.requestFullScreen()
+  else if elem.mozRequestFullScreen?
+    elem.mozRequestFullScreen()
+  else if elem.webkitRequestFullScreen?
+    elem.webkitRequestFullScreen()
+  else
+    fullscreen_active = true
+
   false
 
 fullscreen_de_activate = (event) ->
-  $(event.target).toggleClass("enter_fullscreen exit_fullscreen")
-  $("div.main h3, div.main h4, #tools, #controls, #header, #footer").show(200)
-  $(selector).attr("style", "") for selector in fullscreen_selectors
+  fullscreen_deactivate_called = true
+
   $fullscreen = $("#fullscreen")
+  $fullscreen.toggleClass("enter_fullscreen exit_fullscreen")
+  $("div.main h3, div.main h4, #tools, #controls, #header, #footer").show()
+  $(selector).attr("style", "") for selector in fullscreen_selectors
+  Controls.restoreOriginalWidth()
   $fullscreen.unbind("click")
   $fullscreen.bind("click", fullscreen_activate)
-  fullscreen_active = false
+
+  if document.cancelFullScreen?
+    document.cancelFullScreen()
+  else if document.mozCancelFullScreen?
+    document.mozCancelFullScreen()
+  else if document.webkitCancelFullScreen?
+    document.webkitCancelFullScreen()
+  else
+    fullscreen_active = false
+
   false
 
+toggle_fullscreen_active = () ->
+  fullscreen_de_activate() if fullscreen_active and !fullscreen_deactivate_called
+  fullscreen_active = !fullscreen_active
+  fullscreen_deactivate_called = false
+
 mejs.MediaElementDefaults.pluginPath = "/assets/img/mediaelementjs/"
-  
+
 window.init_presentz = init_presentz
 window.fbShare = fbShare
 window.twitterShare = twitterShare
@@ -428,9 +456,13 @@ $().ready () ->
 
   window.addEventListener "message", speakerdeck_message, false
 
+  $(document).bind("fullscreenchange", toggle_fullscreen_active)
+  $(document).bind("webkitfullscreenchange", toggle_fullscreen_active)
+  $(document).bind("mozfullscreenchange", toggle_fullscreen_active)
+  
   $("#fullscreen").unbind "click"
   $("#fullscreen").bind "click", fullscreen_activate
-
+  
   $document = $(document)
   $document.unbind "keyup"
   $document.unbind "keydown"
@@ -438,15 +470,15 @@ $().ready () ->
   $document.bind "keydown", (event) ->
     keyCode = event.keyCode
     return if keyCode isnt 32 and keyCode isnt 37 and keyCode isnt 39 and keyCode isnt 27
-
+    
     if keyCode is 27 and fullscreen_active
       $("#fullscreen").click()
       return
-
+  
     tagName = (event.target or event.srcElement).tagName.toUpperCase()
-
+  
     return if tagName is "INPUT" or tagName is "SELECT" or tagName is "TEXTAREA"
-
+  
     event.preventDefault()
     switch keyCode
       when 32
