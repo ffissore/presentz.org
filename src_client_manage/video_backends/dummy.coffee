@@ -25,7 +25,7 @@ class Dummy
 
   fetch_info: (url, callback) ->
     if utils.is_url_valid url
-      callback undefined, url: url, duration: 0
+      callback undefined, url: url
     else
       callback(new Error("invalid"))
 

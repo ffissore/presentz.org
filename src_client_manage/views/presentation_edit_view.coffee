@@ -196,8 +196,9 @@ class PresentationEditView extends Backbone.View
 
         chapter_index = $elem.attr("chapter_index")
         @model.set("chapters.#{chapter_index}.video.url", info.url)
-        @model.set("chapters.#{chapter_index}.duration", info.duration)
-        $("input[name=video_duration][chapter_index=#{chapter_index}]").val(info.duration)
+        if info.duration?
+          @model.set("chapters.#{chapter_index}.duration", info.duration)
+          $("input[name=video_duration][chapter_index=#{chapter_index}]").val(info.duration)
         @init_presentz @model.attributes
         if info.thumb?
           dust.render "_reset_thumb", { chapter_index: chapter_index }, (err, out) ->
