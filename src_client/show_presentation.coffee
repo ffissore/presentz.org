@@ -21,6 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Controls =
 
+  resize_timeout: null
+
   init: () ->
     Controls.resize()
 
@@ -29,9 +31,12 @@ Controls =
     $agenda_chapters.each () ->
       $instance = $(this)
 
-      $instance.unbind "mouseenter"
+      $instance.unbind("mouseenter").bind "mouseenter", () ->
+        if Controls.resize_timeout?
+          clearTimeout(Controls.resize_timeout)
+          Controls.restoreOriginalWidth()
+          Controls.resize_timeout = null
 
-      $instance.bind "mouseenter", () ->
         selectedChapterWidth = $("#controls").width() + 1 - (totalChapters * 2)
 
         $agenda_chapters.not($instance).css "width", "2px"
@@ -39,14 +44,11 @@ Controls =
         $instance.css("width", "#{selectedChapterWidth}px")
         $instance.find(".info").stop(true, true).delay(200).fadeIn(500)
 
-      $instance.unbind "mouseleave"
-
-      $instance.bind "mouseleave", () ->
-        Controls.restoreOriginalWidth()
+      $instance.unbind("mouseleave").bind "mouseleave", () ->
+        Controls.resize_timeout = setTimeout(Controls.restoreOriginalWidth, 400)
 
     $chapters = $("#controls .chapter, #chapters ol li")
-    $chapters.unbind "click"
-    $chapters.bind "click", (e) ->
+    $chapters.unbind("click").bind "click", (e) ->
       $this = $(e.target)
       if $this.hasClass("comments") or $this.parent(".comments").length > 0
         $this = $this.parent()
@@ -55,7 +57,7 @@ Controls =
       else
         $("html:not(:animated),body:not(:animated)").animate({ scrollTop: $("div.main h3").position().top }, 400)
         if !$this.is("a")
-          #this is NOT a typo
+          #"this" is NOT a typo
           $this = $(".info .title a", this)
         prsntz.changeChapter(parseInt($this.attr("chapter_index")), parseInt($this.attr("slide_index")), true)
       false
@@ -63,21 +65,18 @@ Controls =
     Controls.bind_link_to_slides_from_comments()
 
     $previous_slide = $("#prev_slide")
-    $previous_slide.unbind "click"
-    $previous_slide.bind "click", ->
+    $previous_slide.unbind("click").bind "click", ->
       prsntz.previous()
       false
 
     $next_slide = $("#next_slide")
-    $next_slide.unbind "click"
-    $next_slide.bind "click", ->
+    $next_slide.unbind("click").bind "click", ->
       prsntz.next()
       false
 
   bind_link_to_slides_from_comments: () ->
     $slides_in_comments = $("a.slide_title")
-    $slides_in_comments.unbind "click"
-    $slides_in_comments.bind "click", (e) ->
+    $slides_in_comments.unbind("click").bind "click", (e) ->
       $("html:not(:animated),body:not(:animated)").animate({ scrollTop: $("div.main h3").position().top }, 400)
       $this = $(e.target).parent().parent()
       prsntz.changeChapter(parseInt($this.attr("chapter_index")), parseInt($this.attr("slide_index")), true)
@@ -333,8 +332,7 @@ fullscreen_activate = (event) ->
     else
       $("#controls_slide").css({ "padding-left": 0 })
 
-  $fullscreen.unbind("click")
-  $fullscreen.bind("click", fullscreen_de_activate)
+  $fullscreen.unbind("click").bind("click", fullscreen_de_activate)
 
   elem = document.body
   if elem.requestFullScreen?
@@ -356,8 +354,7 @@ fullscreen_de_activate = (event) ->
   $("div.main h3, div.main h4, #tools, #controls, #header, #footer").show()
   $(selector).attr("style", "") for selector in fullscreen_selectors
   Controls.restoreOriginalWidth()
-  $fullscreen.unbind("click")
-  $fullscreen.bind("click", fullscreen_activate)
+  $fullscreen.unbind("click").bind("click", fullscreen_activate)
 
   if document.cancelFullScreen?
     document.cancelFullScreen()
@@ -391,8 +388,7 @@ $().ready () ->
   Controls.init()
 
   $window = $(window)
-  $window.unbind "resize"
-  $window.bind "resize", () ->
+  $window.unbind("resize").bind "resize", () ->
     Controls.resize() if $("#controls").length > 0
 
   $("#comment_form form").submit (e) ->
@@ -433,18 +429,15 @@ $().ready () ->
     false
 
   $li_share_facebook = $("#share li.li_share_facebook")
-  $li_share_facebook.unbind "click"
-  $li_share_facebook.bind "click", () ->
+  $li_share_facebook.unbind("click").bind "click", () ->
     fbShare()
     false
   $li_share_twitter = $("#share li.li_share_twitter")
-  $li_share_twitter.unbind "click"
-  $li_share_twitter.bind "click", () ->
+  $li_share_twitter.unbind("click").bind "click", () ->
     twitterShare()
     false
   $li_share_gplus = $("#share li.li_share_gplus")
-  $li_share_gplus.unbind "click"
-  $li_share_gplus.bind "click", () ->
+  $li_share_gplus.unbind("click").bind "click", () ->
     plusShare()
     false
 
@@ -459,26 +452,24 @@ $().ready () ->
   $(document).bind("fullscreenchange", toggle_fullscreen_active)
   $(document).bind("webkitfullscreenchange", toggle_fullscreen_active)
   $(document).bind("mozfullscreenchange", toggle_fullscreen_active)
-  
-  $("#fullscreen").unbind "click"
-  $("#fullscreen").bind "click", fullscreen_activate
-  
+
+  $("#fullscreen").unbind("click").bind "click", fullscreen_activate
+
   $document = $(document)
-  $document.unbind "keyup"
-  $document.unbind "keydown"
-  $document.unbind "keypress"
-  $document.bind "keydown", (event) ->
+  $document.unbind("keyup")
+  $document.unbind("keypress")
+  $document.unbind("keydown").bind "keydown", (event) ->
     keyCode = event.keyCode
     return if keyCode isnt 32 and keyCode isnt 37 and keyCode isnt 39 and keyCode isnt 27
-    
+
     if keyCode is 27 and fullscreen_active
       $("#fullscreen").click()
       return
-  
+
     tagName = (event.target or event.srcElement).tagName.toUpperCase()
-  
+
     return if tagName is "INPUT" or tagName is "SELECT" or tagName is "TEXTAREA"
-  
+
     event.preventDefault()
     switch keyCode
       when 32

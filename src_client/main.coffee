@@ -44,8 +44,7 @@ DemoScroller =
     $navigation_slider_ul.css("width", ulWidth + "px")
 
     $navigation_slider_ul_li_a = $("#navigation_slider ul li a")
-    $navigation_slider_ul_li_a.unbind "click"
-    $navigation_slider_ul_li_a.bind "click", (e) ->
+    $navigation_slider_ul_li_a.unbind("click").bind "click", (e) ->
       e.preventDefault()
       $navigation_slider_ul_li_a.removeClass()
       $this = $(this)
@@ -70,8 +69,7 @@ DemoScroller =
 $().ready () ->
   if $("#home").length > 0
     $h1_a_menu_ul_li_a = $("h1 a, #menu ul li:first-child a")
-    $h1_a_menu_ul_li_a.unbind "click"
-    $h1_a_menu_ul_li_a.bind "click", (e) ->
+    $h1_a_menu_ul_li_a.unbind("click").bind "click", (e) ->
       e.preventDefault()
       $.scrollTo.window().queue([]).stop()
       $.scrollTo 0, 1200,
@@ -80,13 +78,11 @@ $().ready () ->
           top: 0
 
     $play_home = $("#ico_play_home")
-    $play_home.unbind "click"
-    $play_home.click ->
+    $play_home.unbind("click").bind "click", () ->
       document.location = "/r/talks.html"
 
   $link_demos_link_learn_more = $("#link_demos, .link_demos, #link_learn_more, #link_make_your_own, .link_make_your_own")
-  $link_demos_link_learn_more.unbind "click"
-  $link_demos_link_learn_more.bind "click", (e) ->
+  $link_demos_link_learn_more.unbind("click").bind "click", (e) ->
     href = $(e.target).attr("href")
     if href.indexOf("/") is 0
       href = href.substr(1)
@@ -99,14 +95,12 @@ $().ready () ->
           top: -60
 
   $link_login_link_in_comment = $("#link_login, #link_login_in_comment, #link_login_hp")
-  $link_login_link_in_comment.unbind "click"
-  $link_login_link_in_comment.bind "click", (e) ->
+  $link_login_link_in_comment.unbind("click").bind "click", (e) ->
     e.preventDefault()
     $("#login:not(:visible)").fadeIn("slow")
 
   $content_login_close = $("#content_login .close")
-  $content_login_close.unbind "click"
-  $content_login_close.bind "click", (e) ->
+  $content_login_close.unbind("click").bind "click", (e) ->
     e.preventDefault()
     $("#login:visible").fadeOut("fast")
 
@@ -131,8 +125,7 @@ $().ready () ->
   DemoScroller.init() if $("#content_slider").length > 0
 
   $window = $(window)
-  $window.unbind "resize"
-  $window.bind "resize", () ->
+  $window.unbind("resize").bind "resize", () ->
     DemoScroller.resize() if $("#content_slider").length > 0
 
   if document.location.search is "?access_denied"

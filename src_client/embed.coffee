@@ -99,10 +99,10 @@ open_frame = (pres) ->
   close_button_img.onclick = () ->
     div.parentNode.removeChild(div)
     if jQuery?
-      jQuery(window).unbind "resize", onresize
+      jQuery(window).unbind("resize", onresize)
 
   if jQuery?
-    jQuery(window).bind "resize", onresize
+    jQuery(window).bind("resize", onresize)
 
   fragment = document.createDocumentFragment()
   fragment.appendChild(div)
@@ -111,4 +111,4 @@ open_frame = (pres) ->
 
 pres = find_presentation_data()
 container_node = container_of pres
-container_node.appendChild html_of(pres)
+container_node.appendChild(html_of(pres))
