@@ -313,7 +313,7 @@ fullscreen_activate = (event) ->
   $("#player").css({ "margin-top": 10 })
 
   fullscreen_selectors.push("#player_video, #slideshow_player")
-  $("#player_video, #slideshow_player").css({"width": Math.floor(parseInt($("#player_video, #slideshow_player").css("width")) * ratio), "height": Math.floor(parseInt($("#player_video, #slideshow_player").css("height")) * ratio)})
+  $("#player_video, #slideshow_player").css({"width": Math.floor(parseInt($("#player_video, #slideshow_player").css("width")) * ratio) + 11, "height": Math.floor(parseInt($("#player_video, #slideshow_player").css("height")) * ratio) + 11, "margin-left": 5, "margin-right": 5})
 
   fullscreen_selectors.push("#site_wrapper")
   $("#site_wrapper").css({"padding-bottom": 0, display: "table-cell", "vertical-align": "middle"})
@@ -333,7 +333,7 @@ fullscreen_activate = (event) ->
       $("#controls_slide").css({ "padding-left": 0 })
 
   fullscreen_selectors.push("#controls")
-  $("#controls").css({ "width": $("#player").width() - 30 })
+  $("#controls").css({ "width": $("#player").width() - 25, "margin-left": 5 })
   Controls.restoreOriginalWidth();
 
   $fullscreen.unbind("click").bind("click", fullscreen_de_activate)
