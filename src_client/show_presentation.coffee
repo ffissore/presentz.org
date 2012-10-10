@@ -302,7 +302,7 @@ fullscreen_activate = (event) ->
   $fullscreen = $("#fullscreen")
   $fullscreen.toggleClass("enter_fullscreen exit_fullscreen")
   $(window).scrollTop(0)
-  $("div.main h3, div.main h4, #tools, #controls, #header, #footer, #allcomments, #comments, #chapters, #embed, #share").hide()
+  $("div.main h3, div.main h4, #tools, #header, #footer, #allcomments, #comments, #chapters, #embed, #share").hide()
 
   new_width = $(window).width()
   ratio = new_width / parseInt($("div.main").css("width"))
@@ -332,6 +332,10 @@ fullscreen_activate = (event) ->
     else
       $("#controls_slide").css({ "padding-left": 0 })
 
+  fullscreen_selectors.push("#controls")
+  $("#controls").css({ "width": $("#player").width() - 30 })
+  Controls.restoreOriginalWidth();
+
   $fullscreen.unbind("click").bind("click", fullscreen_de_activate)
 
   elem = document.body
@@ -351,7 +355,7 @@ fullscreen_de_activate = (event) ->
 
   $fullscreen = $("#fullscreen")
   $fullscreen.toggleClass("enter_fullscreen exit_fullscreen")
-  $("div.main h3, div.main h4, #tools, #controls, #header, #footer").show()
+  $("div.main h3, div.main h4, #tools, #header, #footer").show()
   $(selector).attr("style", "") for selector in fullscreen_selectors
   Controls.restoreOriginalWidth()
   $fullscreen.unbind("click").bind("click", fullscreen_activate)
