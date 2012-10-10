@@ -15,9 +15,9 @@
       </div>
       <div class="clear"></div>
       <div id="controls_slide">
-        <a href="javascript:void(0);" id="prev_slide">Prev</a>
-        <a href="javascript:void(0);" id="fullscreen" class="enter_fullscreen">FullScreen</a>
-        <a href="javascript:void(0);" id="next_slide">Next</a>
+        <a href="javascript:void(0);" id="prev_slide" title="Previous slide">Prev</a>
+        <a href="javascript:void(0);" id="fullscreen" title="Fullscreen" class="enter_fullscreen">FullScreen</a>
+        <a href="javascript:void(0);" id="next_slide" title="Next slide">Next</a>
       </div>
       <div id="controls">
         {!
