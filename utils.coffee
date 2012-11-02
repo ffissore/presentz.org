@@ -81,7 +81,7 @@ visit_presentation = (presentation, func, fields_or_maps_of_fields) ->
 
 chars = "0123456789qwertyuiopasdfghjklzxcvbnm"
 non_word_chars = /[\W]/g
-short_words = /\b\w{2}\b/g
+short_words = /\b\w{1,2}\b/g
 
 generate_id = (accent_fold, title) ->
   id = ""

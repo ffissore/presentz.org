@@ -19,6 +19,9 @@ describe "Utils", () ->
     id = utils.generate_id(accent_folding.accent_fold, "Startup in action: Frēstyl")
     assert _s.startsWith(id, "startup_action_frestyl_")
 
+    id = utils.generate_id(accent_folding.accent_fold, "Raspberry Pi: un Ponte tra IT e Embedded")
+    assert _s.startsWith(id, "raspberry_ponte_tra_embedded_")
+
   it "should ignore empty titles", () ->
     id = utils.generate_id(accent_folding.accent_fold)
     assert id.length is 5
