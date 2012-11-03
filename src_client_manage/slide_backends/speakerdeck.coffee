@@ -28,7 +28,9 @@ class Speakerdeck
   handle: (url) ->
     @presentzSpeakerdeck.handle url: url
 
-  thumb_type_of: (url) -> "img"
+  is_dummy: () -> false
+
+  thumb_type_of: () -> "img"
 
   to_data_id: (url) ->
     @presentzSpeakerdeck.slideId url: url

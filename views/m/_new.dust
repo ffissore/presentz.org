@@ -7,22 +7,32 @@
   </form>
   <div class="video_thumb span4"></div>
 </div>
-<p>Now time for the slides. Are they on <strong>slideshare</strong>, <strong>speakerdeck</strong> or are they <strong>images</strong> or <strong>swf</strong> files stored on your server?</p>
+<p>Now time for the slides. Are they on <strong>slideshare</strong>, <strong>speakerdeck</strong> or are they <strong>images</strong> or <strong>Flash</strong> files stored on your server?</p>
 <div class="alert alert-info">
-  If you have images or swf files, type the url of the first one. We'll use it as a template for the others.
+  If you have images or Flash files, type the url of the first one. We'll use it as a template for the others.
 </div>
-{!
-<div class="alert alert-warning">
-  At the moment, we only support slideshare. We are working on the other slide plugins. Follow us at <a href="https://twitter.com/presentzorg" target="_blank">@presentzorg</a> to stay up-to-date.
-</div>
-!}
 <div class="row-fluid">
   <form class="span6">
     <input name="slide_url" type="text" class="input-xxlarge" placeholder="Slides URL">
   </form>
   <div class="slide_thumb span4"></div>
 </div>
-<p>Have you already choosed a title? (If the slideshow has one, I'll use it)</p>
+<div class="override_slide_plugin hidden">
+  <p>Is this really just an image or a Flash file?</p>
+  <div class="row-fluid">
+    <form class="span6">
+      <label class="radio">
+        <input name="slide_plugin" type="radio" checked>
+        Yes
+      </label>
+      <label class="radio">
+        <input name="slide_plugin" type="radio" value="rvlio">
+        No, it's a reveal.js presentation
+      </label>
+    </form>
+  </div>
+</div>
+<p>Have you choosed a title?</p>
 <div class="row-fluid">
   <form class="span8">
     <input name="title" type="text" class="input-xxlarge" placeholder="Title">

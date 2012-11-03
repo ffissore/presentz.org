@@ -24,7 +24,9 @@ class Dummy
   constructor: () ->
     @import_file_value_column = "Slide URL"
 
-  handle: (url) -> true
+  handle: () -> true
+    
+  is_dummy: () -> true
 
   thumb_type_of: (url) ->
     return "swf" if url.indexOf(".swf") isnt -1

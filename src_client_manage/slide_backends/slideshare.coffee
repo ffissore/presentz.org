@@ -29,6 +29,8 @@ class SlideShare
   handle: (url) ->
     @presentzSlideShare.handle url: url
 
+  is_dummy: () -> false
+
   thumb_type_of: (url) -> "swf"
 
   to_doc_id: (url) ->

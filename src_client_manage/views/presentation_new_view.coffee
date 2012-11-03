@@ -92,6 +92,12 @@ class PresentationNewView extends Backbone.View
         $thumb_container.html("<div class=\"alert alert-error\">This URL does not look good (#{err})</div>")
         return
 
+      $override_slide_plugin = $(".override_slide_plugin", @$el)
+      if backend.is_dummy()
+        $override_slide_plugin.removeClass("hidden")
+      else
+        $override_slide_plugin.addClass("hidden")
+  
       $thumb_container.html("<p>Looks good! Here is the first slide.</p>")
       @slideshow = slideshow_info
       @check_if_time_to_start()

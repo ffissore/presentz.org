@@ -106,7 +106,7 @@
     <p>You should make a text file (.txt or .csv) with one of the following format:</p>
     <ol>
       <li>
-        <p>If your slides are images or swf</p>
+        <p>If your slides are images or Flash</p>
         <code>TIME_IN_SECONDS,URL_OF_THE_FILE</code>
         <p></p>
       </li>
