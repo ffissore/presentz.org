@@ -1,0 +1,366 @@
+<!doctype html>  
+<html lang="it">
+	
+	<head>
+		<meta charset="utf-8">
+		
+		<title>Hello Node.js</title>
+
+		<meta name="description" content="Presentazione del Linux day 2012 su Node.js">
+		<meta name="author" content="Maurizio Lupo">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		
+		<link rel="stylesheet" href="css/reveal.css">
+<!--		<link rel="stylesheet" href="css/theme/default.css" id="theme">-->
+		<link rel="stylesheet" href="css/theme/beige.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+	
+	<body>
+		
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+					<h1>Hello node.js !</h1>
+					<h3>di Maurizio Lupo</h3>
+                    <p>@sithmel</p>
+				</section>
+				<section>
+                    <img src="hello_world1.png"/>
+                    <blockquote>The C Programming Language</blockquote>
+<p>Brian Kernighan and Dennis Ritchie - 1978</p>
+				</section>
+				<section>
+                    <h2>Hello world?</h2>
+                    <img src="hello_world2.png"/>
+				</section>
+				<section>
+                    <h2>Che cosa è Node.js?</h2>
+                    <img src="node.jpg"/>
+                    <p class="fragment">Node.js è una piattaforma per la creazione di applicazioni di rete (e non solo) veloci e scalabili basata sulla virtual machine Javascript di Chrome (V8)</p>
+				</section>
+				<section>
+                    <br />
+                    <h1>Perchè usare Node.js?</h1>
+				</section>
+				<section>
+                    <h2>Parliamo di concorrenza</h2>
+                    <img src="panico.jpg"/>
+				</section>
+				<section>
+                    <h2>Anzi parliamo di cucina</h2>
+                    <img src="gordon1.jpg"/>
+                    <h2 class="fragment">Anzi tutte e due!!!</h2>
+				</section>
+				<section>
+                    <h2>Che cosa è la concorrenza?</h2>
+                    <img src="coda.jpg"/>
+                    <p class="fragment">Meglio evitare questa situazione</p>
+				</section>
+				<section>
+                    <h2>Soluzione classica (fork, threads)</h2>
+                    <img src="cuochi.jpg"/>
+                    <p class="fragment">Aumentare il numero di cuochi</p>
+				</section>
+				<section data-state="alert">
+                    <h2>Problema</h2>
+                    <img src="hk2.jpg"/>
+                    <p class="fragment">E' inefficiente</p>
+				</section>
+				<section>
+                    <h2>Esempio</h2>
+                    <p>(in pseudolinguaggio)</p>
+                    <pre><code>
+    function getProfile(request){
+        formdata = extract(request);
+        ldapdata = getLDAPData(formdata);
+        data = queryDatabase(ldapdata);
+        view = Template('profile.html');
+        return view.render(data);
+    }
+                    </code></pre>
+				</section>
+				<section>
+                    <h2>Ordini di grandezza</h2>
+                    <ul>
+                        <li class="fragment">Cache L1: 3 cicli</li>
+                        <li class="fragment">Cache L2: 14 cicli</li>
+                        <li class="fragment">RAM:  250 cicli</li>
+                        <li class="fragment">Disco: 41.000.000 cicli</li>
+                        <li class="fragment">Rete: 240.000.000 cicli</li>
+                    </ul>
+				</section>
+				<section>
+                    <h2>Esempio</h2>
+                    <p>(in pseudolinguaggio)</p>
+                    <pre><code>
+    function getProfile(request){
+        formdata = extract(request); // RAM
+        ldapdata = getLDAPData(formdata); // I/O rete
+        data = queryDatabase(ldapdata); // I/O rete
+        view = Template('profile.html'); // I/O disco
+        return view.render(data);
+    }
+                    </code></pre>
+				</section>
+				<section data-state="alert">
+                    <h2>Ci vuole una soluzione!</h2>
+                    <img src="gordon.jpg"/>
+				</section>
+				<section>
+                    <h2>Eccola: il modello ad eventi</h2>
+                    <img src="teams.jpg"/>
+				</section>
+				<section>
+                    <p>L'esempio di prima</p>
+                    <pre><code>  function getProfile(request){
+      formdata = extract(request);
+      ldapdata = getLDAPData(formdata);
+      data = queryDatabase(ldapdata);
+      view = Template('profile.html');
+      return view.render(data);
+  }                   </code></pre>
+                    <p class="fragment">diventa</p>
+                    <pre class="fragment"><code>  function getProfile(request, response){
+      formdata = extract(request); 
+      getLDAPData(formdata, function (ldapdata){
+          queryDatabase(ldapdata, function (data){
+              Template('profile.html', function (view){
+                  response(view.render());
+              }); 
+          });
+      }); 
+  }                   </code></pre>
+				</section>
+				<section>
+                    <img src="happy.jpg"/>
+                    <blockquote>Stiamo per creare una nuova ondata di talenti. Siamo il Manchester United delle cucine ora. Se lavoro tutto il tempo in cucina? Io sono il coach!</blockquote>
+				</section>
+				<section>
+                    <h2>Test sul campo: Apache vs Nginx</h2>
+                    <img src="apachenginx.png" />
+				</section>
+				<section>
+                    <h2>Perchè Javascript?</h2>
+                    <img src="nodejs.png" />
+				</section>
+				<section>
+                    <h2>Ecco perchè!</h2>
+                    <ul>
+                        <li class="fragment">Gli sviluppatori Javascript "pensano" ad eventi</li>
+                        <li class="fragment">Runtime perfezionati e performanti (V8)</li>
+                        <li class="fragment">Un solo linguaggio per il client ed il server
+                            <ul>
+                                <li>Un solo linguaggio da imparare</li>                        
+                                <li>Librerie condivise tra client e server</li>                        
+                            </ul>
+                        </li>
+                    </ul>
+				</section>
+				<section data-state="soothe">
+                    <h2>Javascript Love</h2>
+                    <img src="bear.jpg" />
+				</section>
+				<section>
+                    <h2>Javascript ieri: un linguaggio incompreso</h2>
+                    <ul>
+                        <li class="fragment">Lisp travestito da C (e con Java nel nome !)</li>
+                        <li class="fragment">Alcune funzionalità inusuali (prototypes)</li>
+                        <li class="fragment">Lunga storia di incompatibilità</li>
+                        <li class="fragment">Alcuni errori di design</li>
+                        <li class="fragment">Molta pessima documentazione in giro</li>
+                    </ul>
+				</section>
+				<section>
+                    <h2>Poi ... un bel giorno</h2>
+                    <img class="fragment" src="crockford.jpg" />
+				</section>
+				<section>
+                    <h2>Javascript: oggi</h2>
+                    <ul>
+                        <li class="fragment">Si trova anche ottima documentazione</li>
+                        <li class="fragment">Standard ECMA (Ecmascript 5.1, versione 6 in via di sviluppo)</li>
+                        <li class="fragment">Il linguaggio più diffuso del mondo</li>
+                        <li class="fragment">Una grandissima comunità di sviluppatori</li>
+                        <li class="fragment">Ci scommettono grandi aziende: Mozilla, Google, Microsoft, Apple ecc.</li>
+                    </ul>
+				</section>
+				<section>
+                    <h2>Torniamo a node.js</h2>
+                    <p>Disponibile su *nix/windows</p>
+                    <p>Meglio usare i sorgenti (o NVM):</p>
+                    <pre><code>
+    sudo apt-get install build-essentials python
+    ./configure
+    make
+    sudo make install
+                    </code></pre>
+				</section>
+				<section>
+                    <h2>Hello Node.js (1)</h2>
+                    <p>app.js</p>
+                    <pre><code>
+console.log("Hello Node.js!");
+                    </code></pre>
+                    <p>node app.js</p>
+                    <pre><code>
+Hello Node.js!
+                    </code></pre>
+				</section>
+				<section>
+                    <h2>Hello Node.js (2)</h2>
+                    <p>app.js</p>
+                    <pre><code>
+var http = require('http');
+
+// Configuro il server HTTP
+var server = http.createServer(function (request, response) {
+  response.writeHead(200, {"Content-Type": "text/plain"});
+  response.end("Hello Node!\n");
+});
+
+// Ascolto sulla porta 8000
+server.listen(8000);
+
+// Segnalo che sono pronto
+console.log("Server attivo su http://127.0.0.1:8000/");
+</code></pre>
+				</section>
+				<section>
+                    <h2>Node.js: la libreria core</h2>
+                    <p>Sistema a moduli</p>
+                    <pre><code>
+var http = require('http');
+                    </code></pre>
+                    <p>Server di rete</p>
+                    <pre><code>
+var server = http.createServer(...
+                    </code></pre>
+				</section>
+				<section>
+                    <h2>Node.js: la libreria core (2)</h2>
+                    <p>Accesso al file system</p>
+                    <pre><code>
+var fs = require('fs');
+fs.readFile('/etc/passwd', function (err, data) {
+  if (err) throw err;
+  console.log(data);
+});
+                    </code></pre>
+                    <p class="fragment">Vai su: <a href="http://nodejs.org/api/">http://nodejs.org/api/</a></p>
+				</section>
+				<section>
+                    <h2>NPN</h2>
+                    <h3>Node.js Package Manager</h3>
+                    <pre><code>
+$ npm install pacchetto
+$ npm install -g pacchetto
+                    </code></pre>
+                    <p class="fragment">Repository moduli su: <a href="https://npmjs.org/">https://npmjs.org/</a><br />
+                    Include un sistema di installazione da sorgenti, pubblicazione, risoluzione dipendenze.<p>
+				</section>
+				<section>
+                    <h2>Alcuni strumenti utili</h2>
+                    <ul>
+                        <li class="fragment">NVM (node version manager)</li>
+                        <li class="fragment">hotnode</li>
+                        <li class="fragment">node-inspector<br /><img src="node-inspector.png"/></li>
+                    </ul>
+				</section>
+				<section>
+                    <h2>Librerie interessanti</h2>
+                    <ul>
+                        <li class="fragment">Connect (sistema di middleware per HTTP)</li>
+                        <li class="fragment">socketIO (gestisce trasparentemente websocket, flashsocket, comet ecc.)</li>
+                        <li class="fragment">Everyauth o passport (per autenticazione)</li>
+                        <li class="fragment">node-mysql, node_redis, node-mongodb-native (database)</li>
+                    </ul>
+				</section>
+				<section>
+                    <h2>Framework più famoso</h2>
+                    <h1>express.js</h1>
+				</section>
+				<section>
+                    <br />
+                    <h1>Demo Time !</h1>
+				</section>
+				<section>
+                    <h2>Bibliografia</h2>
+                    <ul>
+                        <li class="fragment">Node.js up and running (O'Reilly)</li>
+                        <li class="fragment">Smashing Node.js (Smashing Magazine)</li>
+                        <li class="fragment">Node.js cookbook (Packt)</li>
+                    </ul>
+				</section>
+				<section>
+                    <h2>Grazie</h2>
+                    <p class="fragment">seguimi su twitter @sithmel</p>
+				</section>
+				<section>
+                    <h2>Copyright immagini</h2>
+                    <ul>
+                        <li>http://www.flickr.com/photos/54397539@N06/5034955576/</li>
+                        <li>http://www.flickr.com/photos/54397539@N06/5034954264/</li>
+                        <li>http://www.flickr.com/photos/54397539@N06/5034955830/</li>
+                        <li>http://www.flickr.com/photos/54397539@N06/5034334541/</li>
+                        <li>http://www.flickr.com/photos/54397539@N06/5034954460/</li>
+                        <li>http://www.flickr.com/photos/41061319@N00/262930612/</li>
+                    </ul>
+				</section>
+
+
+
+
+			</div>
+			
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+			
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/zoom-js/zoom.js', condition: function() { return !!document.body.classList; } },
+					{ src: '/socket.io/socket.io.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } },
+					{ src: 'plugin/speakernotes/client.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } }
+				]
+			});
+			
+		</script>
+
+	</body>
+</html>
