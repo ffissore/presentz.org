@@ -26,6 +26,7 @@ class PresentationThumbList extends Backbone.Collection
   model: models.PresentationThumb
 
   comparator: (presentation) ->
-    presentation.get("title").toLowerCase()
+    return null unless presentation.has("title")
+    return presentation.get("title").toLowerCase()
 
 @models.PresentationThumbList = PresentationThumbList
