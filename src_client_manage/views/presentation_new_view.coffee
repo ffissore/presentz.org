@@ -97,9 +97,11 @@ class PresentationNewView extends Backbone.View
         $override_slide_plugin.removeClass("hidden")
       else
         $override_slide_plugin.addClass("hidden")
-  
+        @slide_plugin = undefined
+
       $thumb_container.html("<p>Looks good! Here is the first slide.</p>")
       @slideshow = slideshow_info
+      @slideshow._plugin_id = @slide_plugin if @slide_plugin?
       @check_if_time_to_start()
       thumb_type = backend.thumb_type_of(slideshow_info.slide_thumb)
       dust.render "_#{thumb_type}_slide_thumb", slideshow_info, (err, out) ->
@@ -116,6 +118,12 @@ class PresentationNewView extends Backbone.View
     $elem = $(event.target)
     @title = $elem.val()
     @check_if_time_to_start()
+
+  onoverride_slide_plugin: (event) ->
+    @slide_plugin = $(event.target).val()
+    @slide_plugin = undefined if @slide_plugin is "null"
+    return unless @slideshow?
+    @slideshow._plugin_id = @slide_plugin
 
   onclick_start: () ->
     backend = _.find @slide_backends, (backend) => backend.handle(@slideshow.url)
@@ -140,6 +148,7 @@ class PresentationNewView extends Backbone.View
     "change input[name=video_url]": "onchange_video"
     "change input[name=slide_url]": "onchange_slide"
     "change input[name=title]": "onchange_title"
+    "click input[name=slide_plugin]": "onoverride_slide_plugin"
     "click button": "onclick_start"
 
 @views.PresentationNewView = PresentationNewView

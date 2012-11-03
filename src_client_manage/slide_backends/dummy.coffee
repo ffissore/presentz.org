@@ -41,7 +41,9 @@ class Dummy
       callback("Invalid URL: '#{slide.url}'")
 
   first_slide: (slideshow) ->
-    slide_backends.make_new_slide(slideshow.url, 0)
+    new_slide = slide_backends.make_new_slide(slideshow.url, 0)
+    new_slide._plugin_id = slideshow._plugin_id if slideshow._plugin_id?
+    new_slide
 
   slideshow_info: (url, callback) ->
     url = "http://#{url}" unless _.str.startsWith(url, "http")

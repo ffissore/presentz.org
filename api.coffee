@@ -63,8 +63,8 @@ presentation_save_everything = (user, presentation, callback) ->
   allowed_map_of_fields =
     presentation: [ "@class", "@type", "@version", "@rid", "in", "out", "id", "title", "time", "speaker", "_type", "published", "chapters" ]
     chapter: [ "@class", "@type", "@version", "@rid", "in", "out", "duration", "_type", "_index", "video", "slides" ]
-    video: [ "url", "thumb" ]
-    slide: [ "@class", "@type", "@version", "@rid", "in", "out", "url", "title", "time", "_type", "public_url" ]
+    video: [ "url", "thumb", "_plugin_id"  ]
+    slide: [ "@class", "@type", "@version", "@rid", "in", "out", "url", "title", "time", "_type", "public_url", "_plugin_id" ]
 
   utils.visit_presentation presentation, utils.ensure_only_wanted_map_of_fields_in, allowed_map_of_fields
 

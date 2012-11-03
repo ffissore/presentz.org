@@ -22,7 +22,7 @@
   <div class="row-fluid">
     <form class="span6">
       <label class="radio">
-        <input name="slide_plugin" type="radio" checked>
+        <input name="slide_plugin" type="radio" value="null" checked>
         Yes
       </label>
       <label class="radio">
