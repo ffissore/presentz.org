@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 (function() {
   "use strict";
 
-  var BlipTv, Html5Video, ImgSlide, Presentz, RvlIO, SlideShare, SpeakerDeck, SwfSlide, Video, Vimeo, Youtube, root,
+  var BlipTv, Html5Video, IFrameSlide, ImgSlide, Presentz, SlideShare, SpeakerDeck, SwfSlide, Video, Vimeo, Youtube, root,
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -680,28 +680,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   })();
 
-  RvlIO = (function() {
+  IFrameSlide = (function() {
 
-    function RvlIO(presentz, slideContainer) {
+    function IFrameSlide(presentz, slideContainer) {
       this.presentz = presentz;
       this.slideContainer = slideContainer;
       this.preloadedSlides = [];
+      this.selector = "" + this.slideContainer + " iframe.iframe-slide-container";
     }
 
-    RvlIO.prototype.handle = function(slide) {
-      return slide.url.toLowerCase().indexOf("rvl.io") !== -1;
+    IFrameSlide.prototype.handle = function() {
+      return true;
     };
 
-    RvlIO.prototype.changeSlide = function(slide) {
-      if (jQuery("" + this.slideContainer + " iframe.revealjs").length === 0) {
+    IFrameSlide.prototype.changeSlide = function(slide) {
+      if (jQuery(this.selector).length === 0) {
         jQuery(this.slideContainer).empty();
-        jQuery(this.slideContainer).append("<iframe frameborder=\"0\" class=\"revealjs\" src=\"" + slide.url + "\"></iframe>");
+        jQuery(this.slideContainer).append("<iframe frameborder=\"0\" class=\"iframe-slide-container\" src=\"" + slide.url + "\"></iframe>");
       } else {
-        jQuery("" + this.slideContainer + " iframe.revealjs").attr("src", slide.url);
+        jQuery(this.selector).attr("src", slide.url);
       }
     };
 
-    return RvlIO;
+    return IFrameSlide;
 
   })();
 
@@ -722,10 +723,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         swf: new SwfSlide(this, slideContainer, slideWxHParts[0], slideWxHParts[1]),
         speakerdeck: new SpeakerDeck(this, slideContainer, slideWxHParts[0], slideWxHParts[1]),
         image: new ImgSlide(this, slideContainer, slideWxHParts[0], slideWxHParts[1]),
-        rvlio: new RvlIO(this, slideContainer, slideWxHParts[0], slideWxHParts[1])
+        iframe: new IFrameSlide(this, slideContainer, slideWxHParts[0], slideWxHParts[1])
       };
       this.videoPlugins = [this.availableVideoPlugins.vimeo, this.availableVideoPlugins.youtube, this.availableVideoPlugins.bliptv];
-      this.slidePlugins = [this.availableSlidePlugins.slideshare, this.availableSlidePlugins.swf, this.availableSlidePlugins.speakerdeck, this.availableSlidePlugins.rvlio];
+      this.slidePlugins = [this.availableSlidePlugins.slideshare, this.availableSlidePlugins.swf, this.availableSlidePlugins.speakerdeck];
       this.defaultVideoPlugin = this.availableVideoPlugins.html5;
       this.defaultSlidePlugin = this.availableSlidePlugins.image;
       this.currentChapterIndex = -1;
@@ -839,7 +840,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     Presentz.prototype.findVideoPlugin = function(video) {
       var plugin, plugins;
-      if (video._plugin_id != null) {
+      if ((video._plugin_id != null) && (this.availableVideoPlugins[video._plugin_id] != null)) {
         return this.availableVideoPlugins[video._plugin_id];
       }
       plugins = (function() {
@@ -862,7 +863,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     Presentz.prototype.findSlidePlugin = function(slide) {
       var plugin, plugins;
-      if (slide._plugin_id != null) {
+      if ((slide._plugin_id != null) && (this.availableSlidePlugins[slide._plugin_id] != null)) {
         return this.availableSlidePlugins[slide._plugin_id];
       }
       plugins = (function() {

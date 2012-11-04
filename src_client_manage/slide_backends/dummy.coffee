@@ -69,6 +69,7 @@ class Dummy
   make_new_from: (slide) ->
     new_slide = slide_backends.make_new_slide(slide.url.substr(0, slide.url.lastIndexOf("/") + 1), slide.time)
     new_slide._thumb_type = "img"
+    new_slide._plugin_id = slide._plugin_id if slide._plugin_id?
     new_slide
 
 @slide_backends.Dummy = Dummy

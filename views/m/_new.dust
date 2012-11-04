@@ -26,8 +26,8 @@
         Yes
       </label>
       <label class="radio">
-        <input name="slide_plugin" type="radio" value="rvlio">
-        No, it's a reveal.js presentation
+        <input name="slide_plugin" type="radio" value="iframe">
+        No, it's a javascript/htmls/css based presentation
       </label>
     </form>
   </div>
