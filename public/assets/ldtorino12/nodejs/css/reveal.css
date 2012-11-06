@@ -65,7 +65,7 @@ body {
 
 @media screen and (max-width: 900px) {
 	.reveal {
-		font-size: 30px;
+		font-size: 24px;
 	}
 }
 
@@ -108,8 +108,8 @@ body {
 
 .reveal img {
 	/* preserve aspect ratio and scale image so it's bound within the section */
-	max-width: 100%;
-	max-height: 100%;
+	max-width: 80%;
+	max-height: 80%;
 } 
 
 .reveal strong, 
