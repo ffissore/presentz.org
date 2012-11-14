@@ -105,7 +105,7 @@ assetsMiddleware = assetManager
     "public/assets/js/froogaloop.js"
     "public/assets/js/swfobject.js"
     "public/assets/js/mediaelement-and-player.js"
-    "public/assets/js/presentz-1.1.1.js"
+    "public/assets/js/presentz-1.1.2.js"
     "src_client/show_presentation.coffee"
   ])
   css_pres: new_css_conf("pres", [
@@ -129,7 +129,7 @@ assetsMiddleware = assetManager
     "public/assets/js/froogaloop.js"
     "public/assets/js/swfobject.js"
     "public/assets/js/mediaelement-and-player.js"
-    "public/assets/js/presentz-1.1.1.js"
+    "public/assets/js/presentz-1.1.2.js"
     "views/m/_presentation_thumb.dust"
     "views/m/_presentation_menu_title_save_btn.dust"
     "views/m/_presentation.dust"
