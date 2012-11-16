@@ -96,7 +96,10 @@ find_or_create_user = (db, query_tmpl, merge_function) ->
 
 handleAuthCallbackError = (req, res) ->
   res.redirect 302, "/?access_denied"
-    
+
+authCallbackDidErr = (req, res) ->
+  return req.query? and (req.query.error? and req.query.error is "access_denied") or (req.query.access_denied?)
+
 facebook_init = (config, db) ->
   everyauth.facebook.configure
     appId: config.auth.facebook.app_id
@@ -144,8 +147,7 @@ github_init = (config, db) ->
     callbackPath: "/auth/github/callback"
     redirectPath: "/r/back_to_referer"
     handleAuthCallbackError: handleAuthCallbackError
-    authCallbackDidErr: (req, res) ->
-      return req.query? and req.query.error? and req.query.error is "access_denied"
+    authCallbackDidErr: authCallbackDidErr
 
 foursquare_init = (config, db) ->
   everyauth.foursquare.configure
@@ -155,6 +157,7 @@ foursquare_init = (config, db) ->
     findOrCreateUser: find_or_create_user(db, "SELECT @rid FROM V where _type = 'user' and foursquare_id = ", merge_foursquare_user_data)
     redirectPath: "/r/back_to_referer"
     handleAuthCallbackError: handleAuthCallbackError
+    authCallbackDidErr: authCallbackDidErr
 
 init = (config, db) ->
   everyauth.everymodule.findUserById (userId, callback) ->
