@@ -144,6 +144,8 @@ github_init = (config, db) ->
     callbackPath: "/auth/github/callback"
     redirectPath: "/r/back_to_referer"
     handleAuthCallbackError: handleAuthCallbackError
+    authCallbackDidErr: (req, res) ->
+      return req.query? and req.query.error? and req.query.error is "access_denied"
 
 foursquare_init = (config, db) ->
   everyauth.foursquare.configure
