@@ -970,8 +970,7 @@
     // in Firefox where location.hash will always be decoded.
     getHash: function(windowOverride) {
       var loc = windowOverride ? windowOverride.location : window.location;
-      var match = loc.href.match(/#(.*)$/);
-      return match ? match[1] : '';
+      return loc.hash;
     },
 
     // Get the cross-browser normalized URL fragment, either from the URL,
