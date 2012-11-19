@@ -1,6 +1,9 @@
 "use strict"
 
 assert = require "assert"
+xregexp = require("../node_modules/xregexp/xregexp-all.js")
+global.XRegExp = xregexp.XRegExp
+
 utils = require("../utils")
 _s = require "underscore.string"
 accent_folding = require("accent-folding").accent
@@ -21,6 +24,9 @@ describe "Utils", () ->
 
     id = utils.generate_id(accent_folding.accent_fold, "Raspberry Pi: un Ponte tra IT e Embedded")
     assert _s.startsWith(id, "raspberry_ponte_tra_embedded_")
+
+    id = utils.generate_id(accent_folding.accent_fold, "テスト:")
+    assert _s.startsWith(id, "テスト_")
 
   it "should ignore empty titles", () ->
     id = utils.generate_id(accent_folding.accent_fold)

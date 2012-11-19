@@ -114,6 +114,7 @@ assetsMiddleware = assetManager
   js_embed: new_js_conf("embed", ["src_client/embed.coffee"])
   js_manage: new_js_conf("manage", [
     "node_modules/accent-folding/accent-fold.js"
+    "node_modules/xregexp/xregexp-all.js"
     "public/assets/js/piwik.js"
     "public/assets/js/jquery/jquery-1.8.0.js"
     "public/assets/js/jquery/jquery-ui-1.8.23.custom.min.js"

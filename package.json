@@ -18,7 +18,8 @@
     "connect-assetmanager-handlers": "git://github.com/ffissore/connect-assetmanager-handlers.git",
     "slideshare": "git://github.com/adityab/node-slideshare.git",
     "xml2json": ">= 0.2.4",
-    "accent-folding": "git://github.com/ffissore/accent-folding.git"
+    "accent-folding": "git://github.com/ffissore/accent-folding.git",
+    "xregexp": ">= 2.0.x"
   },
   "devDependencies": {
     "mocha": ""

@@ -19,6 +19,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 "use strict"
 
+if require?
+  XRegExp = require("./node_modules/xregexp/xregexp-all.js").XRegExp
+else if window?
+  XRegExp = window.XRegExp
+
 exec_for_each = (callable, elements, callback) ->
   return callback(undefined, elements) if elements.length is 0
   exec_times = 0
@@ -80,8 +85,10 @@ visit_presentation = (presentation, func, fields_or_maps_of_fields) ->
   presentation
 
 chars = "0123456789qwertyuiopasdfghjklzxcvbnm"
-non_word_chars = /[\W]/g
-short_words = /\b\w{1,2}\b/g
+non_word_chars = XRegExp("[^\\p{L}\\p{N}]", "g")
+punct = XRegExp("\\p{P}", "g")
+short_words = XRegExp("\\b\\w{1,2}\\b", "g")
+spaces = XRegExp("\\s", "g")
 
 generate_id = (accent_fold, title) ->
   id = ""
@@ -91,9 +98,15 @@ generate_id = (accent_fold, title) ->
 
   return id unless title? and title isnt ""
 
-  title = accent_fold(title.toLowerCase()).replace(non_word_chars, " ").replace(short_words, "").replace(/\s/g, "_")
+  title = accent_fold(title.toLowerCase())
+  #title = XRegExp.replace(title, non_word_chars, " ")
+  title = XRegExp.replace(title, punct, "")
+  title = XRegExp.replace(title, short_words, "")
+  title = XRegExp.replace(title, spaces, "_")
+  
   while title.indexOf("__") isnt -1
     title = title.replace("__", "_")
+  
   title = title.replace(/[_]+$/, "")
   title = title.replace(/^[_]+/, "")
 
