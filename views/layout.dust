@@ -43,7 +43,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   {/presentz_css}
 </head>
 <body>
-<div id="resolution_notice">Your resolution is too low. A screen width of at least 768 pixels is required</div>
+<div id="resolution_notice">Your resolution is too low. <span></span> A screen width of at least 768 pixels is required</div>
 <div id="wrapper" {.wrapper_css|s}>
   <header id="header">
     <div id="content_header">

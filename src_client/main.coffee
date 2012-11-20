@@ -57,16 +57,31 @@ DemoScroller =
     $("#content_slider").stop(true, false).animate({"left": -(value * $("#slider").width())}, 1200, "easeInOutQuart")
 
   resize: () ->
-    if $("#content_slider").length is 0
-      return
+    return if $("#content_slider").length is 0
 
     $content_slider_li_box4 = $("#content_slider li.box4")
     content_slider_w = $content_slider_li_box4.length * parseInt(parseInt($content_slider_li_box4.css("width").replace("px", "")) + (parseInt($content_slider_li_box4.css("margin-left").replace("px", "")) * 2))
     $("#content_slider").css("width", content_slider_w)
 
     $("#navigation_slider ul li a.active").click()
+    
+resolution_notice_span_timeout = null
+
+resolution_notice_span_on_resize = () ->
+  $window = $(window)
+  $resolution_notice_span = $("#resolution_notice span")
+  if $window.height() > $window.width()
+    $resolution_notice_span.text("Try flipping your device.")
+  else
+    $resolution_notice_span.text("")
+
+set_timeout_of_resolution_notice_span_on_resize = () ->
+  clearTimeout(resolution_notice_span_timeout)
+  resolution_notice_span_timeout = setTimeout(resolution_notice_span_on_resize, 30)
 
 $().ready () ->
+  resolution_notice_span_on_resize()
+  
   if $("#home").length > 0
     $h1_a_menu_ul_li_a = $("h1 a, #menu ul li:first-child a")
     $h1_a_menu_ul_li_a.unbind("click").bind "click", (e) ->
@@ -126,7 +141,8 @@ $().ready () ->
 
   $window = $(window)
   $window.unbind("resize").bind "resize", () ->
-    DemoScroller.resize() if $("#content_slider").length > 0
+    DemoScroller.resize()
+    set_timeout_of_resolution_notice_span_on_resize()  
 
   if document.location.search is "?access_denied"
     $link_login_link_in_comment.click()
