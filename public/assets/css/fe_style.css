@@ -407,6 +407,7 @@ header h1 a {
 
 /*section demo_home*/
 #demo_home {
+    margin-top: 20px;
     padding-top: 65px;
     height: 505px;
 
@@ -1297,4 +1298,10 @@ img.github {
     border: 0;
     width: 149px;
     height: 149px;
+}
+
+#logos-wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
