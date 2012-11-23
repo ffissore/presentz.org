@@ -499,7 +499,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     }
 
     SlideShare.prototype.handle = function(slide) {
-      return slide.url.toLowerCase().indexOf("slideshare.net") !== -1 && !(slide.public_url != null);
+      return slide.url.toLowerCase().indexOf("slideshare.net") !== -1;
     };
 
     SlideShare.prototype.slideId = function(slide) {
