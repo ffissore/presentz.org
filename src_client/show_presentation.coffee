@@ -154,16 +154,8 @@ prsntz = new Presentz("#player_video", "460x420", "#slideshow_player", "460x420"
 youtube_ready = false
 presentation_ready = false
 
-onYouTubeIframeAPIReady = () ->
-  youtube_ready = true
-  init_presentz()
-
 init_presentz = (presentation) ->
-  if presentation?
-    window.presentation = presentation
-    presentation_ready = true
-
-  return unless youtube_ready and presentation_ready
+  window.presentation = presentation
 
   oneBasedAbsoluteSlideIndex= (presentation, chapter_index, slide_index) ->
     absoluteSlideIndex = 0
@@ -386,7 +378,6 @@ window.hide = hide
 window.show = show
 window.comment_this_slide = comment_this_slide
 window.comment_this_presentation = comment_this_presentation
-window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady
 
 $().ready () ->
   Controls.init()
