@@ -229,7 +229,7 @@ show_presentation = (presentation, path, req, res, preview) ->
 
   slides_duration_percentage_css(slides, duration)
 
-  title_parts = presentation.title.split(" ")
+  title_parts = presentation.title.trim().split(" ")
   title_parts[title_parts.length - 1] = "<span>#{title_parts[title_parts.length - 1]}</span>"
   talk_title = title_parts.join(" ")
   pres_title = presentation.title
