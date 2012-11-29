@@ -19,6 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 "use strict"
 
+PLAY_ON_LOAD = true
+
 Controls =
 
   resize_timeout: null
@@ -59,7 +61,8 @@ Controls =
         if !$this.is("a")
           #"this" is NOT a typo
           $this = $(".info .title a", this)
-        prsntz.changeChapter(parseInt($this.attr("chapter_index")), parseInt($this.attr("slide_index")), true)
+        prsntz.changeChapter parseInt($this.attr("chapter_index")), parseInt($this.attr("slide_index")), PLAY_ON_LOAD, (err) ->
+          alert(err) if err?
       false
 
     Controls.bind_link_to_slides_from_comments()
@@ -79,7 +82,8 @@ Controls =
     $slides_in_comments.unbind("click").bind "click", (e) ->
       $("html:not(:animated),body:not(:animated)").animate({ scrollTop: $("div.main h3").position().top }, 400)
       $this = $(e.target).parent().parent()
-      prsntz.changeChapter(parseInt($this.attr("chapter_index")), parseInt($this.attr("slide_index")), true)
+      prsntz.changeChapter parseInt($this.attr("chapter_index")), parseInt($this.attr("slide_index")), PLAY_ON_LOAD, (err) ->
+        alert(err) if err?
       false
 
   restoreOriginalWidth: () ->
@@ -157,7 +161,7 @@ presentation_ready = false
 init_presentz = (presentation) ->
   window.presentation = presentation
 
-  oneBasedAbsoluteSlideIndex= (presentation, chapter_index, slide_index) ->
+  oneBasedAbsoluteSlideIndex = (presentation, chapter_index, slide_index) ->
     absoluteSlideIndex = 0
     if chapter_index > 0
       for idx in [0...chapter_index]
@@ -182,7 +186,10 @@ init_presentz = (presentation) ->
     return
 
   prsntz.init window.presentation
-  prsntz.changeChapter 0, 0, true
+  prsntz.changeChapter 0, 0, PLAY_ON_LOAD, (err) ->
+    alert(err) if err?
+
+  return
 
 openPopupTo = (width, height, url) ->
   left = (screen.width - width) / 2
