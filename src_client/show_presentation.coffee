@@ -143,14 +143,15 @@ Controls =
       sum_of_pixels += chapter_pixels
       pixel_widths.push(chapter_pixels)
 
-    #some pixel may still be missing, lets spread them
-    while (container_width - sum_of_pixels) > 0
-      for idx in [0...pixel_widths.length] when (container_width - sum_of_pixels) > 0
-        pixel_widths[idx] = pixel_widths[idx] + 1
-        sum_of_pixels += 1
+    if sum_of_pixels > 0
+      #some pixel may still be missing, lets spread them
+      while (container_width - sum_of_pixels) > 0
+        for pixel_width, idx in pixel_widths when (container_width - sum_of_pixels) > 0
+          pixel_widths[idx] = pixel_widths[idx] + 1
+          sum_of_pixels += 1
 
     #now give each div its width in pixel
-    for idx in [0...pixel_widths.length]
+    for pixel_width, idx in pixel_widths
       $($chapters[idx]).css("width", "#{pixel_widths[idx]}px")
 
 prsntz = new Presentz("#player_video", "460x420", "#slideshow_player", "460x420")
