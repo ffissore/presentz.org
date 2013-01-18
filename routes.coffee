@@ -225,6 +225,8 @@ show_presentation = (presentation, path, req, res, preview) ->
   for chapter, chapter_index in presentation.chapters
     for slide, slide_index in chapter.slides
       slides.push slide_to_slide(slide, chapter_index, slide_index, duration)
+    if !chapter.duration? and chapter.slides? and chapter.slides.length > 0
+      chapter.duration = chapter.slides[chapt1er.slides.length - 1].time + 5
     duration += chapter.duration
 
   slides_duration_percentage_css(slides, duration)
