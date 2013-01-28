@@ -62,7 +62,7 @@
         <p>The purpose of Presentz is to allow everyone to faithfully reproduce presentations and conference talks, without imposing any technology constraint.</p>
         <p>Most alternatives to Presentz have a centralized approach: you give them your video or audio, your slides, you use their tool to mix them, and they will host and publish the result.</p>
         <p>We don't. There are enough streaming and slide sharing services available without us making another. And if you prefer to host your files on your own, do that. With Presentz you just mix them all.</p>
-        <p>Well, not really ALL of them. Not yet. In <a href="https://github.com/ffissore/presentz.js">Presentz.js</a> (the js library at the hearth of Presentz) there are a number of video and slide "plugins". So, if we don't support your favourite slide sharing or video streaming service, poke us on the <a href="https://github.com/ffissore/presentz.js/issues">issue tracker</a>.</p>
+        <p>Well, not really ALL of them. Not yet. In <a href="https://github.com/ffissore/presentz.js">Presentz.js</a> (the javascript library at the hearth of Presentz) there are a number of video and slide "plugins". So, if we don't support your favourite slide sharing or video streaming service, poke us on the <a href="https://github.com/ffissore/presentz.js/issues">issue tracker</a>.</p>
         <p>As of now, we support the following video services: Youtube, Vimeo, your own video files. And the following slide services: Slideshare, Speakerdeck, Rvl.io, your own Flash files and images. Take a look at the <a class="link_demos" href="#demo_home">demos</a> to see them working.</p>
         <p>Thank you for your interest in Presentz.</p>
       </div>
