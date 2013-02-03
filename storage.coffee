@@ -217,6 +217,15 @@ delete_slide = (rid, callback) ->
 
                         db.delete node, callback
 
+is_user_author_of = (user_rid, other_rid, callback) ->
+  db.command "select gremlin('current.inE.filter({it.label.equals(\"authored\")}).outV.id') as authors from #{other_rid}", (err, results) ->
+    return callback(err) if err?
+    
+    authors = results[0].authors
+    authors = [authors] if !_.isArray(authors)
+    
+    callback(null, authors.indexOf(user_rid) isnt -1)
+                        
 exports.load_chapters_of = load_chapters_of
 exports.load_entire_presentation_from_catalog = load_entire_presentation_from_catalog
 exports.load_entire_presentation_from_id = load_entire_presentation_from_id
@@ -236,3 +245,4 @@ exports.link_chapter_to_presentation = link_chapter_to_presentation
 exports.link_user_to_presentation = link_user_to_presentation
 exports.find_user_by_username_by_social = find_user_by_username_by_social
 exports.delete_slide = delete_slide
+exports.is_user_author_of = is_user_author_of

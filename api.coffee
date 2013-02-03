@@ -158,7 +158,18 @@ presentation_load = (req, res, next) ->
   storage.load_entire_presentation_from_id req.params.presentation, (err, presentation) ->
     return safe_next(next, err) if err?
 
-    res.send presentation
+    can_user_edit_presentation req.user, presentation, (err) ->
+      return safe_next(next, err) if err?
+    
+      res.send presentation
+
+can_user_edit_presentation = (user, presentation, callback) ->
+  storage.is_user_author_of user["@rid"], presentation["@rid"], (err, is_author) ->
+    return callback(err) if err?
+    
+    return callback() if is_author
+
+    return callback(new Error("unauthorized"))
 
 slideshare_slides_of = (req, res, next) ->
   request_params =
