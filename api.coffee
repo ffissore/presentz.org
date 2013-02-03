@@ -160,16 +160,21 @@ presentation_load = (req, res, next) ->
 
     can_user_edit_presentation req.user, presentation, (err) ->
       return safe_next(next, err) if err?
-    
+
       res.send presentation
 
 can_user_edit_presentation = (user, presentation, callback) ->
   storage.is_user_author_of user["@rid"], presentation["@rid"], (err, is_author) ->
     return callback(err) if err?
-    
+
     return callback() if is_author
 
-    return callback(new Error("unauthorized"))
+    storage.is_user_admin_of_catalog_of user["@rid"], presentation["@rid"], (err, is_admin) ->
+      return callback(err) if err?
+
+      return callback() if is_admin
+
+      return callback(new Error("unauthorized"))
 
 slideshare_slides_of = (req, res, next) ->
   request_params =
@@ -208,7 +213,7 @@ speakerdeck_url_to_data_id = (req, res, next) ->
 
   request = https.request request_params, (response) ->
     return res.send 500, "Unable to find data-id" if response.statusCode isnt 200
-    
+
     response.setEncoding "utf8"
     html = ""
     response.on "data", (chunk) ->

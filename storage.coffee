@@ -225,6 +225,15 @@ is_user_author_of = (user_rid, other_rid, callback) ->
     authors = [authors] if !_.isArray(authors)
     
     callback(null, authors.indexOf(user_rid) isnt -1)
+
+is_user_admin_of_catalog_of = (user_rid, other_rid, callback) ->
+  db.command "select gremlin('current.outE(\"part_of\").inV.filter({it._type.equals(\"catalog\")}).inE(\"admin_of\").outV') as catalog_admins from #{other_rid}", (err, results) ->
+    return callback(err) if err?
+
+    catalog_admins = results[0].catalog_admins
+    catalog_admins = [catalog_admins] if !_.isArray(catalog_admins)
+    
+    callback(null, catalog_admins.indexOf(user_rid) isnt -1)
                         
 exports.load_chapters_of = load_chapters_of
 exports.load_entire_presentation_from_catalog = load_entire_presentation_from_catalog
@@ -246,3 +255,4 @@ exports.link_user_to_presentation = link_user_to_presentation
 exports.find_user_by_username_by_social = find_user_by_username_by_social
 exports.delete_slide = delete_slide
 exports.is_user_author_of = is_user_author_of
+exports.is_user_admin_of_catalog_of = is_user_admin_of_catalog_of
