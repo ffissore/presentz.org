@@ -103,16 +103,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <h2>Presentz</h2>
         <div class="testo">
           <p>
-            is free (as in free speech) software.
+            is free software.
             <br/>
             You are strongly invited to <br/>
             <a href="https://github.com/ffissore/presentz.org" target="blank">hack</a>, 
             <a href="https://github.com/ffissore/presentz.org" target="blank">fork</a> and 
-            <a href="https://github.com/ffissore/presentz.org/issues" target="blank">contribute</a> to the code.
+            <a href="https://github.com/ffissore/presentz.org/issues" target="blank">contribute</a> to it.
           </p>
           <p>Follow <a href="https://twitter.com/presentzorg" target="_blank">@presentzorg</a> on twitter.</p>
           <p><a href="/r/tos.html">Terms of service</a></p>
-          <p id="copy">Copyright &copy; 2012 <a href="mailto:federico^_^AT^_^presentz.org">Federico Fissore</a>
+          <p id="copy">Copyright &copy; 2013 <a href="mailto:federico^_^AT^_^presentz.org">Federico Fissore</a>
           </p>
         </div>
       </div>
