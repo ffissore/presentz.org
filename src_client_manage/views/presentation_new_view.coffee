@@ -26,6 +26,7 @@ class PresentationNewView extends Backbone.View
   @video: null
   @slideshow: null
   @title: null
+  @no_slides: false
 
   initialize: (@video_backends, @slide_backends) ->
     _.bindAll(@)
@@ -41,7 +42,17 @@ class PresentationNewView extends Backbone.View
 
   check_if_time_to_start: () ->
     $button = $("button", @$el)
-    if @video? and @slideshow? and @title? and @title isnt ""
+
+    is_time = () =>
+      if @video? and @title? and @title isnt ""
+        if @no_slides
+          return true
+        else if @slideshow?
+          return true
+        return false
+      return false
+
+    if is_time()
       $button.removeClass("disabled")
       $button.attr("disabled", false)
     else
@@ -114,6 +125,15 @@ class PresentationNewView extends Backbone.View
         $title.val(slideshow_info.title)
         $title.change()
 
+  onchange_noslides: (event) ->
+    @no_slides = $(event.target).is(":checked")
+    if @no_slides
+      $(".with_slides").hide()
+      $("input[name=slide_url]").val("")
+    else
+      $(".with_slides").show()
+    @check_if_time_to_start()
+    
   onchange_title: (event) ->
     $elem = $(event.target)
     @title = $elem.val()
@@ -147,6 +167,7 @@ class PresentationNewView extends Backbone.View
   events:
     "change input[name=video_url]": "onchange_video"
     "change input[name=slide_url]": "onchange_slide"
+    "click input[name=no_slides]": "onchange_noslides"
     "change input[name=title]": "onchange_title"
     "click input[name=slide_plugin]": "onoverride_slide_plugin"
     "click button": "onclick_start"
