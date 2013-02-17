@@ -158,6 +158,7 @@ prsntz = new Presentz("#player_video", "460x420", "#slideshow_player", "460x420"
 
 youtube_ready = false
 presentation_ready = false
+slides_hidden = false
 
 init_presentz = (presentation) ->
   window.presentation = presentation
@@ -171,6 +172,8 @@ init_presentz = (presentation) ->
     absoluteSlideIndex + slide_index + 1
 
   prsntz.on "slidechange", (previous_chapter_index, previous_slide_index, new_chapter_index, new_slide_index) ->
+    hide_show_slides(new_chapter_index, new_slide_index, 500)
+
     fromSlide = oneBasedAbsoluteSlideIndex window.presentation, previous_chapter_index, previous_slide_index
     $from = $("#controls .chapter:nth-child(#{fromSlide}), #chapters ol li:nth-child(#{fromSlide}) a:nth-child(1)")
     $from.removeClass "selected"
@@ -191,6 +194,22 @@ init_presentz = (presentation) ->
     alert(err) if err?
 
   return
+
+hide_show_slides = (chapter_index, slide_index, duration = 0) ->
+  real_hide_show_slide = () ->
+    $player_video = $("#player_video")
+    $slideshow_player = $("#slideshow_player")
+    starting_width = parseInt($player_video.css("width"))
+    if !presentation.chapters[chapter_index].slides[slide_index].url? and !slides_hidden
+      $slideshow_player.hide()
+      $player_video.animate { width: "#{starting_width * 2 + 20}px" }, duration
+      slides_hidden = true
+    else if presentation.chapters[chapter_index].slides[slide_index].url? and slides_hidden
+      $player_video.animate { width: "#{starting_width / 2 - 10}px" }, duration, () ->
+       $slideshow_player.show()
+      slides_hidden = false
+  
+  setTimeout real_hide_show_slide, 500
 
 openPopupTo = (width, height, url) ->
   left = (screen.width - width) / 2
@@ -312,8 +331,10 @@ fullscreen_activate = (event) ->
   fullscreen_selectors.push("#player")
   $("#player").css({ "margin-top": 10 })
 
-  fullscreen_selectors.push("#player_video, #slideshow_player")
-  $("#player_video, #slideshow_player").css({"width": Math.floor(parseInt($("#player_video, #slideshow_player").css("width")) * ratio) + 11, "height": Math.floor(parseInt($("#player_video, #slideshow_player").css("height")) * ratio) + 11, "margin-left": 5, "margin-right": 5})
+  fullscreen_selectors.push("#player_video")
+  $("#player_video").css({"width": Math.floor(parseInt($("#player_video").css("width")) * ratio) + 11, "height": Math.floor(parseInt($("#player_video").css("height")) * ratio) + 11, "margin-left": 5, "margin-right": 5})
+  fullscreen_selectors.push("#slideshow_player")
+  $("#slideshow_player").css({"width": Math.floor(parseInt($("#slideshow_player").css("width")) * ratio) + 11, "height": Math.floor(parseInt($("#slideshow_player").css("height")) * ratio) + 11, "margin-left": 5, "margin-right": 5})
 
   fullscreen_selectors.push("#site_wrapper")
   $("#site_wrapper").css({"padding-bottom": 0, display: "table-cell", "vertical-align": "middle"})
@@ -357,6 +378,8 @@ fullscreen_de_activate = (event) ->
   $fullscreen.toggleClass("enter_fullscreen exit_fullscreen")
   $("div.main h3, div.main h4, #tools, #header, #footer").show()
   $(selector).attr("style", "") for selector in fullscreen_selectors
+  slides_hidden = false
+  hide_show_slides(current_chapter, current_slide)
   Controls.restoreOriginalWidth()
   $fullscreen.unbind("click").bind("click", fullscreen_activate)
 
