@@ -115,6 +115,11 @@
         <code>TIME_IN_SECONDS,SLIDE_INDEX</code>
         <p></p>
       </li>
+      <li>
+        <p>If you don't have slides, just list the timings</p>
+        <code>TIME_IN_SECONDS</code>
+        <p></p>
+      </li>
     </ol>
     <span class="help-inline">Get file</span> <input type="file" class="input-small">
   </div>

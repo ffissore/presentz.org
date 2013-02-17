@@ -385,6 +385,10 @@ class PresentationEditView extends Backbone.View
         match = /(.+),(.+)/.exec(row)
         if match? and match.length >= 3
           @data.push time: parseFloat(match[1]), value: match[2]
+        else
+          match = /^(.+)$/.exec(row)
+          if match? and match.length >= 2
+            @data.push time: parseFloat(match[1])
 
       $ADVANCED_USER().modal("hide")
       $ADVANCED_USER_DATA_PREVIEW().modal("show")
