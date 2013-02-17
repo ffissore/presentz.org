@@ -133,7 +133,7 @@ class PresentationNewView extends Backbone.View
     else
       $(".with_slides").show()
     @check_if_time_to_start()
-    
+
   onchange_title: (event) ->
     $elem = $(event.target)
     @title = $elem.val()
@@ -146,7 +146,11 @@ class PresentationNewView extends Backbone.View
     @slideshow._plugin_id = @slide_plugin
 
   onclick_start: () ->
-    backend = _.find @slide_backends, (backend) => backend.handle(@slideshow.url)
+    if @slideshow?
+      slideshow_url = @slideshow.url
+    else
+      slideshow_url = null
+    backend = _.find @slide_backends, (backend) => backend.handle(slideshow_url)
     slides = [ backend.first_slide(@slideshow) ]
 
     chapter =

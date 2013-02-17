@@ -24,16 +24,18 @@ class Dummy
   constructor: () ->
     @import_file_value_column = "Slide URL"
 
-  handle: () -> true
-    
+  handle: (url) ->
+    return url?
+
   is_dummy: () -> true
 
   thumb_type_of: (url) ->
+    return "none" if !url?
     return "swf" if url.indexOf(".swf") isnt -1
     "img"
 
   slide_info: (slide, callback) ->
-    if utils.is_url_valid(slide.url)
+    if !slide.url? or utils.is_url_valid(slide.url)
       callback undefined, slide,
         slide_thumb: slide.url
         public_url: slide.url
@@ -41,6 +43,8 @@ class Dummy
       callback("Invalid URL: '#{slide.url}'")
 
   first_slide: (slideshow) ->
+    return slide_backends.make_new_slide(null, 0) if !slideshow?
+
     new_slide = slide_backends.make_new_slide(slideshow.url, 0)
     new_slide._plugin_id = slideshow._plugin_id if slideshow._plugin_id?
     new_slide

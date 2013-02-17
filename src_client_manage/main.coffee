@@ -23,7 +23,7 @@ jQuery () ->
   prsntz = new Presentz("#video", "450x400", "#slide", "450x400")
 
   video_backends = [new window.video_backends.Youtube(prsntz.availableVideoPlugins.youtube), new window.video_backends.Vimeo(prsntz.availableVideoPlugins.vimeo), new window.video_backends.Dummy(prsntz.availableVideoPlugins.html5)]
-  slide_backends = [new window.slide_backends.SlideShare(prsntz.availableSlidePlugins.slideshare), new window.slide_backends.Speakerdeck(prsntz.availableSlidePlugins.speakerdeck), new window.slide_backends.Dummy(prsntz.availableSlidePlugins.image)]
+  slide_backends = [new window.slide_backends.SlideShare(prsntz.availableSlidePlugins.slideshare), new window.slide_backends.Speakerdeck(prsntz.availableSlidePlugins.speakerdeck), new window.slide_backends.Dummy(prsntz.availableSlidePlugins.image), new window.slide_backends.None()]
 
   app = new window.views.AppView(prsntz, video_backends, slide_backends)
   router = new window.AppRouter(app)

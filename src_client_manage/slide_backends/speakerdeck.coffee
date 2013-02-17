@@ -26,6 +26,7 @@ class Speakerdeck
     @import_file_value_column = "Slide Index"
 
   handle: (url) ->
+    return false if !url?
     @presentzSpeakerdeck.handle url: url
 
   is_dummy: () -> false

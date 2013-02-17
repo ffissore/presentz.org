@@ -27,6 +27,7 @@ class SlideShare
     @import_file_value_column = "Slide Index"
 
   handle: (url) ->
+    return false if !url?
     @presentzSlideShare.handle url: url
 
   is_dummy: () -> false

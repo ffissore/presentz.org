@@ -21,12 +21,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 make_new_slide = (url, time, public_url) ->
   new_slide =
-    url: url
     time: time
+  
+  if url?
+    new_slide.url = url
+  
   if public_url?
     new_slide.public_url = public_url
-  else
+  else if new_slide.url?
     new_slide.public_url = new_slide.url
+  
   new_slide
 
 @slide_backends.make_new_slide = make_new_slide

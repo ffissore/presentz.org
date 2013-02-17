@@ -316,8 +316,10 @@ class PresentationEditView extends Backbone.View
 
   onchange_slide_public_url: (event) ->
     $elem = $(event.target)
-    public_url = $elem.val()
-    return if !utils.is_url_valid(public_url)
+    public_url = $elem.val().trim()
+    public_url = null if public_url is ""
+    
+    return if public_url? and !utils.is_url_valid(public_url)
 
     selector = $MODEL_SELECTOR_OF_SLIDE($elem)
 
