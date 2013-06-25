@@ -76,7 +76,7 @@ app.configure ->
     cookie:
       maxAge: ONE_WEEK
   app.use express.methodOverride()
-  app.use everyauth.middleware()
+  app.use everyauth.middleware(app)
   app.use auth.put_user_in_locals
   app.use express.static "#{__dirname}/public" if app.settings.env is "development"
   app.use app.router
