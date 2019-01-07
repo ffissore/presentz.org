@@ -69,13 +69,13 @@
     </div>
     <div id="logos-wrapper" class="box12">
       <div class="box4">
-        <a href="http://www.nodejs.org/"><img src="/assets/img/fe/logos-tech-nodejs.png" alt="Presentz runs on Node.js" title="Presentz runs on Node.js"/></a>
+        <a href="https://www.nodejs.org/"><img src="/assets/img/fe/logos-tech-nodejs.png" alt="Presentz runs on Node.js" title="Presentz runs on Node.js"/></a>
       </div>
       <div class="box4">
-        <a href="http://jashkenas.github.com/coffee-script/"><img src="/assets/img/fe/logos-tech-coffeescript.png" alt="Presentz is made with Coffeescript" title="Presentz is made with Coffeescript"/></a>
+        <a href="https://coffeescript.org/"><img src="/assets/img/fe/logos-tech-coffeescript.png" alt="Presentz is made with Coffeescript" title="Presentz is made with Coffeescript"/></a>
       </div>
       <div class="box4">
-        <a href="http://www.orientdb.org/"><img src="/assets/img/fe/logos-tech-orientdb.png" alt="Presentz stores data on OrientDB" title="Presentz stores data on OrientDB"/></a>
+        <a href="https://www.orientdb.org/"><img src="/assets/img/fe/logos-tech-orientdb.png" alt="Presentz stores data on OrientDB" title="Presentz stores data on OrientDB"/></a>
       </div>
     </div>
     <div class="clear"></div>
