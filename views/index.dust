@@ -10,15 +10,10 @@
       <div id="wrapper_link_demos" class="box3">
         <a href="#demo_home" id="link_demos">View the demos</a>
       </div>
-      <p class="wrapper_learn_more box3">
+      <p class="wrapper_learn_more last box3">
         <span>or</span>
         <br />
         <a href="#learn1" id="link_learn_more">Learn More</a>
-      </p>
-      <p class="wrapper_learn_more last box3">
-        <span>and</span>
-        <br />
-        <a href="#make_your_own" id="link_make_your_own">Make Your Own</a>
       </p>
     </div>
     <div class="box8">
@@ -33,10 +28,10 @@
       <h3 id="learn1">Learn More</h3>
       <div class="testo">
         <p>
-          Presentz is a mashup, as it merges things like Vimeo, Youtube, Slideshare and Speakerdeck. But you can use images and video files as well, unleashing the HTML5 video tag power.
+          Presentz is a mashup, as it merges things like Vimeo, Youtube, and Slideshare. But you can use images and video files as well, unleashing the HTML5 video tag power.
         </p>
         <p>
-          Presentz wants to be easy to use: watch a talk, comment it, <a href="#make_your_own" class="link_make_your_own">make a brand new one</a> and share it. If there is something that doesn't work for you, tell us <a href="mailto:federico^_^AT^_^presentz.org">by email</a> or <a href="https://twitter.com/presentzorg">on twitter</a>: we'll fix it.
+          Presentz wants to be easy to use: watch a talk, comment it, and share it.
         </p>
         <p>
           Take a look at the featured talks: the <a class="link_demos" href="#demo_home">demos</a> are just below, the others are in the <a href="/r/talks.html">talks section</a>.
@@ -46,15 +41,6 @@
         </p>
         <p>&nbsp;</p>
       </div>
-      <h3 id="make_your_own">Make your own</h3>
-      <div class="testo">
-        <p>
-          Start making your own presentation: as you {?user}log in{:else}<a id="link_login_hp" href="#">log in</a>{/user}, the "MAKE" button in the top menu will lead you to "Presentz Maker", our editor.
-        </p>
-        <p>
-          Once it's done and published, your presentation will be listed on your personal page: log in and click on your name to see it.
-        </p>
-      </div>
     </div>
     <div class="box6">
       <h3>About</h3>
@@ -63,7 +49,7 @@
         <p>Most alternatives to Presentz have a centralized approach: you give them your video or audio, your slides, you use their tool to mix them, and they will host and publish the result.</p>
         <p>We don't. There are enough streaming and slide sharing services available without us making another. And if you prefer to host your files on your own, do that. With Presentz you just mix them all.</p>
         <p>Well, not really ALL of them. Not yet. In <a href="https://github.com/ffissore/presentz.js">Presentz.js</a> (the javascript library at the hearth of Presentz) there are a number of video and slide "plugins". So, if we don't support your favourite slide sharing or video streaming service, poke us on the <a href="https://github.com/ffissore/presentz.js/issues">issue tracker</a>.</p>
-        <p>As of now, we support the following video services: Youtube, Vimeo, your own video files. And the following slide services: Slideshare, Speakerdeck, Rvl.io, your own Flash files and images. Take a look at the <a class="link_demos" href="#demo_home">demos</a> to see them working.</p>
+        <p>As of now, we support the following video services: Youtube, Vimeo, your own video files. And the following slide services: Slideshare, your own Flash files and images. Take a look at the <a class="link_demos" href="#demo_home">demos</a> to see them working.</p>
         <p>Thank you for your interest in Presentz.</p>
       </div>
     </div>
@@ -99,18 +85,6 @@
             <span class="demo_thumb_item_icon left"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_vimeo.png" alt="vimeo icon"/></span>
             <span class="demo_thumb_item_icon right"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_images.png" alt="images icon"/></span>
             Vimeo player, images as slides
-          </li>
-          <li class="box4 demo_thumb_item">
-            <a href="/demo/06_youtube-speakerdeck" title="Demo: Youtube player, Speaker Deck player">Demo: Youtube player, Speaker Deck player</a>
-            <span class="demo_thumb_item_icon left"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_youtube.png" alt="youtube icon"/></span>
-            <span class="demo_thumb_item_icon right"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_speakerdeck.png" alt="speakerdeck icon"/></span>
-            Youtube player, Speaker Deck player
-          </li>
-          <li class="box4 demo_thumb_item">
-            <a href="/demo/youtube-rvlio" title="Demo: Youtube player, rvl.io player">Demo: Youtube player, rvl.io player</a>
-            <span class="demo_thumb_item_icon left"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_youtube.png" alt="youtube icon"/></span>
-            <span class="demo_thumb_item_icon right"><img width="80" height="80" src="/assets/img/fe/demo_thumb_icon_rvlio.png" alt="rvlio icon"/></span>
-            Youtube player, rvl.io player
           </li>
           <li class="box4 demo_thumb_item">
             <a href="/demo/04_youtube-img" title="Demo: Youtube player, images as slides">Demo: Youtube player, images as slides</a>

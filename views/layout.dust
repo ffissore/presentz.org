@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
   <meta name="title" content="{.head_title}"/>
   <meta name="description" content="{.head_description}"/>
-  <meta name="keywords" content="presentation, video, slide, slides, synchronized, talk, vimeo, youtube, speakerdeck, slideshare, webm, mp4, mediaelementjs, rvl.io, revealjs, reveal.js"/>
+  <meta name="keywords" content="presentation, video, slide, slides, synchronized, talk, vimeo, youtube, slideshare, webm, mp4, mediaelementjs, revealjs, reveal.js"/>
   <meta name="googlebot" content="noodp">
   <meta property="fb:app_id" content="166873390098258"/>
   <meta property="og:type" content="website"/>
@@ -58,10 +58,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <li class="{.css_section_talks}"><a href="/r/talks.html">Talks</a></li>
             {!<li><a href="/#demos">Demo</a></li>!}
             {#user}
-              <li><a href="/m/">Make</a></li>
               <li><a href="/byebye">Logout</a></li>
             {:else}
-              {!<li><a href="/#make_your_own" class="link_make_your_own">Make</a></li>!}
               <li><a href="javascript:void(0)" id="link_login">Login</a></li>
             {/user}
           </ul>
@@ -110,7 +108,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <a href="https://github.com/ffissore/presentz.org" target="blank">fork</a> and 
             <a href="https://github.com/ffissore/presentz.org/issues" target="blank">contribute</a> to it.
           </p>
-          <p>Follow <a href="https://twitter.com/presentzorg" target="_blank">@presentzorg</a> on twitter.</p>
           <p><a href="/r/tos.html">Terms of service</a></p>
           <p id="copy">Copyright &copy; 2013 <a href="mailto:federico^_^AT^_^presentz.org">Federico Fissore</a>
           </p>

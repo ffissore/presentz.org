@@ -103,16 +103,16 @@ app.get "/robots.txt", express.static "#{__dirname}/public/assets"
 app.get "/r/back_to_referer", redirect_routes.back_to_referer config
 app.get "/r/tos.html", routes.static_view "tos", "Terms of Service", "Terms of Service - Presentz", generic_description
 app.get "/r/talks.html", routes.list_catalogs
-app.all "/m/*", routes.ensure_is_logged
-app.get "/m/", routes.static_view "m/index", "Presentz Maker", "Presentz Maker", "Presentz Maker"
-app.get "/m/api/presentations/:presentation", api.presentation_load
-app.put "/m/api/presentations/:presentation", api.presentation_save
+#app.all "/m/*", routes.ensure_is_logged
+#app.get "/m/", routes.static_view "m/index", "Presentz Maker", "Presentz Maker", "Presentz Maker"
+#app.get "/m/api/presentations/:presentation", api.presentation_load
+#app.put "/m/api/presentations/:presentation", api.presentation_save
 #app.post "/m/api/presentations", api.presentation_save
-app.get "/m/api/presentations", api.presentations
-app.get "/m/api/slideshare/url_to_doc_id", api.slideshare_url_to_doc_id
-app.get "/m/api/slideshare/:doc_id", api.slideshare_slides_of
-app.get "/m/api/speakerdeck/url_to_data_id", api.speakerdeck_url_to_data_id
-app.delete "/m/api/delete_slide/:node_id", api.delete_slide
+#app.get "/m/api/presentations", api.presentations
+#app.get "/m/api/slideshare/url_to_doc_id", api.slideshare_url_to_doc_id
+#app.get "/m/api/slideshare/:doc_id", api.slideshare_slides_of
+#app.get "/m/api/speakerdeck/url_to_data_id", api.speakerdeck_url_to_data_id
+#app.delete "/m/api/delete_slide/:node_id", api.delete_slide
 
 app.get "/u/fb/:user_name", routes.show_catalog_of_user auth.socials_prefixes.facebook
 app.get "/u/tw/:user_name", routes.show_catalog_of_user auth.socials_prefixes.twitter
